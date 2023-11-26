@@ -12,7 +12,7 @@ public class PreconditionAttribute : Attribute
 public class ComponentUsedInMarkupDescriptionAttribute : DescriptionAttribute
 {
     public ComponentUsedInMarkupDescriptionAttribute(Type componentType)
-        : base($"This test verifies that the component {componentType} is used inside the razor markup")
+        : base($"This test verifies that the component {componentType.TypeNameWithoutGenerics()} is used inside the razor markup")
     {
         ComponentType = componentType;
     }
@@ -73,10 +73,13 @@ public class DescriptionAttribute : Attribute
 public class ComponentUsedInMarkupTitleAttribute : TitleAttribute
 {
     public ComponentUsedInMarkupTitleAttribute(Type componentType) : base(
-        $"{componentType} component is used in markup")
+        $"{componentType.TypeNameWithoutGenerics()} component is used in markup")
     {
         ComponentName = componentType;
+        
     }
+
+  
 
     public Type ComponentName { get; }
 }
