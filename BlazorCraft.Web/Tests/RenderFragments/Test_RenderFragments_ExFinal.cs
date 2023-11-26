@@ -1,8 +1,8 @@
 ﻿using BlazorCraft.Web.Infrastructure.Attributes;
-using BlazorCraft.Web.Shared._Exercises.RehderFragments;
+using BlazorCraft.Web.Shared._Exercises._1_Components._5_RenderFragments;
 using BlazorCraft.Web.Tests.Introduction;
 using Bunit;
-using Employee = BlazorCraft.Web.Shared._Exercises.RehderFragments.RenderFragments_LessonFinal.Employee;
+using Employee = BlazorCraft.Web.Shared._Exercises._1_Components._5_RenderFragments.RenderFragments_LessonFinal.Employee;
 
 namespace BlazorCraft.Web.Tests.RenderFragments;
 

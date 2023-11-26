@@ -1,4 +1,6 @@
-﻿namespace BlazorCraft.Web.Shared._Exercises.Forms;
+﻿using BlazorCraft.Web.Shared._Exercises._7_Forms;
+
+namespace BlazorCraft.Web.Shared._Exercises.Forms;
 
 using Employee = Forms_Ex_LessonFinal.Employee;
 

@@ -1,5 +1,5 @@
-﻿using BlazorCraft.Web.Shared._Exercises.RehderFragments;
-using Employee = BlazorCraft.Web.Shared._Exercises.RehderFragments.RenderFragments_LessonFinal.Employee;
+﻿using BlazorCraft.Web.Shared._Exercises._1_Components._5_RenderFragments;
+using Employee = BlazorCraft.Web.Shared._Exercises._1_Components._5_RenderFragments.RenderFragments_LessonFinal.Employee;
 
 namespace BlazorCraft.Web.Shared._Exercises.DependencyInjection;
 

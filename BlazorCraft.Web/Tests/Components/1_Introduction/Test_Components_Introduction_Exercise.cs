@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Pages._3_Components;
-using BlazorCraft.Web.Shared._Exercises.Components._1_Introduction;
+using BlazorCraft.Web.Shared._Exercises._1_Components._1_Introduction;
 using BlazorCraft.Web.Tests.Routing;
 using Bunit;
 

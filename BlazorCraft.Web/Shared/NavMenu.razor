@@ -1,12 +1,12 @@
 ﻿@using BlazorCraft.Web.Pages._3_Components
 @using BlazorCraft.Web.Pages._4_RenderFragments
 @using BlazorCraft.Web.Pages._5_Routing
-@using BlazorCraft.Web.Pages._6_Forms
-@using BlazorCraft.Web.Pages._7_DependencyInjection
 @using BlazorCraft.Web.Pages._8_JsInterop
 @using BlazorCraft.Web.Pages._9_ComponentLibraries
 @using BlazorCraft.Web.Pages._10_CSSIsolation
 @using BlazorCraft.Web.Pages._11_ExamExercise
+@using BlazorCraft.Web.Pages._6_DependencyInjection
+@using BlazorCraft.Web.Pages._7_Forms
 <MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
     <MudNavLink Href="introduction" Match="NavLinkMatch.Prefix">Introduction</MudNavLink>
@@ -16,26 +16,13 @@
         <MudNavLinkWithTestTracking PageType="typeof(ComponentEvents)" >Component events</MudNavLinkWithTestTracking>
         <MudNavLinkWithTestTracking PageType="typeof(ComponentDataBinding)" >Data-binding</MudNavLinkWithTestTracking>
         <MudNavLinkWithTestTracking PageType="typeof(ComponentLifecycle)" >Component lifecycle</MudNavLinkWithTestTracking>
-        @*<MudNavLinkWithTestTracking PageType="typeof(ComponentCascadingValues)">Cascaded values</MudNavLinkWithTestTracking>*@
         <MudNavLinkWithTestTracking PageType="typeof(RenderFragments)">Generic components with render fragments</MudNavLinkWithTestTracking>
     </MudNavGroup>
     <MudNavLinkWithTestTracking PageType="typeof(Routing)">Routing</MudNavLinkWithTestTracking>
-    <MudNavLinkWithTestTracking PageType="typeof(Forms)">Forms</MudNavLinkWithTestTracking>
-    @*<MudNavLink Href="forms/edit-form">EditForm</MudNavLink>
-        <MudNavLink Href="forms/validation">Validáció</MudNavLink>
-        <MudNavLink Href="forms/form-events">Form események</MudNavLink>*@
     <MudNavLinkWithTestTracking PageType="typeof(DependencyInjection)">Dependency Injection</MudNavLinkWithTestTracking>
+    <MudNavLinkWithTestTracking PageType="typeof(Forms)">Forms</MudNavLinkWithTestTracking>
     <MudNavLinkWithTestTracking PageType="typeof(JsInterop)">Javascript Interop</MudNavLinkWithTestTracking>
     <MudNavLinkWithTestTracking PageType="typeof(ComponentLibraries)">Using UI Component libraries</MudNavLinkWithTestTracking>
     <MudNavLinkWithTestTracking PageType="typeof(CssIsolation)">CSS isolation</MudNavLinkWithTestTracking>
     <MudNavLinkWithTestTracking PageType="typeof(ExamExercise)" Class="fw-bold">Exam exercise</MudNavLinkWithTestTracking>
-    @*<MudNavGroup Title="Javascript interop" Expanded="true">
-        <MudNavLink Href="js-interop/dotnet-from-js">.NET hívása Javascriptből</MudNavLink>
-        <MudNavLink Href="js-interop/js-from-dotnet">Javascript hívása .NET-ből</MudNavLink>
-    </MudNavGroup>*@
-    @*<MudNavGroup Title="Dependency injection" Expanded="true">
-        <MudNavLink Href="dependency-injection/basics">EditForm</MudNavLink>
-        <MudNavLink Href="dependency-injection/register-and-use-services">Szolgáltatások regisztrálása</MudNavLink>
-        <MudNavLink Href="dependency-injection/service-lifecycles">Szolgáltatások életciklusa</MudNavLink>
-    </MudNavGroup> *@
 </MudNavMenu>

@@ -1,22 +1,22 @@
 ﻿using System.Diagnostics;
 using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Pages._3_Components;
-using BlazorCraft.Web.Shared._Exercises.Components._3_DataBinding;
+using BlazorCraft.Web.Shared._Exercises._1_Components._5_RenderFragments;
+using BlazorCraft.Web.Shared._Exercises._6_DependencyInjection;
 using BlazorCraft.Web.Shared._Exercises.DependencyInjection;
 using BlazorCraft.Web.Shared._Exercises.JsInterop;
-using BlazorCraft.Web.Shared._Exercises.RehderFragments;
 using BlazorCraft.Web.Tests.Routing;
 using Bunit;
 using FluentAssertions;
 using Microsoft.AspNetCore.Components;
 
-using Employee = BlazorCraft.Web.Shared._Exercises.RehderFragments.RenderFragments_LessonFinal.Employee;
+using Employee = BlazorCraft.Web.Shared._Exercises._1_Components._5_RenderFragments.RenderFragments_LessonFinal.Employee;
 
 namespace BlazorCraft.Web.Tests.DependencyInjection;
 
 
 
-[TestForPage(typeof(Pages._7_DependencyInjection.DependencyInjection))]
+[TestForPage(typeof(Pages._6_DependencyInjection.DependencyInjection))]
 public class Test_DependencyInjection_LessonFinal : ComponentTestBase<DependencyInjection_Ex_LessonFinal>
 {
     private static Type ListComponentType = typeof(RenderFragments_LessonFinal);

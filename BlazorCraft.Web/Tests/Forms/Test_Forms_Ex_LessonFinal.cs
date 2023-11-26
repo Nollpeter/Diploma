@@ -1,28 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AngleSharp.Dom;
 using BlazorCraft.Web.Infrastructure.Attributes;
+using BlazorCraft.Web.Shared._Exercises._7_Forms;
 using BlazorCraft.Web.Shared._Exercises.Forms;
-using BlazorCraft.Web.Shared._Exercises.JsInterop;
-using BlazorCraft.Web.Shared._Exercises.RehderFragments;
-using BlazorCraft.Web.Shared.Examples._9_Forms;
-using BlazorCraft.Web.Shared.Examples.RenderFragments;
+using BlazorCraft.Web.Shared.Examples._1_Components._5_RenderFragments;
 using BlazorCraft.Web.Tests.Routing;
 using Bunit;
-using FluentAssertions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using Microsoft.JSInterop.Infrastructure;
-using NSubstitute;
-
-using Employee = BlazorCraft.Web.Shared._Exercises.Forms.Forms_Ex_LessonFinal.Employee;
+using Employee = BlazorCraft.Web.Shared._Exercises._7_Forms.Forms_Ex_LessonFinal.Employee;
 
 namespace BlazorCraft.Web.Tests.Forms;
 
 
 
-[TestForPage(typeof(Pages._6_Forms.Forms))]
+[TestForPage(typeof(Pages._7_Forms.Forms))]
 public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
 {
     public const string CreateButtonLabel = "Create";

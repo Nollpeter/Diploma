@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Shared._Exercises.DependencyInjection;
-using BlazorCraft.Web.Shared._Exercises.RehderFragments;
+using BlazorCraft.Web.Shared._Exercises._1_Components._5_RenderFragments;
 using BlazorCraft.Web.Tests;
 using BlazorCraft.Web.Tests.Routing;
 using Bunit;

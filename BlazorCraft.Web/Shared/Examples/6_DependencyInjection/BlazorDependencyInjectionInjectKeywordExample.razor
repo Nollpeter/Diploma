@@ -1,4 +1,5 @@
-﻿@inject IExampleTransientService TransientService
+﻿@using BlazorCraft.Web.Shared.Examples._7_DependencyInjection
+@inject IExampleTransientService TransientService
 @inject IExampleScopedService ScopedService
 
 <p>Transient value: @TransientService.GetValue()</p>

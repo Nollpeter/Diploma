@@ -23,6 +23,7 @@
 
 	<ItemGroup>
 	  <!--<Folder Include="Shared\Examples\7_DependencyInjection\ExampleUsages\" />-->
+	  <Folder Include="Shared\_Exercises\1_Components\4_LifeCycle\" />
 	  <Folder Include="Tests\Helpers\" />
 	  <Folder Include="wwwroot\img\" />
 	</ItemGroup>
@@ -35,6 +36,22 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Shared\Examples\Introduction\HelloWorld.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\_1_Components._5_RenderFragments\RenderFragments_Ex1.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\_1_Components._5_RenderFragments\RenderFragments_Ex2.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\_1_Components._5_RenderFragments\RenderFragments_Ex3.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\_1_Components._5_RenderFragments\RenderFragments_Ex4.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\_1_Components._5_RenderFragments\RenderFragments_LessonFinal.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ExampleUsages\ListComponent1Usage.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ExampleUsages\ListComponent2Usage.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ExampleUsages\ListComponent3Usage.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ExampleUsages\ListComponent4QuickFix.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ExampleUsages\ListComponent4Usage.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ExampleUsages\ListComponent5Usage.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ListComponent1.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ListComponent2.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ListComponent3.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ListComponent4.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ListComponent5.razor" />
     </ItemGroup>
 	
 </Project>

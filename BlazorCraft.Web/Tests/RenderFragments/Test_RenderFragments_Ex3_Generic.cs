@@ -1,11 +1,12 @@
 ﻿using System.Security.Cryptography;
 using BlazorCraft.Web.Infrastructure.Attributes;
-using BlazorCraft.Web.Shared._Exercises.RehderFragments;
+using BlazorCraft.Web.Shared._Exercises._1_Components._5_RenderFragments;
+using BlazorCraft.Web.Shared._Exercises._1_Components._5_RenderFragments;
 using BlazorCraft.Web.Tests.Introduction;
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
-using Employee = BlazorCraft.Web.Shared._Exercises.RehderFragments.RenderFragments_Ex2.Employee;
+using Employee = BlazorCraft.Web.Shared._Exercises._1_Components._5_RenderFragments.RenderFragments_Ex2.Employee;
 
 namespace BlazorCraft.Web.Tests.RenderFragments;
 
