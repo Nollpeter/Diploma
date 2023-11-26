@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using BlazorCraft.Web.Infrastructure.Attributes;
+using BlazorCraft.Web.Tests;
 using BlazorCraft.Web.Tests.Introduction;
 
 namespace BlazorCraft.Web.Infrastructure;

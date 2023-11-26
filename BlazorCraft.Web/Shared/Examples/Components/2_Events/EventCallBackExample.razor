@@ -1,0 +1,11 @@
+﻿<button class="btn btn-primary" @onclick="RaiseEvent">Click be</button>
+@code {
+    private int _count;
+    [Parameter] public EventCallback<int> ButtonClicked { get; set; }
+
+    private async Task RaiseEvent()
+    {
+        ++_count;
+        await ButtonClicked.InvokeAsync(_count);
+    }
+}

@@ -1,0 +1,35 @@
+﻿<div class="ex-container">
+    
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @* Add your code here *@
+        @foreach(var emp in Employees)
+            {
+                <tr class="d-flex justify-content-between">
+                    <td>@emp.Id</td>
+                    <td>@emp.Name</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="async () => { await ListItemDeleted.InvokeAsync(emp);}">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+    
+</div>
+
+@code {
+
+    public record Employee(int Id, string Name);
+    
+    [Parameter] public List<Employee> Employees { get; set; }
+    [Parameter] public EventCallback<Employee> ListItemDeleted { get; set; }
+}

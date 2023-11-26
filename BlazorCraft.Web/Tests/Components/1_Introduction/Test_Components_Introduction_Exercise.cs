@@ -1,19 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Pages._3_Components;
-using BlazorCraft.Web.Shared._Exercises.Components.Introduction;
+using BlazorCraft.Web.Shared._Exercises.Components._1_Introduction;
 using BlazorCraft.Web.Tests.Routing;
 using Bunit;
-using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace BlazorCraft.Web.Tests.Introduction;
-
-public record TestRunResult(bool IsSuccessful, string? ErrorMessage)
-{
-    public static TestRunResult Success => new(true, null);
-}
 
 [TestForPage(typeof(ComponentsIntroduction))]
 public class Test_Components_Introduction_Exercise : ComponentTestBase<ComponentsIntroductionExercise>

@@ -68,3 +68,11 @@ p {
 hr {
     background-color: black !important;
 }
+
+ul {
+    list-style: circle !important;
+    margin-left: 16px; 
+}
+.mud-typography ul{
+    margin-top: 8px;
+}

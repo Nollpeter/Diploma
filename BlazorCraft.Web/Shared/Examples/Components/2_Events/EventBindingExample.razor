@@ -1,0 +1,21 @@
+﻿<button class="btn btn-primary" @onclick="@(() => { _textToDisplay = "Button with inline handler clicked"; })">Button with inline handler</button>
+<button class="btn btn-primary" @onclick="SyncHandler">Button with sync handler</button>
+<button class="btn btn-primary" @onclick="AsyncHandler">Button with async handler</button>
+<button class="btn btn-primary" @onclick="@(async () => { await Task.Delay(500); _textToDisplay = "Button with inline async handler clicked";})">Button with inline async handler</button>
+<p>@_textToDisplay</p>
+
+@code {
+    private string _textToDisplay = string.Empty;
+
+    private void SyncHandler()
+    {
+        _textToDisplay = "Button with sync handler clicked";
+    }
+
+    private async Task AsyncHandler()
+    {
+        // Let's simulate loading a resource from a backend
+        await Task.Delay(500);
+        _textToDisplay = "Button with async handler clicked";
+    }
+}

@@ -1,0 +1,12 @@
+﻿<EventCallBackExample ButtonClicked="(count) =>_currentCount = count" />
+<EventCallBackExample ButtonClicked="EventHandler" />
+<p>@_currentCount</p>
+@code {
+    private int _currentCount;
+
+    private void EventHandler(int count)
+    {
+        _currentCount = count;
+    }
+
+}

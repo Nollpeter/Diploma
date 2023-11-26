@@ -1,9 +1,16 @@
 ﻿@page "/components/component-events"
+@using BlazorCraft.Web.Shared.Examples.Components._2_Events
+@using BlazorCraft.Web.Shared.Examples.Components._2_Events.ExampleUsages
+@using BlazorCraft.Web.Shared._Exercises.Components._2_Events
+@using BlazorCraft.Web.Tests.Components._2_Events
 
 <MudContainer Class="d-grid gap-3">
     <MudText Typo="Typo.h4">Blazor component events</MudText>
-    <MudText>Component events in Blazor are a fundamental aspect of building interactive web applications. They provide a way for different parts of your application to communicate and respond to specific actions or changes, making it easier to create dynamic and responsive user interfaces.</MudText>
-    <MudText>Imagine component events as a system of signals and listeners within your web application. When something noteworthy happens within a component, such as a button click or data update, it can emit a signal or event. Other components that are interested in knowing when this event occurs can act as listeners, ready to respond accordingly. This system of signaling and listening allows components to communicate effectively, even if they are not directly connected or aware of each other's existence.</MudText>
+    <MudText>In Blazor, component events are the backbone of interactivity within your web application. Think of them as a structured conversation between various parts of your app. For instance, when a user interacts with a component — say, by clicking a button — this component can broadcast a message indicating that the action has taken place.</MudText>
+    <MudText>
+        Imagine component events as a system of signals and listeners within your web application. When something noteworthy happens within a component, such as a button click or data update, it can emit a signal or event. Other components that are interested in knowing when this event occurs can act as listeners, ready to respond accordingly.
+        This system of signaling and listening allows components to communicate effectively, even if they are not directly connected or aware of each other's existence.
+    </MudText>
     <MudText>They are beneficial to use, because they make the components more <Important>modular</Important>, <Important>interactive</Important> and <Important>flexible</Important></MudText>
 
     <MudExpansionPanels MultiExpansion="true">
@@ -15,10 +22,9 @@
                 <div class="d-grid gap-3">
                     <MudText>
                         Event binding is one of the foundational elements for creating interactive user interfaces in Blazor applications.
-                        It provides the mechanism through which HTML events can be tied directly to C# methods in your component class.
-                        This is done using a simple yet powerful syntax involving Razor directives like @("@onclick"), @("@onkeydown"), etc.
-                        You can even pass arguments to the C# method, like event arguments or custom values.
-                        The integration of HTML and C# through event binding streamlines development, obviating the need for developers to juggle between JavaScript and C#.
+                        It provides us the ability to bind HTML events directly to C# methods in your component class.
+                        This can be achieved via using the @("@onclick"), @("@onkeydown"), etc. attributes in our razor markup
+                        We can even pass arguments to the C# method, like event arguments or custom values.
                     </MudText>
                     <MudText>
                         Event binding in Blazor is not just a syntactic sugar; it also plays well with Blazor's rendering system.
@@ -26,30 +32,49 @@
                         This makes updates faster and minimizes the performance overhead.
                     </MudText>
                     <MudText>
-                        It's worth noting that event binding is possible for both standard DOM events and custom events defined in your Blazor components.
-                        This makes it highly versatile and suitable for a broad range of application requirements.
-                        For example, you can easily create a custom component with its own specific events, like OnCompleted, and consumers of that component can handle that event as they would any standard HTML event.
+                        Note that this kind of event binding works on both HTML elements and in blazor components as well.
+                        For HTML elements, you can use the standard HTML events along with the @("@") sign to tell Blazor, that the event handler will be a C# method.
                     </MudText>
+                    <MudText>
+                        Event handlers will be standard C# methods, they can be synchronous and asynchronous as well.
+                    </MudText>
+                    <AdvancedCodeSnippet TComponent="EventBindingExample" RenderOutput="true"></AdvancedCodeSnippet>
                 </div>
                 @*TODO Példakód, feladat*@
             </ChildContent>
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="eventCallBack">
             <TitleContent>
-                <MudText Typo="Typo.h5" Class="fw-bold">EventCallback@("<T>")</MudText>
+                <MudText Typo="Typo.h5" Class="fw-bold">EventCallBack and EventCallback@("<T>")</MudText>
             </TitleContent>
             <ChildContent>
                 <div class="d-grid gap-3">
                     <MudText>
-                        The <strong>EventCallback@("<T>")</strong> class is a special Blazor class that can be exposed as a Parameter so that components can easily notify consumers when something of interest has occurred.
+                        The <strong>EventCallback@("<T>")</strong> class is a special Blazor class that can be used to
+                        <ul>
+                            <li>
+                                <MudText>Raise events from a component that can be handled <strong>outside of the component</strong></MudText>
+                            </li>
+                            <li>
+                                <MudText>Pass data for the event handler</MudText>
+                            </li>
+                            <li>
+                                <MudText>Consumed via direct blazor markup</MudText>
+                            </li>
+                        </ul>
                     </MudText>
                     <MudText>
-                        Once a public property of type <strong>EventCallback@("<T>")</strong> has been declared and decorated with the [Parameter] attribute, consuming components can specify in Razor mark-up which method to call when the event is triggered.
+                        Once declare a public property of type <strong>EventCallback@("<T>")</strong> and annotate with the [Parameter] attribute, we can specify for consuming components in Razor mark-up which method to call when the event is triggered.
                     </MudText>
                     <MudText>
-                        EventCallback and <strong>EventCallback@("<T>")</strong> are special types that serve a crucial role in component architecture, particularly in achieving loosely-coupled designs.
+                        <strong>EventCallback</strong> and <strong>EventCallback@("<T>")</strong> will serve us a crucial role in component architecture, particularly in achieving loosely-coupled designs.
                         They provide a way for child components to notify parent components about something that needs their attention.
                         For example, if you have a list component with a delete button for each item, clicking the delete button could trigger an EventCallback that the parent component listens to in order to remove the item from the database.
+                    </MudText>
+                    <MudText>
+                        The <strong>EventCallback@("<T>")</strong> type can also pass data to the consumer component.
+                        In this case, declaring the handler in the markup will also have a parameter that can be used in the handler. (See code example below)
+
                     </MudText>
                     <MudText>
                         The second crucial aspect of EventCallback is its re-rendering behavior.
@@ -57,59 +82,89 @@
                         This ensures that the parent component's UI is updated based on any state changes that might have occurred as a result of the child component's events.
                     </MudText>
                     <MudText>
-                        Thirdly, <strong>EventCallback@("<T>")</strong> allows for the passing of data back to the parent component.
-                        This is particularly useful in scenarios where the child component performs some form of computation or selection and needs to inform the parent component about it.
-                        For example, a DatePicker component could use EventCallback@("<DateTime>") to send the selected date back to the parent.
-                        This provides a way for components to be not only reusable but also informative, making complex UI workflows simpler to manage.
+                        Raising the event can be achieved via the <strong>InvokeAsync</strong> method.
+                        <ul>
+                            <li>
+                                <MudText>For <strong>EventCallback</strong> this will be a parameterless method</MudText>
+                            </li>
+                            <li>
+                                <MudText>
+                                    For <strong>EventCallback@("<T>")</strong> this will be a method with a parameter of type <strong>T</strong>
+                                    <br/>
+                                    So for <strong>EventCallback@("<int>")</strong> it will be a method with an <strong>int</strong> parameter
+                                </MudText>
+                            </li>
+                        </ul>
                     </MudText>
+                    <CompanionSnippets>
+                        <Component>
+                            <AdvancedCodeSnippet TComponent="EventCallBackExample" RenderOutput="false"></AdvancedCodeSnippet>
+                        </Component>
+                        <Usage>
+                            <AdvancedCodeSnippet TComponent="EventCallBackExampleUsage" RenderOutput="true"></AdvancedCodeSnippet>
+                        </Usage>
+                    </CompanionSnippets>
+                    <MudDivider/>
+                    <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
+                    <MudText>Your task here is to create a grid component, that for each item has a delete button, and notifies its consumer component that a grid item was deleted</MudText>
+                    <MudText>The actual deletion will be handled externally in the next exercise</MudText>
+                    <MudText>In this execrise you will only have to modify the @(nameof(ComponentEvents_Ex2_EventCallBack)).razor component</MudText>
+                    <MudText>
+                        For the component, you will need
+                        <ul>
+                            <li>
+                                <MudText>A List@("<int") public property annotated with the [Parameter] attribute with the name <strong>@Test_Components_Events_Ex2.EmployeesParameterName</strong></MudText>
+                                <MudText>
+                                    An EventCallBack@("<ItemWithIndex>") public property annotated with the [Parameter] attribute (The <strong>ItemWithIndex</strong> type will be provided, you only need to use it)
+                                    with the name <strong>ListItemDeleted</strong>
+                                </MudText>
+                            </li>
+                        </ul>
+                    </MudText>
+                    <MudText>You only have to render grid rows, you will be guided by the table header, how a row should look like</MudText>
+                    <MudText><strong>Note:</strong> valid table rows look like this inside the @("tbody") tag</MudText>
+                    <CodeSnippet>
+                        @("<tr> \n" +
+                          "    <td>...</td> \n" +
+                          "    <td>...</td> \n" +
+                          "    ... \n" +
+                          "</tr> \n")
+                    </CodeSnippet>
+                    <MudText></MudText>
+                    <TestRunner TTestClass="Test_Components_Events_Ex2"></TestRunner>
                 </div>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
-        <MudExpansionPanelWithStoredState Id="eventModifiers">
+        <MudExpansionPanelWithStoredState Id="components_ex-final">
             <TitleContent>
-                <MudText Typo="Typo.h5" Class="fw-bold">Event modifiers</MudText>
+                <MudText Typo="Typo.h5" Class="fw-bold">Exercise</MudText>
             </TitleContent>
             <ChildContent>
                 <div class="d-grid gap-3">
                     <MudText>
-                        Event modifiers in Blazor help to simplify the event-handling mechanism by providing ways to modify the standard behavior of DOM events.
-                        For instance, you can use <strong>@("@onmousemove:preventDefault")</strong> to prevent the default behavior of a mouse move event.
-                        This feature is particularly useful when you want to control the behavior of browser events without writing additional JavaScript code.
+                        Your task is to modify the pre-created component: @(nameof(ComponentEvents_ExLessonFinal)).razor, so that it behaves accordingly:
+                        <ul>
+                            <li>
+                                <MudText>
+                                    The component should handle the @Test_Components_Events_Ex2.EventCallBackPropertyName event,
+                                    so that the list items are deleted from the @Test_Components_Events_ExLessonFinal.EmployeesParameterName list
+                                </MudText>
+                            </li>
+                            <li>
+                                <MudText>
+                                    The component should also list the already deleted employees, you will find the instructions inside the component how you need to render them
+                                </MudText>
+                            </li>
+                        </ul>
                     </MudText>
-                    <MudText>
-                        Another commonly used modifier is stopPropagation, which prevents the event from bubbling up the DOM tree.
-                        By using these modifiers, you can create more maintainable and readable code, reducing the need for inline JavaScript or additional methods to handle simple event modifications.
-                    </MudText>
-                    <MudText>
-                        It's crucial to understand when and how to use these modifiers, as they can influence not just the component they are declared in but also potentially impact parent or child components.
-                        Incorrect use can lead to unexpected behavior, making debugging more challenging.
-                    </MudText>
-                </div>
-            </ChildContent>
-        </MudExpansionPanelWithStoredState>
-        <MudExpansionPanelWithStoredState Id="customEvents">
-            <TitleContent>
-                <MudText Typo="Typo.h5" Class="fw-bold">Custom events</MudText>
-            </TitleContent>
-            <ChildContent>
-                <div class="d-grid gap-3">
-                    <MudText>
-                        Custom events allow you to define and emit events that are specific to your application's requirements.
-                        In Blazor, you can use <strong>EventCallback</strong> and <strong>@("EventCallback<T>")</strong> to create custom events that can be bound to parent components, allowing for a robust data flow mechanism between components.
-                    </MudText>
-                    <MudText>
-                        These custom events can carry payloads, enabling richer interaction patterns.
-                        For example, you might emit a custom event from a child component to its parent, carrying some data that the parent then uses to modify its own state or even trigger additional logic.
-                    </MudText>
-                    <MudText>
-                        Custom events offer a clean and type-safe way to communicate between components.
-                        It encourages encapsulation and makes it easier to reason about your application's behavior.
-                        However, care must be taken to manage these custom events properly, to avoid leaks and ensure that components are not tightly coupled.
-                    </MudText>
+                    <MudText>You can see that you have some code already provided for you, you don't need to touch them, also, please don't!</MudText>
+                    <MudText>The component also guides you with comments where you need to put your code, please follow these instructions</MudText>
+                    <TestRunner TTestClass="Test_Components_Events_ExLessonFinal"></TestRunner>
                 </div>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
     </MudExpansionPanels>
+    <ComponentEvents_ExLessonFinal></ComponentEvents_ExLessonFinal>
 </MudContainer>
 
 

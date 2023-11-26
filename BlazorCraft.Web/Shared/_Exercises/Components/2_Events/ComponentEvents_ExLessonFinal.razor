@@ -1,0 +1,25 @@
+﻿<div class="grid-container">
+    <ComponentEvents_Ex2_EventCallBack Employees="Employees" ListItemDeleted="@((emp) => { Employees.Remove(emp); _deletedEmployees.Add(emp);})"></ComponentEvents_Ex2_EventCallBack>
+</div>
+<div class="deleted_employees">
+    <ul>
+        @* List deleted employee names here in <li> tags *@
+        @foreach (var emp in _deletedEmployees)
+        {
+            <li>@emp.Name</li>
+        }
+    </ul>
+</div>
+@code {
+
+    private List<ComponentEvents_Ex2_EventCallBack.Employee> _deletedEmployees = new List<ComponentEvents_Ex2_EventCallBack.Employee>();
+    [Parameter] 
+    public List<ComponentEvents_Ex2_EventCallBack.Employee> Employees { get; set; } = new()
+    {
+        new(1, "Test Theodore"),
+        new(2, "Test Tiffany"),
+        new(3, "Test Thomas"),
+        new(4, "Test Timothy")
+    };
+
+}
