@@ -17,7 +17,7 @@
     <MudExpansionPanels MultiExpansion="true">
         <MudExpansionPanelWithStoredState Id="components_eventBinding">
             <TitleContent>
-                <MudText Typo="Typo.h5" Class="fw-bold">Event Binding</MudText>
+                <MudText Typo="Typo.h6" Class="fw-bold">Event Binding</MudText>
             </TitleContent>
             <ChildContent>
                 <div class="d-grid gap-3">
@@ -46,7 +46,9 @@
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="eventCallBack">
             <TitleContent>
-                <MudText Typo="Typo.h5" Class="fw-bold">EventCallBack and EventCallback@("<T>")</MudText>
+                <PanelHeaderWithTestTracking TTestClass="Test_Components_Events_Ex2">
+                    <MudText Typo="Typo.h6" Class="fw-bold">EventCallBack and EventCallback@("<T>")</MudText>
+                </PanelHeaderWithTestTracking>
             </TitleContent>
             <ChildContent>
                 <div class="d-grid gap-3">
@@ -124,7 +126,6 @@
                           "    ... \n" +
                           "</tr> \n")
                     </CodeSnippet>
-                    <MudText></MudText>
                     @{
                         var employees = new List<ComponentEvents_Ex2_EventCallBack.Employee>() { new(1, "employee 1"), new(2, "employee 2") };
                         var eventCallback = EventCallback.Factory.Create<ComponentEvents_Ex2_EventCallBack.Employee>(employees, employee => { employees.Remove(employee); });
@@ -140,7 +141,9 @@
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="components_ex-final">
             <TitleContent>
-                <MudText Typo="Typo.h5" Class="fw-bold">Exercise</MudText>
+                <PanelHeaderWithTestTracking TTestClass="Test_Components_Events_ExLessonFinal">
+                    <MudText Typo="Typo.h6" Class="fw-bold">Exercise</MudText>
+                </PanelHeaderWithTestTracking>
             </TitleContent>
             <ChildContent>
                 <div class="d-grid gap-3">

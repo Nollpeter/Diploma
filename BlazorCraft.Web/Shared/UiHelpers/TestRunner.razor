@@ -23,10 +23,9 @@
                     <MudTreeViewItem T="KeyValuePair<TestDescriptor, TestRunResult>">
                         <BodyContent>
                             <div class="d-flex justify-content-start align-items-center">
-                                @*<div class="d-flex justify-content-start align-items-center">*@
                                 <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
-                                <MudIconButton OnClick="@(() => TestRunnerService.RunTest(test.Key))" Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Medium" Color="Color.Success"/>
-                                <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
+                                @*<MudIconButton OnClick="@(() => TestRunnerService.RunTest(test.Key))" Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Medium" Color="Color.Success"/>
+                                <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>*@
                                 @switch (test.Value)
                                 {
                                     case null:
