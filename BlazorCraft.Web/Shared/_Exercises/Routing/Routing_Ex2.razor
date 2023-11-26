@@ -1,0 +1,7 @@
+﻿@page "/route-with-parameter/{MyParameter}"
+<p>@MyParameter</p>
+@code {
+    
+   [Parameter]public string MyParameter { get; set; }
+    
+}

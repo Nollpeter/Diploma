@@ -1,17 +1,20 @@
 ﻿@using System.Reflection
 @using BlazorCraft.Web.Infrastructure
 @using BlazorCraft.Web.Infrastructure.Attributes
-@typeparam TTestClass 
+@typeparam TTestClass
 @inject ITestRunnerService TestRunnerService
 @if (_isInitialized)
 {
     <div>
-        <div class="d-flex justify-content-start align-items-center mt-8 gap-3">
-            <MudButton Color="Color.Primary" Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.PlayArrow" IconColor="Color.Success" OnClick="() => TestRunnerService.RunAllInTestClass(typeof(TTestClass))">Run all</MudButton>
-            <MudText Typo="Typo.body1">Successful: <strong>@_testDescriptors.Count(p => p.Value is {IsSuccessful:true})/@_testDescriptors.Count</strong></MudText>
-            <MudText Typo="Typo.body1">Failed: <strong>@_testDescriptors.Count(p => p.Value is {IsSuccessful: false })/@_testDescriptors.Count</strong></MudText>
-            <MudText Typo="Typo.body1">Not run: <strong>@_testDescriptors.Count(p => p.Value is null)/@_testDescriptors.Count</strong></MudText>
-        </div>
+        <div class="d-flex justify-content-between align-items-center mt-8">
+            <div class="d-flex justify-content-start align-items-center gap-3">
+                <MudButton Color="Color.Primary" Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.PlayArrow" IconColor="Color.Success" OnClick="() => TestRunnerService.RunAllInTestClass(typeof(TTestClass))">Run all</MudButton>
+                <MudText Typo="Typo.body1">Successful: <strong>@_testDescriptors.Count(p => p.Value is {IsSuccessful:true})/@_testDescriptors.Count</strong></MudText>
+                <MudText Typo="Typo.body1">Failed: <strong>@_testDescriptors.Count(p => p.Value is {IsSuccessful: false })/@_testDescriptors.Count</strong></MudText>
+                <MudText Typo="Typo.body1">Not run: <strong>@_testDescriptors.Count(p => p.Value is null)/@_testDescriptors.Count</strong></MudText>
+            </div>
+            <MudText Typo="Typo.body1" Class="text-end">Component under test: <strong>@TestComponentName</strong>.razor</MudText>
+            </div>
         <MudTabs Outlined="true" Position="Position.Left" Rounded="true" Border="true" ApplyEffectsToContainer="true" Class="mt-0" PanelClass="pa-3 " TabPanelHeaderPosition="TabHeaderPosition.Before">
             <TabPanelHeader>
                 <div class="d-flex gap-2 me-3">
@@ -88,6 +91,9 @@ else
     Dictionary<TestDescriptor, TestRunResult?> _testDescriptors = null!;
     bool _isInitialized = false;
 
+    [Parameter]
+    public string TestComponentName { get; set; } = typeof(TTestClass).GetGenericArguments().FirstOrDefault()?.Name ?? string.Empty;
+    
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();

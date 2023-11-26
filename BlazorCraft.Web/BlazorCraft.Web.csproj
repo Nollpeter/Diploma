@@ -17,6 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Tests\Helpers\" />
 	  <Folder Include="wwwroot\img\" />
 	</ItemGroup>
 

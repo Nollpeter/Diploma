@@ -69,7 +69,7 @@ public class TestRunnerService : ITestRunnerService
         }
         catch (Exception e)
         {
-            TestStateChanged?.Invoke(this, new TestRunStateEventArgs(testDescriptor, null, TestRunState.Error));
+            TestStateChanged?.Invoke(this, new TestRunStateEventArgs(testDescriptor, new TestRunResult(false, e.Message), TestRunState.Error));
         }
 
     }
@@ -113,27 +113,6 @@ public class TestRunnerService : ITestRunnerService
     public Dictionary<TestDescriptor, TestRunResult?> GetTestRunResultMethods(Type testClass)
     {
         return GetEveryTest().Where(p => p.Key.TestClass == testClass).ToDictionary(p => p.Key, p => p.Value);
-        
-        /*Dictionary<TestDescriptor, TestRunResult?> resultList = new();
-        foreach (var methodInfo in testClass.GetMethods(BindingFlags.Instance | BindingFlags.Public))
-        {
-            if (methodInfo.ReturnType != typeof(TestRunResult))
-            {
-                continue;
-            }
-
-            var titleAttribute = methodInfo.GetCustomAttribute<TitleAttribute>();
-            var descriptionAttribute = methodInfo.GetCustomAttribute<DescriptionAttribute>();
-            var hintAttribute = methodInfo.GetCustomAttribute<HintAttribute>();
-            var testForPageAttribute = testClass.GetCustomAttribute<TestForPageAttribute>();
-            Func<TestRunResult> func =
-                (Func<TestRunResult>)Delegate.CreateDelegate(typeof(Func<TestRunResult>), null, methodInfo);
-            resultList.Add(
-                new(func, titleAttribute?.Title, descriptionAttribute?.Description, hintAttribute?.Hint,
-                    testForPageAttribute.Page, testClass), null);
-        }
-
-        return resultList;*/
     }
 
     public event EventHandler<TestRunStateEventArgs>? TestStateChanged;

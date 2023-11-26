@@ -5,7 +5,7 @@
 {
     @if (CompanionContainer == null)
     {
-        <MudPaper Elevation="3" Class="p-3">
+        <MudPaper Elevation="3" Class="p-3 mw-100">
 
             @if (ShowComponentName || true)
             {
@@ -44,7 +44,7 @@
     {
         @if (ShowComponentName || true)
         {
-            <div class="d-flex pb-1 align-items-center gap-1">
+            <div class="d-flex pb-1 align-items-center gap-1 ">
                 <MudIcon Size="Size.Small" Icon="@Icons.Material.Outlined.FileOpen"></MudIcon>
                 <MudText class="fw-bold">@ComponentFileName</MudText>
             </div>

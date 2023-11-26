@@ -30,7 +30,6 @@
         TestRunnerService.TestStateChanged += (sender, args) =>
         {
             if (args.TestDescriptor.PageClass != PageType) return;
-            Console.WriteLine(args.TestRunState);
             
             switch (args.TestRunState)
             {

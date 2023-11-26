@@ -1,0 +1,14 @@
+﻿@page "/route-with-optional-parameter/{MyParameter:int?}"
+@if (MyParameter != null)
+{
+    <p>@MyParameter</p>
+}
+else
+{
+    <p>The parameter value is empty</p>
+}
+@code {
+    
+   [Parameter]public int? MyParameter { get; set; }
+    
+}
