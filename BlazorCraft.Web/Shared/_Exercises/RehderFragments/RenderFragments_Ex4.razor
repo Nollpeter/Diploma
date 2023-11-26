@@ -1,0 +1,24 @@
+﻿<ListComponent5 T="int" ListItems="new List<int>() { 1, 2, 3 }">
+    @* Implement the rest of the renderfragments here *@
+    <Title><h2>Items table</h2></Title>
+    <ListItemTemplate>
+        <tr><td>@context</td></tr>
+    </ListItemTemplate>
+    <ListTemplate>
+        <table>
+            <thead>
+            <tr>
+                <th>List items</th>
+            </tr>
+            </thead>
+            <tbody>
+            @context
+            </tbody>
+        </table>
+    </ListTemplate>
+</ListComponent5>
+
+
+@code {
+
+}

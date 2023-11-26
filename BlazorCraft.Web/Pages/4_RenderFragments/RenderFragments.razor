@@ -1,5 +1,8 @@
 ﻿@page "/render-fragments"
 @using BlazorCraft.Web.Shared.Components.RenderFragments.ExampleUsages
+@using BlazorCraft.Web.Shared._Exercises.RehderFragments
+@using BlazorCraft.Web.Shared._Exercises.Routing
+@using BlazorCraft.Web.Tests.RenderFragments
 <MudText Typo="Typo.h4">Render Fragments</MudText>
 <div class="d-grid gap-3">
 <MudText>
@@ -38,9 +41,9 @@
             <CodeSnippet>
                 @("""public record TestClass(int a, int b);""")
             </CodeSnippet>
-            <AdvancedCodeSnippet TComponent="ListComponent1" ShowComponentName="true" />
+            <AdvancedCodeSnippet TComponent="ListComponent1" ShowComponentName="true"/>
             <AdvancedCodeSnippet TComponent="ListComponent1Usage" ShowComponentName="false" RenderOutput="true"></AdvancedCodeSnippet>
-            
+
             <MudText>
                 Technically a List component, but it confronts us instantly with 2 problems:
                 - What if we want the Title to be a bit bigger, like a <strong>@("<h2>")</strong> tag?
@@ -51,24 +54,29 @@
             <MudText>
                 By using a <strong>RenderFragment</strong> property instead of a <strong>string</strong> property, we can externally define what should exactly be in the Title. It can be virtually everything, as long as it is a valid Blazor markup.
             </MudText>
-            @*<CodeSnippet>
-                @("""@Title""" + "\n" +
-                  """@foreach (var item in ListItems)""" + "\n" +
-                  """{""" + "\n" +
-                  """    <div>a: @item.a, b: @item.b</div>""" + "\n" +
-                  """}""" + "\n" +
-                  """@code{""" + "\n" +
-                  "\n" +
-                  """    [Parameter, EditorRequired] public RenderFragment Title { get; set; }""" + "\n" +
-                  """    [Parameter, EditorRequired] public List<TestClass> ListItems { get; set; }""" + "\n" +
-                  "\n" +
-                  """}""" + "\n")
-            </CodeSnippet>*@
-            <AdvancedCodeSnippet TComponent="ListComponent2" ShowComponentName="true" />
+            <AdvancedCodeSnippet TComponent="ListComponent2" ShowComponentName="true"/>
             <MudText>Which can be used like this:</MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent2Usage" RenderOutput="true" />
+            <AdvancedCodeSnippet TComponent="ListComponent2Usage" RenderOutput="true"/>
             <MudText>Now, we can define the title any way that we want.</MudText>
             <MudText>In the next section, we will make the List items customizable as well</MudText>
+            <MudDivider/>
+            <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
+            <MudText>
+                Your task here will be to create an accordion component, that can be expanded and collapsed with a button (this will be provided)
+                You can find the base component for it in @(nameof(RenderFragments_Ex1)).razor
+                For the header and the content of the accordion you will need to defined two renderfragments:
+            </MudText>
+            <ul>
+                <li>
+                    <MudText Class="fw-bold">HeaderContent</MudText>
+                </li>
+                <li>
+                    <MudText Class="fw-bold">DetailsContent</MudText>
+                </li>
+            </ul>
+            <MudText>There is no kind of animation required, by clicking the button, you just have to toggle the visibility of the <strong>DetailsContent</strong></MudText>
+            <MudText><strong>Hint:</strong> Remember from previous exercises how we can create a Click handler for the button!</MudText>
+            <TestRunner TTestClass="Test_RenderFragments_Ex1_Basics"></TestRunner>
         </div>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
@@ -99,6 +107,23 @@
                   """</ListItemTemplate>""" + "\n" +
                   """@* ... *@""" + "\n")
             </CodeSnippet>
+
+            <MudDivider/>
+            <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
+            <MudText>
+                Your task here will be to extend the functionality of the accordion, so that it can accept an Employee in its <strong>DetailsContent</strong> renderfragment
+                For this you will need to define an Employee parameter with the name <strong>EmployeeToRender</strong>
+                </MudText>
+            <MudText>
+                How the Details is rendered should be entirely up to the caller component, you just have to pass the parameter and implement rendering the renderfragment
+            </MudText>
+            <MudText>
+                <strong>Although it requires extending a component from the previous exercise, for the separation tests, it will be a separate component, feel free the reuse the code from the previous exercise!</strong>
+            </MudText>
+            <MudText>
+                You can find the base component for it in @(nameof(RenderFragments_Ex2)).razor
+            </MudText>
+            <TestRunner TTestClass="Test_RenderFragments_Ex2_RenderFragment_Parameter"></TestRunner>
         </div>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
@@ -116,7 +141,7 @@
                 To address this issue, we can use the <strong>typeParam keyword to make the Blazor component generic, just the way we would make any C# type generic</strong>.
             </MudText>
             <MudText>The modified component will look like this</MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent4<int>" ShowComponentName="true" />
+            <AdvancedCodeSnippet TComponent="ListComponent4<int>" ShowComponentName="true"/>
             <MudText>
                 Now if we create a new type to use it with
             </MudText>
@@ -124,11 +149,36 @@
                 @("""public record TestClass2(int c, int d, int e);""")
             </CodeSnippet>
             <MudText>Then we can use the new List component like this:</MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent4Usage" RenderOutput="true" />
+            <AdvancedCodeSnippet TComponent="ListComponent4Usage" RenderOutput="true"/>
             <MudText><strong>Note: </strong> generic constraints works with blazor component typeparams as well, just as C# generic contraints</MudText>
             <CodeSnippet>
                 @("""@typeparam T where T: ComponentBase, IComponent""")
             </CodeSnippet>
+
+            <MudDivider/>
+            <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
+            <MudText>
+                Your task here will be to extend the functionality of the accordion, so that it can accept any kind of type and render all its fields of an object 
+                For this you will need to define a generic typed parameter with the name <strong>ObjectToRender</strong>
+                <br/>
+                <strong>Note: </strong> Don't forget to add the @("@typeParam") to the component!
+                <strong>Note: </strong>In this exercise you won't need the <strong>DetailsContent</strong> renderFragment
+            </MudText>
+            <MudText>
+                Code for enumerating all the fields of the passed object will be provided for you, you just have to you use it
+            </MudText>
+            <MudText>
+                The fields should be rendered inside a <strong>@("ul")</strong> tag with its items in a <strong>@("li")</strong> tag, with the fields of the passed object in the following format:
+                <br/>
+                <strong>{field Name}</strong>: <strong>{field Value}</strong>
+            </MudText>
+            <MudText>
+                <strong>Although it requires extending a component from the previous exercise, for the separation tests, it will be a separate component, feel free the reuse the code from the previous exercise!</strong>
+            </MudText>
+            <MudText>
+                You can find the base component for it in @(nameof(RenderFragments_Ex3<RenderFragments_Ex2.Employee>)).razor
+            </MudText>
+            <TestRunner TTestClass="Test_RenderFragments_Ex3_Generic"></TestRunner>
         </div>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
@@ -155,13 +205,13 @@
             <MudText>
                 As a quick fix, we could of course try and wrap our entire ListComponent within a <strong>@("<ul>")</strong> tag.
             </MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent4QuickFix" ShowComponentName="false" RenderOutput="true" />
+            <AdvancedCodeSnippet TComponent="ListComponent4QuickFix" ShowComponentName="false" RenderOutput="true"/>
             <MudText>By just looking and the rendered html content visually, we could assume it worked, but if we dig into the markup of it, we can see that something is fishy:</MudText>
             <MudText>
                 The Title became a list item! This solution won't hold in more complex scenarios, we need to find a way, to wrap <strong>only</strong> the list items around with the <strong>@("<ul>")</strong> tag.
                 For this we are going to pass a RenderFragment to a RenderFragment to solve the problem
             </MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent5<int>" ShowComponentName="true" RenderOutput="false" />
+            <AdvancedCodeSnippet TComponent="ListComponent5<int>" ShowComponentName="true" RenderOutput="false"/>
             <MudText>
                 Another trick that we use here is the @("@:@{}") operator.
                 It is in fact two character sequences. First @("@:") tells the Razor parser to treat the following text as Razor mark-up, and then @("@{") is the start of a C# code block - which will obviously end somewhere with a complementary }.
@@ -170,11 +220,80 @@
             <MudText>
                 And then we can use this modified component the following way to achieve the desired result
             </MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent5Usage" RenderOutput="true" />
+            <AdvancedCodeSnippet TComponent="ListComponent5Usage" RenderOutput="true"/>
+
+            <MudDivider/>
+            <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
+            <MudText>
+                Your task here will be to reuse the type @nameof(ListComponent5<int>), so that it can render the values in a table
+            </MudText>
+            <MudText>
+                A valid html table follows the following syntax: (class="table" will make it look much better, please annotate it with that class)
+            </MudText>
+            <CodeSnippet>
+                @("""<table class="table"> """ + "\n" +
+                  """    <thead> """ + "\n" +
+                  """    <tr> """ + "\n" +
+                  """        <th>header1</th> """ + "\n" +
+                  """        <th>header2</th> """ + "\n" +
+                  """        @* ... *@ """ + "\n" +
+                  """    </tr> """ + "\n" +
+                  """    </thead> """ + "\n" +
+                  """    <tbody> """ + "\n" +
+                  """    <tr> """ + "\n" +
+                  """        <td>value1</td> """ + "\n" +
+                  """        <td>value2</td> """ + "\n" +
+                  """        @* ... *@ """ + "\n" +
+                  """    </tr> """ + "\n" +
+                  """    </tbody> """ + "\n" +
+                  """</table> """)
+            </CodeSnippet>
+            <MudText>It will still use integer as its Generic type, so the table will have a single column with the "List items" as its header and its rows will be the integer values inside <strong>@("<td>")</strong> tags</MudText>
+            <MudText>The title should be "Items table" enclosed in an @("h2") tag</MudText>
+            <MudText>
+                You can find the base component for it in @(nameof(RenderFragments_Ex4)).razor
+            </MudText>
+            <TestRunner TTestClass="Test_RenderFragments_Ex4_Table"></TestRunner>
         </div>
-        
+
     </ChildContent>
-    
+
+</MudExpansionPanelWithStoredState>
+<MudExpansionPanelWithStoredState Id="render-fragments-final-exercise">
+    <TitleContent>
+           <MudText Typo="Typo.h5" Class="fw-bold">Lesson final exercise</MudText>
+       </TitleContent>
+       <ChildContent>
+           <div class="d-grid gap-3">
+               <MudText>In this exercise, you will have to modify the component @nameof(RenderFragments_LessonFinal)</MudText>
+               <MudText>Your task is to implement a list component for employee data that can be switched with two buttons if a List view is displayed or a Table view is displayed</MudText>
+               <MudText>For both kind of views, reuse the @nameof(ListComponent5<RenderFragments_LessonFinal.Employee>) type</MudText>
+               <MudText>The actual data will be passed externally, you will need a separate parameter property for it</MudText>
+               <MudText>The two buttons will be provided for you</MudText>
+               <MudText>The title should be in both cases: @("<h2>Employees</h2>")</MudText>
+               <ul>
+                   <li>
+                       <MudText>
+                           For the list view, the Title should be "Employees", and the list should follow the list layout of previous exercises with the @("<ul>") tag and its list items should be enclosed in a
+                           @("<p>") tag with the employee
+                           with the fields of the passed object in the following format:
+                           <br/>
+                           @("<span>")<strong>{field Name}</strong>: <strong>{field Value}</strong>@("</span>")
+                           <br/>
+                           <strong>Note:</strong> To simply render string text inside a foreach is a bit tricky, therefore for your convenience they will be wrapped in @("<span>") tags
+                       </MudText>
+                   </li>
+                   <li>
+                       <MudText>
+                           For the table view, the table header should contain the employee field names and the table rows should contain the employee data fields
+                           <br/>
+                           <strong>Please annotate your @("<table>") with class="table"</strong>
+                       </MudText>
+                   </li>
+               </ul>
+               <TestRunner TTestClass="Test_RenderFragments_ExFinal"></TestRunner>
+           </div>
+       </ChildContent>
 </MudExpansionPanelWithStoredState>
 </MudExpansionPanels>
 </div>

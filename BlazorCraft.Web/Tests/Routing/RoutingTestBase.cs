@@ -1,11 +1,10 @@
 ﻿using System.Reflection;
 using BlazorCraft.Web.Infrastructure.Attributes;
-using Bunit;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorCraft.Web.Tests.Routing;
 
-public class RoutingTestBase<TTestComponent> : TestContext where TTestComponent : ComponentBase
+public class RoutingTestBase<TTestComponent> : ComponentTestBase<TTestComponent> where TTestComponent : ComponentBase
 {
     protected IList<RouteAttribute> CheckRouteAttributesExist(TTestComponent component)
     {

@@ -1,0 +1,32 @@
+﻿<div id="ex2-container">
+    <button class="btn btn-primary toggle" @onclick="() => _detailsVisible = !_detailsVisible">Toggle details visibility</button>
+    <div class="accordion">
+        @* Accordion content should come here *@
+        <div class="title">
+            @TitleContent
+        </div>
+        <div class="details">
+            @if (_detailsVisible)
+            {
+                @DetailsContent(EmployeeToRender)
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+
+    public record Employee(int Id, string FirstName, string LastName, string Position);
+
+    private bool _detailsVisible = false;
+
+    [Parameter]
+    public RenderFragment TitleContent { get; set; }
+
+    [Parameter]
+    public RenderFragment<Employee> DetailsContent { get; set; }
+
+    [Parameter]
+    public Employee EmployeeToRender { get; set; }
+
+}

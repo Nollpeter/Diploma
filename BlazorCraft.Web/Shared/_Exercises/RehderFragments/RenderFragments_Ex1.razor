@@ -1,0 +1,23 @@
+﻿@using BlazorCraft.Web.Tests.RenderFragments
+
+<div id="@Test_RenderFragments_Ex1_Basics.ContainerId">
+    <button class="btn btn-primary toggle" @onclick="() => _detailsVisible = !_detailsVisible">Toggle details visibility</button>
+    <div class="accordion">
+        @* Accordion content should come here *@
+        <div class="title">
+            @TitleContent
+        </div>
+        <div class="details">
+            @if (_detailsVisible)
+            {
+                @DetailsContent
+            }
+        </div>
+    </div>    
+</div>
+
+@code {
+    private bool _detailsVisible = false;
+    [Parameter]public RenderFragment TitleContent { get; set; }
+    [Parameter]public RenderFragment DetailsContent { get; set; }
+}
