@@ -5,6 +5,7 @@
 @using Microsoft.AspNetCore.Components.Rendering
 @using System.Diagnostics
 @using System.Text
+@using MudBlazor.Services
 @typeparam TComponent where TComponent : ComponentBase
 @inject IServiceProvider ServiceProvider
 @if (renderingFinished)
@@ -23,7 +24,7 @@
     @if (RenderOutput)
     {
         <MudGrid Spacing="2">
-            <MudItem xs="6">
+            <MudItem xs="SkipHtml ? 12 : 6">
                 <MudText class="fw-bold text-center">What it looks like visually</MudText>
                 <MudPaper Elevation="0" Class="p-3 subtle-border">
                     <div id="codeSnippet_@typeof(TComponent).Name" class="code-container">
@@ -31,13 +32,16 @@
                     </div>
                 </MudPaper>
             </MudItem>
-            <MudItem xs="6">
-                <MudText class="fw-bold text-center">The html behind it</MudText>
+            @if (!SkipHtml)
+            {
+                <MudItem xs="6">
+                    <MudText class="fw-bold text-center">The html behind it</MudText>
 
-                <CodeSnippet Language="html" @key="_uniqueKey">
-                    @_renderedHtml
-                </CodeSnippet>
-            </MudItem>
+                    <CodeSnippet Language="html" @key="_uniqueKey">
+                        @_renderedHtml
+                    </CodeSnippet>
+                </MudItem>
+            }
         </MudGrid>
     }
 }
@@ -55,6 +59,9 @@
 
     [Parameter]
     public bool RenderOutput { get; set; } = false;
+
+    [Parameter] 
+    public bool SkipHtml { get; set; } = false;
 
     private string ComponentFileName => $"{Regex.Replace(typeof(TComponent).Name, @"`\d+", "")}.razor";
 
@@ -81,9 +88,12 @@
         _testContext.Services.AddScoped<IExampleTransientService>(provider => ServiceProvider.GetRequiredService<IExampleTransientService>());
         _testContext.Services.AddScoped<IExampleScopedService>(provider => ServiceProvider.GetRequiredService<IExampleScopedService>());
         _testContext.Services.AddSingleton(_js);
+        _testContext.Services.AddMudServices();
+        _testContext.JSInterop.SetupVoid("mudPopover.initialize", _ => true);
+        _testContext.JSInterop.SetupVoid("mudKeyInterceptor.connect", _ => true);
         
         _originalMarkup = await ReadOriginalMarkup();
-        if (RenderOutput)
+        if (RenderOutput && !SkipHtml)
         {
             string renderedHtml = RenderComponentMarkup();
             //var prettifiedHtml = await _js.InvokeAsync<string>("prettifyHtml", new object?[] { renderedHtml });
@@ -95,7 +105,7 @@
         
         StateHasChanged();
 
-        if (RenderOutput)
+        if (RenderOutput && !SkipHtml)
         {
             objRef = DotNetObjectReference.Create(this);
             await _js.InvokeVoidAsync("domWatcher.watch", $"codeSnippet_{typeof(TComponent).Name}", objRef);

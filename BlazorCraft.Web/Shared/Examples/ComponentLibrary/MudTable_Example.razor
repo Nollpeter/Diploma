@@ -1,0 +1,25 @@
+﻿<MudTable T="Employee" Items="ItemsSource">
+    <HeaderContent>
+        <MudTh>Id</MudTh>
+        <MudTh>First Name</MudTh>
+        <MudTh>Last Name</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.Id</MudTd>
+        <MudTd>@context.FirstName</MudTd>
+        <MudTd>@context.LastName</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    private record Employee(int Id, string FirstName, string LastName);
+
+    private List<Employee> ItemsSource = new()
+    {
+        new(1, "Tiffany", "Test"),
+        new(2, "Timothy", "Test"),
+        new(3, "Theodore", "Test")
+    };
+
+}

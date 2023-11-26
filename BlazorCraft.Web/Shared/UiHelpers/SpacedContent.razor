@@ -1,0 +1,9 @@
+﻿<div class="d-grid gap-@Gap mt-2">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public int Gap { get; set; } = 3;
+    [Parameter, EditorRequired] public RenderFragment ChildContent { get; set; }
+
+}

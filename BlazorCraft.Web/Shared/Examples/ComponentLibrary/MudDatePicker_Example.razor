@@ -1,0 +1,17 @@
+﻿@using System.ComponentModel.DataAnnotations
+<EditForm Model="_model">
+    <DataAnnotationsValidator/>
+    <SpacedContent>
+        <MudDatePicker T="DateTime?" Label="Date" @bind-Date="@_model.Date" For="() => _model.Date"/>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Validate</MudButton>
+    </SpacedContent>
+</EditForm>
+@code {
+    private class Model
+    {
+        [Required]
+        public DateTime? Date { get; set; }
+    }
+
+    private Model _model = new Model();
+}

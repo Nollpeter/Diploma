@@ -1,0 +1,32 @@
+﻿@using System.ComponentModel.DataAnnotations
+<EditForm Model="_model">
+    <DataAnnotationsValidator/>
+    <SpacedContent>
+        <MudNumericField T="int?" Label="Id" @bind-Value="@_model.Id" For="() => _model.Id"/>
+        <MudTextField T="string?" Label="First Name" @bind-Value="_model.FirstName" For="() => _model.FirstName" />
+        <MudTextField T="string?" Label="Last Name" @bind-Value="_model.LastName" For="() => _model.LastName" />
+        <MudEnumSelect TEnum="Gender" Label="Gender" @bind-Value="_model.Gender" For="() => _model.Gender" />
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Validate</MudButton>
+    </SpacedContent>
+</EditForm>
+@code {
+    private class Employee
+    {
+        [Required]
+        public int? Id { get; set; }
+        [Required]
+        public string? FirstName { get; set; }
+        [Required]
+        public string? LastName { get; set; }
+        [Required]
+        public Gender? Gender { get; set; }
+    }
+
+    private enum Gender
+    {
+        Female,
+        Male
+    }
+
+    private Employee _model = new Employee();
+}

@@ -1,0 +1,21 @@
+﻿<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SyncHandler">Click me</MudButton>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AsyncHandler">Click me</MudButton>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => _text = "Sync lambda handler")">Click me</MudButton>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(async () => { await Task.CompletedTask; _text = "Async lambda handler"; })">Click me</MudButton>
+<MudText>@_text</MudText>
+
+@code {
+    private string _text = string.Empty;
+
+    private void SyncHandler()
+    {
+        _text = "Sync handler";
+    }
+
+    private async Task AsyncHandler()
+    {
+        await Task.CompletedTask;
+        _text = "Async handler";
+    }
+
+}
