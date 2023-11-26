@@ -35,8 +35,10 @@ public abstract class ComponentTestBase : TestContext
     }
 }
 
-public class ComponentTestBase<TTestComponent> : ComponentTestBase where TTestComponent : ComponentBase
+public class ComponentTestBase<TTestComponent> : ComponentTestBase where TTestComponent : ComponentBase, new()
 {
+    protected TTestComponent Component { get; set; } = new();
+
     protected void ValidateComponentProperty(object component, string parameterName, Type parameterType )
     {
         var employee = component.GetType().GetProperties()
@@ -59,15 +61,22 @@ public class ComponentTestBase<TTestComponent> : ComponentTestBase where TTestCo
     {
         var componentType = component.GetType();
         var manifestResourceNames =componentType.Assembly.GetManifestResourceNames();
-        var key = manifestResourceNames.FirstOrDefault(x => x.Contains(componentType.Name+".razor"));
+        
+        var componentTypeName = componentType.IsGenericType ? componentType.Name.Split('`')[0] : componentType.Name;
+        var componentThatShouldBeUsedName = componentThatShouldBeUsedInMarkup.IsGenericType ? componentThatShouldBeUsedInMarkup.Name.Split('`')[0] : componentThatShouldBeUsedInMarkup.Name;
+
+        Console.WriteLine(componentTypeName);
+        Console.WriteLine(componentThatShouldBeUsedName);
+        var key = manifestResourceNames.FirstOrDefault(x => x.Contains(componentTypeName + ".razor"));
         using (var stream = componentType.Assembly.GetManifestResourceStream(key))
         using (var reader = new StreamReader(stream))
         {
             var read = reader.ReadToEnd();
-            var value = $"<{componentThatShouldBeUsedInMarkup.Name}";
+            
+            var value = $"<{componentThatShouldBeUsedName}";
             if (!read.Contains(value))
             {
-                throw new TestRunException($"The component {componentThatShouldBeUsedInMarkup.Name} was not used inside the component markup!");
+                throw new TestRunException($"The component {componentThatShouldBeUsedName} was not used inside the component markup!");
             }
 
         }
@@ -116,6 +125,18 @@ public class ComponentTestBase<TTestComponent> : ComponentTestBase where TTestCo
         if (method == null)
         {
             throw new TestRunException($"The component does not have a public method with name {methodName} attributed with the [{attributeType}] attribute annotated");
+        }
+    }
+
+    protected void ValidatePropertyAnnotatedWithAttribute(object component, string propertyName, Type attributeType)
+    {
+        var methodInfos = component.GetType().GetProperties();
+        var method = methodInfos
+            .FirstOrDefault(p => p.Name == propertyName && p.GetCustomAttribute(attributeType) != null);
+
+        if (method == null)
+        {
+            throw new TestRunException($"The component does not have a public Property with name {propertyName} attributed with the [{attributeType}] attribute annotated");
         }
     }
 

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace BlazorCraft.Web.Tests.Routing;
 
-public class RoutingTestBase<TTestComponent> : ComponentTestBase<TTestComponent> where TTestComponent : ComponentBase
+public class RoutingTestBase<TTestComponent> : ComponentTestBase<TTestComponent> where TTestComponent : ComponentBase, new()
 {
     protected IList<RouteAttribute> CheckRouteAttributesExist(TTestComponent component)
     {

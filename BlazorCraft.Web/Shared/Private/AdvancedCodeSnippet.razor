@@ -105,6 +105,10 @@
     {
         _renderedHtml = await _js.InvokeAsync<string>("prettifyHtml", new object?[] { markup });
         _renderedHtml = _renderedHtml.Replace("<!--!-->", "").Trim('\n', '\r');
+        string finalHtml = "";
+        var strings = _renderedHtml.Split(Environment.NewLine);
+        finalHtml = string.Join(Environment.NewLine, strings.Where(p => !string.IsNullOrWhiteSpace(p)));
+        _renderedHtml = finalHtml;
         _uniqueKey = new object();
         await Task.Delay(1);
         StateHasChanged();

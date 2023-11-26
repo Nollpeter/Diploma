@@ -1,0 +1,46 @@
+﻿@using System.ComponentModel.DataAnnotations
+<EditForm class="d-grid gap-2 mb-2" Model="@Model" OnInvalidSubmit="() => _isValid = false" OnValidSubmit="() => _isValid = true">
+    <DataAnnotationsValidator />
+    <div>
+        <label class="form-label">Text field</label>
+        <InputText class="form-control" @bind-Value="Model.TextField"/>
+        <ValidationMessage class="text-danger" For="() => Model.TextField" />
+    </div>
+    <div>
+        <label class="form-label">Number field</label>
+        <InputNumber class="form-control" @bind-Value="Model.NumberField"/>
+        <ValidationMessage class="text-danger" For="() => Model.NumberField" />
+    </div>
+    <div>
+        <label class="form-label">Date field</label>
+        <InputDate class="form-control" @bind-Value="Model.DateField"/>
+        <ValidationMessage class="text-danger" For="() => Model.DateField" />
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+    <ValidationSummary class="text-danger" />
+</EditForm>
+
+@if (_isValid)
+{
+    <p>Text field: @Model.TextField, Number field: @Model.NumberField, Date field: @Model.DateField</p>
+}
+
+@code {
+
+    public class ModelClass
+    {
+        [Required]
+        public string? TextField { get; set; }
+        [Required]
+        public int? NumberField { get; set; }
+        [Required]
+        public DateTime? DateField { get; set; }
+    }
+
+    private ModelClass Model = new();
+    private bool _isValid = false;
+}
+
+@code {
+    
+}

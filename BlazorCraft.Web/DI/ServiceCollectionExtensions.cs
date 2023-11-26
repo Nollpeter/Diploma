@@ -15,7 +15,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddScoped<IPanelStateService, PanelStateService>();
         serviceCollection.AddExampleServices();
         serviceCollection.AddEmployeeService();
-        
+        Shared._Exercises.Forms.ServiceCollectionExtensions.AddEmployeeService(serviceCollection);
         serviceCollection.AddSingleton<IAsyncLockProvider, AsyncLockProvider>();
         serviceCollection.AddTests();
         
@@ -32,7 +32,5 @@ public static class ServiceCollectionExtensions
                 serviceCollection.AddScoped(type);
             }
         }
-
-        //serviceCollection.AddScoped<Test_JsInterop_Ex_LessonFinal>();
     }
 }

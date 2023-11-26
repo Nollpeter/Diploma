@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components;
 namespace BlazorCraft.Web.Tests.RenderFragments;
 
 public class RenderFragmentsTestBase<TTestComponent> : ComponentTestBase<TTestComponent>
-    where TTestComponent : ComponentBase
+    where TTestComponent : ComponentBase, new()
 {
     protected void ValidateRenderFragmentExists(object renderFragmentsEx1, string fragmentName,
         Type? renderFragmentType = null)

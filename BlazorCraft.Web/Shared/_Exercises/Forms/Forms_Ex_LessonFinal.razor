@@ -1,0 +1,123 @@
+﻿@using System.ComponentModel.DataAnnotations
+@inject IEmployeeService EmployeeService
+
+@if (_selectedEmployee != null)
+{
+    <EditForm class="d-grid gap-2" Model="_selectedEmployee" OnValidSubmit="SaveEmployee">
+        <DataAnnotationsValidator/>
+        <div>
+            <label class="form-label">First name</label>
+            <InputText class="first-name form-control" @bind-Value="@_selectedEmployee.FirstName"/>
+            <ValidationMessage class="text-danger" For="() => _selectedEmployee.FirstName" />
+        </div>
+        <div>
+            <label class="form-label">Last name</label>
+            <InputText class="last-name form-control" @bind-Value="@_selectedEmployee.LastName"/>
+            <ValidationMessage class="text-danger" For="() => _selectedEmployee.LastName" />
+        </div>
+        <div>
+            <label class="form-label">Position</label>
+            <InputText class="position form-control" @bind-Value="@_selectedEmployee.Position"/>
+            <ValidationMessage class="text-danger" For="() => _selectedEmployee.Position" />
+        </div>
+        <div>
+            <label class="form-label">Salary</label>
+            <InputNumber class="salary form-control" TValue="@(int?)" @bind-Value="@_selectedEmployee.Salary"/>
+            <ValidationMessage class="text-danger" For="() => _selectedEmployee.Salary" />
+        </div>
+        <div>
+            <label class="form-label">Birthdate</label>
+            <InputDate class="birthdate form-control" TValue="DateTime?" @bind-Value="@_selectedEmployee.BirthDate"/>
+            <ValidationMessage class="text-danger" For="() => _selectedEmployee.BirthDate" />
+        </div>
+        <ValidationSummary class="validation-summary text-danger"></ValidationSummary>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </EditForm>
+}
+<ListComponent5 T="Employee" ListItems="_employees">
+    <Title>
+        <div class="d-flex justify-content-start gap-2">
+            <h2>Employees</h2>
+            <button class="btn btn-primary" @onclick="CreateEmployee">
+                Create
+            </button>
+        </div>
+    </Title>
+    <ListTemplate>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Position</th>
+                <th>Salary</th>
+                <th>Birthdate</th>
+            </tr>
+            </thead>
+            <tbody>
+            @context
+            </tbody>
+        </table>
+    </ListTemplate>
+    <ListItemTemplate>
+        <tr>
+            <td>@context.Id</td>
+            <td>@context.FirstName</td>
+            <td>@context.LastName</td>
+            <td>@context.Position</td>
+            <td>@context.Salary</td>
+            <td>@context.BirthDate</td>
+        </tr>
+    </ListItemTemplate>
+</ListComponent5>
+
+@code {
+
+    private Employee? _selectedEmployee;
+    
+    private List<Employee> _employees;
+
+    public class Employee
+    {
+        public int Id { get; set; }
+
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
+        [Required]
+        public string Position { get; set; }
+        
+        [Range(20000, 40000)]
+        [Required]
+        public int? Salary { get; set; }
+        
+        [Required]
+        public DateTime? BirthDate { get; set; }
+        
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        _employees = await EmployeeService.GetEmployees();
+        
+    }
+
+    private async Task SaveEmployee()
+    {
+        await EmployeeService.AddEmployee(_selectedEmployee);
+        _selectedEmployee = null;
+        _employees = await EmployeeService.GetEmployees();
+        StateHasChanged();
+    }
+
+    private async Task CreateEmployee()
+    {
+        _selectedEmployee = new Employee();
+    }
+
+}
