@@ -5,14 +5,11 @@
 
 @code {
     [Parameter] public EventCallback Closed { get; set; }
-    [Parameter] public EventCallback EmployeeCreated { get; set; }
     [Parameter] public ExamEmployee Employee { get; set; }
 
     private async Task CreateEmployee()
     {
         await EmployeeService.AddEmployee(Employee);
-        await EmployeeCreated.InvokeAsync();
-        
         await Closed.InvokeAsync();
     }
 

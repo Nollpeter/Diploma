@@ -14,10 +14,13 @@
                 }
             </MudDrawer>
             <MudDrawer @bind-Open="@_createPanelOpen" Width="50%" Fixed="false" Anchor="Anchor.Start" Elevation="0" Variant="@DrawerVariant.Persistent">
-                <MudDrawerHeader>
-                    <MudText Typo="Typo.h6">Create new Employee</MudText>
-                </MudDrawerHeader>
-                <ExamEmployeeCreate EmployeeCreated="async () => await LoadEmployees()" Closed="@CreateClosed" Employee="new ExamEmployee()"></ExamEmployeeCreate>
+                @if (_createPanelOpen)
+                {
+                    <MudDrawerHeader>
+                        <MudText Typo="Typo.h6">Create new Employee</MudText>
+                    </MudDrawerHeader>
+                    <ExamEmployeeCreate Closed="@CreateClosed" Employee="new ExamEmployee()"></ExamEmployeeCreate>
+                }
             </MudDrawer>
             <div>
                 <MudTable T="ExamEmployee" Items="_employees" Class="w-100">

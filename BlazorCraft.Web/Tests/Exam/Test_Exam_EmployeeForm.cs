@@ -14,8 +14,20 @@ using NSubstitute;
 
 namespace BlazorCraft.Web.Tests.Exam;
 
+public class ExamTestBase<TComponent> : ComponentTestBase<TComponent> where TComponent : ComponentBase, new()
+{
+    protected virtual TestContext SetupTestContext()
+    {
+        TestContext ctx = new TestContext();
+        ctx.Services.AddMudServices();
+        ctx.JSInterop.SetupVoid("mudPopover.initialize", _ => true);
+        ctx.JSInterop.SetupVoid("mudKeyInterceptor.connect", _ => true);
+        return ctx;
+    }
+}
+
 [TestForPage(typeof(Pages._11_Exam.Exam))]
-public class Test_Exam_EmployeeForm : ComponentTestBase<EmployeeForm>
+public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
 {
     public interface IFormFieldDeclaration<TComponentType> where TComponentType : IComponent
     {
@@ -207,15 +219,6 @@ public class Test_Exam_EmployeeForm : ComponentTestBase<EmployeeForm>
     }
     #endregion
 
-    protected TestContext SetupTestContext()
-    {
-        TestContext ctx = new TestContext();
-        ctx.Services.AddMudServices();
-        ctx.JSInterop.SetupVoid("mudPopover.initialize", _ => true);
-        ctx.JSInterop.SetupVoid("mudKeyInterceptor.connect", _ => true);
-        return ctx;
-    }
-    
     //Iseditmode = false -> All fields disabled
     [Title("All fields disabled if EditMode = false")]
     // TODO Description
