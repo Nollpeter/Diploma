@@ -32,7 +32,7 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
         var hasComponent = renderedComponent.HasComponent<EmployeeForm>();
         if (!hasComponent)
         {
-            throw new TestRunException($"The component has no {nameof(ExamEmployeeCreate)} component declared");
+            throw new TestRunException($"The component has no {nameof(EmployeeForm)} component declared");
         }
     }
 
