@@ -14,7 +14,7 @@ public class ComponentTestBase<TTestComponent> : TestContext where TTestComponen
                 p.Name == parameterName && (p.PropertyType ==(parameterType)));
         if (employee == null)
         {
-            throw new TestRunException($"The component Property {parameterName} is not defined in the component");
+            throw new TestRunException($"The component Property {parameterName} with the type {parameterType.Name} is not defined in the component");
         }
 
         var parameterAttribute = employee.GetCustomAttribute<ParameterAttribute>();

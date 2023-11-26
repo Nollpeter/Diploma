@@ -1,0 +1,16 @@
+﻿@code {
+    [Parameter] public int Count { get; set; }
+    [Parameter] public EventCallback<int> CountChanged { get; set; }
+    
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        System.Timers.Timer timer = new System.Timers.Timer(1000);
+        timer.Elapsed += (sender, e) =>
+        {
+            ++Count;
+            CountChanged.InvokeAsync(Count);
+        };
+        timer.Start();
+    }
+}

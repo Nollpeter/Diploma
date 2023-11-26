@@ -171,7 +171,7 @@ public class TestRunnerService : ITestRunnerService
         catch (Exception e)
         {
             OnTestStateChanged(new TestRunStateEventArgs(testDescriptor,
-                new TestRunResult(false, String.Join(Environment.NewLine, e.Message, e.StackTrace)),
+                new TestRunResult(false, String.Join(Environment.NewLine, e.GetType().Name, e.Message, e.StackTrace)),
                 session,
                 TestRunState.Error));
         }

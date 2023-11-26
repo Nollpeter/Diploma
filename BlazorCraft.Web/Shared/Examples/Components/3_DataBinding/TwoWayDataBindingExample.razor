@@ -1,0 +1,8 @@
+﻿<p>Type in the input field below</p>
+<input class="form-control" type="text" @bind-value="name" @bind-value:event="oninput"/>
+<p>The value of the field: @name</p>
+<button class="btn btn-primary" @onclick="@(() => { name = "asd";})">Change it to "asd"</button>
+@code {
+
+    private string? name;
+}

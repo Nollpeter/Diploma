@@ -1,0 +1,15 @@
+﻿<p>Type in the input field below</p>
+<InstantInputText class="form-control" bind-Value="@name" ValueChanged="OnNameChanged" ValueExpression="() => name"></InstantInputText>
+<p>The value of the field: @name</p>
+<button class="btn btn-primary" @onclick="@(() => { name = "asd";})">Change it to "asd"</button>
+@code {
+
+    private string? name;
+
+    private void OnNameChanged(string value)
+    {
+        @* Any kind of additional logic can be put here *@
+        name = value;
+        @* Or here *@
+    }
+}
