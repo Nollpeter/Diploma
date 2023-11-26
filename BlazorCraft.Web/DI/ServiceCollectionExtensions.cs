@@ -20,6 +20,8 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddScoped<INavigationService, NavigationService>();
         Shared._Exercises.Forms.ServiceCollectionExtensions.AddEmployeeService(serviceCollection);
         serviceCollection.AddSingleton<IAsyncLockProvider, AsyncLockProvider>();
+        serviceCollection.AddScoped<ITestLoggerService, TestLoggerService>();
+        serviceCollection.AddScoped<ITestLoggingRepository, TestLoggingRepository>();
         serviceCollection.AddTests();
         
     }

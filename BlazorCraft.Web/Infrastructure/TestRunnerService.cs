@@ -86,19 +86,27 @@ public record TestRunStateEventArgs(TestDescriptor TestDescriptor, TestRunResult
 public record TestDescriptor(Func<Task> Method, string Title, string Description, string? Hint,
     Type PageClass, Type TestClass, bool IsPrecondition, ComponentTestBase testClassInstance)
 {
+    public bool IsExamTest => TestClass.Name.Contains("Exam");
     public override int GetHashCode() => Title.GetHashCode();
+
+    public string ToShortString()
+    {
+        return $"Title: {Title}, PageClass: {PageClass.Name}, TestClass: {TestClass.Name}, IsPrecondition: {IsPrecondition}";
+    }
 }
 
-public class TestRunnerService : ITestRunnerService
+public class 
+    TestRunnerService : ITestRunnerService
 {
 
     private TestRunSession _testsSession;
     private Dictionary<TestDescriptor, TestRunResult?> _testRunResults;
     private IServiceProvider _serviceProvider;
-
+    private readonly ITestLoggerService _testLoggerService;
     public TestRunnerService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
+        _testLoggerService = serviceProvider.GetRequiredService<ITestLoggerService>();
         _testsSession = new TestRunSession(GetEveryTest().ToDictionary(p => p.Key, p => TestRunState.NotStarted));
         _testRunResults = GetEveryTest();
     }
@@ -106,20 +114,23 @@ public class TestRunnerService : ITestRunnerService
     
     public async Task RunTests(IEnumerable<KeyValuePair<TestDescriptor,TestRunResult?>> tests)
     {
-        foreach (var test in tests)
+        await using (_testLoggerService.CreateLoggingSession(this, tests.Select(p => p.Key).ToArray()))
         {
-            OnTestStateChanged(new TestRunStateEventArgs(test.Key, null, _testsSession, TestRunState.Running));
-        }
-        
-        //Let the UI update
-        await Task.Delay(100);
-        
-        foreach (var test in tests)
-        {
-            await RunTest(test.Key, _testsSession);
-            
+            foreach (var test in tests)
+            {
+                OnTestStateChanged(new TestRunStateEventArgs(test.Key, null, _testsSession, TestRunState.Running));
+            }
+
             //Let the UI update
-            await Task.Delay(1);
+            await Task.Delay(100);
+
+            foreach (var test in tests)
+            {
+                await RunTest(test.Key, _testsSession);
+
+                //Let the UI update
+                await Task.Delay(1);
+            }
         }
     }
     
