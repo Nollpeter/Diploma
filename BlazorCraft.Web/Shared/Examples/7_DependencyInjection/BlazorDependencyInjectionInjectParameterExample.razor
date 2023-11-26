@@ -1,0 +1,12 @@
+﻿<p>Transient value: @TransientService.GetValue()</p>
+<p>Scoped value: @ScopedService.GetValue()</p>
+
+@code {
+
+    [Inject]
+    IExampleTransientService TransientService { get; set; }
+
+    [Inject]
+    IExampleScopedService ScopedService { get; set; }
+
+}

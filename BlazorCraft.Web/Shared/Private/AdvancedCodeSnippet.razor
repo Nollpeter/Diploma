@@ -1,5 +1,6 @@
 ﻿@using Bunit
 @using System.Text.RegularExpressions
+@using BlazorCraft.Web.DI
 @typeparam TComponent where TComponent : ComponentBase
 @if (renderingFinished)
 {
@@ -75,7 +76,7 @@
         {
             string renderedHtml = RenderComponentMarkup();
             var prettifiedHtml = await _js.InvokeAsync<string>("prettifyHtml", new object?[] { renderedHtml });
-            _renderedHtml = prettifiedHtml /*.Replace("&", "&amp;").Replace("<", "&lt;")*/;
+            _renderedHtml = prettifiedHtml;
         }
         renderingFinished = true;
         StateHasChanged();
@@ -104,7 +105,9 @@
 
     string RenderComponentMarkup()
     {
-        return new ComponentRenderer().RenderComponent();
+        var componentRenderer = new ComponentRenderer();
+        componentRenderer.Services.AddBlazorCraftServices();
+        return componentRenderer.RenderComponent();
     }
 
     public class ComponentRenderer : TestContext
@@ -123,9 +126,6 @@
         using (var reader = new StreamReader(stream))
         {
             var read = reader.ReadToEnd();
-            read = read /*.Replace("&", "&amp;").Replace("<", "&lt;")*/;
-
-
             return read;
         }
     }

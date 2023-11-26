@@ -1,5 +1,5 @@
 ﻿@using System.Reflection
-@inherits MudNavLink
+@inherits MudLink
 
 @{
     base.BuildRenderTree(__builder);
@@ -25,6 +25,8 @@
     {
         base.OnInitialized();
         Href = GetPageRoute(PageType);
+        Underline = Underline.Always;
+        Color = Color.Primary;
     }
 
 }

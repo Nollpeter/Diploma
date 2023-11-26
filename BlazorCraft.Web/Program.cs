@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using BlazorCraft.Web;
-using BlazorCraft.Web.Infrastructure;
+using BlazorCraft.Web.DI;
+using BlazorCraft.Web.Shared.Examples._7_DependencyInjection;
 using BlazorCraft.Web.Tests.Introduction;
 using Blazored.LocalStorage;
 using MudBlazor.Services;
@@ -12,9 +13,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddMudServices();
-builder.Services.AddScoped<ITestRunnerService, TestRunnerService>();
-builder.Services.AddTransient<Test_Components_Introduction_Exercise>();
+builder.Services.AddBlazorCraftServices();
 builder.Services.AddBlazoredLocalStorage();
-builder.Services.AddScoped<IPanelStateService, PanelStateService>();
+
 
 await builder.Build().RunAsync();

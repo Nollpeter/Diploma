@@ -4,6 +4,7 @@
 @using BlazorCraft.Web.Tests
 @typeparam TTestClass
 @inject ITestRunnerService TestRunnerService
+@inject IServiceProvider ServiceProvider
 @if (_isInitialized)
 {
     <div>
@@ -102,7 +103,7 @@
                         @ComponentUnderTestHelperFragment
                     }
                     <MudDivider DividerType="DividerType.Middle" Class="border-2 border-dark mb-2"></MudDivider>
-                    @CreateComponent(GetComponentUnderTest(), ComponentUnderTestParameters)
+                    <DynamicComponent Type="GetComponentUnderTest()" Parameters="ComponentUnderTestParameters"></DynamicComponent>
                 </MudPaper>
             }
         </MudPaper>
@@ -125,18 +126,32 @@ else
     [Parameter]
     public RenderFragment? ComponentUnderTestHelperFragment { get; set; }
 
-    private RenderFragment CreateComponent(Type componentType, IDictionary<string, object> parameters) => builder =>
+    /*private RenderFragment CreateComponent(Type componentType, IDictionary<string, object> parameters) => builder =>
     {
-        builder.OpenComponent(0, componentType);
+        int seq = 1;
+        builder.OpenComponent(seq, componentType);
+        //componentType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetCustomAttribute<InjectAttribute>())
         if (parameters != null)
         {
             foreach (var parameter in parameters)
             {
-                builder.AddAttribute(1, parameter.Key, parameter.Value);
+                builder.AddAttribute(++seq, parameter.Key, parameter.Value);
+            }
+        }
+        
+        var injectProperties = componentType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+            .Where(p => p.GetCustomAttribute<InjectAttribute>() != null);
+
+        foreach (var prop in injectProperties)
+        {
+            var service = ServiceProvider.GetService(prop.PropertyType);
+            if (service != null)
+            {
+                builder.AddAttribute(++seq, prop.Name, service);
             }
         }
         builder.CloseComponent();
-    };
+    };*/
 
     [Parameter]
     public string TestComponentName { get; set; } = GetComponentUnderTest().Name;

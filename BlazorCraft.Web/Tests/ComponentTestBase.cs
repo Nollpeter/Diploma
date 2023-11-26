@@ -29,12 +29,13 @@ public class ComponentTestBase<TTestComponent> : TestContext where TTestComponen
     {
         var componentType = component.GetType();
         var manifestResourceNames =componentType.Assembly.GetManifestResourceNames();
-        var key = manifestResourceNames.FirstOrDefault(x => x.Contains(componentType.Name));
+        var key = manifestResourceNames.FirstOrDefault(x => x.Contains(componentType.Name+".razor"));
         using (var stream = componentType.Assembly.GetManifestResourceStream(key))
         using (var reader = new StreamReader(stream))
         {
             var read = reader.ReadToEnd();
-            if (!read.Contains($"<{componentThatShouldBeUsedInMarkup.Name}"))
+            var value = $"<{componentThatShouldBeUsedInMarkup.Name}";
+            if (!read.Contains(value))
             {
                 throw new TestRunException($"The component {componentThatShouldBeUsedInMarkup.Name} was not used inside the component markup!");
             }
@@ -42,5 +43,22 @@ public class ComponentTestBase<TTestComponent> : TestContext where TTestComponen
         }
         
     }
+    
+    protected void ValidateInjectedProperty(object component, string propertyName, Type propertyType )
+    {
+        var employee = component.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+            .FirstOrDefault(p =>
+                p.Name == propertyName && (p.PropertyType ==(propertyType)));
+        if (employee == null)
+        {
+            throw new TestRunException($"The component Property {propertyName} with the type {propertyType.Name} is not defined in the component");
+        }
 
+        var parameterAttribute = employee.GetCustomAttribute<InjectAttribute>();
+        if (parameterAttribute == null)
+        {
+            throw new TestRunException(
+                $"The component Property {propertyName} is defined in the component, but it is not annotated with the [Parameter] attribute");
+        }
+    }
 }
