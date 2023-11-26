@@ -3,6 +3,7 @@
 @inherits LayoutComponentBase
 @inject ITestRunnerService TestRunnerService
 @inject NavigationManager NavigationManager
+@inject INavigationService NavigationService
 
 <MudThemeProvider/>
 <MudDialogProvider/>
@@ -14,12 +15,18 @@
         <MudButton Class="mx-2" OnClick="TestRunnerService.RunAll" Color="Color.Secondary" Variant="Variant.Filled">Run all</MudButton>
         <MudButton Class="mx-2" OnClick="() => TestRunnerService.RunAllInPage(CurrentPageType)" Color="Color.Tertiary" Variant="Variant.Filled">Run all in page</MudButton>
         <MudSpacer/>
-        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/" Target="_blank"/>
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank"/>
+        @if (PreviousPage != null)
+        {
+            <MudPageLinkButton PageType="PreviousPage" Class="mx-2" Variant="Variant.Filled" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.ArrowLeft">Previous chapter</MudPageLinkButton>
+        }
+        @if (NextPage != null)
+        {
+            <MudPageLinkButton PageType="NextPage" Class="mx-2" Variant="Variant.Filled" Color="Color.Secondary" EndIcon="@Icons.Material.Filled.ArrowRight">Next chapter</MudPageLinkButton>
+        }
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
         <MudDrawerHeader>
-            <MudText Typo="Typo.h6">BlazorCraft.Web</MudText>
+            <MudImage Src="/img/ik-logo.jpg" Height="78" Width="120"></MudImage>
         </MudDrawerHeader>
         <NavMenu/>
     </MudDrawer>
@@ -39,7 +46,10 @@
     }
 
     private Type CurrentPageType;
-
+    private Type? NextPage;
+    private Type? PreviousPage;
+    
+    
     protected override void OnParametersSet()
     {
         var absoluteUri = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
@@ -56,10 +66,33 @@
                 if (routeAttribute.Any(p => p.Template.TrimStart('/') == absoluteUri.Trim()))
                 {
                     CurrentPageType = type;
+                    
                     break;
                 }
             }
         }
+        NavigationManager.LocationChanged += (sender, args) =>
+        {
+            var nextAndPreviousPages = NavigationService.GetNextAndPreviousPages(CurrentPageType);
+            PreviousPage = nextAndPreviousPages.previousPage;
+            NextPage = nextAndPreviousPages.nextPage;
+            StateHasChanged();
+        };
     }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        
+        
+        if (firstRender && CurrentPageType != null)
+        {
+            var nextAndPreviousPages = NavigationService.GetNextAndPreviousPages(CurrentPageType);
+            PreviousPage = nextAndPreviousPages.previousPage;
+            NextPage = nextAndPreviousPages.nextPage;
+            StateHasChanged();
+        }
+    }
+    
 
 }

@@ -1,0 +1,41 @@
+﻿@using System.Reflection
+@using BlazorCraft.Web.Infrastructure
+@inherits MudNavLink
+@inject INavigationService NavigationService
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+@code {
+
+    [Parameter, EditorRequired]
+    public Type PageType { get; set; } = null!;
+    
+    [Parameter]
+    public Type? NextPage { get; set; }
+    
+    [Parameter]
+    public Type? PreviousPage { get; set; }
+
+    private string GetPageRoute(Type pageType)
+    {
+        var routeAttribute = pageType.GetCustomAttribute<RouteAttribute>();
+        if (routeAttribute != null)
+        {
+            return routeAttribute.Template;
+        }
+        return null;
+    }
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Href = GetPageRoute(PageType);
+        NavigationService.RegisterPage(PageType, (PreviousPage,NextPage));
+        StateHasChanged();
+    }
+
+}

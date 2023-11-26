@@ -7,22 +7,44 @@
 @using BlazorCraft.Web.Pages._11_ExamExercise
 @using BlazorCraft.Web.Pages._6_DependencyInjection
 @using BlazorCraft.Web.Pages._7_Forms
+@using BlazorCraft.Web.Pages._1_Introduction
+@using BlazorCraft.Web.Pages._0_About
 <MudNavMenu>
-    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="introduction" Match="NavLinkMatch.Prefix">Introduction</MudNavLink>
-    <MudNavLink Href="layouts" Match="NavLinkMatch.Prefix">Layouts</MudNavLink>
+    <MudPageNavlink PageType="typeof(AboutBlazorCraft)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home - START HERE</MudPageNavlink>
+    <MudPageNavlink Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(Introduction)"  NextPage="typeof(Introduction)" >0. Blazor Webassembly</MudPageNavlink>
     <MudNavGroup Title="Components" Expanded="true">
-        <MudNavLinkWithTestTracking PageType="typeof(ComponentsIntroduction)" >Components Introduction</MudNavLinkWithTestTracking>
-        <MudNavLinkWithTestTracking PageType="typeof(ComponentEvents)" >Component events</MudNavLinkWithTestTracking>
-        <MudNavLinkWithTestTracking PageType="typeof(ComponentDataBinding)" >Data-binding</MudNavLinkWithTestTracking>
-        <MudNavLinkWithTestTracking PageType="typeof(ComponentLifecycle)" >Component lifecycle</MudNavLinkWithTestTracking>
-        <MudNavLinkWithTestTracking PageType="typeof(RenderFragments)">Generic components with render fragments</MudNavLinkWithTestTracking>
+        <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(ComponentsIntroduction)" PreviousPage="typeof(Introduction)" NextPage="typeof(ComponentEvents)">
+            1. Components Introduction
+        </MudNavLinkWithTestTracking>
+        <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(ComponentEvents)" PreviousPage="typeof(ComponentsIntroduction)" NextPage="typeof(ComponentDataBinding)">
+            2. Component events
+        </MudNavLinkWithTestTracking>
+        <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(ComponentDataBinding)" PreviousPage="typeof(ComponentEvents)" NextPage="typeof(ComponentLifecycle)">
+            3. Data-binding
+        </MudNavLinkWithTestTracking>
+        <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(ComponentLifecycle)" PreviousPage="typeof(ComponentDataBinding)" NextPage="typeof(RenderFragments)">
+            4. Component lifecycle
+        </MudNavLinkWithTestTracking>
+        <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(RenderFragments)" PreviousPage="typeof(ComponentLifecycle)" NextPage="typeof(Routing)">
+            5. Generic components with render fragments
+        </MudNavLinkWithTestTracking>
     </MudNavGroup>
-    <MudNavLinkWithTestTracking PageType="typeof(Routing)">Routing</MudNavLinkWithTestTracking>
-    <MudNavLinkWithTestTracking PageType="typeof(DependencyInjection)">Dependency Injection</MudNavLinkWithTestTracking>
-    <MudNavLinkWithTestTracking PageType="typeof(Forms)">Forms</MudNavLinkWithTestTracking>
-    <MudNavLinkWithTestTracking PageType="typeof(JsInterop)">Javascript Interop</MudNavLinkWithTestTracking>
-    <MudNavLinkWithTestTracking PageType="typeof(ComponentLibraries)">Using UI Component libraries</MudNavLinkWithTestTracking>
-    <MudNavLinkWithTestTracking PageType="typeof(CssIsolation)">CSS isolation</MudNavLinkWithTestTracking>
-    <MudNavLinkWithTestTracking PageType="typeof(ExamExercise)" Class="fw-bold">Exam exercise</MudNavLinkWithTestTracking>
+    <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(Routing)" PreviousPage="typeof(RenderFragments)" NextPage="typeof(DependencyInjection)">
+        6. Routing
+    </MudNavLinkWithTestTracking>
+    <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(DependencyInjection)" PreviousPage="typeof(Routing)" NextPage="typeof(Forms)">
+        7. Dependency Injection
+    </MudNavLinkWithTestTracking>
+    <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(Forms)" PreviousPage="typeof(DependencyInjection)" NextPage="typeof(JsInterop)">
+        8. Forms
+    </MudNavLinkWithTestTracking>
+    <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(JsInterop)" PreviousPage="typeof(Forms)" >
+        9. Javascript Interop
+    </MudNavLinkWithTestTracking>
+    @*<MudNavGroup Title="Bonus" Expanded="false">
+        $1$<MudPageLink PageType="" Match="NavLinkMatch.Prefix">Layouts</MudPageLink>
+        <MudPageLink PageType="typeof(ComponentLibraries)">Using UI CompoMudPageLinklibraries</PageL>
+        <MudPageLink PageType="typeof(CssIsolation)">CSS isolation</PageLMudPageLink </MudNavGroup>#1#
+    </MudNavGroup>*@
+    <MudNavLinkWithTestTracking Icon="@Icons.Material.Filled.Assignment" PageType="typeof(ExamExercise)" Class="fw-bold">Exam exercise</MudNavLinkWithTestTracking>
 </MudNavMenu>

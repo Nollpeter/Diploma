@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddScoped<IPanelStateService, PanelStateService>();
         serviceCollection.AddExampleServices();
         serviceCollection.AddEmployeeService();
+        serviceCollection.AddScoped<INavigationService, NavigationService>();
         Shared._Exercises.Forms.ServiceCollectionExtensions.AddEmployeeService(serviceCollection);
         serviceCollection.AddSingleton<IAsyncLockProvider, AsyncLockProvider>();
         serviceCollection.AddTests();

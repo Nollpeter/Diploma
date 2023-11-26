@@ -65,8 +65,6 @@ public class ComponentTestBase<TTestComponent> : ComponentTestBase where TTestCo
         var componentTypeName = componentType.IsGenericType ? componentType.Name.Split('`')[0] : componentType.Name;
         var componentThatShouldBeUsedName = componentThatShouldBeUsedInMarkup.IsGenericType ? componentThatShouldBeUsedInMarkup.Name.Split('`')[0] : componentThatShouldBeUsedInMarkup.Name;
 
-        Console.WriteLine(componentTypeName);
-        Console.WriteLine(componentThatShouldBeUsedName);
         var key = manifestResourceNames.FirstOrDefault(x => x.Contains(componentTypeName + ".razor"));
         using (var stream = componentType.Assembly.GetManifestResourceStream(key))
         using (var reader = new StreamReader(stream))

@@ -29,7 +29,6 @@ class EmployeeService : IEmployeeService
 
     public Task AddEmployee(Employee employee)
     {
-        Console.WriteLine("AddEmployee");
         var max = _employees.Keys.Any() ? _employees.Keys.Max() : 1;
         employee.Id = max + 1;
         _employees[employee.Id] = employee;
