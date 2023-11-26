@@ -90,7 +90,7 @@ pre[class*="language-razor"] {
     border: 1px grey !important;
 }
 .sticky .mud-expand-panel-header {
-    background-color: white;
+    background-color: var(--mud-palette-background);
     top: 64px;
     position: sticky !important;
     z-index: 1000;
