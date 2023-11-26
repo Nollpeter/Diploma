@@ -41,7 +41,7 @@
             <CodeSnippet>
                 @("""public record TestClass(int a, int b);""")
             </CodeSnippet>
-            <CompanionSnippets TComponent="ListComponent1" TUsage="ListComponent1Usage" />
+            <CompanionSnippets TComponent="ListComponent1" TUsage="ListComponent1Usage"/>
             <MudText>
                 Technically a List component, but it confronts us instantly with 2 problems:
                 - What if we want the Title to be a bit bigger, like a <strong>@("<h2>")</strong> tag?
@@ -52,7 +52,7 @@
             <MudText>
                 By using a <strong>RenderFragment</strong> property instead of a <strong>string</strong> property, we can externally define what should exactly be in the Title. It can be virtually everything, as long as it is a valid Blazor markup.
             </MudText>
-            <CompanionSnippets TComponent="ListComponent2" TUsage="ListComponent2Usage" />
+            <CompanionSnippets TComponent="ListComponent2" TUsage="ListComponent2Usage"/>
             <MudText>Now, we can define the title any way that we want.</MudText>
             <MudText>In the next section, we will make the List items customizable as well</MudText>
             <MudDivider/>
@@ -72,7 +72,11 @@
             </ul>
             <MudText>There is no kind of animation required, by clicking the button, you just have to toggle the visibility of the <strong>DetailsContent</strong></MudText>
             <MudText><strong>Hint:</strong> Remember from previous exercises how we can create a Click handler for the button!</MudText>
-            <TestRunner TTestClass="Test_RenderFragments_Ex1_Basics"></TestRunner>
+
+
+            <TestRunner TTestClass="Test_RenderFragments_Ex1_Basics"
+                        ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_RenderFragments_Ex1_Basics.TitleFragmentName] = _titleFragment, [Test_RenderFragments_Ex1_Basics.DetailsFragmentName] = (RenderFragment)(builder => { builder.OpenElement(0, "p"); builder.AddContent(1, "Details"); builder.CloseElement(); }) })">
+            </TestRunner>
         </div>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
@@ -109,7 +113,7 @@
             <MudText>
                 Your task here will be to extend the functionality of the accordion, so that it can accept an Employee in its <strong>DetailsContent</strong> renderfragment
                 For this you will need to define an Employee parameter with the name <strong>EmployeeToRender</strong>
-                </MudText>
+            </MudText>
             <MudText>
                 How the Details is rendered should be entirely up to the caller component, you just have to pass the parameter and implement rendering the renderfragment
             </MudText>
@@ -119,7 +123,8 @@
             <MudText>
                 You can find the base component for it in @(nameof(RenderFragments_Ex2)).razor
             </MudText>
-            <TestRunner TTestClass="Test_RenderFragments_Ex2_RenderFragment_Parameter"></TestRunner>
+            <TestRunner TTestClass="Test_RenderFragments_Ex2_RenderFragment_Parameter"
+                        ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_RenderFragments_Ex2_RenderFragment_Parameter.TitleFragmentName] = _titleFragment, [Test_RenderFragments_Ex2_RenderFragment_Parameter.DetailsFragmentName] = (RenderFragment<RenderFragments_Ex2.Employee>)(employee => builder => { builder.OpenElement(0, "p"); builder.AddContent(1, $"Id: {employee.Id}, Name: {employee.FirstName} {employee.LastName}, Position: {employee.Position}"); builder.CloseElement(); }), [Test_RenderFragments_Ex2_RenderFragment_Parameter.EmployeeParamName] = new RenderFragments_Ex2.Employee(1, "Test", "Tiffany", "CEO") })"/>
         </div>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
@@ -154,12 +159,13 @@
             <MudDivider/>
             <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
             <MudText>
-                Your task here will be to extend the functionality of the accordion, so that it can accept any kind of type and render all its fields of an object 
+                Your task here will be to extend the functionality of the accordion, so that it can accept any kind of type and render all its fields of an object
                 For this you will need to define a generic typed parameter with the name <strong>ObjectToRender</strong>
                 <br/>
                 <strong>Note: </strong> Don't forget to add the @("@typeParam") to the component!
                 <strong>Note: </strong>In this exercise you won't need the <strong>DetailsContent</strong> renderFragment
             </MudText>
+            <MudText>For the exercise, modify the @(nameof(RenderFragments_Ex3<int>)).razor component</MudText>
             <MudText>
                 Code for enumerating all the fields of the passed object will be provided for you, you just have to you use it
             </MudText>
@@ -174,7 +180,9 @@
             <MudText>
                 You can find the base component for it in @(nameof(RenderFragments_Ex3<RenderFragments_Ex2.Employee>)).razor
             </MudText>
-            <TestRunner TTestClass="Test_RenderFragments_Ex3_Generic"></TestRunner>
+            <TestRunner TTestClass="Test_RenderFragments_Ex3_Generic"
+                        ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_RenderFragments_Ex3_Generic.TitleFragmentName] = _titleFragment, [Test_RenderFragments_Ex3_Generic.ObjectToRenderParamName] = new RenderFragments_Ex2.Employee(1, "Test", "Tiffany", "CEO") })">
+            </TestRunner>
         </div>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
@@ -249,7 +257,9 @@
             <MudText>
                 You can find the base component for it in @(nameof(RenderFragments_Ex4)).razor
             </MudText>
-            <TestRunner TTestClass="Test_RenderFragments_Ex4_Table"></TestRunner>
+            <TestRunner TTestClass="Test_RenderFragments_Ex4_Table"
+                        ComponentUnderTestParameters="@(new Dictionary<string, object>() { })">
+            </TestRunner>
         </div>
 
     </ChildContent>
@@ -257,44 +267,59 @@
 </MudExpansionPanelWithStoredState>
 <MudExpansionPanelWithStoredState Id="render-fragments-final-exercise">
     <TitleContent>
-           <MudText Typo="Typo.h5" Class="fw-bold">Lesson final exercise</MudText>
-       </TitleContent>
-       <ChildContent>
-           <div class="d-grid gap-3">
-               <MudText>In this exercise, you will have to modify the component @nameof(RenderFragments_LessonFinal)</MudText>
-               <MudText>Your task is to implement a list component for employee data that can be switched with two buttons if a List view is displayed or a Table view is displayed</MudText>
-               <MudText>For both kind of views, reuse the @nameof(ListComponent5<RenderFragments_LessonFinal.Employee>) type</MudText>
-               <MudText>The actual data will be passed externally, you will need a separate parameter property for it</MudText>
-               <MudText>The two buttons will be provided for you</MudText>
-               <MudText>The title should be in both cases: @("<h2>Employees</h2>")</MudText>
-               <ul>
-                   <li>
-                       <MudText>
-                           For the list view, the Title should be "Employees", and the list should follow the list layout of previous exercises with the @("<ul>") tag and its list items should be enclosed in a
-                           @("<p>") tag with the employee
-                           with the fields of the passed object in the following format:
-                           <br/>
-                           @("<span>")<strong>{field Name}</strong>: <strong>{field Value}</strong>@("</span>")
-                           <br/>
-                           <strong>Note:</strong> To simply render string text inside a foreach is a bit tricky, therefore for your convenience they will be wrapped in @("<span>") tags
-                       </MudText>
-                   </li>
-                   <li>
-                       <MudText>
-                           For the table view, the table header should contain the employee field names and the table rows should contain the employee data fields
-                           <br/>
-                           <strong>Please annotate your @("<table>") with class="table"</strong>
-                       </MudText>
-                   </li>
-               </ul>
-               <TestRunner TTestClass="Test_RenderFragments_ExFinal"></TestRunner>
-           </div>
-       </ChildContent>
+        <MudText Typo="Typo.h5" Class="fw-bold">Lesson final exercise</MudText>
+    </TitleContent>
+    <ChildContent>
+        <div class="d-grid gap-3">
+            <MudText>In this exercise, you will have to modify the component @nameof(RenderFragments_LessonFinal)</MudText>
+            <MudText>Your task is to implement a list component for employee data that can be switched with two buttons if a List view is displayed or a Table view is displayed</MudText>
+            <MudText>For both kind of views, reuse the @nameof(ListComponent5<RenderFragments_LessonFinal.Employee>) type</MudText>
+            <MudText>The actual data will be passed externally, you will need a separate parameter property for it</MudText>
+            <MudText>The two buttons will be provided for you</MudText>
+            <MudText>The title should be in both cases: @("<h2>Employees</h2>")</MudText>
+            <ul>
+                <li>
+                    <MudText>
+                        For the list view, the Title should be "Employees", and the list should follow the list layout of previous exercises with the @("<ul>") tag and its list items should be enclosed in a
+                        @("<p>") tag with the employee
+                        with the fields of the passed object in the following format:
+                        <br/>
+                        @("<span>")<strong>{field Name}</strong>: <strong>{field Value}</strong>@("</span>")
+                        <br/>
+                        <strong>Note:</strong> To simply render string text inside a foreach is a bit tricky, therefore for your convenience they will be wrapped in @("<span>") tags
+                    </MudText>
+                </li>
+                <li>
+                    <MudText>
+                        For the table view, the table header should contain the employee field names and the table rows should contain the employee data fields
+                        <br/>
+                        <strong>Please annotate your @("<table>") with class="table"</strong>
+                    </MudText>
+                </li>
+            </ul>
+            <TestRunner TTestClass="Test_RenderFragments_ExFinal"
+                        ComponentUnderTestParameters="@(new Dictionary<string, object>() {
+                                                          [Test_RenderFragments_ExFinal.EmployeesParamName] = new List<RenderFragments_LessonFinal.Employee>() 
+                                                          {
+                                                              new(1, "Test", "Tiffany", "CEO"),
+                                                              new(2, "Test", "Timothy", "CFO") 
+                                                          } 
+                                                      })">
+            </TestRunner>
+        </div>
+    </ChildContent>
 </MudExpansionPanelWithStoredState>
 </MudExpansionPanels>
 </div>
 
 
 @code {
+
+    private RenderFragment _titleFragment = (RenderFragment)(builder =>
+    {
+        builder.OpenElement(0, "p");
+        builder.AddContent(1, "Title");
+        builder.CloseElement();
+    });
 
 }

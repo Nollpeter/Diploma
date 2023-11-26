@@ -125,7 +125,16 @@
                           "</tr> \n")
                     </CodeSnippet>
                     <MudText></MudText>
-                    <TestRunner TTestClass="Test_Components_Events_Ex2"></TestRunner>
+                    @{
+                        var employees = new List<ComponentEvents_Ex2_EventCallBack.Employee>() { new(1, "employee 1"), new(2, "employee 2") };
+                        var eventCallback = EventCallback.Factory.Create<ComponentEvents_Ex2_EventCallBack.Employee>(employees, employee => { employees.Remove(employee); });
+                    }
+                    <TestRunner TTestClass="Test_Components_Events_Ex2"
+                                ComponentUnderTestParameters="@(new Dictionary<string, object>() { 
+                                                                  [Test_Components_Events_Ex2.EmployeesParameterName] = employees, 
+                                                                  [Test_Components_Events_Ex2.EventCallBackPropertyName] = eventCallback})" />
+                        
+                    }
                 </div>
             </ChildContent>
         </MudExpansionPanelWithStoredState>

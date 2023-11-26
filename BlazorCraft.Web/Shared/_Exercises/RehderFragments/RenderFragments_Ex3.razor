@@ -1,7 +1,7 @@
 ﻿@using System.Reflection
 @typeparam TContent
 <div id="ex3-container">
-    <button class="toggle" @onclick="() => _detailsVisible = !_detailsVisible">Toggle details visibility</button>
+    <button class="btn btn-primary toggle" @onclick="() => _detailsVisible = !_detailsVisible">Toggle details visibility</button>
     <div class="accordion">
         @* Accordion content should come here *@
         <div class="title">

@@ -28,7 +28,7 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
     }
 
     [Title("" + ObjectToRenderParamName + " parameter defined")]
-    [Description("This test verifies that the " + DetailsFragmentName + " has been defined on the component")]
+    [Description("This test verifies that the " + ObjectToRenderParamName + " has been defined on the component")]
     public async Task<TestRunResult> Test2_1()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex3<Employee>();
@@ -49,8 +49,6 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
         string titleContent = "title_" + new Random().Next(0, 1000);
 
         var titleFragment = CreateFragment(titleContent, "p");
-
-
         var renderedComponent = testContext.RenderComponent<RenderFragments_Ex3<Employee>>(parameters:
             new[] { ComponentParameter.CreateParameter(TitleFragmentName, titleFragment) });
 

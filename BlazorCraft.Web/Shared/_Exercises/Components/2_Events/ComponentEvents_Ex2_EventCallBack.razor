@@ -10,16 +10,16 @@
         </thead>
         <tbody>
         @* Add your code here *@
-        @foreach(var emp in Employees)
-            {
-                <tr class="d-flex justify-content-between">
-                    <td>@emp.Id</td>
-                    <td>@emp.Name</td>
-                    <td>
-                        <button class="btn btn-primary" @onclick="async () => { await ListItemDeleted.InvokeAsync(emp);}">Delete</button>
-                    </td>
-                </tr>
-            }
+        @foreach (var emp in Employees)
+        {
+            <tr>
+                <td>@emp.Id</td>
+                <td>@emp.Name</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="async () => { await ListItemDeleted.InvokeAsync(emp); }">Delete</button>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
     

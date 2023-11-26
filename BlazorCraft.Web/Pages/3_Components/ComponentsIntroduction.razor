@@ -162,7 +162,7 @@
                     <MudText>The component should have a parameter defined of type <strong>@("List<int>")</strong> with the name <strong>@Test_Components_Introduction_Exercise.NumbersParameterName</strong></MudText>
                     <MudText>If the <strong>_showList</strong> field is true, the component should render for each element of the <strong>@Test_Components_Introduction_Exercise.NumbersParameterName</strong> property a @(nameof(ComponentWithParameter)) component with its Number parameter set to the value of the number from the @Test_Components_Introduction_Exercise.NumbersParameterName list</MudText>
                     <MudText>If the <strong>_showList</strong> field is false, the component should render @Test_Components_Introduction_Exercise.ListIsHiddenMarkup</MudText>
-                    <TestRunner TTestClass="Test_Components_Introduction_Exercise"></TestRunner>
+                    <TestRunner TTestClass="Test_Components_Introduction_Exercise" ComponentUnderTestParameters="@(new Dictionary<string, object>(){ [Test_Components_Introduction_Exercise.NumbersParameterName] = new List<int>(){1,2,3,4,5,6,7,8}})"/>
                 </div>
             </ChildContent>
         </MudExpansionPanelWithStoredState>

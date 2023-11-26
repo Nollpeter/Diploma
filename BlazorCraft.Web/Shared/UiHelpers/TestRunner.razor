@@ -54,7 +54,22 @@
                                 <div class="d-flex flex-column gap-3 ">
                                     <MudText Typo="Typo.subtitle1" Class="fw-bold">@test.Key.Description</MudText>
                                     <MudText>Result:</MudText>
-                                    @if (test.Value is {ErrorMessage: not null })
+                                    @if (test.Value is HtmlMarkupMismatchTestRunResult htmlMarkupMismatchTestRunResult)
+                                    {
+                                        <MudText Typo="Typo.body1">@test.Value.ErrorMessage</MudText>
+                                        <div class="row">
+                                            <div class="col-6"><MudText Typo="Typo.subtitle1" Class="fw-bold">Expected HTML markup: </MudText>
+                                                                                                               <CodeSnippet>
+                                                                                                                   @htmlMarkupMismatchTestRunResult.ExpectedMarkup
+                                                                                                               </CodeSnippet></div>
+                                            <div class="col-6">
+                                                 <MudText Typo="Typo.subtitle1" Class="fw-bold">Actual HTML markup: </MudText>
+                                                                                                 <CodeSnippet>
+                                                                                                     @htmlMarkupMismatchTestRunResult.ActualMarkup
+                                                                                                 </CodeSnippet>  </div>
+                                        </div>
+                                    }
+                                    else if (test.Value is {ErrorMessage: not null })
                                     {
                                         <MudText Typo="Typo.body1">@test.Value.ErrorMessage</MudText>
                                     }
@@ -76,9 +91,9 @@
                         <MudText Class="fw-bold" Typo="Typo.subtitle1">Congratulations! All tests passed, you successfully passed the exercise!</MudText>
                         <MudIcon Icon="@Icons.Material.Filled.Celebration" Color="Color.Tertiary"></MudIcon>
                     </div>
-                    
                     <MudText Typo="Typo.subtitle1">Take a look and feel free to play around with the component you finished!</MudText>
-                    @CreateComponent(GetComponentUnderTest(), ComponentUnderTestParameters)
+                    <MudDivider DividerType="DividerType.Middle" Class="border-2 border-dark mb-2" ></MudDivider>
+                        @CreateComponent(GetComponentUnderTest(), ComponentUnderTestParameters)
                 </MudPaper>
             }
         </MudPaper>

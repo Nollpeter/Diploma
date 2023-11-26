@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
+using System.Text.RegularExpressions;
 using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Tests;
 using BlazorCraft.Web.Tests.Introduction;
+using Bunit;
 
 namespace BlazorCraft.Web.Infrastructure;
 
@@ -37,16 +39,18 @@ public class TestRunnerService : ITestRunnerService
         var tests = GetEveryTest();
         foreach (var test in tests)
         {
+            //await Task.Run(async () => await RunTest(test.Key));
             await RunTest(test.Key);
+            //await Task.Delay(1);
         }
     }
 
     public async Task RunAllInPage(Type pageType)
     {
         var keyValuePairs = GetEveryTest().Where(p => p.Key.PageClass == pageType);
-        Console.WriteLine(pageType);
         foreach (var kvp in keyValuePairs)
         {
+            //await Task.Run(async () => await RunTest(kvp.Key));
             await RunTest(kvp.Key);
         }
     }
@@ -56,6 +60,7 @@ public class TestRunnerService : ITestRunnerService
         var testRunResultMethods = GetTestRunResultMethods(testClass);
         foreach (var testRunResult in testRunResultMethods)
         {
+            //await Task.Run(async () => await RunTest(testRunResult.Key));
             await RunTest(testRunResult.Key);
         }
     }
@@ -63,6 +68,7 @@ public class TestRunnerService : ITestRunnerService
     public async Task RunTest(TestDescriptor testDescriptor)
     {
         TestStateChanged?.Invoke(this, new TestRunStateEventArgs(testDescriptor, null, TestRunState.Running));
+        //await Task.Delay(10);
         try
         {
             var contextIdMethod = await testDescriptor.Method();
@@ -72,7 +78,20 @@ public class TestRunnerService : ITestRunnerService
         }
         catch (TestRunException e)
         {
-            TestStateChanged?.Invoke(this, new TestRunStateEventArgs(testDescriptor, new TestRunResult(false, e.Message), TestRunState.Error));
+            TestStateChanged?.Invoke(this,
+                new TestRunStateEventArgs(testDescriptor, new TestRunResult(false, e.Message), TestRunState.Error));
+        }
+        catch (HtmlEqualException e)
+        {
+            string actualHtmlPattern = @"Actual HTML:\s*(.+?)\s*Expected HTML:";
+            string expectedHtmlPattern = @"Expected HTML:\s*(.+)";
+
+            Match actualHtmlMatch = Regex.Match(e.Message, actualHtmlPattern, RegexOptions.Singleline);
+            Match expectedHtmlMatch = Regex.Match(e.Message, expectedHtmlPattern, RegexOptions.Singleline);
+            string actualHtml = actualHtmlMatch.Groups[1].Value.Trim();
+            string expectedHtml = expectedHtmlMatch.Groups[1].Value.Trim();
+            TestStateChanged?.Invoke(this,
+                new TestRunStateEventArgs(testDescriptor, new HtmlMarkupMismatchTestRunResult("The rendered HTML markup of the component is not as expected!", expectedHtml, actualHtml), TestRunState.Error));
         }
         catch (Exception e)
         {

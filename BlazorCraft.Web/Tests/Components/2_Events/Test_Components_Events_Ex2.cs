@@ -42,6 +42,38 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
     {
         var component = new ComponentEvents_Ex2_EventCallBack();
         ValidateComponentProperty(component, EmployeesParameterName, typeof(List<Employee>));
+        
+        TestContext testContext = new TestContext();
+        Random r = new Random();
+        List<Employee> list = new List<Employee>()
+        {
+            new(r.Next(1000), $"test_{r.Next(1000)}"),
+            new(r.Next(1000), $"test_{r.Next(1000)}"),
+        };
+
+        Employee calledEmployee = null;
+
+        var renderedComponent = testContext.RenderComponent<ComponentEvents_Ex2_EventCallBack>(
+            ComponentParameter.CreateParameter(EmployeesParameterName, list),
+            ComponentParameter.CreateParameter(EventCallBackPropertyName,
+                EventCallback.Factory.Create<Employee>(testContext, employee => calledEmployee = employee)));
+
+
+        var tbody = renderedComponent.FindAll("tbody");
+        
+        tbody.MarkupMatches($"<tbody>" +
+                            $"  <tr>" +
+                            $"      <td>{list[0].Id}</td>" +
+                            $"      <td>{list[0].Name}</td>" +
+                            $"      <td><button class=\"btn btn-primary\">Delete</button></td>" +
+                            $"  </tr>" +
+                            $"  <tr>" +
+                            $"      <td>{list[1].Id}</td>" +
+                            $"      <td>{list[1].Name}</td>" +
+                            $"      <td><button class=\"btn btn-primary\">Delete</button></td>" +
+                            $"  </tr>" +
+                            $"</tbody>");
+        
         return TestRunResult.Success;
     }
 
