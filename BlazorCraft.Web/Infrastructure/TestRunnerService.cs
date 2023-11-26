@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Text.RegularExpressions;
 using BlazorCraft.Web.Infrastructure.Attributes;
+using BlazorCraft.Web.Pages._11_Exam;
 using BlazorCraft.Web.Tests;
 using BlazorCraft.Web.Tests.Introduction;
 using BlazorCraft.Web.Tests.Routing;
@@ -19,6 +20,8 @@ public interface ITestRunnerService
     TestRunSession GetSessionForPage(Type pageType);
     event EventHandler<TestRunStateEventArgs> TestStateChanged;
     TestRunSession GetSessionForTestClass(Type testClass);
+
+    bool ExamCompleted();
 }
 
 public enum TestRunState
@@ -95,8 +98,7 @@ public record TestDescriptor(Func<Task> Method, string Title, string Description
     }
 }
 
-public class 
-    TestRunnerService : ITestRunnerService
+public class TestRunnerService : ITestRunnerService
 {
 
     private TestRunSession _testsSession;
@@ -257,6 +259,11 @@ public class
     public TestRunSession GetSessionForTestClass(Type testClass)
     {
         return new(_testsSession.Where(p => p.Key.TestClass == testClass).ToDictionary(p => p.Key, p => p.Value));
+    }
+
+    public bool ExamCompleted()
+    {
+        return _testsSession.Where(p => p.Key.PageClass == typeof(Exam)).All(p => p.Value == TestRunState.Successful);
     }
 
     public event EventHandler<TestRunStateEventArgs>? TestStateChanged;

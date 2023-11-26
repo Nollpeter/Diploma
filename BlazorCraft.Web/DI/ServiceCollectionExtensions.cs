@@ -22,6 +22,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddSingleton<IAsyncLockProvider, AsyncLockProvider>();
         serviceCollection.AddScoped<ITestLoggerService, TestLoggerService>();
         serviceCollection.AddScoped<ITestLoggingRepository, TestLoggingRepository>();
+        serviceCollection.AddScoped<ISendResultsService, SendResultsService>();
         serviceCollection.AddTests();
         
     }

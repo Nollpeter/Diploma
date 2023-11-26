@@ -1,9 +1,11 @@
 ﻿@using BlazorCraft.Web.Infrastructure
 @using System.Reflection
+@using BlazorCraft.Web.Pages._11_Exam
 @inherits LayoutComponentBase
 @inject ITestRunnerService TestRunnerService
 @inject NavigationManager NavigationManager
 @inject INavigationService NavigationService
+@inject ISendResultsService SendResultService
 
 <MudThemeProvider/>
 <MudDialogProvider/>
@@ -15,6 +17,11 @@
         <MudButton Class="mx-2" OnClick="TestRunnerService.RunAll" Color="Color.Secondary" Variant="Variant.Filled">Run all</MudButton>
         <MudButton Class="mx-2" OnClick="() => TestRunnerService.RunAllInPage(CurrentPageType)" Color="Color.Tertiary" Variant="Variant.Filled">Run all in page</MudButton>
         <MudSpacer/>
+        @if (CurrentPageType == typeof(Exam))
+        {
+                <MudButton Class="ms-4 me-2" Variant="Variant.Filled" Color="Color.Tertiary" Disabled="@(!TestRunnerService.ExamCompleted())" >Send results</MudButton>
+                <MudButton Class="mx-2" Variant="Variant.Filled" Color="Color.Secondary" OnClick="async () => await SendResultService.SendResults()">Give up</MudButton>
+        }
         @if (PreviousPage != null)
         {
             <MudPageLinkButton PageType="PreviousPage" Class="mx-2" Variant="Variant.Filled" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.ArrowLeft">Previous chapter</MudPageLinkButton>
@@ -63,6 +70,7 @@
             NextPage = nextAndPreviousPages.nextPage;
             StateHasChanged();
         };
+        TestRunnerService.TestStateChanged += (sender, args) => StateHasChanged();
     }
 
     private Type GetCurrentPage(string absoluteUri)
