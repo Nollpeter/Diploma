@@ -7,7 +7,7 @@ namespace BlazorCraft.Web.Tests.Introduction;
 
 public class Test1 : TestContext
 {
-    public bool RunTest()
+    public (bool, string?) RunTest()
     {
         string componentName = "HelloWorld";
         // Megkeresi a komponens típust a név alapján.
@@ -18,27 +18,44 @@ public class Test1 : TestContext
             throw new ArgumentException($"A {componentName} komponens nem található.", nameof(componentName));
         }
 
-        return true;
+        return (true, null);
     }
 
-    public bool RunTest2()
+    public (bool, string?) RunTest2()
     {
-        string componentName = "HelloWorld";
-        // Megkeresi a komponens típust a név alapján.
-        Type componentType = Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(p => p.Name == componentName);
-        if (componentType == null)
+        try
         {
-            throw new ArgumentException($"A {componentName} komponens nem található.", nameof(componentName));
+            string componentName = "HelloWorld";
+            // Megkeresi a komponens típust a név alapján.
+            Type componentType = Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(p => p.Name == componentName);
+            if (componentType == null)
+            {
+                throw new ArgumentException($"A {componentName} komponens nem található.", nameof(componentName));
+            }
+
+            // Meghívja a generikus RenderComponent függvényt a megfelelő típussal.
+            MethodInfo method = GetType().GetMethods().FirstOrDefault(p => p.Name == nameof(RenderComponent) && p.ContainsGenericParameters && p.GetParameters().Length == 1 && p.GetParameters().First().ParameterType == typeof(ComponentParameter[]));
+            MethodInfo genericMethod = method.MakeGenericMethod(componentType);
+            IRenderedComponent<IComponent> invoke =
+                (IRenderedComponent<IComponent>)genericMethod.Invoke(this, null);
+
+            var invokeMarkup = invoke.Markup;
+            if (invokeMarkup == "<h6>Hello World!</h6>")
+            {
+                return (true, null);
+            }
+            //invoke.MarkupMatches("<h6>Hello World!</h6>");
+            else
+            {
+                return (false, $"Nem megfelelő markup. Elvárt: <h6>Hello World!</h6>, Kapott: {invokeMarkup}");
+            }
+            
         }
-
-        // Meghívja a generikus RenderComponent függvényt a megfelelő típussal.
-        MethodInfo method = GetType().GetMethods().FirstOrDefault(p => p.Name == nameof(RenderComponent) && p.ContainsGenericParameters && p.GetParameters().Length == 1 && p.GetParameters().First().ParameterType == typeof(ComponentParameter[]));
-        MethodInfo genericMethod = method.MakeGenericMethod(componentType);
-        IRenderedComponent<IComponent> invoke =
-            (IRenderedComponent<IComponent>)genericMethod.Invoke(this, new object[0]);
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return (false, "Hiba történt a teszt végrehajtása közben");
+        }
         
-        invoke.MarkupMatches("<h6>Hello World!</h6>");
-
-        return true;
     }
 }

@@ -54,35 +54,84 @@
                 <MudText Typo="Typo.body1">A komponens csak egy h3 típusú html taget tartalmazzon, melynek tartalma: "Hello world"!</MudText>
 
                 <MudTabs Outlined="true" Position="Position.Left" Rounded="true" Border="true"
-                         ApplyEffectsToContainer="true" Class="mt-8" PanelClass="pa-6">
-                    <MudTabPanel Text="1. Teszt, létező komponens">
-                        @{
-                            bool testResult = false;
-                            <div class="d-flex flex-column">
-                                <MudText Typo="Typo.h6">1. Teszt</MudText>
-                                <MudText Typo="Typo.body1">Ez a teszt ellenőrzni, hogy létrehozta-e a komponenst</MudText>
-                                <MudButton OnClick="() => { testResult = Test1.RunTest(); StateHasChanged();}">Futtatás</MudButton>
-                                <MudText >Eredmény: @(testResult ? "Siker" : "Elbukott")</MudText>
-                            </div>
-                        }
-                    </MudTabPanel>
-                    <MudTabPanel Text="2. Teszt, komponens tartalma helyes">
-                        @{
-                            bool testResult = false;
-                            <div class="d-flex flex-column">
-                                <MudText Typo="Typo.h6">2. Teszt</MudText>
-                                <MudText Typo="Typo.body1">Ez a teszt ellenőrzni, hogy valóban azt tartalmazza-e a komponens, ami az elvárt</MudText>
-                                <MudButton OnClick="() => { testResult = Test1.RunTest2(); StateHasChanged();}">Futtatás</MudButton>
-                                <MudText >Eredmény: @(testResult ? "Siker" : "Elbukott")</MudText>
-                            </div>
-                        }
+                         ApplyEffectsToContainer="true" Class="mt-8" PanelClass="pa-6" HeaderPosition="TabHeaderPosition.Before">
+                    <TabPanelHeader>
+                        <MudTooltip Text="Futtatás" >
+                            <MudIconButton  Class="ml-2 pa-1" Color="Color.Success" Icon="@Icons.Material.Filled.PlayArrow" OnClick="()=>RunTest(context.ID)"/>
+                        </MudTooltip>
 
-                    </MudTabPanel>
+                        @switch (tests[context.ID].result)
+                        {
+                            case null:
+                                <MudIcon Icon="@Icons.Filled.Warning" Color="@Color.Warning"></MudIcon>
+                                break;
+                            case true:
+                                <MudIcon Icon="@Icons.Filled.Check" Color="@Color.Success"></MudIcon>
+                                break;
+                            default:
+                                <MudIcon Icon="@Icons.Filled.Error" Color="@Color.Error"></MudIcon>
+                                break;
+                        }
+                    </TabPanelHeader>
+                    <ChildContent>
+                        @foreach (var test in tests)
+                        {
+                            <MudTabPanel Text="@test.Value.title" ID="@test.Key">
+                                @{
+                                    <div class="d-flex flex-column">
+                                        <MudText Typo="Typo.h6">@test.Value.title</MudText>
+                                        <MudText Typo="Typo.body1">@test.Value.description</MudText>
+                                        @*<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => { testResult1 = Test1.RunTest(); StateHasChanged(); }">Futtatás</MudButton>*@
+                                        <MudText >Eredmény: @renderText(@test.Value.result)</MudText>
+                                        <MudText>@test.Value.resultText</MudText>
+                                    </div>
+                                }
+                            </MudTabPanel>
+                        }
+                    </ChildContent>
                 </MudTabs>
             </ChildContent>
         </MudExpansionPanel>
-
-        <!-- További alfejezetek -->
-
     </MudExpansionPanels>
 </MudContainer>
+
+@code
+{
+
+    Dictionary<object, (Func<(bool,string?)>, bool? result, string? resultText, string title, string description)> tests = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        tests["1"] = (Test1.RunTest, null, resultText:null, title: "1. Teszt, létező komponens", description:"Ez a teszt ellenőrzni, hogy létrehozta-e a komponenst");
+        tests["2"] = (Test1.RunTest2, null, resultText: null, title: "2. Teszt, komponens tartalma helyes", description:"Ez a teszt ellenőrzni, hogy valóban azt tartalmazza-e a komponens, ami az elvárt");
+    }
+
+    void RunTest(object ID)
+    {
+        var valueTuple = tests[ID];
+        var item1 = valueTuple.Item1();
+        tests[ID] = (valueTuple.Item1, item1.Item1, item1.Item2, valueTuple.title, valueTuple.description);
+        Console.WriteLine(item1);
+        StateHasChanged();
+    }
+    
+    bool? testResult1 = null;
+    bool? testResult2 = null;
+
+    private string renderText(bool? result)
+    {
+        if (result == null) return "még nem futott";
+        return result.Value ? "Siker" : "Elbukott";
+    }
+
+    /*private string GetIcon(object contextId)
+    {
+        var (item1, result, title, description) = tests[contextId];
+        if (result == null)
+        {
+            return Icons.Filled.Warning;
+        }
+        return result ? Icons.Filled.Check;
+    }*/
+}
