@@ -9,12 +9,32 @@
 {
     <div>
         <MudPaper Elevation="3" Class="p-3">
-            <MudText Class="fw-bold mb-2">Automated tests for exercise:</MudText>
+            <MudText Typo="Typo.h6">Exercise runner</MudText>
+            <MudDivider />
+            <MudText Typo="Typo.subtitle1" Class="fw-bold">You can take a look of your component's current state:</MudText>
+            <ErrorBoundary>
+                <ChildContent>
+                    <div class="my-1 p-2 subtle-border">
+                        @if (ComponentUnderTestHelperFragment != null)
+                        {
+                            <MudDivider DividerType="DividerType.Middle" Class="border-2 border-dark mb-2"></MudDivider>
+                            @ComponentUnderTestHelperFragment
+                            <MudDivider DividerType="DividerType.Middle" Class="border-2 border-dark mb-2"></MudDivider>
+                        }
+                        <DynamicComponent Type="GetComponentUnderTest()" Parameters="ComponentUnderTestParameters"></DynamicComponent>
+                    </div>
+                </ChildContent>
+                <ErrorContent>
+                    <MudText Typo="Typo.subtitle1" Color="Color.Error">In its current state, the component cannot be rendered! Please carry on with implementing it, as soon as it reaches the point where it can render, you will see it here!</MudText>
+                </ErrorContent>
+            </ErrorBoundary>
+            <MudDivider/>
+            <MudText Class="fw-bold mt-1 mb-2">Automated tests for exercise:</MudText>
             <div class="d-flex justify-content-between align-items-center ">
                 <div class="d-flex justify-content-start align-items-center gap-3">
                     <MudButton Color="Color.Primary" Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.PlayArrow" IconColor="Color.Success" OnClick="() => TestRunnerService.RunAllInTestClass(typeof(TTestClass))">Run all</MudButton>
-                    <MudText Typo="Typo.body1">Successful: <strong>@_testDescriptors.Count(p => p.Value is {IsSuccessful:true})/@_testDescriptors.Count</strong></MudText>
-                    <MudText Typo="Typo.body1">Failed: <strong>@_testDescriptors.Count(p => p.Value is {IsSuccessful: false })/@_testDescriptors.Count</strong></MudText>
+                    <MudText Typo="Typo.body1">Successful: <strong>@_testDescriptors.Count(p => p.Value is { IsSuccessful: true })/@_testDescriptors.Count</strong></MudText>
+                    <MudText Typo="Typo.body1">Failed: <strong>@_testDescriptors.Count(p => p.Value is { IsSuccessful: false })/@_testDescriptors.Count</strong></MudText>
                     <MudText Typo="Typo.body1">Not run: <strong>@_testDescriptors.Count(p => p.Value is null)/@_testDescriptors.Count</strong></MudText>
                 </div>
                 <MudText Typo="Typo.body1" Class="text-end">Component under test: <strong>@TestComponentName</strong>.razor</MudText>
@@ -47,7 +67,10 @@
                                 }
                                 <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
                                 <MudText Color="@GetTextColor(test)">
-                                    @if(test.Key.IsPrecondition){<strong>[Precondition] </strong>}
+                                    @if (test.Key.IsPrecondition)
+                                    {
+                                        <strong>[Precondition] </strong>
+                                    }
                                     @test.Key.Title
                                 </MudText>
                             </div>
@@ -63,12 +86,12 @@
                                             <HtmlMarkupMismatch TestRunResult="@htmlMarkupMismatchTestRunResult"/>
                                             break;
                                         case PreconditionsNotMetTestRunResult preconditionsNotMetTestRunResult:
-                                            <PreconditionsNotMet TestRunResult="preconditionsNotMetTestRunResult" />
+                                            <PreconditionsNotMet TestRunResult="preconditionsNotMetTestRunResult"/>
                                             break;
                                         case CollectionsNotEquivalentTestRunResult collectionsNotEquivalentTestRunResult:
-                                            <CollectionsNotEqual TestRunResult="collectionsNotEquivalentTestRunResult" />
+                                            <CollectionsNotEqual TestRunResult="collectionsNotEquivalentTestRunResult"/>
                                             break;
-                                        case {ErrorMessage: not null }:
+                                        case { ErrorMessage: not null }:
                                             <MudText Class="text-start" Typo="@Typo.body1" Color="Color.Error">@test.Value.ErrorMessage</MudText>
                                             break;
                                         default:
@@ -77,6 +100,7 @@
                                             {
                                                 <MudText Color="@Color.Success">Test was successful!</MudText>
                                             }
+
                                             break;
                                         }
                                     }
@@ -94,14 +118,7 @@
                         <MudText Class="fw-bold" Typo="Typo.subtitle1">Congratulations! All tests passed, you successfully passed the exercise!</MudText>
                         <MudIcon Icon="@Icons.Material.Filled.Celebration" Color="Color.Tertiary"></MudIcon>
                     </div>
-                    <MudText Typo="Typo.subtitle1">Take a look and feel free to play around with the component you finished!</MudText>
-                    @if (ComponentUnderTestHelperFragment != null)
-                    {
-                        <MudDivider DividerType="DividerType.Middle" Class="border-2 border-dark mb-2"></MudDivider>
-                        @ComponentUnderTestHelperFragment
-                    }
-                    <MudDivider DividerType="DividerType.Middle" Class="border-2 border-dark mb-2"></MudDivider>
-                    <DynamicComponent Type="GetComponentUnderTest()" Parameters="ComponentUnderTestParameters"></DynamicComponent>
+
                 </MudPaper>
             }
         </MudPaper>
