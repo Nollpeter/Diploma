@@ -22,6 +22,7 @@
         await base.OnInitializedAsync();
         IsExpandedChanged = EventCallback.Factory.Create<bool>(this, async b => { await PanelStateService.SaveExpansionState(Id, b); });
         IsExpanded = await PanelStateService.IsExpanded(Id);
+        Class = Class + " sticky";
         StateHasChanged();
     }
 }
