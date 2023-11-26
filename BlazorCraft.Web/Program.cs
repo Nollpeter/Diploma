@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using BlazorCraft.Web;
+using BlazorCraft.Web.Infrastructure;
 using BlazorCraft.Web.Tests.Introduction;
 using Blazored.LocalStorage;
 using MudBlazor.Services;
@@ -13,5 +14,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddMudServices();
 builder.Services.AddTransient<Test1>();
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<IPanelStateService, PanelStateService>();
 
 await builder.Build().RunAsync();

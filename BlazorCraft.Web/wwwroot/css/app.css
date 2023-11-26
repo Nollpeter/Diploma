@@ -61,3 +61,10 @@
     content: var(--blazor-load-percentage-text, "Loading");
 }
 
+p {
+    text-align: justify;
+}
+
+hr {
+    background-color: black !important;
+}

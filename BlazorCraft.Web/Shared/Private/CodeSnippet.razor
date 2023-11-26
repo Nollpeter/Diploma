@@ -1,4 +1,5 @@
-﻿<pre class="code">
+﻿@using Microsoft.AspNetCore.Components.Rendering
+<pre class="code">
     <code class="@Language">
        @ChildContent
     </code>
@@ -13,12 +14,10 @@
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
-    public string Language { get; set; } = "csharp";
+    public string Language { get; set; } = "razor";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await _js.InvokeVoidAsync("highlightSnippet");
-        
     }
-
 }

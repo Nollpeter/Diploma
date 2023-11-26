@@ -1,0 +1,139 @@
+﻿@using System.Reflection
+@using BlazorCraft.Web.Infrastructure.Attributes
+@typeparam TTestClass 
+@if (_isInitialized)
+{
+    <div>
+        <div class="d-flex justify-content-start align-items-center mt-8 gap-3">
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.PlayArrow" IconColor="Color.Success" OnClick="RunAll">Run all</MudButton>
+            <MudText Typo="Typo.body1">Successful: <strong>@_testDescriptors.Count(p => p.Value is {IsSuccessful:true})/@_testDescriptors.Count</strong></MudText>
+            <MudText Typo="Typo.body1">Failed: <strong>@_testDescriptors.Count(p => p.Value is {IsSuccessful: false })/@_testDescriptors.Count</strong></MudText>
+            <MudText Typo="Typo.body1">Not run: <strong>@_testDescriptors.Count(p => p.Value is null)/@_testDescriptors.Count</strong></MudText>
+        </div>
+        <MudTabs Outlined="true" Position="Position.Left" Rounded="true" Border="true" ApplyEffectsToContainer="true" Class="mt-0" PanelClass="pa-3 " TabPanelHeaderPosition="TabHeaderPosition.Before">
+            <TabPanelHeader>
+                <div class="d-flex gap-2 me-3">
+                    <MudTooltip Text="Run">
+                        <MudIconButton Class="ml-2 pa-1" Color="Color.Success" Icon="@Icons.Material.Filled.PlayArrow" OnClick="() => RunTest((TestDescriptor)context.ID)"/>
+                    </MudTooltip>
+                    <MudDivider Vertical="true" Class="h-100 bg-dark fw-bold"></MudDivider>
+                    <MudTooltip Text="Run state">
+                        @switch (_testDescriptors[(TestDescriptor)context.ID])
+                        {
+                            case null:
+                                <MudIcon Icon="@Icons.Filled.QuestionMark" Color="@Color.Default" Size="Size.Small"/>
+                                break;
+                            default:
+                            {
+                                if (_testDescriptors[(TestDescriptor)context.ID]!.IsSuccessful)
+                                {
+                                    <MudIcon Icon="@Icons.Filled.Check" Color="@Color.Success"/>
+                                }
+                                else
+                                {
+                                    <MudIcon Icon="@Icons.Filled.Error" Color="@Color.Error"/>
+                                }
+                                break;
+                            }
+                        }
+                    </MudTooltip>
+                    <MudDivider Vertical="true" Class="h-100 bg-dark fw-bold"></MudDivider>
+                </div>
+            </TabPanelHeader>
+            <ChildContent>
+                @foreach (var test in _testDescriptors)
+                {
+                    <MudTabPanel Text="@test.Key.Title" ID="@test.Key">
+                        @{
+                            <div class="d-flex flex-column gap-3 w-100">
+                                <div class="d-flex justify-content-between">
+                                    <MudText Typo="Typo.h5">@test.Key.Title</MudText>
+                                    @if (test.Value == null)
+                                    {
+                                        <MudText Typo="Typo.body1" Color="Color.Warning">Not run</MudText>
+                                    }
+                                    else if (test.Value.IsSuccessful)
+                                    {
+                                        <MudText Typo="Typo.body1" Color="Color.Success">Successful</MudText>
+                                    }
+                                    else
+                                    {
+                                        <MudText Typo="Typo.body1" Color="Color.Error">Failed</MudText>
+                                    }
+                                </div>
+                                <MudText Typo="Typo.body1">@test.Key.Description</MudText>
+                                @*TODO Hint*@
+                                <MudText>Result:</MudText>
+                                @if (test.Value is {ErrorMessage: not null })
+                                {
+                                    <MudText Typo="Typo.body1">@test.Value.ErrorMessage</MudText>
+                                }
+                            </div>
+                        }
+                    </MudTabPanel>
+                }
+            </ChildContent>
+        </MudTabs>
+    </div>
+}
+else
+{
+    <MudProgressCircular Indeterminate="true" Color="Color.Primary"/>
+}
+
+@code {
+
+    Dictionary<TestDescriptor, TestRunResult?> _testDescriptors = null!;
+    bool _isInitialized = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        _testDescriptors = GetTestRunResultMethods();
+        _isInitialized = true;
+        StateHasChanged();
+    }
+
+    public record TestDescriptor(Func<TestRunResult> Method, string Title, string Description, string? Hint)
+    {
+        public override int GetHashCode() => Title.GetHashCode();
+    }
+
+
+    private Dictionary<TestDescriptor, TestRunResult?> GetTestRunResultMethods()
+    {
+        Dictionary<TestDescriptor, TestRunResult?> resultList = new();
+        foreach (var methodInfo in typeof(TTestClass).GetMethods(BindingFlags.Instance | BindingFlags.Public))
+        {
+            if (methodInfo.ReturnType != typeof(TestRunResult))
+            {
+                continue;
+            }
+
+            var titleAttribute = methodInfo.GetCustomAttribute<TitleAttribute>();
+            var descriptionAttribute = methodInfo.GetCustomAttribute<DescriptionAttribute>();
+            var hintAttribute = methodInfo.GetCustomAttribute<HintAttribute>();
+            Func<TestRunResult> func = (Func<TestRunResult>)Delegate.CreateDelegate(typeof(Func<TestRunResult>), null, methodInfo);
+            resultList.Add(new(func, titleAttribute?.Title, descriptionAttribute?.Description, hintAttribute?.Hint), null);
+        }
+        return resultList;
+    }
+
+
+    private void RunTest(TestDescriptor contextId)
+    {
+        var contextIdMethod = contextId.Method();
+        _testDescriptors[contextId] = contextIdMethod;
+        StateHasChanged();
+    }
+
+    private void RunAll()
+    {
+        foreach (var testDescriptor in _testDescriptors)
+        {
+            var testResult = testDescriptor.Key.Method();
+            _testDescriptors[testDescriptor.Key] = testResult;
+        }
+    }
+
+}

@@ -1,0 +1,14 @@
+﻿@inherits MudText
+@{
+    base.BuildRenderTree(__builder);
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Inline = true;
+        Class += "fw-bold text-decoration-underline";
+    }
+
+}

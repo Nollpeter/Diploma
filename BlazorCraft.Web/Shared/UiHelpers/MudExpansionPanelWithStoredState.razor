@@ -1,0 +1,27 @@
+﻿@using BlazorCraft.Web.Infrastructure
+@inherits MudExpansionPanel
+@inject IPanelStateService PanelStateService
+@{
+    base.BuildRenderTree(__builder);
+}
+
+@code {
+
+    [Parameter, EditorRequired]
+    public string Id { get; set; } = null!;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        
+        StateHasChanged();
+        await base.OnParametersSetAsync();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        IsExpandedChanged = EventCallback.Factory.Create<bool>(this, async b => { await PanelStateService.SaveExpansionState(Id, b); });
+        IsExpanded = await PanelStateService.IsExpanded(Id);
+        StateHasChanged();
+    }
+}

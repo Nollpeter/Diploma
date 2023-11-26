@@ -1,13 +1,21 @@
 ﻿using System.Reflection;
+using BlazorCraft.Web.Infrastructure.Attributes;
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace BlazorCraft.Web.Tests.Introduction;
 
+public record TestRunResult(bool IsSuccessful, string? ErrorMessage)
+{
+    public static TestRunResult Success => new(true, null);
+}
+
 public class Test1 : TestContext
 {
-    public (bool, string?) RunTest()
+    [Title("Létező komponens")]
+    [Description("Ez a teszt ellenőrzni, hogy létrehozta-e a komponenst")]
+    public TestRunResult RunTest()
     {
         string componentName = "HelloWorld";
         // Megkeresi a komponens típust a név alapján.
@@ -18,10 +26,12 @@ public class Test1 : TestContext
             throw new ArgumentException($"A {componentName} komponens nem található.", nameof(componentName));
         }
 
-        return (true, null);
+        return new (true, null);
     }
 
-    public (bool, string?) RunTest2()
+    [Title("komponens tartalma helyes")]
+    [Description("Ez a teszt ellenőrzni, hogy valóban azt tartalmazza-e a komponens, ami az elvárt")]
+    public TestRunResult RunTest2()
     {
         try
         {
@@ -42,18 +52,18 @@ public class Test1 : TestContext
             var invokeMarkup = invoke.Markup;
             if (invokeMarkup == "<h6>Hello World!</h6>")
             {
-                return (true, null);
+                return TestRunResult.Success;
             }
             else
             {
-                return (false, $"Nem megfelelő markup. Elvárt: <h6>Hello World!</h6>, Kapott: {invokeMarkup}");
+                return new(false, $"Nem megfelelő markup. Elvárt: <h6>Hello World!</h6>, Kapott: {invokeMarkup}");
             }
             
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            return (false, "Hiba történt a teszt végrehajtása közben");
+            return new(false, "Hiba történt a teszt végrehajtása közben");
         }
         
     }
