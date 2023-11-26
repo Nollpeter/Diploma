@@ -1,0 +1,9 @@
+﻿.text-wrap {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+::deep .text-wrap > .d-grid > .mud-typography {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}

@@ -3,130 +3,191 @@
 <MudText>
     Blazor components offer several virtual methods that allow us to modify our application's behavior.
     These methods get invoked at various points throughout a component's lifecycle.
-    The following diagram illustrates the sequence in which these lifecycle methods are called
+    The following diagram illustrates the sequence in which these lifecycle methods are called.
 </MudText>
-<MudImage Src="\img\component-lifecycle.jpg"/>
+
 <MudExpansionPanels MultiExpansion="true">
-    <MudExpansionPanelWithStoredState Id="SetParametersAsync">
+    <MudExpansionPanelWithStoredState Id="lifecycle-methods">
         <TitleContent>
-            <MudText Typo="Typo.h6" Class="fw-bold">SetParametersAsync</MudText>
+            <MudText Typo="Typo.h6" Class="fw-bold">Lifecycle methods</MudText>
         </TitleContent>
         <ChildContent>
-            <div class="d-grid gap-3">
-                <MudText>This method is executed whenever the parent renders.</MudText>
-                <MudText>Parameters that were passed into the component are contained in a ParameterView. This is a good point at which to make asynchronous calls to a server (for example) based on the state passed into the component.</MudText>
-                <MudText>The component’s [Parameter] properties are assigned their values when you call base.SetParametersAsync(parameters) inside your override.</MudText>
-                <MudText>It is also the correct place to assign default parameter values. See Optional route parameters for a full explanation.</MudText>
+            <div class="row">
+                <div class="col-5">
+                    <MudImage Src="\img\component-lifecycle.jpg" Style="max-width: 100%; top: 64px; z-index: 1000; position: sticky;"/>
+                </div>
+                <div class="col-7 text-wrap">
+                    <div class="d-grid gap-3" style="max-width: 100%">
+                        <MudText Typo="Typo.h6" Class="fw-bold">SetParametersAsync</MudText>
+                        <MudText>This method is executed whenever the parent renders.</MudText>
+                        <MudText>Parameters that were passed into the component are contained in a ParameterView. This is a good point at which to make asynchronous calls to a server (for example) based on the state passed into the component.</MudText>
+                        <MudText>The component’s <strong>[Parameter]</strong> properties are assigned their values when you call <strong>base.SetParametersAsync(parameters)</strong> inside your override.</MudText>
+                        <MudText>It is also the correct place to assign default parameter values. See Optional route parameters for a full explanation.</MudText>
+                        <MudDivider/>
+                        <MudText Typo="Typo.h6" Class="fw-bold">OnInitialized / OnInitializedAsync</MudText>
+                        <MudText>
+                            Once the state from the ParameterCollection has been assigned to the component's <strong>[Parameter]</strong> properties, these methods are executed.
+                            This is useful in the same way as SetParametersAsync, except it is possible to use the component's state.
+                        </MudText>
+                        <MudText>
+                            * This method is only executed once when the component is first created.
+                            If the parent changes the component's parameters at a later time, this method is skipped.
+                        </MudText>
+                        <MudText>
+                            Note: When the component is a @("@page"), and our Blazor app navigates to a new URL that renders the same page, Blazor will reuse the current object instance for that page.
+                            Because the object is the same instance, Blazor does not call IDisposable.Dispose on the object, nor does it execute its OnInitialized method again.
+                        </MudText>
+                        <MudDivider/>
+                        <MudText Typo="Typo.h6" Class="fw-bold">OnParametersSet / OnParametersSetAsync</MudText>
+                        <MudText>
+                            This method will be executed immediately after OnInitializedAsync if this is a new instance of a component.
+                            If it is an existing component that is being re-rendered because its parent is re-rendering then the OnInitialized* methods will not be executed, and this method will be executed immediately after SetParametersAsync instead
+                        </MudText>
+                        <MudDivider/>
+                        <MudText Typo="Typo.h6" Class="fw-bold">StateHasChanged</MudText>
+                        <MudText>This method flags the component to be rendered.</MudText>
+                        <MudText>A component will call this method whenever it wants to inform Blazor that changes have occurred that would result in the rendered output being different</MudText>
+                        <MudText>Consider the following example:</MudText>
+                        <CompanionSnippets TComponent="StateHasChangedExample" TUsage="StateHasChangedExampleUsage"/>
+
+                        <MudText>Without calling <strong>StateHasChanged()</strong>, this component would always show "Elapsed seconds: 0"</MudText>
+                        <MudDivider/>
+                        <MudText Typo="Typo.h6" Class="fw-bold">ShouldRender</MudText>
+                        <MudText>
+                            This method can be used to prevent the component's RenderTree from being recalculated by returning false.
+                            Note that this method is not executed the first time a component is created and rendered.
+                        </MudText>
+                        <MudText>
+                            Instructing Blazor not to go through the BuildRenderTree process can save processing time and improve the user's experience when we know that our state is either unaltered since the last render, or only altered in a way that would cause identical output to be rendered.
+                        </MudText>
+                        <MudText Class="italic">
+                            * This method is not executed the first time the component is rendered.
+                        </MudText>
+                        <MudDivider/>
+                        <MudText Typo="Typo.h6" Class="fw-bold">OnAfterRender / OnAfterRenderAsync</MudText>
+                        <MudText>
+                            These last two methods are executed every time Blazor has re-generated the component's RenderTree.
+                            This can be as a result of the component's parent re-rendering, the user interacting with the component (e.
+                            g.
+                            a mouse-click), or if the component executes its StateHasChanged method to invoke a re-render.
+                        </MudText>
+                        <MudText>
+                            These methods have a single parameter named firstRender.
+                            This parameter is true only the first time the method is called on the current component, from there onwards it will always be false.
+                            In cases where additional component hook-up is required (for example, via JavaScript) it is useful to know this is the first render.
+                        </MudText>
+                        <MudText>
+                            It is not until after the OnAfterRender methods have executed that it is safe to use any references to components set via the @("@ref") directive.
+                        </MudText>
+                        <CodeSnippet>
+                            @("""<ChildComponent @ref=MyReferenceToChildComponent/>""" + "\n" +
+                              "\n" +
+                              """@code""" + "\n" +
+                              """{""" + "\n" +
+                              """    // This will be null until the OnAfterRender\* methods execute""" + "\n" +
+                              """    ChildComponent MyReferenceToChildComponent;""" + "\n" +
+                              """}""" + "\n")
+                        </CodeSnippet>
+                        <MudText>And it is not until after the OnAfterRender methods have been executed with firstRender set to true that it is safe to use any references to HTML elements set via the @("@ref") directive.</MudText>
+                        <CodeSnippet>
+                            @("""<h1 @ref=MyReferenceToAnHtmlElement>Hello</h1>""" + "\n" +
+                              "\n" +
+                              """@code""" + "\n" +
+                              """{""" + "\n" +
+                              """    // This will be null until the OnAfterRender\* methods execute""" + "\n" +
+                              """    // with firstRender set to true""" + "\n" +
+                              """    ElementReference MyReferenceToAnHtmlElement;""" + "\n" +
+                              """}""" + "\n")
+                        </CodeSnippet>
+                    </div>
+                </div>
             </div>
         </ChildContent>
     </MudExpansionPanelWithStoredState>
-    <MudExpansionPanelWithStoredState Id="OnInitialized ">
+    <MudExpansionPanelWithStoredState Id="await-in-async-lifecycle-methods ">
         <TitleContent>
-            <MudText Typo="Typo.h6" Class="fw-bold">OnInitialized / OnInitializedAsync</MudText>
+            <MudText Typo="Typo.h6" Class="fw-bold">Awaiting within Async lifecycle methods</MudText>
         </TitleContent>
         <ChildContent>
             <div class="d-grid gap-3">
                 <MudText>
-                    Once the state from the ParameterCollection has been assigned to the component's <strong>[Parameter]</strong> properties, these methods are executed.
-                    This is useful in the same way as SetParametersAsync, except it is possible to use the component's state.
+                    It is important to note that instead of waiting for long-running asynchronous methods to complete before being able to render a component, Blazor will trigger a render as soon as it possibly can.
                 </MudText>
+                <MudText> This enables the component to render mark-up for the user to see whilst it performs background tasks such as retrieving data from a server.</MudText>
+
+                <MudText Typo="Typo.h6">Individual method await behaviours</MudText>
+                <MudSimpleTable>
+                    <thead>
+                    <tr>
+                        <th class="fw-bold">LifeCycle method</th>
+                        <th class="fw-bold">Action on first await</th>
+                        <th class="fw-bold">Action on exiting method</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="fw-bold">SetParametersAsync</td>
+                        <td>Continue the lifecycle process (OnInitialized* if new instance, otherwise OnParametersSet*)</td>
+                        <td>No further action</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">OnInitializedAsync</td>
+                        <td>Render the component</td>
+                        <td>Continue the lifecycle process</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">OnParametersSetAsync</td>
+                        <td>Render the component</td>
+                        <td>Continue the lifecycle process</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">OnAfterRenderAsync</td>
+                        <td>No further action</td>
+                        <td>No further action</td>
+                    </tr>
+                    </tbody>
+                </MudSimpleTable>
                 <MudText>
-                    * This method is only executed once when the component is first created.
-                    If the parent changes the component's parameters at a later time, this method is skipped.
+                    <strong>Note:</strong> The <strong>base.SetParametersAsync</strong> method must be executed before any await instructions in the method <strong>SetParametersAsync</strong>, otherwise an InvalidOperationException will be thrown.
+                    The simple rule is that <strong>SetParametersAsync</strong> is the only method that cannot suspend the lifecycle process by awaiting a Task.
                 </MudText>
-                <MudText>
-                    Note: When the component is a @("@page"), and our Blazor app navigates to a new URL that renders the same page, Blazor will reuse the current object instance for that page.
-                    Because the object is the same instance, Blazor does not call IDisposable.Dispose on the object, nor does it execute its OnInitialized method again.
-                </MudText>
-            </div>
-        </ChildContent>
-    </MudExpansionPanelWithStoredState>
-    <MudExpansionPanelWithStoredState Id="OnParametersSet  ">
-        <TitleContent>
-            <MudText Typo="Typo.h6" Class="fw-bold">OnParametersSet / OnParametersSetAsync</MudText>
-        </TitleContent>
-        <ChildContent>
-            <div class="d-grid gap-3">
-                <MudText>
-                    This method will be executed immediately after OnInitializedAsync if this is a new instance of a component.
-                    If it is an existing component that is being re-rendered because its parent is re-rendering then the OnInitialized* methods will not be executed, and this method will be executed immediately after SetParametersAsync instead
-                </MudText>
-            </div>
-        </ChildContent>
-    </MudExpansionPanelWithStoredState>
-    <MudExpansionPanelWithStoredState Id="StateHasChanged">
-        <TitleContent>
-            <MudText Typo="Typo.h6" Class="fw-bold">StateHasChanged</MudText>
-        </TitleContent>
-        <ChildContent>
-            <div class="d-grid gap-3">
-                <MudText>This method flags the component to be rendered.</MudText>
-                <MudText>A component will call this method whenever it wants to inform Blazor that changes have occurred that would result in the rendered output being different</MudText>
-                <MudText>Consider the following example:</MudText>
-                <CompanionSnippets TComponent="StateHasChangedExample" TUsage="StateHasChangedExampleUsage"/>
-                
-                <MudText>Without calling <strong>StateHasChanged()</strong>, this component would always show "Elapsed seconds: 0"</MudText>
-            </div>
-        </ChildContent>
-    </MudExpansionPanelWithStoredState>
-    <MudExpansionPanelWithStoredState Id="ShouldRender">
-        <TitleContent>
-            <MudText Typo="Typo.h6" Class="fw-bold">ShouldRender</MudText>
-        </TitleContent>
-        <ChildContent>
-            <div class="d-grid gap-3">
-                <MudText>
-                    This method can be used to prevent the component's RenderTree from being recalculated by returning false.
-                    Note that this method is not executed the first time a component is created and rendered.
-                </MudText>
-                <MudText>
-                    Instructing Blazor not to go through the BuildRenderTree process can save processing time and improve the user's experience when we know that our state is either unaltered since the last render, or only altered in a way that would cause identical output to be rendered.
-                </MudText>
-                <MudText Class="italic">
-                    * This method is not executed the first time the component is rendered.
-                </MudText>
-            </div>
-        </ChildContent>
-    </MudExpansionPanelWithStoredState>
-    <MudExpansionPanelWithStoredState Id="OnAfterRender">
-        <TitleContent>
-            <MudText Typo="Typo.h6" Class="fw-bold">OnAfterRender / OnAfterRenderAsync</MudText>
-        </TitleContent>
-        <ChildContent>
-            <div class="d-grid gap-3">
-                <MudText>
-                    These last two methods are executed every time Blazor has re-generated the component's RenderTree.
-                    This can be as a result of the component's parent re-rendering, the user interacting with the component (e.
-                    g.
-                    a mouse-click), or if the component executes its StateHasChanged method to invoke a re-render.
-                </MudText>
-                <MudText>
-                    These methods have a single parameter named firstRender.
-                    This parameter is true only the first time the method is called on the current component, from there onwards it will always be false.
-                    In cases where additional component hook-up is required (for example, via JavaScript) it is useful to know this is the first render.
-                </MudText>
-                <MudText>
-                    It is not until after the OnAfterRender methods have executed that it is safe to use any references to components set via the @("@ref") directive.
-                </MudText>
-                <CodeSnippet>
-                    @("""<ChildComponent @ref=MyReferenceToChildComponent/>"""+"\n"+
-                    "\n"+
-                    """@code"""+"\n"+
-                    """{"""+"\n"+
-                    """    // This will be null until the OnAfterRender\* methods execute"""+"\n"+
-                    """    ChildComponent MyReferenceToChildComponent;"""+"\n"+
-                    """}"""+"\n")
+                <MudText>All other async methods can suspend the lifecycle process until execution exits the method, and the first await will cause a render via <strong>BuildRenderTree</strong> to prevent the user from having to wait to see updates.</MudText>
+                <MudText>OnRenderAsync might look like an exception as it performs no further action in either case. If we consider the fact that rendering is the end of execution chain then we can think of it as completing the chain rather than doing nothing. As for rendering on await, if desired then this must be done explicitly by the programmer by calling StateHasChanged, otherwise an await in an OnAfterRenderAsync would cause an endless loop.</MudText>
+                <MudDivider></MudDivider>
+
+
+                <MudText Typo="Typo.h6" Class="fw-bold">Asynchronous methods and multiple awaits</MudText>
+                <MudText>The code Blazor executes on await inside an async method will only be executed on the first await. Subsequent awaits will not cause multiple renders. For example</MudText>
+
+                <CodeSnippet Language="csharp">
+                    @("protected override async Task OnParametersSetAsync() \n"+
+                      "{ \n"+
+                      "  // Automatically renders when next line starts to await \n"+
+                      "  await Task.Delay(1000); \n"+
+                      " \n"+
+                      "  // No automatic render when next line starts to await \n"+
+                      "  await Task.Delay(1000); \n"+
+                      " \n"+
+                      "  // No automatic render when next line starts to await \n"+
+                      "  await Task.Delay(1000); \n"+
+                      "} \n")
                 </CodeSnippet>
-                <MudText>And it is not until after the OnAfterRender methods have been executed with firstRender set to true that it is safe to use any references to HTML elements set via the @("@ref") directive.</MudText>
-                <CodeSnippet>
-                    @("""<h1 @ref=MyReferenceToAnHtmlElement>Hello</h1>"""+"\n"+
-                    "\n"+
-                    """@code"""+"\n"+
-                    """{"""+"\n"+
-                    """    // This will be null until the OnAfterRender\* methods execute"""+"\n"+
-                    """    // with firstRender set to true"""+"\n"+
-                    """    ElementReference MyReferenceToAnHtmlElement;"""+"\n"+
-                    """}"""+"\n")
+                
+                <MudText>If we want to render at additional points then we must call <strong>StateHasChanged</strong> just before all additional await statements.</MudText>
+                <CodeSnippet Language="csharp">
+                    @("protected override async Task OnParametersSetAsync() \n"+
+                    "{ \n"+
+                    "// Automatically renders when next line starts to await \n"+
+                    "await Task.Delay(1000); \n"+
+                    " \n"+
+                    "// Explicitly render when next line starts to await \n"+
+                    "StateHasChanged(); \n"+
+                    "await Task.Delay(1000); \n"+
+                    " \n"+
+                    "// Explicitly render when next line starts to await \n"+
+                    "StateHasChanged(); \n"+
+                    "await Task.Delay(1000); \n"+
+                    "} \n")
                 </CodeSnippet>
             </div>
         </ChildContent>

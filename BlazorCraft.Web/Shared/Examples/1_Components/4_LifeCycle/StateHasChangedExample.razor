@@ -7,11 +7,13 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        timer = new System.Timers.Timer(1000); // Timer fires every 1 second (1000 milliseconds) 
+        // Timer fires every 1 second (1000 milliseconds)
+        timer = new System.Timers.Timer(1000);  
         timer.Elapsed += (sender, e) =>
         {
-            elapsedSeconds++; // Increase the elapsed time every second. 
-            StateHasChanged(); // Notify Blazor that the component needs to be re-rendered
+            elapsedSeconds++;  
+            // Notify Blazor that the component needs to be re-rendered
+            StateHasChanged(); 
         };
         timer.Start();
     }
