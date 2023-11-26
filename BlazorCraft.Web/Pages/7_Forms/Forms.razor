@@ -7,7 +7,7 @@
 @using BlazorCraft.Web.Tests.Forms
 @using IEmployeeService = BlazorCraft.Web.Shared._Exercises.DependencyInjection.IEmployeeService
 <MudText Typo="Typo.h4">Forms</MudText>
-<div class="d-grid gap-3">
+<SpacedContent>
 @*<MudText Typo="Typo.h6" Class="fw-bold">What is dependency injection?</MudText>*@
 <MudText>
     So far, we have only covered how to display data that has already been provided, now it is time to dig ourselves into how to
@@ -22,7 +22,7 @@
         <MudText Typo="Typo.h6" Class="fw-bold">The blazor EditForm</MudText>
     </TitleContent>
     <ChildContent>
-        <div class="d-grid gap-3">
+        <SpacedContent>
             <MudText>
                 If you are familiar with pure html forms, all of this should be very familiar to you.
                 The core concept for html forms is the following:
@@ -117,7 +117,7 @@
             </MudText>
             <AdvancedCodeSnippet TComponent="EditFormExample" RenderOutput="true"/>
 
-        </div>
+        </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 
@@ -126,7 +126,7 @@
         <MudText Typo="Typo.h6" Class="fw-bold">Validation</MudText>
     </TitleContent>
     <ChildContent>
-        <div class="d-grid gap-3">
+        <SpacedContent>
             <MudText>So far what we have seen may not be too convincing to use blazor forms, its power starts to shine, once we want to validate our models</MudText>
             <MudText>
                 There are various techniques to validate blazor form models, however the most straightforward, and the one we are going to use is
@@ -257,7 +257,7 @@
             </MudText>
             <MudText>Let's see an example where the fields are required, and the result is only shown, if the form is in a valid state: </MudText>
             <AdvancedCodeSnippet TComponent="DataAnnotationsValidatorExample" RenderOutput="true"/>
-        </div>
+        </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 <MudExpansionPanelWithStoredState Id="forms-exercise">
@@ -267,7 +267,7 @@
         </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
-        <div class="d-grid gap-3">
+        <SpacedContent>
             <MudText>
                 Your exercise here will be to Reuse the List component that you created in the Final exercise for <MudPageLink PageType="typeof(RenderFragments)">Render fragments</MudPageLink>:
                 <strong>@nameof(RenderFragments_LessonFinal)</strong>
@@ -305,11 +305,11 @@
             <TestRunner TTestClass="Test_Forms_Ex_LessonFinal"
                         ComponentUnderTestParameters="@(new Dictionary<string, object>() { })">
             </TestRunner>
-        </div>
+        </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 </MudExpansionPanels>
-</div>
+</SpacedContent>
 
 @code {
 

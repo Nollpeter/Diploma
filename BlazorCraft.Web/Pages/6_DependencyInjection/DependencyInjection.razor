@@ -10,7 +10,7 @@
 @using BlazorCraft.Web.Shared.Examples._7_DependencyInjection
 @using BlazorCraft.Web.Tests.DependencyInjection
 <MudText Typo="Typo.h4">Dependency Injection</MudText>
-<div class="d-grid gap-3">
+<SpacedContent>
     @*<MudText Typo="Typo.h6" Class="fw-bold">What is dependency injection?</MudText>*@
     <MudText>
         While objects in C# can be Created with the <strong>new</strong> keyword, and can be created manually,
@@ -24,7 +24,7 @@
                 <MudText Typo="Typo.h6" Class="fw-bold">Registering objects</MudText>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText>
                         To register an object, we are going to need an instance of an <strong>IServiceCollection</strong> object
                         This is provided for us by the Blazor framework, inside the <strong>Program.cs</strong> via the
@@ -108,7 +108,7 @@
                         "builder.Services.AddExampleServices();\n"+
                         "// ...\n")
                     </CodeSnippet>
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
 
@@ -117,7 +117,7 @@
                 <MudText Typo="Typo.h6" Class="fw-bold">Dependency injection for blazor components</MudText>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText>For blazor objects, dependency injection is done via property injection</MudText>
                     <MudText>There are two ways to achieve this:</MudText>
                     <ul>
@@ -147,7 +147,7 @@
                     <MudText>
                         <strong>Note: </strong> If the the requested service isn't registered, we will receive an <strong>InvalidOperationException</strong>
                     </MudText>
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="di-poco">
@@ -155,7 +155,7 @@
                 <MudText Typo="Typo.h6" Class="fw-bold">Dependency injection for plain C# types</MudText>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText>
                         For plain c# objects, dependency injection is done via constructor injection.
                         This means that whichever objects we require will be added as a constructor parameter, with which we can initialize a
@@ -172,7 +172,7 @@
                         "   }\n"+
                         "}\n")
                     </CodeSnippet>
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="di-exercise">
@@ -182,7 +182,7 @@
                 </PanelHeaderWithTestTracking>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText>
                         Your exercise here will be to Reuse the List component that you created in the Final exercise for <MudPageLink PageType="typeof(RenderFragments)">Render fragments</MudPageLink>:
                         <strong>@nameof(RenderFragments_LessonFinal)</strong>
@@ -217,11 +217,11 @@
                     <TestRunner TTestClass="Test_DependencyInjection_LessonFinal"
                                 ComponentUnderTestParameters="@(new Dictionary<string, object>() { })">
                     </TestRunner>
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
     </MudExpansionPanels>
-</div>
+</SpacedContent>
 
 @code {
 

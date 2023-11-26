@@ -19,11 +19,11 @@
                     Blazor is a <MudText Inline="true" Class="fw-bold text-decoration-underline">Single Page Application </MudText> framework. The name Blazor is a combination/mutation of the words Browser and Razor (the .NET HTML view generating engine). The implication being that instead of having to execute Razor views on the server in order to present HTML to the browser, Blazor is capable of executing these views on the client.
                 </MudText>
                 <!----><MudDivider DividerType="DividerType.Middle" Class="my-6"/><!---->
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText Typo="Typo.h6">What Blazor is not:</MudText>
                     <MudText>Blazor differs from Microsoft's previous attempt, Silverlight, as it doesn't rely on a browser plugin for client-side execution. Silverlight required a plugin, limiting its compatibility, especially on iOS devices.</MudText>
                     <MudText>Blazor operates without the need for any client-side plugins. It can run server-side, with the server handling execution, or directly in the browser through <MudText Inline="true" Class="fw-bold text-decoration-underline">WebAssembly</MudText>. Since WebAssembly is a web standard, it's supported by all major browsers, ensuring that client-side Blazor apps work on Windows, Linux, Mac, Android, and iOS.</MudText>
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
 
@@ -32,12 +32,12 @@
                 <MudText Typo="Typo.h6" Class="fw-bold">What is WebAssembly?</MudText>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText><Important>WebAssembly</Important>, or "Wasm," is an instruction set designed to run on any host that can interpret these instructions or convert them into native machine code for execution.</MudText>
                     <MudText>WebAssembly instructions are encoded in a specific binary format. Any host, whether hardware or software, following this specification can read and execute these binaries, either through interpretation or direct compilation to machine language tailored to the device.</MudText>
                     <MudText>WebAssembly shares similarities with the Common Intermediate Language (CIL) that .NET source code compiles into. Like .NET, Wasm can be generated from higher-level languages like C#.</MudText>
                     <MudText>Blazor does not require .NET to be installed on the client in order to run through WebAssembly.</MudText>
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="hostingModels">
@@ -47,7 +47,7 @@
             <ChildContent>
                 <MudText>Blazor has two hosting models: <Important>Server-side</Important> and <Important>WebAssembly</Important>. Server-side Blazor was launched in September 2019, while WebAssembly became official in May 2020.</MudText>
                 <!----><MudDivider DividerType="DividerType.Middle" Class="my-6"/><!---->
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText Typo="Typo.h6">Server-Side</MudText>
                     <MudImage Src="\img\blazor-server-side.png"></MudImage>
                     <MudText>
@@ -108,9 +108,9 @@
                         </div>
                     </div>
                     <MudText Typo="Typo.h6" Class="fw-bold text-decoration-underline">NOTE: This application will not discuss further this hosting model!</MudText>
-                </div>
+                </SpacedContent>
                 <!----><MudDivider DividerType="DividerType.Middle" Class="my-6"/><!---->
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText Typo="Typo.h6"><MudIcon Icon="@Icons.Rounded.MenuBook"></MudIcon>WebAssembly</MudText>
                     <MudImage Src="\img\blazor-webassembly.png"></MudImage>
                     <MudText>
@@ -171,7 +171,7 @@
                     </div>
                     <MudText Typo="Typo.h6" Class="fw-bold text-decoration-underline">NOTE: From this point on, everything you learn will only be considered inside the boundaries of this hosting model</MudText>
 
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
     </MudExpansionPanels>

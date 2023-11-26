@@ -3,7 +3,7 @@
 @using BlazorCraft.Web.Tests.Exam
 @inject IExamEmployeeService EmployeeService
 <MudText Typo="Typo.h4">Exam exercise</MudText>
-<div class="d-grid gap-3">
+<SpacedContent>
     <MudText>
         Congratulations for making it to the final part of this application!
     </MudText>
@@ -70,7 +70,7 @@
             </ChildContent>
         </MudExpansionPanelWithStoredState>
     </MudExpansionPanels>
-</div>
+</SpacedContent>
 
 @code {
     private ExamEmployee _employee;

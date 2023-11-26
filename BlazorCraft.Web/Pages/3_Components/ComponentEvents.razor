@@ -19,7 +19,7 @@
                 <MudText Typo="Typo.h6" Class="fw-bold">Event Binding</MudText>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText>
                         Event binding is one of the foundational elements for creating interactive user interfaces in Blazor applications.
                         It provides us the ability to bind HTML events directly to C# methods in your component class.
@@ -39,7 +39,7 @@
                         Event handlers will be standard C# methods, they can be synchronous and asynchronous as well.
                     </MudText>
                     <AdvancedCodeSnippet TComponent="EventBindingExample" RenderOutput="true"></AdvancedCodeSnippet>
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="eventCallBack">
@@ -49,7 +49,7 @@
                 </PanelHeaderWithTestTracking>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText>
                         The <strong>EventCallback@("<T>")</strong> class is a special Blazor class that can be used to
                         <ul>
@@ -134,7 +134,7 @@
                                                                   [Test_Components_Events_Ex2.EventCallBackPropertyName] = eventCallback})" />
                         
                     }
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="components_ex-final">
@@ -144,7 +144,7 @@
                 </PanelHeaderWithTestTracking>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText>
                         Your task is to modify the pre-created component: <ComponentFileWithPath T="ComponentEvents_ExLessonFinal"/>, so that it behaves accordingly:
                         <ul>
@@ -168,7 +168,7 @@
                                 "@(new Dictionary<string, object>(){ [Test_Components_Events_ExLessonFinal.EmployeesParameterName]= 
                                      new List<ComponentEvents_Ex2_EventCallBack.Employee>(){ new (1, "employee 1"), new(2, "employee 2")}})"
                                 ></TestRunner>
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
     </MudExpansionPanels>

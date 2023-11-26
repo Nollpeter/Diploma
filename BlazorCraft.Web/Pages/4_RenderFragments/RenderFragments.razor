@@ -2,7 +2,7 @@
 @using BlazorCraft.Web.Tests.RenderFragments
 @using BlazorCraft.Web.Shared.Examples._1_Components._5_RenderFragments.ExampleUsages
 <MudText Typo="Typo.h4">Render Fragments</MudText>
-<div class="d-grid gap-3">
+<SpacedContent>
 <MudText>
     So far, we've developed components that generate their entire rendered output based on parameters.
     However, components aren't always that straightforward.
@@ -31,7 +31,7 @@
         </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
-        <div class="d-grid gap-3">
+        <SpacedContent>
             <MudText>
                 First of all, we would like to have a ListComponent. Our List component will have a title and List items. In this example we will use a record type name <strong>TestClass</strong> for list items
             </MudText>
@@ -77,7 +77,7 @@
             <TestRunner TTestClass="Test_RenderFragments_Ex1_Basics"
                         ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_RenderFragments_Ex1_Basics.TitleFragmentName] = _titleFragment, [Test_RenderFragments_Ex1_Basics.DetailsFragmentName] = (RenderFragment)(builder => { builder.OpenElement(0, "p"); builder.AddContent(1, "Details"); builder.CloseElement(); }) })">
             </TestRunner>
-        </div>
+        </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 <MudExpansionPanelWithStoredState Id="listComponent_items_templateable">
@@ -87,7 +87,7 @@
         </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
-        <div class="d-grid gap-3">
+        <SpacedContent>
             <MudText>The next step is that we make the List items customizable as well. We may want to use <strong>@("<p>")</strong> tags, instead of <strong>@("div>")</strong></MudText>
             <AdvancedCodeSnippet TComponent="ListComponent3" ShowComponentName="true"/>
             <MudText>
@@ -127,7 +127,7 @@
             </MudText>
             <TestRunner TTestClass="Test_RenderFragments_Ex2_RenderFragment_Parameter"
                         ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_RenderFragments_Ex2_RenderFragment_Parameter.TitleFragmentName] = _titleFragment, [Test_RenderFragments_Ex2_RenderFragment_Parameter.DetailsFragmentName] = (RenderFragment<RenderFragments_Ex2.Employee>)(employee => builder => { builder.OpenElement(0, "p"); builder.AddContent(1, $"Id: {employee.Id}, Name: {employee.FirstName} {employee.LastName}, Position: {employee.Position}"); builder.CloseElement(); }), [Test_RenderFragments_Ex2_RenderFragment_Parameter.EmployeeParamName] = new RenderFragments_Ex2.Employee(1, "Test", "Tiffany", "CEO") })"/>
-        </div>
+        </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 <MudExpansionPanelWithStoredState Id="listComponent_typeParam">
@@ -137,7 +137,7 @@
         </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
-        <div class="d-grid gap-3">
+        <SpacedContent>
             <MudText>
                 While it is a significant step forward that we can customize how each item in the list will be rendered,
                 the component still binds us to the <strong>TestClass</strong> type, which is a show stopper regarding its reusability and versatility
@@ -187,7 +187,7 @@
             <TestRunner TTestClass="Test_RenderFragments_Ex3_Generic"
                         ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_RenderFragments_Ex3_Generic.TitleFragmentName] = _titleFragment, [Test_RenderFragments_Ex3_Generic.ObjectToRenderParamName] = new RenderFragments_Ex2.Employee(1, "Test", "Tiffany", "CEO") })">
             </TestRunner>
-        </div>
+        </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 <MudExpansionPanelWithStoredState Id="listComponent_placeholders">
@@ -197,7 +197,7 @@
         </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
-        <div class="d-grid gap-3">
+        <SpacedContent>
             <MudText>
                 Our List component is getting very close to perfection, however it is only a list component in the sense of a C# list, where objects (or rows in our context) follow each other.
                 In the world of the web, we very often need to encapsulate our list within an html element, like the following:
@@ -266,7 +266,7 @@
             <TestRunner TTestClass="Test_RenderFragments_Ex4_Table"
                         ComponentUnderTestParameters="@(new Dictionary<string, object>() { })">
             </TestRunner>
-        </div>
+        </SpacedContent>
 
     </ChildContent>
 
@@ -278,7 +278,7 @@
         </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
-        <div class="d-grid gap-3">
+        <SpacedContent>
             <MudText>In this exercise, you will have to modify the component @nameof(RenderFragments_LessonFinal)</MudText>
             <MudText>Your task is to implement a list component for employee data that can be switched with two buttons if a List view is displayed or a Table view is displayed</MudText>
             <MudText>For both kind of views, reuse the @nameof(ListComponent5<RenderFragments_LessonFinal.Employee>) type</MudText>
@@ -314,11 +314,11 @@
                                                           } 
                                                       })">
             </TestRunner>
-        </div>
+        </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 </MudExpansionPanels>
-</div>
+</SpacedContent>
 
 
 @code {

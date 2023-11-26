@@ -4,7 +4,7 @@
 @using BlazorCraft.Web.Shared.Examples.Routing
 @using BlazorCraft.Web.Shared.Examples.Routing.ExampleUsages
 <MudText Typo="Typo.h4">Routing</MudText>
-<div class="d-grid gap-3">
+<SpacedContent>
 <MudText Typo="Typo.h6" Class="fw-bold">What is routing?</MudText>
 <MudText>
     Routing is what defines with what url you can reach a page. For example, this page can be reached with the <strong>/routing</strong> route.
@@ -22,7 +22,7 @@
         </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
-        <div class="d-grid gap-3">
+        <SpacedContent>
             <MudText>
                 To define the pages route, we need to use the <strong>@("""@page /{route}""")</strong> like this:
             </MudText>
@@ -51,7 +51,7 @@
                 </li>
             </ul>
             <TestRunner TTestClass="Test_Routing_Ex1_Basics" TestComponentName="@nameof(Routing_Ex1)"></TestRunner>
-        </div>
+        </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 <MudExpansionPanelWithStoredState Id="routeparameters">
@@ -61,7 +61,7 @@
         </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
-        <div class="d-grid gap-3">
+        <SpacedContent>
             <MudText>Pages can have have route parameters, which can then be passed as url parameters from the browser.</MudText>
             <MudText>
                 They are essentially component parameters, and thus need to be defined the same way with the <strong>[Parameter]</strong> attribute.
@@ -82,7 +82,7 @@
 
             <TestRunner TTestClass="Test_Routing_Ex2_RouteParams" TestComponentName="@nameof(Routing_Ex2)"></TestRunner>
 
-        </div>
+        </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 <MudExpansionPanelWithStoredState Id="constraining-route-parameters">
@@ -92,7 +92,7 @@
         </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
-        <div class="d-grid gap-3">
+        <SpacedContent>
             <MudText>
                 Routing in Blazor also allows you to add type constraints to your route parameters.
                 Say you have a page for displaying employee details but only for a specific employee.
@@ -156,7 +156,7 @@
             <MudText>The component should only render the value of the route parameter inside a <strong>@("<p>")</strong> tag</MudText>
 
             <TestRunner TTestClass="Test_Routing_Ex3_RouteConstraints"></TestRunner>
-        </div>
+        </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 <MudExpansionPanelWithStoredState Id="optional-route-parameters">
@@ -166,7 +166,7 @@
         </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
-        <div class="d-grid gap-3">
+        <SpacedContent>
             <MudText>
                 Route parameters can be made optional by placing <Important>?</Important> after them
             </MudText>
@@ -199,7 +199,7 @@
             </ul>
 
             <TestRunner TTestClass="Test_Routing_Ex4_OptionalRouteParams"></TestRunner>
-        </div>
+        </SpacedContent>
     </ChildContent>
 
 </MudExpansionPanelWithStoredState>
@@ -210,7 +210,7 @@
         </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
-        <div class="d-grid gap-3">
+        <SpacedContent>
             <MudText>In this exercise, you will have to modify the component @nameof(Routing_Ex5)</MudText>
             <MudText>Your task is to modify it, so that employees can bee looked up via two types of identifiers</MudText>
             <MudText>You will find a list of Employees, with the Employee type having an additional Id: CompanyAccountId</MudText>
@@ -243,11 +243,11 @@
                 <CodeSnippet>@("<p>No identifier received</p>")</CodeSnippet>
             </MudText>
             <TestRunner TTestClass="Test_Routing_Ex5_LessonFinal"></TestRunner>
-        </div>
+        </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 </MudExpansionPanels>
-</div>
+</SpacedContent>
 
 
 @code {

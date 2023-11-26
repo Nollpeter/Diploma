@@ -6,7 +6,7 @@
 @using BlazorCraft.Web.Pages._4_RenderFragments
 @using BlazorCraft.Web.Pages._6_DependencyInjection
 <MudText Typo="Typo.h4">Javascript interop</MudText>
-<div class="d-grid gap-3">
+<SpacedContent>
     <MudText>
         While blazor is a very powerful tool in itself to write web applications, there might be some areas that we may not be able
         to implement using blazor, or we do not want to use blazor for those specific areas. We have nothing to worry about,
@@ -23,7 +23,7 @@
                 <MudText Typo="Typo.h6" Class="fw-bold">Calling javascript from blazor</MudText>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText>
                         To call javascript methods from blazor, we are going to need the <strong>@nameof(IJSRuntime)</strong> interface.
                         This interface allows us to call any method or any method of an object from blazor.
@@ -68,7 +68,7 @@
                     <AdvancedCodeSnippet TComponent="JsInterop_CallJsMethod_PrimitiveType_Example" RenderOutput="true" />
                     <MudText>While of course it is a powerful tool like this, there is of course nothing stopping us to pass it a complex type like an (you guessed it!) <strong>Employee</strong></MudText>
                     <AdvancedCodeSnippet TComponent="JsInterop_CallJsMethod_ComplexType_Example" RenderOutput="true" />
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
 
@@ -77,7 +77,7 @@
                 <MudText Typo="Typo.h6" Class="fw-bold">Calling blazor code from javascript</MudText>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText>
                         To call Blazor methods from JavaScript, we need to expose a C# method to the JavaScript context using the <strong>[JSInvokable]</strong> attribute. 
                         Using this annotation, we can make the method callable from javascript
@@ -93,8 +93,7 @@
                     <JsSnippet JsFileName="js-interop-js-to-blazor"></JsSnippet>
                     <MudText>Then let's use it from a blazor component</MudText>
                     <AdvancedCodeSnippet TComponent="JsInterop_JsToBlazor_Example" RenderOutput="true" />
-                    @*TODO Static method if we have the time*@
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="js-interop-exercise">
@@ -124,4 +123,4 @@
             </ChildContent>
         </MudExpansionPanelWithStoredState>
     </MudExpansionPanels>
-</div>
+</SpacedContent>

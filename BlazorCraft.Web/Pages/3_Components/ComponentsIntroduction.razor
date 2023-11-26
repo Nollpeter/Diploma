@@ -59,7 +59,7 @@
                 <MudText Typo="Typo.h6" Class="fw-bold">The two parts of a component</MudText>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText>In Blazor, all components consist of two parts: </MudText>
                     <ul>
                         <li>
@@ -74,7 +74,7 @@
                         <Important>For simplicity, in this application, we will always use the @("@code{ }") section</Important>
                     </MudText>
                     <AdvancedCodeSnippet TComponent="BuildingBlocks" RenderOutput="false"/>
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="components_at_sign">
@@ -82,7 +82,7 @@
                 <MudText Typo="Typo.h6" Class="fw-bold">The @("@")</MudText>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText>In Blazor the @("@") sign is a very important modifier. This tells the compiler, that after this sign, we are going to write C# code, and it should be interpreted as C# code</MudText>
                     <MudText>Without it, in our markup whatever we write will be interpreted literally</MudText>
                     <MudText>We can also create sections of C# code inside our markup by enclosing our code in a @("@{ }") section.</MudText>
@@ -100,7 +100,7 @@
                         </li>
                     </ul>
                     <AdvancedCodeSnippet TComponent="AtSign" RenderOutput="true"/>
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="components-control-flow-statements">
@@ -108,12 +108,12 @@
                 <MudText Typo="Typo.h6" Class="fw-bold">if-else and foreach keyword</MudText>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText>Blazor allows us to use control flow statements natively in our components.</MudText>
                     <MudText>The two most notables that we are going to use in this application are <strong>if-else</strong> and <strong>foreach</strong></MudText>
                     <MudText>Be careful, that they count as @("@{ }") sections, therefore content inside them should be placed accordingly (see previous section of this page)</MudText>
                     <AdvancedCodeSnippet TComponent="ControlFlowStatements" RenderOutput="true"/>
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="components-render-another-component">
@@ -121,7 +121,7 @@
                 <MudText Typo="Typo.h6" Class="fw-bold">Rendering other components</MudText>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     <MudText>If we could only render plain html inside our components, blazor would be a very useless framework</MudText>
                     <MudText>Its power shines once we start rendering Blazor components inside Blazor components</MudText>
                     <MudText>
@@ -131,7 +131,7 @@
                     </MudText>
                     <MudText>Let's create a very simple HelloWorld component and render it from another one.</MudText>
                     <CompanionSnippets TComponent="HelloWorld" TUsage="RenderHelloWorld"/>
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="components-parameters">
@@ -139,14 +139,14 @@
                         <MudText Typo="Typo.h6" Class="fw-bold">Component parameters</MudText>
                     </TitleContent>
                     <ChildContent>
-                        <div class="d-grid gap-3">
+                        <SpacedContent>
                             <MudText>Components can have parameters that can be set externall by their caller component</MudText>
                             <MudText>To define such a parameter, we need to create a <strong>public property</strong> annotated with the <strong>[Parameter]</strong> attribute</MudText>
                             <MudText><strong>Note: </strong> these parameters can also be made mandatory by also annotating them with the <strong>[EditorRequired]</strong> attribute</MudText>
                             <MudText>Then, when we want to render such a component we can assign values to the parameters exactly as if they were html attributes</MudText>
                             <MudText><strong>Note:</strong> there are also parameters that will come to the body of the component, we will cover them in the <MudPageLink PageType="@typeof(RenderFragments)">RenderFragments</MudPageLink>  chapter</MudText>
                             <CompanionSnippets TComponent="ComponentWithParameter" TUsage="ComponentWithParameterUsage"/>
-                        </div>
+                        </SpacedContent>
                     </ChildContent>
                 </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="components_ex-1">
@@ -156,7 +156,7 @@
                 </PanelHeaderWithTestTracking>
             </TitleContent>
             <ChildContent>
-                <div class="d-grid gap-3">
+                <SpacedContent>
                     @*<ComponentFileWithPath T="ComponentsIntroductionExercise"/>*@
                     <MudText>Your task is to modify the pre-created component: <ComponentFileWithPath T="ComponentsIntroductionExercise" />, so that it behaves accordingly:</MudText>
                     <MudText>You can see that you have some code already provided for you, you don't need to touch them, also, please don't!</MudText>
@@ -165,7 +165,7 @@
                     <MudText>If the <strong>_showList</strong> field is true, the component should render for each element of the <strong>@Test_Components_Introduction_Exercise.NumbersParameterName</strong> property a @(nameof(ComponentWithParameter)) component with its Number parameter set to the value of the number from the @Test_Components_Introduction_Exercise.NumbersParameterName list</MudText>
                     <MudText>If the <strong>_showList</strong> field is false, the component should render @Test_Components_Introduction_Exercise.ListIsHiddenMarkup</MudText>
                     <TestRunner TTestClass="Test_Components_Introduction_Exercise" ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_Components_Introduction_Exercise.NumbersParameterName] = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 } })"/>
-                </div>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
     </MudExpansionPanels>

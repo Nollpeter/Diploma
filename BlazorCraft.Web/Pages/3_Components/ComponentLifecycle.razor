@@ -125,7 +125,7 @@
                 <MudText  Typo="Typo.h6" Class="fw-bold">Awaiting within Async lifecycle methods</MudText>
         </TitleContent>
         <ChildContent>
-            <div class="d-grid gap-3">
+            <SpacedContent>
                 <MudText>
                     It is important to note that instead of waiting for long-running asynchronous methods to complete before being able to render a component, Blazor will trigger a render as soon as it possibly can.
                 </MudText>
@@ -205,7 +205,7 @@
                     "await Task.Delay(1000); \n"+
                     "} \n")
                 </CodeSnippet>
-            </div>
+            </SpacedContent>
         </ChildContent>
     </MudExpansionPanelWithStoredState>
 </MudExpansionPanels>
