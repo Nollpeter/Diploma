@@ -87,12 +87,13 @@ pre[class*="language-razor"] {
 }
 
 .mud-divider {
-    border: 1px grey !important;
+    border: 1px solid #e0e0e0 !important;
+    
 }
 .sticky .mud-expand-panel-header {
-    background-color: var(--mud-palette-background);
+    background-color: var(--mud-palette-background-grey);
     top: 64px;
     position: sticky !important;
     z-index: 1000;
-    border-bottom: 1px grey solid !important;
+    border-bottom: 1px #e0e0e0 solid !important;
 }
