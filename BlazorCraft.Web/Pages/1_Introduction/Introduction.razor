@@ -1,0 +1,88 @@
+﻿@page "/introduction"
+@inject Test1 Test1
+
+<!-- Oldal layoutja és fejléce -->
+<MudContainer Class="d-grid gap-3">
+    <MudText Typo="Typo.h4">Bevezetés a Blazor WebAssembly-hez</MudText>
+    <!-- Bevezető szöveg -->
+    <MudText>
+        Üdvözlünk a BlazorCraft oktatási platformon! Ebben a bevezető részben megismerkedhetsz a Blazor WebAssembly alapjaival, összetevőivel és a technológia működésével.
+    </MudText>
+
+    <!-- Accordion a fejezetekhez -->
+    <MudExpansionPanels Multiple="true">
+
+        <!-- Alfejezet: Mi az a Blazor? -->
+        <MudExpansionPanel>
+            <TitleContent>
+                <MudText Typo="Typo.h6">Mi az a Blazor?</MudText>
+            </TitleContent>
+            <ChildContent>
+                <MudText>
+                    A Blazor egy Microsoft által fejlesztett web keretrendszer, amely lehetővé teszi a C# és WebAssembly használatát a weboldalak és -alkalmazások fejlesztésében.
+                </MudText>
+                <MudDivider DividerType="DividerType.Middle" Class="my-6"/>
+                <MudText Typo="Typo.h6">Példakód:</MudText>
+                <CodeSnippet>
+                    <h1>Hello world</h1>
+                </CodeSnippet>
+                <MudDivider DividerType="DividerType.Middle" Class="my-6"/>
+                <MudText Typo="Typo.h6">Teszt</MudText>
+
+            </ChildContent>
+        </MudExpansionPanel>
+
+        <!-- Alfejezet: WebAssembly -->
+        <MudExpansionPanel>
+            <TitleContent>
+                <MudText Typo="Typo.h6">WebAssembly</MudText>
+            </TitleContent>
+            <ChildContent>
+                <MudText >
+                    A WebAssembly egy bináris instrukciós formátum, amely a modern webböngészőkben gyorsan fut, és lehetővé teszi olyan programok futtatását, amelyek C, C++ vagy más nyelveken íródtak.
+                </MudText>
+                <MudDivider DividerType="DividerType.Middle" Class="my-6"/>
+                <!-- Példakód -->
+                <MudText Typo="Typo.h6">Példakód:</MudText>
+                <CodeSnippet Language="html">
+                    <h1>Hello world</h1>
+                </CodeSnippet>
+                <MudDivider DividerType="DividerType.Middle" Class="my-6"/>
+                <!-- Teszt -->
+                <MudText Typo="Typo.h6">Feladat - Hello world</MudText>
+                <MudText Typo="Typo.body1">Készítsen egy új komponenst a Components\Introduction mappába HelloWorld.razor néven!</MudText>
+                <MudText Typo="Typo.body1">A komponens csak egy h3 típusú html taget tartalmazzon, melynek tartalma: "Hello world"!</MudText>
+
+                <MudTabs Outlined="true" Position="Position.Left" Rounded="true" Border="true"
+                         ApplyEffectsToContainer="true" Class="mt-8" PanelClass="pa-6">
+                    <MudTabPanel Text="1. Teszt, létező komponens">
+                        @{
+                            bool testResult = false;
+                            <div class="d-flex flex-column">
+                                <MudText Typo="Typo.h6">1. Teszt</MudText>
+                                <MudText Typo="Typo.body1">Ez a teszt ellenőrzni, hogy létrehozta-e a komponenst</MudText>
+                                <MudButton OnClick="() => { testResult = Test1.RunTest(); StateHasChanged();}">Futtatás</MudButton>
+                                <MudText >Eredmény: @(testResult ? "Siker" : "Elbukott")</MudText>
+                            </div>
+                        }
+                    </MudTabPanel>
+                    <MudTabPanel Text="2. Teszt, komponens tartalma helyes">
+                        @{
+                            bool testResult = false;
+                            <div class="d-flex flex-column">
+                                <MudText Typo="Typo.h6">2. Teszt</MudText>
+                                <MudText Typo="Typo.body1">Ez a teszt ellenőrzni, hogy valóban azt tartalmazza-e a komponens, ami az elvárt</MudText>
+                                <MudButton OnClick="() => { testResult = Test1.RunTest2(); StateHasChanged();}">Futtatás</MudButton>
+                                <MudText >Eredmény: @(testResult ? "Siker" : "Elbukott")</MudText>
+                            </div>
+                        }
+
+                    </MudTabPanel>
+                </MudTabs>
+            </ChildContent>
+        </MudExpansionPanel>
+
+        <!-- További alfejezetek -->
+
+    </MudExpansionPanels>
+</MudContainer>
