@@ -19,25 +19,25 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
     
     [Title(""+DetailsFragmentName+" fragment defined")]
     [Infrastructure.Attributes.Description("This test verifies that the "+TitleFragmentName+" has been defined on the component")]
-    public async Task<TestRunResult> Test1()
+    public async Task Test1()
     {
         var renderFragmentsEx1 = new RenderFragments_Ex1();
         ValidateRenderFragmentExists(renderFragmentsEx1, TitleFragmentName, typeof(RenderFragment));
-        return TestRunResult.Success;
+        
     }
     
     [Title(""+DetailsFragmentName+" fragment defined")]
     [Infrastructure.Attributes.Description("This test verifies that the "+DetailsFragmentName+" has been defined on the component")]
-    public async Task<TestRunResult> Test2()
+    public async Task Test2()
     {
         var renderFragmentsEx1 = new RenderFragments_Ex1();
         ValidateRenderFragmentExists(renderFragmentsEx1, DetailsFragmentName, typeof(RenderFragment));
-        return TestRunResult.Success;
+        
     }
     
     [Title(TitleFragmentName + " is rendered")]
     [Infrastructure.Attributes.Description("This test verifies that the "+TitleFragmentName+" is rendered for the component without any interaction")]
-    public async Task<TestRunResult> Test3()
+    public async Task Test3()
     {
         var renderFragmentsEx1 = new RenderFragments_Ex1();
         ValidateRenderFragmentExists(renderFragmentsEx1, TitleFragmentName, typeof(RenderFragment));
@@ -57,12 +57,12 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
         var element = renderedComponent.Find(".title").InnerHtml;
         element.MarkupMatches($"<p>{titleContent}</p>");
 
-        return TestRunResult.Success;
+        
     }
     
     [Title("Button click renders "+DetailsFragmentName)]
     [Infrastructure.Attributes.Description("This test verifies that the "+DetailsFragmentName+" is rendered upon clicking the button")]
-    public async Task<TestRunResult> Test4()
+    public async Task Test4()
     {
         var renderFragmentsEx1 = new RenderFragments_Ex1();
         ValidateRenderFragmentExists(renderFragmentsEx1, TitleFragmentName, typeof(RenderFragment));
@@ -91,13 +91,13 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
         innerHtml.MarkupMatches($"<p>{detailsContent}</p>");
 
 
-        return TestRunResult.Success;
+        
     }
 
 
     [Title("Second Button click hides "+DetailsFragmentName)]
     [Infrastructure.Attributes.Description("This test verifies that the "+DetailsFragmentName+" is hidden upon clicking the button a second time")]
-    public async Task<TestRunResult> Test5()
+    public async Task Test5()
     {
         var renderFragmentsEx1 = new RenderFragments_Ex1();
         ValidateRenderFragmentExists(renderFragmentsEx1, TitleFragmentName, typeof(RenderFragment));
@@ -135,7 +135,7 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
         detailsResult.MarkupMatches(string.Empty);
         
 
-        return TestRunResult.Success;
+        
     }
     
 }

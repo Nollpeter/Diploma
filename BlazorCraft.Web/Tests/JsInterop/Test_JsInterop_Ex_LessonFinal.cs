@@ -37,48 +37,48 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
     [ComponentUsedInMarkupTitle(typeof(RenderFragments_LessonFinal))]
     [ComponentUsedInMarkupDescription(typeof(RenderFragments_LessonFinal))]
     [Precondition]
-    public async Task<TestRunResult> Test1()
+    public async Task Test1()
     {
         var component = new JsInterop_Ex_LessonFinal();
         ValidateComponentUsage(component, ListComponentType);
-        return TestRunResult.Success;
+        
     }
 
     [ParameterDefinedTitle(JsRuntimeName)]
     [ParameterDefinedDescription(JsRuntimeName, typeof(IJSRuntime))]
     [Precondition]
-    public async Task<TestRunResult> Test2()
+    public async Task Test2()
     {
         var component = new JsInterop_Ex_LessonFinal();
         ValidateInjectedProperty(component, JsRuntimeName, typeof(IJSRuntime));
-        return TestRunResult.Success;
+        
     }
 
     [PropertyOrFieldOfTypeDefinedTitle(typeof(DotNetObjectReference<JsInterop_Ex_LessonFinal>))]
     [PropertyOrFieldOfTypeDefinedDescription(typeof(DotNetObjectReference<JsInterop_Ex_LessonFinal>))]
     [Precondition]
-    public async Task<TestRunResult> Test3()
+    public async Task Test3()
     {
         var component = new JsInterop_Ex_LessonFinal();
 
         ValidatePropertyOrFieldWithTypeExists(component, typeof(DotNetObjectReference<JsInterop_Ex_LessonFinal>));
-        return TestRunResult.Success;
+        
     }
 
     [MethodWithPropertyDefinedTitle(nameof(JsInvokableMethodName), typeof(JSInvokableAttribute))]
     [MethodWithPropertyDefinedDescription(nameof(JsInvokableMethodName), typeof(JSInvokableAttribute))]
     [Precondition]
-    public async Task<TestRunResult> Test4()
+    public async Task Test4()
     {
         var component = new JsInterop_Ex_LessonFinal();
         ValidateMethodWithNameAndAttributeExists(component, JsInvokableMethodName, typeof(JSInvokableAttribute));
-        return TestRunResult.Success;
+        
     }
 
     [Title("Employees are bound to " + nameof(RenderFragments_LessonFinal) + ".Employees")]
     [Description("This test verifies that Employees are bound to " + nameof(RenderFragments_LessonFinal) +
                  ".Employees")]
-    public async Task<TestRunResult> Test6()
+    public async Task Test6()
     {
         var component = new JsInterop_Ex_LessonFinal();
 
@@ -107,7 +107,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
             var employees = await _jsRuntime.InvokeAsync<List<RenderFragments_LessonFinal.Employee>>(GetEmployeesJsMethodName);
             var componentEmployees = findComponent.Instance.Employees;
             componentEmployees.Should().FormattedBeEquivalentTo(employees, "The list of employees bound to the list component is not equal to its expected value!");
-            return TestRunResult.Success;
+            
         }
         catch (JSException e)
         {
@@ -121,7 +121,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
         }
         catch (NullReferenceException e)
         {
-            return new TestRunResult(false,
+            throw new TestRunException(
                 "Error while binding the property Employees to the List component, you probably need to define your markup so that it only renders the list component once employees are set");
             //TODO Ezt megoldani úgy, hogy specifikus exceptiont dobjunk erre és arra lehessen egy hintet adni, hogy kell az _isInitialized
         }

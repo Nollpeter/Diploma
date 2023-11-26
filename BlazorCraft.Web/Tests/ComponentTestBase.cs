@@ -15,12 +15,12 @@ public abstract class ComponentTestBase : TestContext
         var exceptions = new List<PreconditionException>();
         foreach (var preconditionMethod in preconditionMethods)
         {
-            var func = (Func<Task<TestRunResult>>)Delegate.CreateDelegate(typeof(Func<Task<TestRunResult>>),
+            var func = (Func<Task>)Delegate.CreateDelegate(typeof(Func<Task>),
                 this, preconditionMethod);
             var title = preconditionMethod.GetCustomAttribute<TitleAttribute>().Title;
             try
             {
-                var task = await func();
+                await func();
             }
             catch (Exception e)
             {

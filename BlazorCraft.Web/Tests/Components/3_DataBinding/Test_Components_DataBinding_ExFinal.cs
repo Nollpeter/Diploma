@@ -20,17 +20,17 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
     // Component is used
     [ComponentUsedInMarkupTitle(typeof(ComponentDataBinding_Ex1))]
     [ComponentUsedInMarkupDescription(typeof(ComponentDataBinding_Ex1))]
-    public async Task<TestRunResult> Test1()
+    public async Task Test1()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
         ValidateComponentUsage(component, EditorComponentType);
-        return TestRunResult.Success;
+        
     }
 
     // Table rows rendered properly
     [Title("Table rows rendered correctly")]
     [Description("This test verifies that the table rows for each employee were rendered properly")]
-    public async Task<TestRunResult> Test2()
+    public async Task Test2()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
         ValidateComponentUsage(component, EditorComponentType);
@@ -49,7 +49,7 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
         rows[1].MarkupMatches($"<tr> <td>{employees[0].Id}</td> <td>{employees[0].FirstName}</td> <td>{employees[0].LastName}</td> <td><button class=\"btn btn-primary\">Edit</button></td>  </tr>");
         rows[2].MarkupMatches($"<tr> <td>{employees[1].Id}</td> <td>{employees[1].FirstName}</td> <td>{employees[1].LastName}</td> <td><button class=\"btn btn-primary\">Edit</button></td>  </tr>");
 
-        return TestRunResult.Success;
+        
     }
 
     // By default editor is hidden
@@ -57,7 +57,7 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
     
     [Title("Clicking Edit button reveals editor")]
     [Description("This test verifies that clicking the edit button reveals the editor for the employee")]
-    public async Task<TestRunResult> Test3()
+    public async Task Test3()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
         ValidateComponentUsage(component, EditorComponentType);
@@ -82,13 +82,13 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
         renderedComponent.Find(".employee-first-name");
         renderedComponent.Find(".employee-last-name");
         
-        return TestRunResult.Success;
+        
     }
     
     // Editor changes reflected in table
     [Title("Editor change reflected in table")]
     [Description("This test verifies that once you edit something in the editor will be reflected in the employees table as well")]
-    public async Task<TestRunResult> Test4()
+    public async Task Test4()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
         ValidateComponentUsage(component, EditorComponentType);
@@ -129,50 +129,50 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
             throw new TestRunException("Employee's last name change is not reflected in the employees table!");
         }
         
-        return TestRunResult.Success;
+        
     }
  
 
     /*[ParameterDefinedTitle(EmployeeFirstNameParamName)]
     [ParameterDefinedDescription(EmployeeFirstNameParamName, typeof(string))]
-    public async Task<TestRunResult> Test1()
+    public async Task Test1()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
         ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
-        return TestRunResult.Success;
+        
     }
 
     [ParameterDefinedTitle(EmployeeLastNameParamName)]
     [ParameterDefinedDescription(EmployeeLastNameParamName, typeof(string))]
-    public async Task<TestRunResult> Test2()
+    public async Task Test2()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
         ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
-        return TestRunResult.Success;
+        
     }
 
     [ParameterDefinedTitle(EmployeeFirstNameChangedName)]
     [ParameterDefinedDescription(EmployeeFirstNameChangedName, typeof(EventCallback<string>))]
-    public async Task<TestRunResult> Test3()
+    public async Task Test3()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
         ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
-        return TestRunResult.Success;
+        
     }
 
     [ParameterDefinedTitle(EmployeeLastNameChangedName)]
     [ParameterDefinedDescription(EmployeeLastNameChangedName, typeof(EventCallback<string>))]
-    public async Task<TestRunResult> Test4()
+    public async Task Test4()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
         ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
-        return TestRunResult.Success;
+        
     }
 
     [Title(EmployeeFirstNameParamName + " binding Consumer -> Component")]
     [Description("This test verifies that once the Consumer component changes the " + EmployeeFirstNameParamName +
                  " it is reflected in the component ")]
-    public async Task<TestRunResult> Test5()
+    public async Task Test5()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
 
@@ -198,13 +198,13 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
         }
 
 
-        return TestRunResult.Success;
+        
     }
 
     [Title(EmployeeFirstNameParamName + " binding Component -> Consumer")]
     [Description("This test verifies that once the Component changes the " + EmployeeFirstNameParamName +
                  " it is reflected in the Consumer component ")]
-    public async Task<TestRunResult> Test6()
+    public async Task Test6()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
         ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
@@ -246,13 +246,13 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
             throw new TestRunException(
                 $"{EmployeeLastNameParamName} is not bound two way. Upon changing the value of the input, the change is not reflected. Are you calling NameChanged?");
         }
-        return TestRunResult.Success;
+        
     }
 
     [Title(EmployeeLastNameParamName + " binding Consumer -> Component")]
     [Description("This test verifies that once the Consumer component changes the " + EmployeeLastNameParamName +
                  " it is reflected in the component ")]
-    public async Task<TestRunResult> Test7()
+    public async Task Test7()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
 
@@ -279,13 +279,13 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
         }
 
 
-        return TestRunResult.Success;
+        
     }
 
     [Title(EmployeeLastNameParamName + " binding Component -> Consumer")]
     [Description("This test verifies that once the Component changes the " + EmployeeLastNameParamName +
                  " it is reflected in the Consumer component ")]
-    public async Task<TestRunResult> Test8()
+    public async Task Test8()
     {
        var component = new ComponentDataBinding_Ex_LessonFinal();
         ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
@@ -318,7 +318,7 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
                 $"{EmployeeLastNameParamName} is not bound two way. Upon changing the value of the input, the change is not reflected. Are you calling NameChanged?");
         }
 
-        return TestRunResult.Success;
+        
     }*/
 
 }

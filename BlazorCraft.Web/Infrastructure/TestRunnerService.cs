@@ -83,7 +83,7 @@ public class TestRunSession : Dictionary<TestDescriptor, TestRunState>
 public record TestRunStateEventArgs(TestDescriptor TestDescriptor, TestRunResult? TestRunResult, TestRunSession Session,
     TestRunState TestRunState);
 
-public record TestDescriptor(Func<Task<TestRunResult>> Method, string Title, string Description, string? Hint,
+public record TestDescriptor(Func<Task> Method, string Title, string Description, string? Hint,
     Type PageClass, Type TestClass, bool IsPrecondition, ComponentTestBase testClassInstance)
 {
     public override int GetHashCode() => Title.GetHashCode();
@@ -147,8 +147,8 @@ public class TestRunnerService : ITestRunnerService
                 await testDescriptor.testClassInstance.CheckPreconditions();
             }
 
-            var contextIdMethod = await testDescriptor.Method();
-            OnTestStateChanged(new TestRunStateEventArgs(testDescriptor, contextIdMethod, session,
+            await testDescriptor.Method();
+            OnTestStateChanged(new TestRunStateEventArgs(testDescriptor, TestRunResult.Success, session,
                 TestRunState.Successful));
         }
         catch (TestRunException e)
@@ -211,19 +211,18 @@ public class TestRunnerService : ITestRunnerService
             {
                 foreach (var methodInfo in type.GetMethods(BindingFlags.Instance | BindingFlags.Public))
                 {
-                    if (methodInfo.ReturnType != typeof(Task<TestRunResult>))
+                    var titleAttribute = methodInfo.GetCustomAttribute<TitleAttribute>();
+                    if (titleAttribute == null)
                     {
                         continue;
                     }
-
-                    var titleAttribute = methodInfo.GetCustomAttribute<TitleAttribute>();
                     var descriptionAttribute = methodInfo.GetCustomAttribute<DescriptionAttribute>();
                     var hintAttribute = methodInfo.GetCustomAttribute<HintAttribute>();
                     var isPrecondition = methodInfo.GetCustomAttribute<PreconditionAttribute>() != null;
 
                     var testClassInstance = _serviceProvider.GetRequiredService(type);
                     
-                    var func = (Func<Task<TestRunResult>>)Delegate.CreateDelegate(typeof(Func<Task<TestRunResult>>),
+                    var func = (Func<Task>)Delegate.CreateDelegate(typeof(Func<Task>),
                         testClassInstance, methodInfo);
                     resultList.Add(
                         new(func, titleAttribute?.Title, descriptionAttribute?.Description, hintAttribute?.Hint,

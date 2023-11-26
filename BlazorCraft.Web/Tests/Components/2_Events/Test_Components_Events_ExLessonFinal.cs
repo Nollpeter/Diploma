@@ -16,16 +16,16 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
     public const string EmployeesParameterName = "Employees";
     [Title(nameof(ComponentEvents_Ex2_EventCallBack) + " component is used")]
     [Description("This test verifies tha in your markup you actually used the "+nameof(ComponentEvents_Ex2_EventCallBack) + " component")]
-    public async Task<TestRunResult> Test1()
+    public async Task Test1()
     {
         var component = new ComponentEvents_ExLessonFinal();
         ValidateComponentUsage(component, typeof(ComponentEvents_Ex2_EventCallBack));
-        return TestRunResult.Success;
+        
     }
 
     [Title("Employee is deleted upon clicking delete")]
     [Description("This test verifies that the employee is deleted from "+EmployeesParameterName+" upon clicking delete")]
-    public async Task<TestRunResult> Test2()
+    public async Task Test2()
     {
         var component = new ComponentEvents_ExLessonFinal();
         ValidateComponentUsage(component, typeof(ComponentEvents_Ex2_EventCallBack));
@@ -53,13 +53,13 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
             throw new TestRunException("Employee was not deleted from the grid upon clicking delete button");
         }
 
-        return TestRunResult.Success;
+        
     }
     
     //Deleted employees modified
     [Title("Employee is deleted upon clicking delete")]
     [Description("This test verifies that the employee is deleted from "+EmployeesParameterName+" upon clicking delete")]
-    public async Task<TestRunResult> Test3()
+    public async Task Test3()
     {
         var component = new ComponentEvents_ExLessonFinal();
         ValidateComponentUsage(component, typeof(ComponentEvents_Ex2_EventCallBack));
@@ -86,6 +86,6 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
         var innerHtml = renderedComponent.Find(".deleted_employees ul");
         innerHtml.MarkupMatches($"<ul><li>{employee1.Name}</li></ul>");
 
-        return TestRunResult.Success;
+        
     }
 }

@@ -20,27 +20,27 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
 
     [Title("Route by Id defined")]
     [Description("This test verifies if the component has the /" + RouteById + " route defined")]
-    public async Task<TestRunResult> Ex1()
+    public async Task Ex1()
     {
         var routingEx5 = new Routing_Ex5();
         var routeAttributes = CheckRouteAttributesExist(routingEx5);
         CheckRouteByTemplate(routeAttributes, RouteById);
-        return TestRunResult.Success;
+        
     }
 
     [Title("Route by Id defined")]
     [Description("This test verifies if the component has the /" + RouteByCompanyAccountId + " route defined")]
-    public async Task<TestRunResult> Ex2()
+    public async Task Ex2()
     {
         var routingEx5 = new Routing_Ex5();
         var routeAttributes = CheckRouteAttributesExist(routingEx5);
         CheckRouteByTemplate(routeAttributes, RouteByCompanyAccountId);
-        return TestRunResult.Success;
+        
     }
 
     [Title("Route parameters")]
     [Description("This test verifies if the route parameters are defined with the correct name and type")]
-    public async Task<TestRunResult> Ex3()
+    public async Task Ex3()
     {
         var routingEx5 = new Routing_Ex5();
         var routeAttributes = CheckRouteAttributesExist(routingEx5);
@@ -61,13 +61,13 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
         FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, companyIdAttribute);
 
 
-        return TestRunResult.Success;
+        
     }
 
 // Id is given with all data
     [Title("Id with all data")]
     [Description("This test verifies if company id is given with all data shown, the component renders accordingly")]
-    public async Task<TestRunResult> Ex4()
+    public async Task Ex4()
     {
         var routingEx5 = new Routing_Ex5();
         var routeAttributes = CheckRouteAttributesExist(routingEx5);
@@ -101,14 +101,14 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
         AssertCorrectMarkup(expectedOutput, renderedComponentMarkup);
 
 
-        return TestRunResult.Success;
+        
     }
 
 // ID is given with not all data
     [Title("Id with NOT ALL data")]
     [Description(
         "This test verifies if company id is given with not all data shown, the component renders accordingly")]
-    public async Task<TestRunResult> Ex5()
+    public async Task Ex5()
     {
         var routingEx5 = new Routing_Ex5();
         var routeAttributes = CheckRouteAttributesExist(routingEx5);
@@ -141,12 +141,12 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
         AssertCorrectMarkup(expectedOutput, renderedComponentMarkup);
 
 
-        return TestRunResult.Success;
+        
     }
 
     [Title("Company Account Id with all data")]
     [Description("This test verifies if company id is given with all data shown, the component renders accordingly")]
-    public async Task<TestRunResult> Ex6()
+    public async Task Ex6()
     {
         var routingEx5 = new Routing_Ex5();
         var routeAttributes = CheckRouteAttributesExist(routingEx5);
@@ -180,13 +180,13 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
         AssertCorrectMarkup(expectedOutput, renderedComponentMarkup);
 
 
-        return TestRunResult.Success;
+        
     }
 
     [Title("Company Account Id with NOT ALL data")]
     [Description(
         "This test verifies if company id is given with not all data shown, the component renders accordingly")]
-    public async Task<TestRunResult> Ex7()
+    public async Task Ex7()
     {
         var routingEx5 = new Routing_Ex5();
         var routeAttributes = CheckRouteAttributesExist(routingEx5);
@@ -219,13 +219,13 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
         AssertCorrectMarkup(expectedOutput, renderedComponentMarkup);
 
 
-        return TestRunResult.Success;
+        
     }
 
     [Title("No Id passed")]
     [Description(
         "This test verifies if company id is given with not all data shown, the component renders accordingly")]
-    public async Task<TestRunResult> Ex8()
+    public async Task Ex8()
     {
         var routingEx5 = new Routing_Ex5();
         var routeAttributes = CheckRouteAttributesExist(routingEx5);
@@ -256,12 +256,12 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
         AssertCorrectMarkup(expectedOutput, renderedComponentMarkup);
 
 
-        return TestRunResult.Success;
+        
     }
 
     [Title("Not found by Id")]
     [Description("This test verifies if id is given, but the employee is not found, the component renders accordingly")]
-    public async Task<TestRunResult> Ex9()
+    public async Task Ex9()
     {
         var routingEx5 = new Routing_Ex5();
         var routeAttributes = CheckRouteAttributesExist(routingEx5);
@@ -293,13 +293,13 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
         AssertCorrectMarkup(expectedOutput, renderedComponentMarkup);
 
 
-        return TestRunResult.Success;
+        
     }
 
     [Title("Not found by Company Account Id")]
     [Description(
         "This test verifies if Company Account Id is given, but the employee is not found, the component renders accordingly")]
-    public async Task<TestRunResult> Ex10()
+    public async Task Ex10()
     {
         var routingEx5 = new Routing_Ex5();
         var routeAttributes = CheckRouteAttributesExist(routingEx5);
@@ -331,6 +331,6 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
         AssertCorrectMarkup(expectedOutput, renderedComponentMarkup);
 
 
-        return TestRunResult.Success;
+        
     }
 }

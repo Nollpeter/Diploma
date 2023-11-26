@@ -24,35 +24,35 @@ public class Test_DependencyInjection_LessonFinal : ComponentTestBase<Dependency
     
     [ComponentUsedInMarkupTitle(typeof(RenderFragments_LessonFinal))]
     [ComponentUsedInMarkupDescription(typeof(RenderFragments_LessonFinal))]
-    public async Task<TestRunResult> Test1()
+    public async Task Test1()
     {
         var component = new DependencyInjection_Ex_LessonFinal();
         ValidateComponentUsage(component, ListComponentType);
-        return TestRunResult.Success;
+        
     }
 
     [ParameterDefinedTitle(EmployeeServiceName)]
     [ParameterDefinedDescription(EmployeeServiceName, typeof(IEmployeeService))]
-    public async Task<TestRunResult> Test2()
+    public async Task Test2()
     {
         var component = new DependencyInjection_Ex_LessonFinal();
         ValidateInjectedProperty(component, EmployeeServiceName, typeof(IEmployeeService));
-        return TestRunResult.Success;
+        
     }
 
     [Title("EmployeeService is registered as a scoped service")]
     [Description("This test verifies that the EmployeeService is registered as a scoped service")]
-    public async Task<TestRunResult> Test3()
+    public async Task Test3()
     {
         var component = new DependencyInjection_Ex_LessonFinal();
         ValidateComponentUsage(component, ListComponentType);
         GetAndValidateTestContext();
-        return TestRunResult.Success;
+        
     }
     
     [Title("Employees property is bound to "+nameof(RenderFragments_LessonFinal)+".Employees")]
     [Description("This test verifies that Employees property is bound to "+nameof(RenderFragments_LessonFinal)+".Employees")]
-    public async Task<TestRunResult> Test4()
+    public async Task Test4()
     {
         var component = new DependencyInjection_Ex_LessonFinal();
         ValidateInjectedProperty(component, EmployeeServiceName, typeof(IEmployeeService));
@@ -70,12 +70,12 @@ public class Test_DependencyInjection_LessonFinal : ComponentTestBase<Dependency
             var findComponent = renderedComponent.FindComponent<RenderFragments_LessonFinal>();
             var componentEmployees = findComponent.Instance.Employees;
             componentEmployees.Should().FormattedBeEquivalentTo(employees,"The list of employees bound to the list component is not equal to its expected value!");
-            return TestRunResult.Success;
+            
         }
         catch (NullReferenceException e)
         {
-
-            return new TestRunResult(false,
+            Console.WriteLine(e);
+            throw new TestRunException(
                 "Error while binding the property Employees to the List component, you probably need to define your markup so that it only renders the list component once the component has been initialized");
             //TODO Ezt megoldani úgy, hogy specifikus exceptiont dobjunk erre és arra lehessen egy hintet adni, hogy kell az _isInitialized
         }

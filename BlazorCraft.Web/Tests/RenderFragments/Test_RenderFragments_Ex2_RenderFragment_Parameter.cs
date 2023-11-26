@@ -21,34 +21,34 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
     
     [Title(""+DetailsFragmentName+" fragment defined")]
     [Description("This test verifies that the "+TitleFragmentName+" has been defined on the component")]
-    public async Task<TestRunResult> Test1()
+    public async Task Test1()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex2();
         ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
-        return TestRunResult.Success;
+        
     }
     
     [Title(""+DetailsFragmentName+" fragment defined")]
     [Description("This test verifies that the "+DetailsFragmentName+" has been defined on the component")]
-    public async Task<TestRunResult> Test2()
+    public async Task Test2()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex2();
         ValidateRenderFragmentExists(renderFragmentsEx2, DetailsFragmentName, typeof(RenderFragment<Employee>));
-        return TestRunResult.Success;
+        
     }
     
     [Title(""+EmployeeParamName+" parameter defined")]
     [Description("This test verifies that the "+DetailsFragmentName+" has been defined on the component")]
-    public async Task<TestRunResult> Test2_1()
+    public async Task Test2_1()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex2();
         ValidateComponentProperty(renderFragmentsEx2, EmployeeParamName, typeof(Employee));
-        return TestRunResult.Success;
+        
     }
     
     [Title(TitleFragmentName + " is rendered")]
     [Description("This test verifies that the "+TitleFragmentName+" is rendered for the component without any interaction")]
-    public async Task<TestRunResult> Test3()
+    public async Task Test3()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex2();
         ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
@@ -68,12 +68,12 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
         var element = renderedComponent.Find(".title").InnerHtml;
         element.MarkupMatches($"<p>{titleContent}</p>");
 
-        return TestRunResult.Success;
+        
     }
     
     [Title("Button click renders "+DetailsFragmentName)]
     [Description("This test verifies that the "+DetailsFragmentName+" is rendered upon clicking the button")]
-    public async Task<TestRunResult> Test4()
+    public async Task Test4()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex2();
         ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
@@ -106,12 +106,12 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
         innerHtml.MarkupMatches($"<p>{detailsContent(employee)}</p>");
 
 
-        return TestRunResult.Success;
+        
     }
 
     [Title("Second Button click hides "+DetailsFragmentName)]
     [Description("This test verifies that the "+DetailsFragmentName+" is hidden upon clicking the button a second time")]
-    public async Task<TestRunResult> Test5()
+    public async Task Test5()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex2();
         ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
@@ -150,7 +150,7 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
         detailsResult.MarkupMatches(string.Empty, "The details content is not hidden after second click");
         
 
-        return TestRunResult.Success;
+        
     }
 
     private static RenderFragment<Employee> CreateDetailsFragment(Func<Employee, string> detailsContent)

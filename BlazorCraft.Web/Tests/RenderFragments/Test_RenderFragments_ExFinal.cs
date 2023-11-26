@@ -14,16 +14,16 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
     
     [Title(EmployeesParamName + " parameted is defined")]
     [Description("This test verifies that the "+EmployeesParamName+" parameter is defined in the component")]
-    public async Task<TestRunResult> Test1()
+    public async Task Test1()
     {
         var component = new RenderFragments_LessonFinal();
         ValidateComponentProperty(component, EmployeesParamName, typeof(List<Employee>));
-        return TestRunResult.Success;
+        
     }
     
     [Title("List view renders properly")]
     [Description("This test validates if the list view for the component renders properly")]
-    public async Task<TestRunResult> Test2()
+    public async Task Test2()
     {
         var component = new RenderFragments_LessonFinal();
         ValidateComponentProperty(component, EmployeesParamName, typeof(List<Employee>));
@@ -48,12 +48,12 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
             );
 
 
-        return TestRunResult.Success;
+        
     }
     
     [Title("Table view renders properly")]
     [Description("This test validates if the table view for the component renders properly")]
-    public async Task<TestRunResult> Test3()
+    public async Task Test3()
     {
         var component = new RenderFragments_LessonFinal();
         ValidateComponentProperty(component, EmployeesParamName, typeof(List<Employee>));
@@ -80,9 +80,6 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
                               "</tbody>"+
                               "</table>"
         );
-
-
-        return TestRunResult.Success;
     }
     
 }

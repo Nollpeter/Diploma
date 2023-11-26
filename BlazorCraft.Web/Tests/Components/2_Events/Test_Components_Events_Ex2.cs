@@ -19,26 +19,26 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
     [Title(EmployeesParameterName + " parameter defined")]
     [Description("This test verifies that you have defined the " + EmployeesParameterName +
                  " Parameter property and annotated it with the [Paramaeter] attribute")]
-    public async Task<TestRunResult> Test1()
+    public async Task Test1()
     {
         var component = new ComponentEvents_Ex2_EventCallBack();
         ValidateComponentProperty(component, EmployeesParameterName, typeof(List<Employee>));
-        return TestRunResult.Success;
+        
     }
 
     [Title(EventCallBackPropertyName + " parameter defined")]
     [Description("This test verifies that you have defined the " + EventCallBackPropertyName +
                  " Parameter property and annotated it with the [Paramaeter] attribute")]
-    public async Task<TestRunResult> Test2()
+    public async Task Test2()
     {
         var component = new ComponentEvents_Ex2_EventCallBack();
         ValidateComponentProperty(component, EventCallBackPropertyName, typeof(EventCallback<Employee>));
-        return TestRunResult.Success;
+        
     }
 
     [Title(EmployeesParameterName + " are rendered properly")]
     [Description("This test verifies that you render the values of " + EmployeesParameterName + " properly")]
-    public async Task<TestRunResult> Test3()
+    public async Task Test3()
     {
         var component = new ComponentEvents_Ex2_EventCallBack();
         ValidateComponentProperty(component, EmployeesParameterName, typeof(List<Employee>));
@@ -74,12 +74,12 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
                             $"  </tr>" +
                             $"</tbody>");
         
-        return TestRunResult.Success;
+        
     }
 
     [Title(EventCallBackPropertyName + " event is called upon clicking on delete button")]
     [Description("This test verifies that upon clicking on the delete button for a row, the event is actually called")]
-    public async Task<TestRunResult> Test4()
+    public async Task Test4()
     {
         var component = new ComponentEvents_Ex2_EventCallBack();
         ValidateComponentProperty(component, EmployeesParameterName, typeof(List<Employee>));
@@ -114,6 +114,6 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
             throw new TestRunException(EventCallBackPropertyName + " was called but not with the correct employee");
         }
 
-        return TestRunResult.Success;
+        
     }
 }

@@ -32,7 +32,7 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
     [Title("Employee properties annotated with Validation attributes")]
     [Description("This test verifies that you have annotated the Employee type with the proper Validation attributes")]
     [Precondition]
-    public async Task<TestRunResult> Test1()
+    public async Task Test1()
     {
         Employee employee = new Employee();
         ValidatePropertyAnnotatedWithAttribute(employee, nameof(Employee.Salary), typeof(RequiredAttribute));
@@ -42,7 +42,7 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
         ValidatePropertyAnnotatedWithAttribute(employee, nameof(Employee.BirthDate), typeof(RequiredAttribute));
         ValidatePropertyAnnotatedWithAttribute(employee, nameof(Employee.Position), typeof(RequiredAttribute));
         
-        return TestRunResult.Success;
+        
     }
     
     
@@ -50,27 +50,27 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
     [ComponentUsedInMarkupTitle(typeof(DataAnnotationsValidator))]
     [ComponentUsedInMarkupDescription(typeof(DataAnnotationsValidator))]
     [Precondition]
-    public async Task<TestRunResult> Test2()
+    public async Task Test2()
     {
         ValidateComponentUsage(Component, typeof(DataAnnotationsValidator));
         
-        return TestRunResult.Success;
+        
     }
     //ListComponent5 used
     [ComponentUsedInMarkupTitle(typeof(ListComponent5<Employee>))]
     [ComponentUsedInMarkupDescription(typeof(ListComponent5<Employee>))]
     [Precondition]
-    public async Task<TestRunResult> Test2_2()
+    public async Task Test2_2()
     {
         ValidateComponentUsage(Component, typeof(ListComponent5<Employee>));
         
-        return TestRunResult.Success;
+        
     }
 
     [Title("Create button is rendered for the list component Title")]
     [Description("This test verifies that the create button is rendered for the list component Title")]
     [Precondition]
-    public async Task<TestRunResult> Test2_3()
+    public async Task Test2_3()
     {
         var renderedComponent = SetupTestContext().RenderComponent<Forms_Ex_LessonFinal>();
         var buttons = renderedComponent.FindAll("button");
@@ -80,14 +80,14 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
             throw new TestRunException("There is no \"Create\" button on the component!");
         }
         
-        return TestRunResult.Success;
+        
     }
     
     //Table is rendered properly
     [Title("Table is rendered properly")]
     [Description("This test verifies teh employees table is rendered properly with all its fields")]
     [Precondition]
-    public async Task<TestRunResult> Test3_2()
+    public async Task Test3_2()
     {
         var testContext = SetupTestContext();
         var renderedComponent = testContext.RenderComponent<Forms_Ex_LessonFinal>();
@@ -112,7 +112,7 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
         var employees = await employeeService.GetEmployees();
         AssertTableWithEmployees(employees,tbody);
         
-        return TestRunResult.Success;
+        
     }
 
     private void AssertTableWithEmployees(IList<Employee> employees, IElement tbody)
@@ -130,7 +130,7 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
     //Form is hidden by default
     [Title("Form is hidden by default")]
     [Description("This test verifies that the edit form for employees is hidden by default")]
-    public async Task<TestRunResult> Test3()
+    public async Task Test3()
     {
         var renderedComponent = SetupTestContext().RenderComponent<Forms_Ex_LessonFinal>();
 
@@ -140,7 +140,7 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
             throw new TestRunException("The edit form for employees should be hidden by default");
         }
 
-        return TestRunResult.Success;
+        
         
     }
 
@@ -153,7 +153,7 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
     
     [Title("Clicking create shows form")]
     [Description("This test verifies that the edit form for employees is displays once the Create button is clicked")]
-    public async Task<TestRunResult> Test4()
+    public async Task Test4()
     {
         var renderedComponent = SetupTestContext().RenderComponent<Forms_Ex_LessonFinal>();
 
@@ -166,14 +166,14 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
             throw new TestRunException("The edit form for employees is not visible after clicking the \"Create\" button");
         }
         
-        return TestRunResult.Success;
+        
     }
     
     
     //Invalid form cannot be saved
     [Title("Invalid employee cannot be saved")]
     [Description("This test verifies that an employee with invalid or missing fields cannot be saved")]
-    public async Task<TestRunResult> Test5()
+    public async Task Test5()
     {
         var renderedComponent = SetupTestContext().RenderComponent<Forms_Ex_LessonFinal>();
 
@@ -248,7 +248,7 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
             throw new TestRunException($"Unexpected validation errors: {validationSummary[0].InnerHtml}");
         }
 
-        return TestRunResult.Success;
+        
     }
 
     private void ValidateRequiredErrorMessage(IRenderedComponent<Forms_Ex_LessonFinal> renderedComponent, string propertyName, bool shouldShow)
@@ -296,7 +296,7 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
     //Valid form adds new employee
     [Title("Valid employee is added to the list")]
     [Description("This test verifies that a valid employee is added to the table")]
-    public async Task<TestRunResult> Test6()
+    public async Task Test6()
     {
         var testContext = SetupTestContext();
         var renderedComponent = testContext.RenderComponent<Forms_Ex_LessonFinal>();
@@ -348,7 +348,7 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
         
 
 
-        return TestRunResult.Success;
+        
     }
 
     private TestContext SetupTestContext()
