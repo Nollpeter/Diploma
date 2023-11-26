@@ -1,0 +1,33 @@
+﻿@typeparam T
+
+<MudText Inline="true" Class="fw-bold text-decoration-underline">@RenderFilePath()</MudText>
+
+@code {
+    private string GetFilePath()
+    {
+        var type = typeof(T);
+        var namespaceParts = type.Namespace?.Split('.');
+        var projectRootNamespace = namespaceParts?.FirstOrDefault();
+        var pathParts = namespaceParts?.Skip(2); // Skip the root namespace
+
+        var fileName = type.Name + ".razor";
+
+        var filePath = pathParts != null ? Path.Combine(pathParts.ToArray()) : "";
+        filePath = Path.Combine(filePath, fileName);
+
+        return $"{filePath.Replace("/", "\\")}";
+    }
+
+    private string GetFilePathWithWrap()
+    {
+        var filePath = GetFilePath();
+        // Insert zero-width spaces after each backslash
+        return filePath.Replace("\\", "\\\u200B");
+    }
+
+    private MarkupString RenderFilePath()
+    {
+        var wrappedFilePath = GetFilePathWithWrap();
+        return new MarkupString(wrappedFilePath);
+    }
+}

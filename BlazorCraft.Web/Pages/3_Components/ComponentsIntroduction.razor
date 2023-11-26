@@ -157,13 +157,14 @@
             </TitleContent>
             <ChildContent>
                 <div class="d-grid gap-3">
-                    <MudText>Your task is to modify the pre-created component: @(nameof(ComponentsIntroductionExercise)).razor, so that it behaves accordingly:</MudText>
+                    @*<ComponentFileWithPath T="ComponentsIntroductionExercise"/>*@
+                    <MudText>Your task is to modify the pre-created component: <ComponentFileWithPath T="ComponentsIntroductionExercise" />, so that it behaves accordingly:</MudText>
                     <MudText>You can see that you have some code already provided for you, you don't need to touch them, also, please don't!</MudText>
                     <MudText>The component also guides you with comments where you need to put your code, please follow these instructions</MudText>
                     <MudText>The component should have a parameter defined of type <strong>@("List<int>")</strong> with the name <strong>@Test_Components_Introduction_Exercise.NumbersParameterName</strong></MudText>
                     <MudText>If the <strong>_showList</strong> field is true, the component should render for each element of the <strong>@Test_Components_Introduction_Exercise.NumbersParameterName</strong> property a @(nameof(ComponentWithParameter)) component with its Number parameter set to the value of the number from the @Test_Components_Introduction_Exercise.NumbersParameterName list</MudText>
                     <MudText>If the <strong>_showList</strong> field is false, the component should render @Test_Components_Introduction_Exercise.ListIsHiddenMarkup</MudText>
-                    <TestRunner TTestClass="Test_Components_Introduction_Exercise" ComponentUnderTestParameters="@(new Dictionary<string, object>(){ [Test_Components_Introduction_Exercise.NumbersParameterName] = new List<int>(){1,2,3,4,5,6,7,8}})"/>
+                    <TestRunner TTestClass="Test_Components_Introduction_Exercise" ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_Components_Introduction_Exercise.NumbersParameterName] = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 } })"/>
                 </div>
             </ChildContent>
         </MudExpansionPanelWithStoredState>

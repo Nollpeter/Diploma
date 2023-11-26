@@ -59,7 +59,7 @@
             <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
             <MudText>
                 Your task here will be to create an accordion component, that can be expanded and collapsed with a button (this will be provided)
-                You can find the base component for it in @(nameof(RenderFragments_Ex1)).razor
+                You can find the base component for it in <ComponentFileWithPath T="RenderFragments_Ex1"/>
                 For the header and the content of the accordion you will need to defined two renderfragments:
             </MudText>
             <ul>
@@ -123,7 +123,7 @@
                 <strong>Although it requires extending a component from the previous exercise, for the separation tests, it will be a separate component, feel free the reuse the code from the previous exercise!</strong>
             </MudText>
             <MudText>
-                You can find the base component for it in @(nameof(RenderFragments_Ex2)).razor
+                You can find the base component for it in <ComponentFileWithPath T="RenderFragments_Ex2"/>
             </MudText>
             <TestRunner TTestClass="Test_RenderFragments_Ex2_RenderFragment_Parameter"
                         ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_RenderFragments_Ex2_RenderFragment_Parameter.TitleFragmentName] = _titleFragment, [Test_RenderFragments_Ex2_RenderFragment_Parameter.DetailsFragmentName] = (RenderFragment<RenderFragments_Ex2.Employee>)(employee => builder => { builder.OpenElement(0, "p"); builder.AddContent(1, $"Id: {employee.Id}, Name: {employee.FirstName} {employee.LastName}, Position: {employee.Position}"); builder.CloseElement(); }), [Test_RenderFragments_Ex2_RenderFragment_Parameter.EmployeeParamName] = new RenderFragments_Ex2.Employee(1, "Test", "Tiffany", "CEO") })"/>
@@ -169,7 +169,7 @@
                 <strong>Note: </strong> Don't forget to add the @("@typeParam") to the component!
                 <strong>Note: </strong>In this exercise you won't need the <strong>DetailsContent</strong> renderFragment
             </MudText>
-            <MudText>For the exercise, modify the @(nameof(RenderFragments_Ex3<int>)).razor component</MudText>
+            <MudText>For the exercise, modify the <ComponentFileWithPath T="RenderFragments_Ex3<int>"/> component</MudText>
             <MudText>
                 Code for enumerating all the fields of the passed object will be provided for you, you just have to you use it
             </MudText>
@@ -182,7 +182,7 @@
                 <strong>Although it requires extending a component from the previous exercise, for the separation tests, it will be a separate component, feel free the reuse the code from the previous exercise!</strong>
             </MudText>
             <MudText>
-                You can find the base component for it in @(nameof(RenderFragments_Ex3<RenderFragments_Ex2.Employee>)).razor
+                You can find the base component for it in <ComponentFileWithPath T="RenderFragments_Ex3<RenderFragments_Ex2.Employee>"/>
             </MudText>
             <TestRunner TTestClass="Test_RenderFragments_Ex3_Generic"
                         ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_RenderFragments_Ex3_Generic.TitleFragmentName] = _titleFragment, [Test_RenderFragments_Ex3_Generic.ObjectToRenderParamName] = new RenderFragments_Ex2.Employee(1, "Test", "Tiffany", "CEO") })">
@@ -261,7 +261,7 @@
             <MudText>It will still use integer as its Generic type, so the table will have a single column with the "List items" as its header and its rows will be the integer values inside <strong>@("<td>")</strong> tags</MudText>
             <MudText>The title should be "Items table" enclosed in an @("h2") tag</MudText>
             <MudText>
-                You can find the base component for it in @(nameof(RenderFragments_Ex4)).razor
+                You can find the base component for it in <ComponentFileWithPath T="RenderFragments_Ex4"/>
             </MudText>
             <TestRunner TTestClass="Test_RenderFragments_Ex4_Table"
                         ComponentUnderTestParameters="@(new Dictionary<string, object>() { })">
