@@ -7,79 +7,81 @@
 @if (_isInitialized)
 {
     <div>
-        <div class="d-flex justify-content-between align-items-center mt-8">
-            <div class="d-flex justify-content-start align-items-center gap-3">
-                <MudButton Color="Color.Primary" Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.PlayArrow" IconColor="Color.Success" OnClick="() => TestRunnerService.RunAllInTestClass(typeof(TTestClass))">Run all</MudButton>
-                <MudText Typo="Typo.body1">Successful: <strong>@_testDescriptors.Count(p => p.Value is {IsSuccessful:true})/@_testDescriptors.Count</strong></MudText>
-                <MudText Typo="Typo.body1">Failed: <strong>@_testDescriptors.Count(p => p.Value is {IsSuccessful: false })/@_testDescriptors.Count</strong></MudText>
-                <MudText Typo="Typo.body1">Not run: <strong>@_testDescriptors.Count(p => p.Value is null)/@_testDescriptors.Count</strong></MudText>
-            </div>
-            <MudText Typo="Typo.body1" Class="text-end">Component under test: <strong>@TestComponentName</strong>.razor</MudText>
-            </div>
-        <MudTabs Outlined="true" Position="Position.Left" Rounded="true" Border="true" ApplyEffectsToContainer="true" Class="mt-0" PanelClass="pa-3 " TabPanelHeaderPosition="TabHeaderPosition.Before">
-            <TabPanelHeader>
-                <div class="d-flex gap-2 me-3">
-                    <MudTooltip Text="Run">
-                        <MudIconButton Class="ml-2 pa-1" Color="Color.Success" Icon="@Icons.Material.Filled.PlayArrow" OnClick="() => TestRunnerService.RunTest((TestDescriptor)context.ID)"/>
-                    </MudTooltip>
-                    <MudDivider Vertical="true" Class="h-100 bg-dark fw-bold"></MudDivider>
-                    <MudTooltip Text="Run state">
-                        @switch (_testDescriptors[(TestDescriptor)context.ID])
-                        {
-                            case null:
-                                <MudIcon Icon="@Icons.Filled.QuestionMark" Color="@Color.Default" Size="Size.Small"/>
-                                break;
-                            default:
-                            {
-                                if (_testDescriptors[(TestDescriptor)context.ID]!.IsSuccessful)
-                                {
-                                    <MudIcon Icon="@Icons.Filled.Check" Color="@Color.Success"/>
-                                }
-                                else
-                                {
-                                    <MudIcon Icon="@Icons.Filled.Error" Color="@Color.Error"/>
-                                }
-                                break;
-                            }
-                        }
-                    </MudTooltip>
-                    <MudDivider Vertical="true" Class="h-100 bg-dark fw-bold"></MudDivider>
+        <MudPaper Elevation="3" Class="p-3">
+            <MudText Class="fw-bold mb-2">Automated tests for exercise:</MudText>
+            <div class="d-flex justify-content-between align-items-center ">
+                <div class="d-flex justify-content-start align-items-center gap-3">
+                    <MudButton Color="Color.Primary" Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.PlayArrow" IconColor="Color.Success" OnClick="() => TestRunnerService.RunAllInTestClass(typeof(TTestClass))">Run all</MudButton>
+                    <MudText Typo="Typo.body1">Successful: <strong>@_testDescriptors.Count(p => p.Value is {IsSuccessful:true})/@_testDescriptors.Count</strong></MudText>
+                    <MudText Typo="Typo.body1">Failed: <strong>@_testDescriptors.Count(p => p.Value is {IsSuccessful: false })/@_testDescriptors.Count</strong></MudText>
+                    <MudText Typo="Typo.body1">Not run: <strong>@_testDescriptors.Count(p => p.Value is null)/@_testDescriptors.Count</strong></MudText>
                 </div>
-            </TabPanelHeader>
-            <ChildContent>
-                @foreach (var test in _testDescriptors)
-                {
-                    <MudTabPanel Text="@test.Key.Title" ID="@test.Key">
-                        @{
-                            <div class="d-flex flex-column gap-3 w-100">
-                                <div class="d-flex justify-content-between">
-                                    <MudText Typo="Typo.h5">@test.Key.Title</MudText>
-                                    @if (test.Value == null)
+                <MudText Typo="Typo.body1" Class="text-end">Component under test: <strong>@TestComponentName</strong>.razor</MudText>
+            </div>
+            <MudTreeView Items="_testDescriptors.ToHashSet()" Hover="true">
+                <ItemTemplate Context="test">
+                    <MudTreeViewItem T="KeyValuePair<TestDescriptor, TestRunResult>">
+                        <BodyContent>
+                            <div class="d-flex justify-content-start align-items-center">
+                                @*<div class="d-flex justify-content-start align-items-center">*@
+                                <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
+                                <MudIconButton OnClick="@(() => TestRunnerService.RunTest(test.Key))" Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Medium" Color="Color.Success"/>
+                                <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
+                                @switch (test.Value)
+                                {
+                                    case null:
+                                        <MudIcon Icon="@Icons.Material.Filled.QuestionMark" Color="@Color.Default" Size="Size.Small"/>
+                                        break;
+                                    default:
                                     {
-                                        <MudText Typo="Typo.body1" Color="Color.Warning">Not run</MudText>
+                                        if (test.Value!.IsSuccessful)
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Filled.Check" Color="@Color.Success"/>
+                                        }
+                                        else
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Filled.Error" Color="@Color.Error"/>
+                                        }
+                                        break;
                                     }
-                                    else if (test.Value.IsSuccessful)
+                                }
+                                <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
+                                <MudText Color="@GetTextColor(test)">@test.Key.Title</MudText>
+                            </div>
+                        </BodyContent>
+                        <ChildContent >
+                            <MudPaper Elevation="1" Class="p-2 m-0 subtle-border">
+                                <div class="d-flex flex-column gap-3 ">
+                                    <MudText Typo="Typo.subtitle1" Class="fw-bold">@test.Key.Description</MudText>
+                                    <MudText>Result:</MudText>
+                                    @if (test.Value is {ErrorMessage: not null })
                                     {
-                                        <MudText Typo="Typo.body1" Color="Color.Success">Successful</MudText>
+                                        <MudText Typo="Typo.body1">@test.Value.ErrorMessage</MudText>
                                     }
-                                    else
+                                    else if (test.Value?.IsSuccessful ?? false)
                                     {
-                                        <MudText Typo="Typo.body1" Color="Color.Error">Failed</MudText>
+                                        <MudText Color="Color.Success">Test was successful!</MudText>
                                     }
                                 </div>
-                                <MudText Typo="Typo.body1">@test.Key.Description</MudText>
-                                @*TODO Hint*@
-                                <MudText>Result:</MudText>
-                                @if (test.Value is {ErrorMessage: not null })
-                                {
-                                    <MudText Typo="Typo.body1">@test.Value.ErrorMessage</MudText>
-                                }
-                            </div>
-                        }
-                    </MudTabPanel>
-                }
-            </ChildContent>
-        </MudTabs>
+                            </MudPaper>
+                        </ChildContent>
+                    </MudTreeViewItem>
+                </ItemTemplate>
+            </MudTreeView>
+            @if (_testDescriptors.All(p => p.Value?.IsSuccessful ?? false) && ComponentUnderTestParameters != null)
+            {
+                <MudPaper Elevation="0" Class="p-2 subtle-border">
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.Celebration" Color="Color.Secondary"></MudIcon>
+                        <MudText Class="fw-bold" Typo="Typo.subtitle1">Congratulations! All tests passed, you successfully passed the exercise!</MudText>
+                        <MudIcon Icon="@Icons.Material.Filled.Celebration" Color="Color.Tertiary"></MudIcon>
+                    </div>
+                    
+                    <MudText Typo="Typo.subtitle1">Take a look and feel free to play around with the component you finished!</MudText>
+                    @CreateComponent(GetComponentUnderTest(), ComponentUnderTestParameters)
+                </MudPaper>
+            }
+        </MudPaper>
     </div>
 }
 else
@@ -93,8 +95,41 @@ else
     bool _isInitialized = false;
 
     [Parameter]
-    public string TestComponentName { get; set; } = typeof(TTestClass).GetGenericArguments().FirstOrDefault()?.Name ?? string.Empty;
-    
+    public IDictionary<string, object>? ComponentUnderTestParameters { get; set; }
+
+    private RenderFragment CreateComponent(Type componentType, IDictionary<string, object> parameters) => builder =>
+    {
+        builder.OpenComponent(0, componentType);
+        if (parameters != null)
+        {
+            foreach (var parameter in parameters)
+            {
+                builder.AddAttribute(1, parameter.Key, parameter.Value);
+            }
+        }
+        builder.CloseComponent();
+    };
+
+    [Parameter]
+    public string TestComponentName { get; set; } = GetComponentUnderTest().Name;
+
+    public static Type GetComponentUnderTest()
+    {
+        Type typeToCheck = typeof(TTestClass);
+
+        while (typeToCheck != null && typeToCheck != typeof(object))
+        {
+            if (typeToCheck.IsGenericType)
+            {
+                return typeToCheck.GetGenericArguments().FirstOrDefault();
+            }
+
+            typeToCheck = typeToCheck.BaseType;
+        }
+
+        return typeof(object);
+    }
+
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
@@ -113,6 +148,22 @@ else
                 StateHasChanged();
             }
         };
+    }
+
+    private Color GetTextColor(KeyValuePair<TestDescriptor, TestRunResult> value)
+    {
+        if (value.Value == null)
+        {
+            return Color.Dark;
+        }
+        else if (value.Value.IsSuccessful)
+        {
+            return Color.Success;
+        }
+        else
+        {
+            return Color.Error;
+        }
     }
 
 }

@@ -76,3 +76,12 @@ ul {
 .mud-typography ul{
     margin-top: 8px;
 }
+pre[class*="language-razor"] {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.subtle-border {
+    border: 1px solid #e0e0e0 !important;
+}
+

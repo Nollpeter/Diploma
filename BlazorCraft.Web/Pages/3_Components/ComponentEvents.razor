@@ -2,6 +2,7 @@
 @using BlazorCraft.Web.Shared.Examples.Components._2_Events
 @using BlazorCraft.Web.Shared.Examples.Components._2_Events.ExampleUsages
 @using BlazorCraft.Web.Shared._Exercises.Components._2_Events
+@using BlazorCraft.Web.Shared._Exercises.RehderFragments
 @using BlazorCraft.Web.Tests.Components._2_Events
 
 <MudContainer Class="d-grid gap-3">
@@ -159,12 +160,15 @@
                     </MudText>
                     <MudText>You can see that you have some code already provided for you, you don't need to touch them, also, please don't!</MudText>
                     <MudText>The component also guides you with comments where you need to put your code, please follow these instructions</MudText>
-                    <TestRunner TTestClass="Test_Components_Events_ExLessonFinal"></TestRunner>
+                    <TestRunner TTestClass="Test_Components_Events_ExLessonFinal"
+                                ComponentUnderTestParameters=
+                                "@(new Dictionary<string, object>(){ [Test_Components_Events_ExLessonFinal.EmployeesParameterName]= 
+                                     new List<ComponentEvents_Ex2_EventCallBack.Employee>(){ new (1, "employee 1"), new(2, "employee 2")}})"
+                                ></TestRunner>
                 </div>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
     </MudExpansionPanels>
-    <ComponentEvents_ExLessonFinal></ComponentEvents_ExLessonFinal>
 </MudContainer>
 
 
