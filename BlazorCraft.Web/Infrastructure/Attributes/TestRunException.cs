@@ -26,3 +26,15 @@ public class PreconditionsFailedException : Exception
     public List<PreconditionException> Preconditions { get; }
     
 }
+
+public class CollectionsNotEquivalentException : Exception
+{
+    public IEnumerable<object> Expected { get; }
+    public IEnumerable<object> Actual { get; }
+
+    public CollectionsNotEquivalentException(IEnumerable<object> expected, IEnumerable<object> actual, string message) : base(message)
+    {
+        Expected = expected;
+        Actual = actual;
+    }
+}

@@ -119,4 +119,11 @@ public class ComponentTestBase<TTestComponent> : ComponentTestBase where TTestCo
         }
     }
 
+    protected async Task WaitForState(Func<bool> condition)
+    {
+        while (condition() != true)
+        {
+            await Task.Delay(50);
+        }
+    }
 }

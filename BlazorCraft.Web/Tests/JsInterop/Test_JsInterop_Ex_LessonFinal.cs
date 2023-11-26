@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Reflection;
 using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Shared._Exercises.DependencyInjection;
 using BlazorCraft.Web.Shared._Exercises.RehderFragments;
@@ -107,8 +106,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
             var findComponent = renderedComponent.FindComponent<RenderFragments_LessonFinal>();
             var employees = await _jsRuntime.InvokeAsync<List<RenderFragments_LessonFinal.Employee>>(GetEmployeesJsMethodName);
             var componentEmployees = findComponent.Instance.Employees;
-            //TODO Erre valami friendly message!
-            componentEmployees.Should().BeEquivalentTo(employees);
+            componentEmployees.Should().FormattedBeEquivalentTo(employees, "The list of employees bound to the list component is not equal to its expected value!");
             return TestRunResult.Success;
         }
         catch (JSException e)
@@ -128,14 +126,6 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
             //TODO Ezt megoldani úgy, hogy specifikus exceptiont dobjunk erre és arra lehessen egy hintet adni, hogy kell az _isInitialized
         }
         
-    }
-
-    private async Task WaitForState(Func<bool> condition)
-    {
-        while (condition() != true)
-        {
-            await Task.Delay(50);
-        }
     }
 
     private async Task SetupMockJsRuntime(TestContext testContext)
@@ -163,50 +153,5 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
         await renderedComponent.Instance.CallOnParametersSetAsync();
         await renderedComponent.Instance.CallOnInitializedAsync();
         await WaitForState(() => isLifeCycleComplete);
-    }
-}
-
-public static class FluentAssertionExtensions
-{
-}
-
-public static class RenderedComponentExtensions
-{
-    public static async Task CallOnInitializedAsync<TComponent>(this TComponent component) where TComponent : class
-    {
-        var method = typeof(TComponent).GetMethod("OnInitializedAsync", BindingFlags.NonPublic | BindingFlags.Instance);
-        if (method == null)
-        {
-            throw new InvalidOperationException("The OnInitializedAsync method could not be found on the component.");
-        }
-
-        // Ensure that we're calling a method that returns a Task, as expected for OnInitializedAsync
-        if (method.ReturnType != typeof(Task))
-        {
-            throw new InvalidOperationException("The OnInitializedAsync method does not return a Task.");
-        }
-
-        var task = (Task)method.Invoke(component, null);
-        await task;
-    }
-
-    public static async Task CallOnParametersSetAsync<TComponent>(this TComponent component)
-        where TComponent : ComponentBase
-    {
-        var method =
-            typeof(TComponent).GetMethod("OnParametersSetAsync", BindingFlags.NonPublic | BindingFlags.Instance);
-        if (method == null)
-        {
-            throw new InvalidOperationException("The OnParametersSetAsync method could not be found on the component.");
-        }
-
-        // Ensure that we're calling a method that returns a Task, as expected for OnParametersSetAsync
-        if (method.ReturnType != typeof(Task))
-        {
-            throw new InvalidOperationException("The OnParametersSetAsync method does not return a Task.");
-        }
-
-        var task = (Task)method.Invoke(component, null);
-        await task;
     }
 }

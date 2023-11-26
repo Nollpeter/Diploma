@@ -172,7 +172,14 @@ public class TestRunnerService : ITestRunnerService
         }
         catch (PreconditionsFailedException e)
         {
-            OnTestStateChanged(new TestRunStateEventArgs(testDescriptor, new PreconditionsNotMetTestRunResult(e),session, TestRunState.Error));
+            OnTestStateChanged(new TestRunStateEventArgs(testDescriptor, new PreconditionsNotMetTestRunResult(e),
+                session, TestRunState.Error));
+        }
+        catch (CollectionsNotEquivalentException e)
+        {
+            OnTestStateChanged(new TestRunStateEventArgs(testDescriptor,
+                new CollectionsNotEquivalentTestRunResult(e.Expected, e.Actual, e.Message), session,
+                TestRunState.Error));
         }
         catch (Exception e)
         {

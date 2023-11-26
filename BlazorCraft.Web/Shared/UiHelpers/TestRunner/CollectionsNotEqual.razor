@@ -1,0 +1,21 @@
+﻿@using BlazorCraft.Web.Tests
+@using System.Text.Json
+<MudText Typo="Typo.body1">@TestRunResult.ErrorMessage</MudText>
+<div class="row">
+    <div class="col-6">
+        <MudText Typo="Typo.subtitle1" Class="fw-bold">Expected collection: </MudText>
+        <CodeSnippet Language="json">
+            @JsonSerializer.Serialize(TestRunResult.Expected, new JsonSerializerOptions() {WriteIndented = true} )
+        </CodeSnippet>
+    </div>
+    <div class="col-6">
+        <MudText Typo="Typo.subtitle1" Class="fw-bold">Actual collection: </MudText>
+        <CodeSnippet Language="json">
+            @JsonSerializer.Serialize(TestRunResult.Actual , new JsonSerializerOptions() {WriteIndented = true} )
+        </CodeSnippet>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public CollectionsNotEquivalentTestRunResult TestRunResult { get; set; }
+}

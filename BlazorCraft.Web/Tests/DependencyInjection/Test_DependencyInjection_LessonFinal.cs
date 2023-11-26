@@ -3,6 +3,7 @@ using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Pages._3_Components;
 using BlazorCraft.Web.Shared._Exercises.Components._3_DataBinding;
 using BlazorCraft.Web.Shared._Exercises.DependencyInjection;
+using BlazorCraft.Web.Shared._Exercises.JsInterop;
 using BlazorCraft.Web.Shared._Exercises.RehderFragments;
 using BlazorCraft.Web.Tests.Routing;
 using Bunit;
@@ -68,7 +69,7 @@ public class Test_DependencyInjection_LessonFinal : ComponentTestBase<Dependency
             await Task.Delay(1000);
             var findComponent = renderedComponent.FindComponent<RenderFragments_LessonFinal>();
             var componentEmployees = findComponent.Instance.Employees;
-            componentEmployees.Should().BeEquivalentTo(employees);
+            componentEmployees.Should().FormattedBeEquivalentTo(employees,"The list of employees bound to the list component is not equal to its expected value!");
             return TestRunResult.Success;
         }
         catch (NullReferenceException e)

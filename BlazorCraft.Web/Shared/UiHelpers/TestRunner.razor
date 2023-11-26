@@ -60,10 +60,13 @@
                                     @switch (test.Value)
                                     {
                                         case HtmlMarkupMismatchTestRunResult htmlMarkupMismatchTestRunResult:
-                                            <HtmlMarkupMismatch TestRunResult="@test.Value" HtmlMarkupMismatchTestRunResult="@htmlMarkupMismatchTestRunResult"/>
+                                            <HtmlMarkupMismatch TestRunResult="@htmlMarkupMismatchTestRunResult"/>
                                             break;
                                         case PreconditionsNotMetTestRunResult preconditionsNotMetTestRunResult:
                                             <PreconditionsNotMet TestRunResult="preconditionsNotMetTestRunResult" />
+                                            break;
+                                        case CollectionsNotEquivalentTestRunResult collectionsNotEquivalentTestRunResult:
+                                            <CollectionsNotEqual TestRunResult="collectionsNotEquivalentTestRunResult" />
                                             break;
                                         case {ErrorMessage: not null }:
                                             <MudText Class="text-start" Typo="@Typo.body1" Color="Color.Error">@test.Value.ErrorMessage</MudText>
