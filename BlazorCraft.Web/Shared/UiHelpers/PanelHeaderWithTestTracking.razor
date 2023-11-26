@@ -6,56 +6,62 @@
 <div class="d-flex justify-content-start align-items-center">
     <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
     <MudIconButton OnClick="@(() => TestRunnerService.RunAllInTestClass(typeof(TTestClass)))" Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Small" Color="Color.Success"/>
-                                    <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
+    <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
     <MudIcon Size="Size.Small" Icon="@_icon" Color="_iconColor"></MudIcon>
     <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
     @ChildContent
 </div>
 
 @code {
-    [Parameter, EditorRequired] public RenderFragment ChildContent { get; set; }
 
-    private TestRunSession _session;
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; }
+
+    private TestRunSession _session => TestRunnerService.GetSessionForTestClass(typeof(TTestClass));
     private string _icon = Icons.Material.Outlined.QuestionMark;
     private Color _iconColor = Color.Default;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        _session = TestRunnerService.GetSessionForTestClass(typeof(TTestClass));
+        SetIcons();
+        StateHasChanged();
+
         TestRunnerService.TestStateChanged += (sender, args) =>
         {
             if (args.TestDescriptor.TestClass
                 != typeof(TTestClass)) return;
-
-            _session[args.TestDescriptor] = args.TestRunState;
-            
-            switch (_session.GetSessionStateInTestClass(typeof(TTestClass)))
-            {
-                case TestRunState.NotStarted:
-                    _icon = Icons.Material.Filled.QuestionMark;
-                    break;
-                case TestRunState.Running:
-                    _icon = CustomIcons.SpinnerSmall;
-                    _iconColor = Color.Primary;
-                    break;
-                case TestRunState.Successful:
-                    _icon = Icons.Material.Filled.Check;
-                    _iconColor = Color.Success;
-                    break;
-                case TestRunState.Error:
-                    _icon = Icons.Material.Filled.Error;
-                    _iconColor = Color.Error;
-                    break;
-                case TestRunState.AtLeastOneNotStarted:
-                    _icon = Icons.Material.Outlined.Warning;
-                    _iconColor = Color.Warning;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            SetIcons();
             StateHasChanged();
         };
+    }
+
+    private void SetIcons()
+    {
+        switch (_session.GetSessionStateInTestClass(typeof(TTestClass)))
+        {
+            case TestRunState.NotStarted:
+                _icon = Icons.Material.Filled.QuestionMark;
+                break;
+            case TestRunState.Running:
+                _icon = CustomIcons.SpinnerSmall;
+                _iconColor = Color.Primary;
+                break;
+            case TestRunState.Successful:
+                _icon = Icons.Material.Filled.Check;
+                _iconColor = Color.Success;
+                break;
+            case TestRunState.Error:
+                _icon = Icons.Material.Filled.Error;
+                _iconColor = Color.Error;
+                break;
+            case TestRunState.AtLeastOneNotStarted:
+                _icon = Icons.Material.Outlined.Warning;
+                _iconColor = Color.Warning;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 
 

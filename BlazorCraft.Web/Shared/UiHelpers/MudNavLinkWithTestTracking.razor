@@ -23,18 +23,16 @@
         return null;
     }
 
-    private TestRunSession _pageSession;
+    private TestRunSession _pageSession => TestRunnerService.GetSessionForPage(PageType);
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         Href = GetPageRoute(PageType);
-        _pageSession = TestRunnerService.GetSessionForPage(PageType);
         TestRunnerService.TestStateChanged += (sender, args) =>
         {
             if (args.TestDescriptor.PageClass != PageType) return;
 
-            _pageSession[args.TestDescriptor] = args.TestRunState;
             
             switch (_pageSession.GetSessionStateInPage(PageType))
             {

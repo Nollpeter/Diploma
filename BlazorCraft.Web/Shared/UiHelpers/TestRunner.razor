@@ -32,7 +32,7 @@
                                         <MudIcon Icon="@Icons.Material.Filled.QuestionMark" Color="@Color.Default"/>
                                         break;
                                     case TestRunState.Running:
-                                        <MudIcon  Icon="@CustomIcons.SpinnerSmall" Color="Color.Primary" />
+                                        <MudIcon Icon="@CustomIcons.SpinnerSmall" Color="Color.Primary"/>
                                         break;
                                     case TestRunState.Successful:
                                         <MudIcon Icon="@Icons.Material.Filled.Check" Color="@Color.Success"/>
@@ -46,24 +46,6 @@
                                         throw new NotImplementedException();
                                     }
                                 }
-                                @*@switch (test.Value)
-                                {
-                                    case null:
-                                        <MudIcon Icon="@Icons.Material.Filled.QuestionMark" Color="@Color.Default" Size="Size.Small"/>
-                                        break;
-                                    default:
-                                    {
-                                        if (test.Value!.IsSuccessful)
-                                        {
-                                            <MudIcon Icon="@Icons.Material.Filled.Check" Color="@Color.Success"/>
-                                        }
-                                        else
-                                        {
-                                            <MudIcon Icon="@Icons.Material.Filled.Error" Color="@Color.Error"/>
-                                        }
-                                        break;
-                                    }
-                                }*@
                                 <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
                                 <MudText Color="@GetTextColor(test)">@test.Key.Title</MudText>
                             </div>
@@ -77,15 +59,18 @@
                                     {
                                         <MudText Typo="Typo.body1">@test.Value.ErrorMessage</MudText>
                                         <div class="row">
-                                            <div class="col-6"><MudText Typo="Typo.subtitle1" Class="fw-bold">Expected HTML markup: </MudText>
-                                                                                                               <CodeSnippet>
-                                                                                                                   @htmlMarkupMismatchTestRunResult.ExpectedMarkup
-                                                                                                               </CodeSnippet></div>
                                             <div class="col-6">
-                                                 <MudText Typo="Typo.subtitle1" Class="fw-bold">Actual HTML markup: </MudText>
-                                                                                                 <CodeSnippet>
-                                                                                                     @htmlMarkupMismatchTestRunResult.ActualMarkup
-                                                                                                 </CodeSnippet>  </div>
+                                                <MudText Typo="Typo.subtitle1" Class="fw-bold">Expected HTML markup: </MudText>
+                                                <CodeSnippet>
+                                                    @htmlMarkupMismatchTestRunResult.ExpectedMarkup
+                                                </CodeSnippet>
+                                            </div>
+                                            <div class="col-6">
+                                                <MudText Typo="Typo.subtitle1" Class="fw-bold">Actual HTML markup: </MudText>
+                                                <CodeSnippet>
+                                                    @htmlMarkupMismatchTestRunResult.ActualMarkup
+                                                </CodeSnippet>
+                                            </div>
                                         </div>
                                     }
                                     else if (test.Value is {ErrorMessage: not null })
@@ -113,11 +98,11 @@
                     <MudText Typo="Typo.subtitle1">Take a look and feel free to play around with the component you finished!</MudText>
                     @if (ComponentUnderTestHelperFragment != null)
                     {
-                        <MudDivider DividerType="DividerType.Middle" Class="border-2 border-dark mb-2" ></MudDivider>
+                        <MudDivider DividerType="DividerType.Middle" Class="border-2 border-dark mb-2"></MudDivider>
                         @ComponentUnderTestHelperFragment
                     }
-                    <MudDivider DividerType="DividerType.Middle" Class="border-2 border-dark mb-2" ></MudDivider>
-                        @CreateComponent(GetComponentUnderTest(), ComponentUnderTestParameters)
+                    <MudDivider DividerType="DividerType.Middle" Class="border-2 border-dark mb-2"></MudDivider>
+                    @CreateComponent(GetComponentUnderTest(), ComponentUnderTestParameters)
                 </MudPaper>
             }
         </MudPaper>
@@ -130,15 +115,16 @@ else
 
 @code {
 
-    Dictionary<TestDescriptor, TestRunResult?> _testDescriptors;// => TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
-    TestRunSession _session;
+    Dictionary<TestDescriptor, TestRunResult?> _testDescriptors;
+    TestRunSession _session => TestRunnerService.GetSessionForTestClass(typeof(TTestClass));
     bool _isInitialized = false;
 
     [Parameter]
     public IDictionary<string, object>? ComponentUnderTestParameters { get; set; }
 
-    [Parameter]public RenderFragment? ComponentUnderTestHelperFragment { get; set; }
-    
+    [Parameter]
+    public RenderFragment? ComponentUnderTestHelperFragment { get; set; }
+
     private RenderFragment CreateComponent(Type componentType, IDictionary<string, object> parameters) => builder =>
     {
         builder.OpenComponent(0, componentType);
@@ -175,29 +161,15 @@ else
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        //_testDescriptors = TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
         _testDescriptors = TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
-        _session = TestRunnerService.GetSessionForTestClass(typeof(TTestClass));
         _isInitialized = true;
         StateHasChanged();
 
-       TestRunnerService.TestStateChanged += (sender, args) =>
-       {
-           
-           _testDescriptors = TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
-           _session[args.TestDescriptor] = args.TestRunState;
-           //_session = TestRunnerService.GetSessionForTestClass(typeof(TTestClass));
-           StateHasChanged();
-           //if (_testDescriptors.ContainsKey(args.TestDescriptor))
-           //{
-           //    if (args.TestRunResult != null)
-           //    {
-           //        _testDescriptors[args.TestDescriptor] = args.TestRunResult;
-           //    }
-           //    StateHasChanged();
-           //}
-       };
-        
+        TestRunnerService.TestStateChanged += (sender, args) =>
+        {
+            _testDescriptors = TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
+            StateHasChanged();
+        };
     }
 
     private Color GetTextColor(KeyValuePair<TestDescriptor, TestRunResult> value)
