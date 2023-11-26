@@ -24,8 +24,6 @@
 
 	<ItemGroup>
 	  <!--<Folder Include="Shared\Examples\7_DependencyInjection\ExampleUsages\" />-->
-	  <Folder Include="Shared\_Exercises\1_Components\4_LifeCycle\" />
-	  <Folder Include="Tests\Helpers\" />
 	  <Folder Include="wwwroot\img\" />
 	</ItemGroup>
 
@@ -53,6 +51,27 @@
       <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ListComponent3.razor" />
       <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ListComponent4.razor" />
       <_ContentIncludedByDefault Remove="Shared\Examples\RenderFragments\ListComponent5.razor" />
+      <_ContentIncludedByDefault Remove="Pages\10_CSSIsolation\CssIsolation.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\1_Components\1_Introduction\ComponentsIntroductionExercise.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\1_Components\3_DataBinding\ComponentDataBinding_Ex1.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\1_Components\3_DataBinding\ComponentDataBinding_Ex_LessonFinal.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\1_Components\5_RenderFragments\RenderFragments_Ex1.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\1_Components\5_RenderFragments\RenderFragments_Ex2.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\1_Components\5_RenderFragments\RenderFragments_Ex3.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\1_Components\5_RenderFragments\RenderFragments_Ex4.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\1_Components\5_RenderFragments\RenderFragments_LessonFinal.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\1_Components\2_Events\EventBindingExample.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\1_Components\2_Events\EventCallBackExample.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\1_Components\2_Events\ExampleUsages\EventCallBackExampleUsage.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\1_Components\3_DataBinding\ExampleUsages\TwoWayDataBinding_Components_ComplexObjectProperty_Usage.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\1_Components\3_DataBinding\ExampleUsages\TwoWayDataBinding_Components_Usage.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\1_Components\3_DataBinding\TwoWayDataBindingExample.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\1_Components\3_DataBinding\TwoWayDataBinding_Components.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\1_Components\3_DataBinding\TwoWayDataBinding_CustomEventHandler.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\1_Components\4_LifeCycle\ExampleUsages\DelayRenderingExample.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\1_Components\4_LifeCycle\ExampleUsages\DelayRenderingWithBooleanExample.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\1_Components\4_LifeCycle\ExampleUsages\StateHasChangedExampleUsage.razor" />
+      <_ContentIncludedByDefault Remove="Shared\Examples\1_Components\4_LifeCycle\StateHasChangedExample.razor" />
     </ItemGroup>
 	
 </Project>

@@ -5,7 +5,7 @@ using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace BlazorCraft.Web.Tests.Routing;
+namespace BlazorCraft.Web.Tests;
 
 public abstract class ComponentTestBase : TestContext
 {

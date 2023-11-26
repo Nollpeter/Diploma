@@ -1,14 +1,17 @@
-﻿@using BlazorCraft.Web.Pages._3_Components
-@using BlazorCraft.Web.Pages._4_RenderFragments
-@using BlazorCraft.Web.Pages._5_Routing
-@using BlazorCraft.Web.Pages._8_JsInterop
-@using BlazorCraft.Web.Pages._10_CSSIsolation
+﻿@using BlazorCraft.Web.Pages
+@using BlazorCraft.Web.Pages._0_Introduction
+@using BlazorCraft.Web.Pages._1_Components_Introduction
+@using BlazorCraft.Web.Pages._2_ComponentEvents
+@using BlazorCraft.Web.Pages._3_DataBinding
+@using BlazorCraft.Web.Pages._4_Component_LifeCycle
+@using BlazorCraft.Web.Pages._5_RenderFragments
+@using BlazorCraft.Web.Pages._6_Routing
+@using BlazorCraft.Web.Pages._7_DependencyInjection
+@using BlazorCraft.Web.Pages._8_Forms
+@using BlazorCraft.Web.Pages._9_JsInterop
+@using BlazorCraft.Web.Pages._10_MudBlazor
 @using BlazorCraft.Web.Pages._11_Exam
-@using BlazorCraft.Web.Pages._6_DependencyInjection
-@using BlazorCraft.Web.Pages._7_Forms
-@using BlazorCraft.Web.Pages._1_Introduction
-@using BlazorCraft.Web.Pages._0_About
-@using BlazorCraft.Web.Pages
+@using BlazorCraft.Web.Pages.About
 <MudNavMenu>
     <MudPageNavlink PageType="typeof(AboutBlazorCraft)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home - START HERE</MudPageNavlink>
     <MudPageNavlink Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(Introduction)"  NextPage="typeof(ComponentsIntroduction)" >0. Blazor Webassembly</MudPageNavlink>
@@ -38,11 +41,11 @@
     <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(Forms)" PreviousPage="typeof(DependencyInjection)" NextPage="typeof(JsInterop)">
         8. Forms
     </MudNavLinkWithTestTracking>
-    <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(JsInterop)" PreviousPage="typeof(Forms)" NextPage="typeof(ComponentLibrary)" >
+    <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(JsInterop)" PreviousPage="typeof(Forms)" NextPage="typeof(MudBlazor_ComponentLibrary)" >
         9. Javascript Interop
     </MudNavLinkWithTestTracking>
-    <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(ComponentLibrary)" PreviousPage="typeof(JsInterop)" NextPage="typeof(Exam)">
+    <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(MudBlazor_ComponentLibrary)" PreviousPage="typeof(JsInterop)" NextPage="typeof(Exam)">
         10. MudBlazor
     </MudNavLinkWithTestTracking>
-    <MudNavLinkWithTestTracking Icon="@Icons.Material.Filled.Assignment" PageType="typeof(Exam)" PreviousPage="typeof(ComponentLibrary)" Class="fw-bold">Exam exercise</MudNavLinkWithTestTracking>
+    <MudNavLinkWithTestTracking Icon="@Icons.Material.Filled.Assignment" PageType="typeof(Exam)" PreviousPage="typeof(MudBlazor_ComponentLibrary)" Class="fw-bold">Exam exercise</MudNavLinkWithTestTracking>
 </MudNavMenu>

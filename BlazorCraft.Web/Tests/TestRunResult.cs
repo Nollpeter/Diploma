@@ -1,5 +1,4 @@
-﻿using BlazorCraft.Web.Infrastructure;
-using BlazorCraft.Web.Infrastructure.Attributes;
+﻿using BlazorCraft.Web.Infrastructure.Attributes;
 
 namespace BlazorCraft.Web.Tests;
 

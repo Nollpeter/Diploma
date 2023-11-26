@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using BlazorCraft.Web;
 using BlazorCraft.Web.DI;
-using BlazorCraft.Web.Shared.Examples._7_DependencyInjection;
-using BlazorCraft.Web.Tests.Introduction;
 using Blazored.LocalStorage;
 using MudBlazor.Services;
 

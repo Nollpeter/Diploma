@@ -1,0 +1,181 @@
+﻿@page "/introduction"
+
+<MudContainer Class="d-grid gap-3">
+    <MudText Typo="Typo.h4">Introduction to Blazor WebAssembly</MudText>
+    <MudText>
+        Welcome to the BlazorCraft educational platform! In this introductory section, you can get acquainted with the fundamentals of Blazor WebAssembly, its components, and how the technology works.
+    </MudText>
+
+    <MudExpansionPanels MultiExpansion="true">
+        <MudExpansionPanelWithStoredState Id="what is blazor?">
+            <TitleContent>
+                <MudText Typo="Typo.h6" Class="fw-bold">What is blazor?</MudText>
+            </TitleContent>
+            <ChildContent>
+                <MudText Inline="true">
+                    Blazor is a <MudText Inline="true" Class="fw-bold text-decoration-underline">Single Page Application </MudText> framework. The name Blazor is a combination/mutation of the words Browser and Razor (the .NET HTML view generating engine). The implication being that instead of having to execute Razor views on the server in order to present HTML to the browser, Blazor is capable of executing these views on the client.
+                </MudText>
+                <!----><MudDivider DividerType="DividerType.Middle" Class="my-6"/><!---->
+                <SpacedContent>
+                    <MudText Typo="Typo.h6">What Blazor is not:</MudText>
+                    <MudText>Blazor differs from Microsoft's previous attempt, Silverlight, as it doesn't rely on a browser plugin for client-side execution. Silverlight required a plugin, limiting its compatibility, especially on iOS devices.</MudText>
+                    <MudText>Blazor operates without the need for any client-side plugins. It can run server-side, with the server handling execution, or directly in the browser through <MudText Inline="true" Class="fw-bold text-decoration-underline">WebAssembly</MudText>. Since WebAssembly is a web standard, it's supported by all major browsers, ensuring that client-side Blazor apps work on Windows, Linux, Mac, Android, and iOS.</MudText>
+                </SpacedContent>
+            </ChildContent>
+        </MudExpansionPanelWithStoredState>
+
+        <MudExpansionPanelWithStoredState Id="webassembly">
+            <TitleContent>
+                <MudText Typo="Typo.h6" Class="fw-bold">What is WebAssembly?</MudText>
+            </TitleContent>
+            <ChildContent>
+                <SpacedContent>
+                    <MudText><Important>WebAssembly</Important>, or "Wasm," is an instruction set designed to run on any host that can interpret these instructions or convert them into native machine code for execution.</MudText>
+                    <MudText>WebAssembly instructions are encoded in a specific binary format. Any host, whether hardware or software, following this specification can read and execute these binaries, either through interpretation or direct compilation to machine language tailored to the device.</MudText>
+                    <MudText>WebAssembly shares similarities with the Common Intermediate Language (CIL) that .NET source code compiles into. Like .NET, Wasm can be generated from higher-level languages like C#.</MudText>
+                    <MudText>Blazor does not require .NET to be installed on the client in order to run through WebAssembly.</MudText>
+                </SpacedContent>
+            </ChildContent>
+        </MudExpansionPanelWithStoredState>
+        <MudExpansionPanelWithStoredState Id="hostingModels">
+            <TitleContent>
+                <MudText Typo="Typo.h6" Class="fw-bold">Hosting models</MudText>
+            </TitleContent>
+            <ChildContent>
+                <MudText>Blazor has two hosting models: <Important>Server-side</Important> and <Important>WebAssembly</Important>. Server-side Blazor was launched in September 2019, while WebAssembly became official in May 2020.</MudText>
+                <!----><MudDivider DividerType="DividerType.Middle" Class="my-6"/><!---->
+                <SpacedContent>
+                    <MudText Typo="Typo.h6">Server-Side</MudText>
+                    <MudImage Src="\img\blazor-server-side.png"></MudImage>
+                    <MudText>
+                        Blazor <Important>server-side</Important> is the first
+                        of the two hosting models provided by Blazor, a web framework developed by Microsoft.
+                        In this model, the majority of the application's code runs on the server rather than in the user's browser.
+                        When a user interacts with a Blazor server-side application, such as clicking a button or filling out a form, these interactions are sent to the server, where the application processes them.
+                        The server then sends back HTML updates to the client, which are used to update the user interface.
+                        This approach minimizes the amount of code that needs to be downloaded to the client's browser, resulting in faster initial load times and efficient use of server resources.
+                    </MudText>
+                    <div class="row">
+                        <div class="col-6">
+                            <MudText Typo="Typo.h6" Class="text-center"><MudIcon Icon="@Icons.Filled.ArrowCircleUp" Color="Color.Success"/>Pros</MudText>
+                            <MudList>
+                                <MudListItem>
+                                    <MudText>
+                                        <Important>Faster Initial Loading</Important>
+                                    </MudText>
+                                    <MudText>Since most of the application logic resides on the server, the initial load time is faster compared to client-side frameworks because the client only needs to download the HTML, CSS, and minimal JavaScript.</MudText>
+                                </MudListItem>
+                                <MudListItem>
+                                    <MudText>
+                                        <Important>Reduced Client Resource Demands</Important>
+                                    </MudText>
+                                    <MudText>Blazor server-side applications can operate on devices with limited processing capabilities and memory since most of the workload is handled by the server.</MudText>
+                                </MudListItem>
+                                <MudListItem>
+                                    <MudText>
+                                        <Important>Real-Time Interactivity</Important>
+                                    </MudText>
+                                    <MudText>Blazor server-side supports real-time functionalities like SignalR, facilitating live updates and bidirectional communication between the server and clients.</MudText>
+                                </MudListItem>
+                            </MudList>
+                        </div>
+                        <div class="col-6">
+                            <MudText Typo="Typo.h6" Class="text-center"><MudIcon Icon="@Icons.Filled.ArrowCircleDown" Color="Color.Error"/>Cons</MudText>
+                            <MudList>
+                                <MudListItem>
+                                    <MudText>
+                                        <Important>Server Workload:</Important>
+                                    </MudText>
+                                    <MudText>Blazor server-side applications place greater demands on the server, as it must manage processing for multiple clients concurrently.</MudText>
+                                </MudListItem>
+                                <MudListItem>
+                                    <MudText>
+                                        <Important>Latency:</Important>
+                                    </MudText>
+                                    <MudText>User interactions necessitate a round-trip to the server, which may introduce latency, particularly in applications characterized by extensive interactivity.</MudText>
+                                </MudListItem>
+                                <MudListItem>
+                                    <MudText>
+                                        <Important>Restricted Offline Functionality:</Important>
+                                    </MudText>
+                                    <MudText>As the majority of logic is executed on the server, Blazor server-side apps are less suited for fully offline scenarios in comparison to progressive web apps (PWAs) constructed using Blazor WebAssembly.</MudText>
+                                </MudListItem>
+
+                            </MudList>
+                        </div>
+                    </div>
+                    <MudText Typo="Typo.h6" Class="fw-bold text-decoration-underline">NOTE: This application will not discuss further this hosting model!</MudText>
+                </SpacedContent>
+                <!----><MudDivider DividerType="DividerType.Middle" Class="my-6"/><!---->
+                <SpacedContent>
+                    <MudText Typo="Typo.h6"><MudIcon Icon="@Icons.Rounded.MenuBook"></MudIcon>WebAssembly</MudText>
+                    <MudImage Src="\img\blazor-webassembly.png"></MudImage>
+                    <MudText>
+                        Blazor <Important>WebAssembly</Important> is the second of the hosting models provided by Blazor, a web framework developed by Microsoft.
+                        Unlike Blazor server-side, which relies on server-side processing, Blazor WebAssembly enables client-side execution of web applications entirely within the user's browser.
+                        When a user accesses a Blazor WebAssembly application, the entire application, including its components and logic, is downloaded and executed within the browser.
+                        This approach allows for more dynamic and interactive web applications without the need for constant communication with a server.
+                        Blazor WebAssembly leverages WebAssembly, a web standard that allows running high-performance, low-level code in the browser, to achieve this level of client-side execution.
+                    </MudText>
+                    <div class="row">
+                        <div class="col-6">
+                            <MudText Typo="Typo.h6" Class="text-center"><MudIcon Icon="@Icons.Filled.ArrowCircleUp" Color="Color.Success"/>Pros</MudText>
+                            <MudList>
+                                <MudListItem>
+                                    <MudText>
+                                        <Important>Rich Client-Side Interactivity</Important>
+                                    </MudText>
+                                    <MudText>Blazor WebAssembly enables highly interactive and responsive web applications that can run independently in the client's browser. This is ideal for scenarios requiring real-time updates and dynamic user experiences.</MudText>
+                                </MudListItem>
+                                <MudListItem>
+                                    <MudText>
+                                        <Important>Reduced Server Load</Important>
+                                    </MudText>
+                                    <MudText>Since much of the application logic runs on the client, it can lead to reduced server load, making it suitable for scenarios with a large number of concurrent users.</MudText>
+                                </MudListItem>
+                                <MudListItem>
+                                    <MudText>
+                                        <Important>Offline Support</Important>
+                                    </MudText>
+                                    <MudText>Blazor WebAssembly can be used to build Progressive Web Apps (PWAs) that can function offline or in low-connectivity environments, thanks to its ability to cache assets and data on the client-side.</MudText>
+                                </MudListItem>
+                            </MudList>
+                        </div>
+                        <div class="col-6">
+                            <MudText Typo="Typo.h6" Class="text-center"><MudIcon Icon="@Icons.Filled.ArrowCircleDown" Color="Color.Error"/>Cons</MudText>
+                            <MudList>
+                                <MudListItem>
+                                    <MudText>
+                                        <Important>Larger Initial Load</Important>
+                                    </MudText>
+                                    <MudText>Blazor WebAssembly applications tend to have a larger initial download size compared to server-side applications because they include the entire application in the initial payload. This can affect load times, especially on slower connections.</MudText>
+                                </MudListItem>
+                                <MudListItem>
+                                    <MudText>
+                                        <Important>Limited Server-Side Control</Important>
+                                    </MudText>
+                                    <MudText>With the majority of the application executing in the client's browser, server-side control and security enforcement can be limited, making it important to secure and validate data on both client and server.</MudText>
+                                </MudListItem>
+                                <MudListItem>
+                                    <MudText>
+                                        <Important>Browser Compatibility</Important>
+                                    </MudText>
+                                    <MudText>While WebAssembly is supported in modern browsers, compatibility with older browsers can be a concern, so it may not be suitable for all audiences.</MudText>
+                                </MudListItem>
+
+                            </MudList>
+                        </div>
+                    </div>
+                    <MudText Typo="Typo.h6" Class="fw-bold text-decoration-underline">NOTE: From this point on, everything you learn will only be considered inside the boundaries of this hosting model</MudText>
+
+                </SpacedContent>
+            </ChildContent>
+        </MudExpansionPanelWithStoredState>
+    </MudExpansionPanels>
+</MudContainer>
+
+@code
+{
+
+
+}

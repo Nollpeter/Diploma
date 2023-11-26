@@ -1,0 +1,124 @@
+﻿@page "/javascript-interop"
+@using BlazorCraft.Web.Shared._Exercises._9_JsInterop
+@using BlazorCraft.Web.Tests.JsInterop
+@using BlazorCraft.Web.Pages._7_DependencyInjection
+@using BlazorCraft.Web.Pages._5_RenderFragments
+<MudText Typo="Typo.h4">Javascript interop</MudText>
+<SpacedContent>
+    <MudText>
+        While blazor is a very powerful tool in itself to write web applications, there might be some areas that we may not be able
+        to implement using blazor, or we do not want to use blazor for those specific areas. We have nothing to worry about,
+        because blazor supports interoperation with the javascript runtime, and also supports it both ways:
+        <ul>
+            <li>We can call javascript functions from blazor</li>
+            <li>We can call blazor functions from javascript</li>
+        </ul>
+    </MudText>
+
+    <MudExpansionPanels MultiExpansion="true">
+        <MudExpansionPanelWithStoredState Id="js-interop-blazor-to-js">
+            <TitleContent>
+                <MudText Typo="Typo.h6" Class="fw-bold">Calling javascript from blazor</MudText>
+            </TitleContent>
+            <ChildContent>
+                <SpacedContent>
+                    <MudText>
+                        To call javascript methods from blazor, we are going to need the <strong>@nameof(IJSRuntime)</strong> interface.
+                        This interface allows us to call any method or any method of an object from blazor.
+                    </MudText>
+                    <MudText>
+                        The <strong>@nameof(IJSRuntime)</strong> service is by default registered for our application, whenever we wish to use it, we only have to inject it.
+                    </MudText>
+                    <AdvancedCodeSnippet TComponent="JsInterop_InjectIJSRuntimeExample"/>
+                    <MudText>
+                        Note that all calls to the javascript runtime are async methods
+                    </MudText>
+                    <MudText>
+                        To make the calls to the javascript runtime, we will typically face two scenarios:
+                        <ul>
+                            <li>
+                                <MudText>We want to call a method with no return type</MudText>
+                                <MudText>
+                                    For this scenario, we can use the <strong>@(nameof(JSRuntimeExtensions)).@nameof(JSRuntimeExtensions.InvokeVoidAsync)</strong> extension method
+                                </MudText>
+                                <MudText>Its first parameter is the name of the method we wish to call and its second parameter is a <strong>params object[] parameter</strong> where we can pass any kind of parameters to it, which will be passed to the javascript method as well</MudText>
+                            </li>
+                            <li>
+                                <MudText>
+                                    We want to call a method with a return type
+                                </MudText>
+                                <MudText>
+                                    For this scenario, we can use the <strong>@(nameof(IJSRuntime)).@nameof(IJSRuntime.InvokeAsync)</strong> method
+                                </MudText>
+                                <MudText>Its first parameter is the name of the method we wish to call and its second parameter is a <strong>params object[] parameter</strong> where we can pass any kind of parameters to it, which will be passed to the javascript method as well</MudText>
+                            </li>
+                        </ul>
+                    </MudText>
+                    <MudText>Let's see it in action:</MudText>
+                    <MudText>First, let's define the javascript object</MudText>
+                    <JsSnippet JsFileName="js-interop-blazor-to-js.js"></JsSnippet>
+                    <MudText>
+                        Then, let's use it from a blazor object:
+                        <br/>
+                        <strong>Note: </strong> Don't be bothered by the locking mechanism, it will only ensure, that the two examples will run their javascript get-set
+                        methods, without interfering with each other.
+                    </MudText>
+                    <AdvancedCodeSnippet TComponent="JsInterop_CallJsMethod_PrimitiveType_Example" RenderOutput="true" />
+                    <MudText>While of course it is a powerful tool like this, there is of course nothing stopping us to pass it a complex type like an (you guessed it!) <strong>Employee</strong></MudText>
+                    <AdvancedCodeSnippet TComponent="JsInterop_CallJsMethod_ComplexType_Example" RenderOutput="true" />
+                </SpacedContent>
+            </ChildContent>
+        </MudExpansionPanelWithStoredState>
+
+        <MudExpansionPanelWithStoredState Id="js-interop-js-to-blazor">
+            <TitleContent>
+                <MudText Typo="Typo.h6" Class="fw-bold">Calling blazor code from javascript</MudText>
+            </TitleContent>
+            <ChildContent>
+                <SpacedContent>
+                    <MudText>
+                        To call Blazor methods from JavaScript, we need to expose a C# method to the JavaScript context using the <strong>[JSInvokable]</strong> attribute. 
+                        Using this annotation, we can make the method callable from javascript
+                    </MudText>
+                    <MudText>
+                        To call a non-static Blazor method from JavaScript, we need to create a reference to the Blazor component instance.
+                        This is can be done by passing a <strong>DotNetObjectReference</strong> to JavaScript, which wraps the C# object instance.
+                    </MudText>
+                    <MudText>
+                        The method we wish to call from javascript can be both sync and async!
+                    </MudText>
+                    <MudText>First, let's define our new javascript object:</MudText>
+                    <JsSnippet JsFileName="js-interop-js-to-blazor"></JsSnippet>
+                    <MudText>Then let's use it from a blazor component</MudText>
+                    <AdvancedCodeSnippet TComponent="JsInterop_JsToBlazor_Example" RenderOutput="true" />
+                </SpacedContent>
+            </ChildContent>
+        </MudExpansionPanelWithStoredState>
+        <MudExpansionPanelWithStoredState Id="js-interop-exercise">
+            <TitleContent>
+                <PanelHeaderWithTestTracking TTestClass="Test_JsInterop_Ex_LessonFinal">Exercise</PanelHeaderWithTestTracking>
+            </TitleContent>
+            <ChildContent>
+                <MudText>
+                    In this exercise, you will need to create a very similar component that you created in the <MudPageLink PageType="typeof(DependencyInjection)">Dependency injection</MudPageLink> chapter.
+                    You are going to reuse the toggleable list component that you created in the final exercise of the chapter <MudPageLink PageType="typeof(RenderFragments)">render fragments</MudPageLink>,
+                    however this time around, we are going to set the Employees from the javascript runtime, and bind that to the list component.
+                    The component that you need to modify can be found in <ComponentFileWithPath T="JsInterop_Ex_LessonFinal"/>
+                </MudText>
+                <MudText>
+                    The javascript object that does the setting is already predefined for you:
+                    <JsSnippet JsFileName="js-interop-exercise-helper.js" />
+                    The helper object inherently gives you instructions what method you need to call from the blazor component, 
+                    and what method you need to define inside the blazor component, that can be called by the js object to set the values of employees.
+                </MudText>
+                <MudText>
+                    You know everything else that is required from the previous chapters, any further instruction can be found in <ComponentFileWithPath T="JsInterop_Ex_LessonFinal"/>
+                </MudText>
+                <MudText>
+                    Good luck!
+                </MudText>
+                <TestRunner TTestClass="Test_JsInterop_Ex_LessonFinal" ComponentUnderTestParameters="new Dictionary<string, object>()"></TestRunner>
+            </ChildContent>
+        </MudExpansionPanelWithStoredState>
+    </MudExpansionPanels>
+</SpacedContent>

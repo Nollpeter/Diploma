@@ -3,7 +3,6 @@ using BlazorCraft.Web.Infrastructure;
 using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Shared._Exercises.DependencyInjection;
 using BlazorCraft.Web.Shared._Exercises.Exam;
-using BlazorCraft.Web.Shared._Exercises.JsInterop;
 using BlazorCraft.Web.Shared.Examples._7_DependencyInjection;
 
 namespace BlazorCraft.Web.DI;

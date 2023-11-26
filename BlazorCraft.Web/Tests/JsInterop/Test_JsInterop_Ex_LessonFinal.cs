@@ -1,20 +1,17 @@
-﻿using System.Collections.ObjectModel;
-using BlazorCraft.Web.Infrastructure.Attributes;
-using BlazorCraft.Web.Shared._Exercises.DependencyInjection;
-using BlazorCraft.Web.Shared._Exercises._1_Components._5_RenderFragments;
-using BlazorCraft.Web.Tests;
-using BlazorCraft.Web.Tests.Routing;
+﻿using BlazorCraft.Web.Infrastructure.Attributes;
+using BlazorCraft.Web.Shared._Exercises._5_RenderFragments;
+using BlazorCraft.Web.Shared._Exercises._9_JsInterop;
+using BlazorCraft.Web.Tests._9_JsInterop;
 using Bunit;
 using FluentAssertions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Microsoft.JSInterop.Infrastructure;
 using NSubstitute;
-using NSubstitute.Core;
 
-namespace BlazorCraft.Web.Shared._Exercises.JsInterop;
+namespace BlazorCraft.Web.Tests.JsInterop;
 
-[TestForPage(typeof(Pages._8_JsInterop.JsInterop))]
+[TestForPage(typeof(Pages._9_JsInterop.JsInterop))]
 public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_LessonFinal>
 {
     private readonly IJSRuntime _jsRuntime;
