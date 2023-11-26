@@ -63,9 +63,7 @@
                 They are essentially component parameters, and thus need to be defined the same way with the <strong>[Parameter]</strong> attribute.
                 The only extra thing that we need to do is to add the parameter to the route declaration in curly braces: <strong>@("""@page "/myroute/{parameterName}" """)</strong>
             </MudText>
-            <AdvancedCodeSnippet TComponent="PageWithRouteParameter" RenderOutput="false"/>
-            <MudText>Then the rendered component will look like this: </MudText>
-            <AdvancedCodeSnippet TComponent="PageWithRouteParameterUsage" RenderOutput="true"></AdvancedCodeSnippet>
+            <CompanionSnippets TComponent="PageWithRouteParameter" TUsage="PageWithRouteParameterUsage" />
             <MudText>Alternatively you can take a look at it as a page by navigating to the page itself <MudLink Href="/page-with-route-parameter/Mystring" Underline="Underline.Always">here</MudLink></MudText>
             <MudText>
                 <Important>Be careful! Even if you define multiple routes with different parameters, the routes have to be unique!</Important>

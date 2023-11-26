@@ -65,10 +65,8 @@
                 <MudText>This method flags the component to be rendered.</MudText>
                 <MudText>A component will call this method whenever it wants to inform Blazor that changes have occurred that would result in the rendered output being different</MudText>
                 <MudText>Consider the following example:</MudText>
-                <CompanionSnippets>
-                    <Component><AdvancedCodeSnippet TComponent="StateHasChangedExample" RenderOutput="false" /></Component>
-                    <Usage><AdvancedCodeSnippet TComponent="StateHasChangedExampleUsage" RenderOutput="true" /></Usage>
-                </CompanionSnippets>
+                <CompanionSnippets TComponent="StateHasChangedExample" TUsage="StateHasChangedExampleUsage"/>
+                
                 <MudText>Without calling <strong>StateHasChanged()</strong>, this component would always show "Elapsed seconds: 0"</MudText>
             </div>
         </ChildContent>

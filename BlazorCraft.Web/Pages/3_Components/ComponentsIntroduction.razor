@@ -131,10 +131,7 @@
                         (Of course, it can be more complicated than this, but don't worry, we will dive into it in later sections
                     </MudText>
                     <MudText>Let's create a very simple HelloWorld component and render it from another one.</MudText>
-                    <CompanionSnippets>
-                        <Component><AdvancedCodeSnippet TComponent="HelloWorld" RenderOutput="false"></AdvancedCodeSnippet></Component>
-                        <Usage><AdvancedCodeSnippet TComponent="RenderHelloWorld" RenderOutput="true"></AdvancedCodeSnippet></Usage>
-                    </CompanionSnippets>
+                    <CompanionSnippets TComponent="HelloWorld" TUsage="RenderHelloWorld"/>
                 </div>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
@@ -149,10 +146,7 @@
                             <MudText><strong>Note: </strong> these parameters can also be made mandatory by also annotating them with the <strong>[EditorRequired]</strong> attribute</MudText>
                             <MudText>Then, when we want to render such a component we can assign values to the parameters exactly as if they were html attributes</MudText>
                             <MudText><strong>Note:</strong> there are also parameters that will come to the body of the component, we will cover them in the <MudPageLink PageType="@typeof(RenderFragments)">RenderFragments</MudPageLink>  chapter</MudText>
-                            <CompanionSnippets>
-                                <Component><AdvancedCodeSnippet TComponent="ComponentWithParameter" RenderOutput="false"></AdvancedCodeSnippet></Component>
-                                <Usage><AdvancedCodeSnippet TComponent="ComponentWithParameterUsage" RenderOutput="true"></AdvancedCodeSnippet></Usage>
-                            </CompanionSnippets>
+                            <CompanionSnippets TComponent="ComponentWithParameter" TUsage="ComponentWithParameterUsage"/>
                         </div>
                     </ChildContent>
                 </MudExpansionPanelWithStoredState>

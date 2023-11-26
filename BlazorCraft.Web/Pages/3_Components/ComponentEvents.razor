@@ -97,14 +97,7 @@
                             </li>
                         </ul>
                     </MudText>
-                    <CompanionSnippets>
-                        <Component>
-                            <AdvancedCodeSnippet TComponent="EventCallBackExample" RenderOutput="false"></AdvancedCodeSnippet>
-                        </Component>
-                        <Usage>
-                            <AdvancedCodeSnippet TComponent="EventCallBackExampleUsage" RenderOutput="true"></AdvancedCodeSnippet>
-                        </Usage>
-                    </CompanionSnippets>
+                    <CompanionSnippets TComponent="EventCallBackExample" TUsage="EventCallBackExampleUsage"/> 
                     <MudDivider/>
                     <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
                     <MudText>Your task here is to create a grid component, that for each item has a delete button, and notifies its consumer component that a grid item was deleted</MudText>

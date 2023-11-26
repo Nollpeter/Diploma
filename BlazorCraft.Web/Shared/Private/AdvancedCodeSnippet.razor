@@ -3,78 +3,39 @@
 @typeparam TComponent where TComponent : ComponentBase
 @if (renderingFinished)
 {
-    @if (CompanionContainer == null)
+    @if (ShowComponentName || true)
     {
-        <MudPaper Elevation="3" Class="p-3 mw-100">
-
-            @if (ShowComponentName || true)
-            {
-                <div class="d-flex pb-1 align-items-center gap-1">
-                    <MudIcon Size="Size.Small" Icon="@Icons.Material.Outlined.FileOpen"></MudIcon>
-                    <MudText class="fw-bold">@ComponentFileName</MudText>
-                </div>
-            }
-            <pre>
-                    <code class="language-razor">
-                       @_originalMarkup
-                    </code>
-                </pre>
-            @if (RenderOutput)
-            {
-                <MudGrid Spacing="2">
-                    <MudItem xs="6">
-                        <MudText class="fw-bold text-center">What it looks like visually</MudText>
-                        <MudPaper Elevation="0" Class="p-3 subtle-border">
-                            <DynamicComponent Type="@typeof(TComponent)"/>
-                        </MudPaper>
-                    </MudItem>
-                    <MudItem xs="6">
-                        <MudText class="fw-bold text-center">The html behind it</MudText>
-                        <pre>
-                            <code class="language-html">
-                              @_renderedHtml
-                            </code>
-                        </pre>
-                    </MudItem>
-                </MudGrid>
-            }
-        </MudPaper>
+        <div class="d-flex pb-1 align-items-center gap-1 ">
+            <MudIcon Size="Size.Small" Icon="@Icons.Material.Outlined.FileOpen"></MudIcon>
+            <MudText class="fw-bold">@ComponentFileName</MudText>
+        </div>
     }
-    else
-    {
-        @if (ShowComponentName || true)
-        {
-            <div class="d-flex pb-1 align-items-center gap-1 ">
-                <MudIcon Size="Size.Small" Icon="@Icons.Material.Outlined.FileOpen"></MudIcon>
-                <MudText class="fw-bold">@ComponentFileName</MudText>
-            </div>
-        }
-        <pre>
+    <pre>
             <code class="language-razor">
                @_originalMarkup
             </code>
         </pre>
-        @if (RenderOutput)
-        {
-            <MudGrid Spacing="2">
-                <MudItem xs="6">
-                    <MudText class="fw-bold text-center">What it looks like visually</MudText>
-                    <MudPaper Elevation="0" Class="p-3 subtle-border">
-                        <DynamicComponent Type="@typeof(TComponent)"/>
-                    </MudPaper>
-                </MudItem>
-                <MudItem xs="6">
-                    <MudText class="fw-bold text-center">The html behind it</MudText>
-                    <pre>
+    @if (RenderOutput)
+    {
+        <MudGrid Spacing="2">
+            <MudItem xs="6">
+                <MudText class="fw-bold text-center">What it looks like visually</MudText>
+                <MudPaper Elevation="0" Class="p-3 subtle-border">
+                    <DynamicComponent Type="@typeof(TComponent)"/>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="6">
+                <MudText class="fw-bold text-center">The html behind it</MudText>
+                <pre>
                         <code class="language-html">
                           @_renderedHtml
                         </code>
                     </pre>
-                </MudItem>
-            </MudGrid>
-        }
+            </MudItem>
+        </MudGrid>
     }
 }
+
 @code {
 
     [Inject]
@@ -88,9 +49,6 @@
 
     [Parameter]
     public bool RenderOutput { get; set; } = false;
-
-    [CascadingParameter]
-    public CompanionSnippets? CompanionContainer { get; set; }
 
     private string ComponentFileName => $"{Regex.Replace(typeof(TComponent).Name, @"`\d+", "")}.razor";
 
@@ -153,4 +111,3 @@
     }
 
 }
-

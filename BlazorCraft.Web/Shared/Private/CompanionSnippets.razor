@@ -1,13 +1,13 @@
-﻿<MudPaper Elevation="3" Class="p-3">
-    <CascadingValue TValue="CompanionSnippets" Value="this">
-        <MudText Class="fw-bold">Component:</MudText>
-        @Component
-        <MudDivider/>
-        @Usage
-    </CascadingValue>
+﻿@typeparam TComponent where TComponent: ComponentBase
+@typeparam TUsage where TUsage: ComponentBase
+
+<MudPaper Elevation="3" Class="p-3">
+    <MudText Typo="Typo.subtitle1" Class="fw-bold">Component:</MudText>
+    <AdvancedCodeSnippet TComponent="TComponent" RenderOutput="false"/>
+    <MudDivider/>
+    <MudText Typo="Typo.subtitle1" Class="fw-bold">Usage of component:</MudText>
+    <AdvancedCodeSnippet TComponent="TUsage" RenderOutput="true"/>
 </MudPaper>
 
 @code {
-    [Parameter,EditorRequired] public RenderFragment Component { get; set; }
-    [Parameter,EditorRequired] public RenderFragment Usage { get; set; }
 }

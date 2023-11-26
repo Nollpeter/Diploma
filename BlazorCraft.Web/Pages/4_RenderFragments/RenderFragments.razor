@@ -41,9 +41,7 @@
             <CodeSnippet>
                 @("""public record TestClass(int a, int b);""")
             </CodeSnippet>
-            <AdvancedCodeSnippet TComponent="ListComponent1" ShowComponentName="true"/>
-            <AdvancedCodeSnippet TComponent="ListComponent1Usage" ShowComponentName="false" RenderOutput="true"></AdvancedCodeSnippet>
-
+            <CompanionSnippets TComponent="ListComponent1" TUsage="ListComponent1Usage" />
             <MudText>
                 Technically a List component, but it confronts us instantly with 2 problems:
                 - What if we want the Title to be a bit bigger, like a <strong>@("<h2>")</strong> tag?
@@ -54,9 +52,7 @@
             <MudText>
                 By using a <strong>RenderFragment</strong> property instead of a <strong>string</strong> property, we can externally define what should exactly be in the Title. It can be virtually everything, as long as it is a valid Blazor markup.
             </MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent2" ShowComponentName="true"/>
-            <MudText>Which can be used like this:</MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent2Usage" RenderOutput="true"/>
+            <CompanionSnippets TComponent="ListComponent2" TUsage="ListComponent2Usage" />
             <MudText>Now, we can define the title any way that we want.</MudText>
             <MudText>In the next section, we will make the List items customizable as well</MudText>
             <MudDivider/>
