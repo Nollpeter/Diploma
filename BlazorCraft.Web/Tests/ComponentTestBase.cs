@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 using BlazorCraft.Web.Infrastructure.Attributes;
 using Bunit;
 using Microsoft.AspNetCore.Components;
@@ -137,10 +138,23 @@ public class ComponentTestBase<TTestComponent> : ComponentTestBase where TTestCo
             throw new TestRunException($"The component does not have a public Property with name {propertyName} attributed with the [{attributeType}] attribute annotated");
         }
     }
-
-    protected async Task WaitForState(Func<bool> condition)
+    
+    protected void ValidateMethodAnnotatedWithAttribute(object component, string methodName, Type attributeType)
     {
-        while (condition() != true)
+        var methodInfos = component.GetType().GetMethods();
+        var method = methodInfos
+            .FirstOrDefault(p => p.Name == methodName && p.GetCustomAttribute(attributeType) != null);
+
+        if (method == null)
+        {
+            throw new TestRunException($"The method with name {methodName} is not annotated with the [{attributeType}] attribute");
+        }
+    }
+
+    protected async Task WaitForState(Func<bool> condition, int? timeoutMilliSecs = null)
+    {
+        var stopwatch = Stopwatch.StartNew();
+        while (condition() != true && stopwatch.ElapsedMilliseconds <= (timeoutMilliSecs ?? 2000))
         {
             await Task.Delay(50);
         }

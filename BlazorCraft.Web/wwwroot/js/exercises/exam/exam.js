@@ -1,8 +1,7 @@
 ﻿window.ExamHelper= {
     async fetchRandomPersonImage(dotnetHelper){
-        
-        const targetUrl = 'https://thispersondoesnotexist.com';
-        const url = 'https://corsproxy.io/?' + encodeURIComponent(targetUrl);
+
+        const url = 'https://thispersondoesnotexist.com/image';
         const response = await fetch(url, { method: 'GET', mode: 'cors' });
         const blob = await response.blob();
         const reader = new FileReader();

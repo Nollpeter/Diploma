@@ -8,6 +8,8 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
+using Microsoft.JSInterop.Infrastructure;
 using MudBlazor;
 using MudBlazor.Services;
 using NSubstitute;
@@ -16,68 +18,167 @@ namespace BlazorCraft.Web.Tests.Exam;
 
 public class ExamTestBase<TComponent> : ComponentTestBase<TComponent> where TComponent : ComponentBase, new()
 {
-    protected virtual TestContext SetupTestContext()
+    private readonly IJSRuntime _jsRuntime;
+    protected List<(string methodName, object[] args)> jsMethodCalls;
+
+    public ExamTestBase(IJSRuntime jsRuntime)
+    {
+        _jsRuntime = jsRuntime;
+    }
+
+    protected virtual async Task<TestContext> SetupTestContext()
     {
         TestContext ctx = new TestContext();
         ctx.Services.AddMudServices();
         ctx.JSInterop.SetupVoid("mudPopover.initialize", _ => true);
         ctx.JSInterop.SetupVoid("mudKeyInterceptor.connect", _ => true);
+        await SetupMockJsRuntime(ctx);
         return ctx;
+    }
+    private async Task SetupMockJsRuntime(TestContext testContext)
+    {
+        IJSRuntime runtime = Substitute.For<IJSRuntime>();
+        jsMethodCalls = new List<(string methodName, object[] args)>();
+        runtime.InvokeAsync<IJSVoidResult>(Arg.Any<string>(), Arg.Any<object[]?>())
+            .ReturnsForAnyArgs<ValueTask<IJSVoidResult>>(async ci =>
+            {
+                string identifier = ci.ArgAt<string>(0);
+                object[] args = ci.ArgAt<object[]>(1);
+
+                jsMethodCalls.Add((identifier, args));
+
+                // Forward the call to the actual IJSRuntime instance
+                return await new ValueTask<IJSVoidResult>(new DummyJSVoidResult());
+                //return await _jsRuntime.InvokeAsync<IJSVoidResult>(identifier, args);
+            });
+        testContext.Services.AddSingleton(runtime);
+    }
+    private class DummyJSVoidResult : IJSVoidResult
+    {
+        // No members are needed, as IJSVoidResult is a marker interface
     }
 }
 
 [TestForPage(typeof(Pages._11_Exam.Exam))]
 public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
 {
-    public interface IFormFieldDeclaration<TComponentType> where TComponentType : IComponent
+    public interface IFormFieldDeclaration<TComponentType, TValue> where TComponentType : IComponent
     {
         public string Label { get; }
         public Type Type => typeof(TComponentType);
         public string RequiredError => $"The {GetType().Name} field is required.";
+        public TComponentType Instance { get; set; }
+        public TValue Value { get; set; }
+        
+        public IRenderedComponent<TComponentType> RenderedComponent { get; protected set; }
 
-    }
-    public class Id : IFormFieldDeclaration<MudNumericField<int>>
-    {
-        public string Label => "Id";
-    }
-    public class FirstName : IFormFieldDeclaration<MudTextField<string?>>
-    {
-        public string Label => "First Name";
-    }
-    
-    public class LastName : IFormFieldDeclaration<MudTextField<string?>>
-    {
-        public string Label => "Last Name";
-    }
-    
-    public class Position : IFormFieldDeclaration<MudEnumSelect<BlazorCraft.Web.Shared._Exercises.Exam.Position>>
-    {
-        public string Label => "Position";
+        public void Initialize(IRenderedComponent<EmployeeForm> form)
+        {
+            var components = form.FindComponents<TComponentType>();
+
+            var firstOrDefault = components.FirstOrDefault(p => p.GetLabel() == Label);
+            if (firstOrDefault == null)
+            {
+                throw new TestRunException($"Could not find Component of type {typeof(TComponentType)} with label {Label} inside the Employee form");
+            }
+
+            RenderedComponent = firstOrDefault;
+            Instance = firstOrDefault.Instance;
+        }
     }
     
-    public class Gender : IFormFieldDeclaration<MudEnumSelect<BlazorCraft.Web.Shared._Exercises.Exam.Gender>>
+    public abstract class NumericFormField<T> : IFormFieldDeclaration<MudNumericField<T>, T>
     {
-        public string Label => "Gender";
+        public abstract string Label { get; }
+        public MudNumericField<T> Instance { get; set; }
+        public IRenderedComponent<MudNumericField<T>> RenderedComponent { get; set; }
+
+        public T Value
+        {
+            get => Instance.Value;
+            set => Instance.Value = value;
+        }
+    }
+    public abstract class TextFormField : IFormFieldDeclaration<MudTextField<string?>, string?>
+    {
+        public abstract string Label { get; }
+        public MudTextField<string?> Instance { get; set; }
+        public string? Value
+        {
+            get => Instance.Value;
+            set => Instance.Value = value;
+        }
+        public IRenderedComponent<MudTextField<string?>> RenderedComponent { get; set; }
+    }
+
+    public abstract class EnumFormField<TEnum> : IFormFieldDeclaration<MudEnumSelect<TEnum>,TEnum?> where TEnum : struct, Enum
+    {
+        public abstract string Label { get; }
+        public MudEnumSelect<TEnum> Instance { get; set; }
+        public TEnum? Value {
+            get => Instance.Value;
+            set => Instance.Value = value;
+        }
+        public IRenderedComponent<MudEnumSelect<TEnum>> RenderedComponent { get; set; }
     }
     
-    public class BirthDate : IFormFieldDeclaration<MudDatePicker>
+    public abstract class DateFormField : IFormFieldDeclaration<MudDatePicker, DateTime?>
     {
-        public string Label => "Birth Date";
+        public abstract string Label { get; }
+        public MudDatePicker Instance { get; set; }
+
+        public DateTime? Value
+        {
+            get => Instance.Date;
+            set => Instance.Date = value;
+        }
+
+        public IRenderedComponent<MudDatePicker> RenderedComponent { get; set; }
+    }
+
+    public class Id : NumericFormField<int>
+    {
+        public override string Label => "Id";
+        public int? Value { get; set; }
+    }
+    public class FirstName : TextFormField
+    {
+        public override string Label => "First Name";
     }
     
-    public class Salary : IFormFieldDeclaration<MudNumericField<int?>>
+    public class LastName : TextFormField
     {
-        public string Label => "Salary";
+        public override string Label => "Last Name";
     }
     
-    public class Address : IFormFieldDeclaration<MudTextField<string?>>
+    public class Position : EnumFormField<EmployeePosition>
     {
-        public string Label => "Address";
+        public override string Label => "Position";
     }
     
-    public class HireDate : IFormFieldDeclaration<MudDatePicker>
+    public class Gender : EnumFormField<EmployeeGender>
     {
-        public string Label => "Hire Date";
+        public override string Label => "Gender";
+    }
+    
+    public class BirthDate : DateFormField
+    {
+        public override string Label => "Birth Date";
+    }
+    
+    public class Salary : NumericFormField<int?>
+    {
+        public override string Label => "Salary";
+    }
+    
+    public class Address : TextFormField
+    {
+        public override string Label => "Address";
+    }
+    
+    public class HireDate : DateFormField
+    {
+        public override string Label => "Hire Date";
     }
     private class TestRunContext
     {
@@ -109,29 +210,23 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     {
         ValidateComponentUsage(Component, typeof(EditForm));
     }
-    private void ValidateDeclaredField<TComponentType>(IFormFieldDeclaration<TComponentType> field) where TComponentType : IComponent
+    private async Task ValidateDeclaredField<TComponentType,TValue>(IFormFieldDeclaration<TComponentType,TValue> field) where TComponentType : IComponent
     {
-        var ctx = SetupTestContext();
+        var ctx = await SetupTestContext();
         var renderedComponent = ctx.RenderComponent<EmployeeForm>(builder => builder.Add(form => form.Employee, new ExamEmployee()));
         GetFormField(renderedComponent, field);
     }
 
-    private IRenderedComponent<TComponentType> GetFormField<TComponentType>(IRenderedComponent<EmployeeForm> form ,IFormFieldDeclaration<TComponentType> field) where TComponentType : IComponent
+    private IRenderedComponent<TComponentType> GetFormField<TComponentType, TValue>(IRenderedComponent<EmployeeForm> form ,IFormFieldDeclaration<TComponentType,TValue> field) where TComponentType : IComponent
     {
         var components = form.FindComponents<TComponentType>();
-
-        string GetLabel(object component)
-        {
-            var propertyInfo = component.GetType().GetProperties().FirstOrDefault(p => p.Name == nameof(MudField.Label));
-            var label = propertyInfo.GetValue(component).ToString();
-            return label;
-        }
 
         var firstOrDefault = components.FirstOrDefault(p => p.GetLabel() == field.Label);
         if (firstOrDefault == null)
         {
             throw new TestRunException($"Could not find Component of type {typeof(TComponentType)} with label {field.Label} inside the Employee form");
         }
+        field.Initialize(form);
 
         return firstOrDefault;
     }
@@ -142,7 +237,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Precondition]
     public async Task FieldForIdDefined()
     {
-        ValidateDeclaredField(TestRunContext.Id);
+        await ValidateDeclaredField(TestRunContext.Id);
     }
     
     
@@ -152,7 +247,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Precondition]
     public async Task FieldForFirstNameDefined()
     {
-        ValidateDeclaredField(TestRunContext.FirstName);
+        await ValidateDeclaredField(TestRunContext.FirstName);
     }
     
     // Field for last name
@@ -161,7 +256,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Precondition]
     public async Task FieldForLastNameDefined()
     {
-        ValidateDeclaredField(TestRunContext.LastName);
+        await ValidateDeclaredField(TestRunContext.LastName);
     }
 
     // field for Position
@@ -170,7 +265,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Precondition]
     public async Task FieldForPositionDefined()
     {
-        ValidateDeclaredField(TestRunContext.Position);
+        await ValidateDeclaredField(TestRunContext.Position);
     }
 
     // field for Gender
@@ -179,7 +274,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Precondition]
     public async Task FieldForGenderDefined()
     {
-        ValidateDeclaredField(TestRunContext.Gender);
+        await ValidateDeclaredField(TestRunContext.Gender);
     }
 
     // field for BirthDate
@@ -188,7 +283,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Precondition]
     public async Task FieldForBirthDateDefined()
     {
-        ValidateDeclaredField(TestRunContext.BirthDate);
+        await ValidateDeclaredField(TestRunContext.BirthDate);
     }
 
     // field for Salaray
@@ -197,7 +292,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Precondition]
     public async Task FieldForSalaryDefined()
     {
-        ValidateDeclaredField(TestRunContext.Salary);
+        await ValidateDeclaredField(TestRunContext.Salary);
     }
 
     //Field for address
@@ -206,7 +301,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Precondition]
     public async Task FieldForAddressDefined()
     {
-        ValidateDeclaredField(TestRunContext.Address);
+        await ValidateDeclaredField(TestRunContext.Address);
     }
 
     // Field for Hire date
@@ -215,7 +310,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Precondition]
     public async Task FieldForHireDateDefined()
     {
-        ValidateDeclaredField(TestRunContext.HireDate);
+        await ValidateDeclaredField(TestRunContext.HireDate);
     }
     #endregion
 
@@ -225,7 +320,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Description("")]
     public async Task GivenEmployeeForm_WhenEditModeFalse_ThenAllFieldsDisabled()
     {
-        var testContext = SetupTestContext();
+        var testContext = await SetupTestContext();
         var form = testContext.RenderComponent<EmployeeForm>(builder => 
             builder.Add(form => form.Employee, new ExamEmployee())
                 .Add(form => form.IsEditMode, false));
@@ -254,7 +349,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Title("Edit and Cancel buttons are hidden if EditMode = false")]
     public async Task GivenEmployeeForm_WhenEditMOdeFalse_ThenEditAndCancelButtonsHidden()
     {
-        var testContext = SetupTestContext();
+        var testContext = await SetupTestContext();
         var form = testContext.RenderComponent<EmployeeForm>(builder => 
             builder.Add(form => form.Employee, new ExamEmployee())
                 .Add(form => form.IsEditMode, false));
@@ -274,7 +369,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Description("")]
     public async Task GivenEmployeeForm_WhenEditModeTrue_ThenIdDisabled()
     {
-        var testContext = SetupTestContext();
+        var testContext = await SetupTestContext();
         var form = testContext.RenderComponent<EmployeeForm>(builder => 
             builder.Add(form => form.Employee, new ExamEmployee())
                 .Add(form => form.IsEditMode, true));
@@ -288,7 +383,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Description("")]
     public async Task GivenEmployeeForm_WhenEditModeTrue_ThenOtherFieldsNotDisabled()
     {
-        var testContext = SetupTestContext();
+        var testContext = await SetupTestContext();
         var form = testContext.RenderComponent<EmployeeForm>(builder => 
             builder.Add(form => form.Employee, new ExamEmployee())
                 .Add(form => form.IsEditMode, true));
@@ -310,7 +405,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     public async Task GivenEmployeeForm_WhenEditModeTrue_ThenEditAndCancelButtonsDisplayed()
     {
         
-        var testContext = SetupTestContext();
+        var testContext = await SetupTestContext();
         var form = testContext.RenderComponent<EmployeeForm>(builder => 
             builder.Add(form => form.Employee, new ExamEmployee())
                 .Add(form => form.IsEditMode, true));
@@ -339,7 +434,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         await GivenEmployeeForm_WhenEditModeTrue_ThenEditAndCancelButtonsDisplayed();
 
         
-        var testContext = SetupTestContext();
+        var testContext = await SetupTestContext();
         var isCancelInvoked = false;
         var form = testContext.RenderComponent<EmployeeForm>(builder => 
             builder.Add(form => form.Employee, new ExamEmployee())
@@ -361,7 +456,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Description("")]
     public async Task GivenEmployeeForm_WhenCreated_ThenFormFieldsAreBoundToEmployeeObject()
     {
-        var testContext = SetupTestContext();
+        var testContext = await SetupTestContext();
         var employee = new ExamEmployee() {Id = 10};
         var form = testContext.RenderComponent<EmployeeForm>(builder =>
         {
@@ -370,7 +465,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         });
 
        
-        async Task ValidateDataBinding<TComponent,TValue>( IRenderedComponent<EmployeeForm> form, IFormFieldDeclaration<TComponent> field, 
+        async Task ValidateDataBinding<TComponent,TValue>( IRenderedComponent<EmployeeForm> form, IFormFieldDeclaration<TComponent, TValue> field, 
             Action<TValue> setValueOfEmployee,
             Func<TValue> getValueOfEmployee,
             TValue value1, TValue value2) where TComponent : IComponent 
@@ -401,8 +496,8 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         await ValidateDataBinding(form, TestRunContext.Address, (value) => employee.Address = value, () => employee.Address, "Test1", "Test2");
         await ValidateDataBinding(form, TestRunContext.HireDate, (value) => employee.HireDate =value, () => employee.HireDate, DateTime.Now, DateTime.MaxValue);
         
-        await ValidateDataBinding(form, TestRunContext.Position, (value) => employee.Position = value, () => employee.Position, Shared._Exercises.Exam.Position.CEO, Shared._Exercises.Exam.Position.CFO);
-        await ValidateDataBinding(form, TestRunContext.Gender, (value) => employee.Gender = value, () => employee.Gender, Shared._Exercises.Exam.Gender.Male, Shared._Exercises.Exam.Gender.Female);
+        await ValidateDataBinding(form, TestRunContext.Position, (value) => employee.Position = value, () => employee.Position, EmployeePosition.CEO, EmployeePosition.CFO);
+        await ValidateDataBinding(form, TestRunContext.Gender, (value) => employee.Gender = value, () => employee.Gender, EmployeeGender.Male, EmployeeGender.Female);
     }
     
     // invalid fields -> Save -> Errors
@@ -411,7 +506,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Description("")]
     public async Task GivenEmployeeForm_WhenInvalidFieldsEntered_ThenErrorMessageForFields()
     {
-        var testContext = SetupTestContext();
+        var testContext = await SetupTestContext();
         var employee = new ExamEmployee() {Id = 10};
         var employeeValidInvoked = false;
         var form = testContext.RenderComponent<EmployeeForm>(builder =>
@@ -423,7 +518,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
 
         await form.Find("#save").ClickAsync(new MouseEventArgs());
 
-        void ValidateRequiredError<TComponent>(IFormFieldDeclaration<TComponent> field) where TComponent : IComponent
+        void ValidateRequiredError<TComponent,TValue>(IFormFieldDeclaration<TComponent,TValue> field) where TComponent : IComponent
         {
             var fieldComponent = GetFormField(form, field);
             if (fieldComponent.GetErrorText() != field.RequiredError)
@@ -464,15 +559,15 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [Description("")]
     public async Task GivenEmployeeForm_WhenFieldsEnteredAndSaveClicked_ThenValidEmployeeInvoked()
     {
-        var testContext = SetupTestContext();
+        var testContext = await SetupTestContext();
         var employee = new ExamEmployee()
         {
             Id = 10,
             Salary = 35000,
             Address = "My address",
-            Gender = Shared._Exercises.Exam.Gender.Female,
+            Gender = EmployeeGender.Female,
             BirthDate = DateTime.Today,
-            Position = Shared._Exercises.Exam.Position.Developer,
+            Position = EmployeePosition.Developer,
             LastName = "Test",
             FirstName = "Test",
             HireDate = DateTime.MinValue,
@@ -487,7 +582,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
 
         await form.Find("#save").ClickAsync(new MouseEventArgs());
 
-        void ValidateNoErrors<TComponent>(IFormFieldDeclaration<TComponent> field) where TComponent : IComponent
+        void ValidateNoErrors<TComponent, TValue>(IFormFieldDeclaration<TComponent,TValue> field) where TComponent : IComponent
         {
             var fieldComponent = GetFormField(form, field);
             var errorText = fieldComponent.GetErrorText();
@@ -512,6 +607,10 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
             throw new TestRunException($"{nameof(EmployeeForm.EmployeeValid)} is NOT invoked with valid Employee!");
         }
         
+    }
+
+    public Test_Exam_EmployeeForm(IJSRuntime jsRuntime) : base(jsRuntime)
+    {
     }
 }
 

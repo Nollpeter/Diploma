@@ -3,15 +3,16 @@ using BlazorCraft.Web.Shared._Exercises.Exam;
 using BlazorCraft.Web.Tests.Routing;
 using Bunit;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace BlazorCraft.Web.Tests.Exam;
 
 [TestForPage(typeof(Pages._11_Exam.Exam))]
 public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
 {
-    protected override TestContext SetupTestContext()
+    protected override async Task<TestContext> SetupTestContext()
     {
-        var setupTestContext = base.SetupTestContext();
+        var setupTestContext = await base.SetupTestContext();
         setupTestContext.Services.AddExamEmployeeService();
         return setupTestContext;
     }
@@ -22,7 +23,7 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
     [Precondition]
     public async Task GivenEmployeeCreate_WhenRendered_ThenHasEmployeeFormDeclared()
     {
-        var ctx = SetupTestContext();
+        var ctx = await SetupTestContext();
         ExamEmployee employee = new ExamEmployee()
         {
             Id = 10,
@@ -42,7 +43,7 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
     [Description("")]
     public async Task GivenEmployeeCreate_WhenRendered_ThenEmployeeFormEmployeeBoundToEmployeeCreateEmployee()
     {
-        var ctx = SetupTestContext();
+        var ctx = await SetupTestContext();
 
         ExamEmployee employee = new ExamEmployee()
         {
@@ -64,7 +65,7 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
     [Description("")]
     public async Task GivenEmployeeCreate_WhenRendered_ThenEmployeeFormIsEditable()
     {
-        var ctx = SetupTestContext();
+        var ctx = await SetupTestContext();
 
         ExamEmployee employee = new ExamEmployee()
         {
@@ -87,7 +88,7 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
     [Description("")]
     public async Task GivenEmployeeCreate_WhenEmployeeFormValidEmployeeInvoked_ThenEmployeeAddedToEmployeeService()
     {
-        var ctx = SetupTestContext();
+        var ctx = await SetupTestContext();
         ExamEmployee employee = new ExamEmployee()
         {
             Id = 10,
@@ -126,7 +127,7 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
     [Description("")]
     public async Task GivenEmployeeCreate_WhenEmployeeFormValidCancelInvoked_ThenClosedInvoked()
     {
-        var ctx = SetupTestContext();
+        var ctx = await SetupTestContext();
         ExamEmployee employee = new ExamEmployee()
         {
             Id = 10,
@@ -144,5 +145,9 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
             throw new TestRunException($"{nameof(ExamEmployeeCreate.Closed)} is not invoked on {nameof(EmployeeForm)}.{nameof(EmployeeForm.EmployeeValid)}!");
         }
         
+    }
+
+    public Test_Exam_EmployeeCreate(IJSRuntime jsRuntime) : base(jsRuntime)
+    {
     }
 }
