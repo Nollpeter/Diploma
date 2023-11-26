@@ -11,7 +11,7 @@ namespace BlazorCraft.Web.Tests._7_DependencyInjection;
 
 
 [TestForPage(typeof(Pages._7_DependencyInjection.DependencyInjection))]
-public class Test_DependencyInjection_LessonFinal : ComponentTestBase<DependencyInjection_Ex_LessonFinal>
+public class Test_DependencyInjection_Ex_LessonFinal : ComponentTestBase<DependencyInjection_Ex_LessonFinal>
 {
     private static Type ListComponentType = typeof(RenderFragments_LessonFinal);
     public const string EmployeeServiceName = "EmployeeService";

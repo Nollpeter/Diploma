@@ -58,7 +58,7 @@
             <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
             <MudText>
                 Your task here will be to create an accordion component, that can be expanded and collapsed with a button (this will be provided)
-                You can find the base component for it in <ComponentFileWithPath T="RenderFragments_Ex1"/>
+                You can find the base component for it in <ComponentFileWithPath T="RenderFragments_Ex1_Basics"/>
                 For the header and the content of the accordion you will need to defined two renderfragments:
             </MudText>
             <ul>
@@ -122,10 +122,10 @@
                 <strong>Although it requires extending a component from the previous exercise, for the separation tests, it will be a separate component, feel free the reuse the code from the previous exercise!</strong>
             </MudText>
             <MudText>
-                You can find the base component for it in <ComponentFileWithPath T="RenderFragments_Ex2"/>
+                You can find the base component for it in <ComponentFileWithPath T="RenderFragments_Ex2_RenderFragment_Parameter"/>
             </MudText>
             <TestRunner TTestClass="Test_RenderFragments_Ex2_RenderFragment_Parameter"
-                        ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_RenderFragments_Ex2_RenderFragment_Parameter.TitleFragmentName] = _titleFragment, [Test_RenderFragments_Ex2_RenderFragment_Parameter.DetailsFragmentName] = (RenderFragment<RenderFragments_Ex2.Employee>)(employee => builder => { builder.OpenElement(0, "p"); builder.AddContent(1, $"Id: {employee.Id}, Name: {employee.FirstName} {employee.LastName}, Position: {employee.Position}"); builder.CloseElement(); }), [Test_RenderFragments_Ex2_RenderFragment_Parameter.EmployeeParamName] = new RenderFragments_Ex2.Employee(1, "Test", "Tiffany", "CEO") })"/>
+                        ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_RenderFragments_Ex2_RenderFragment_Parameter.TitleFragmentName] = _titleFragment, [Test_RenderFragments_Ex2_RenderFragment_Parameter.DetailsFragmentName] = (RenderFragment<RenderFragments_Ex2_RenderFragment_Parameter.Employee>)(employee => builder => { builder.OpenElement(0, "p"); builder.AddContent(1, $"Id: {employee.Id}, Name: {employee.FirstName} {employee.LastName}, Position: {employee.Position}"); builder.CloseElement(); }), [Test_RenderFragments_Ex2_RenderFragment_Parameter.EmployeeParamName] = new RenderFragments_Ex2_RenderFragment_Parameter.Employee(1, "Test", "Tiffany", "CEO") })"/>
         </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
@@ -168,7 +168,7 @@
                 <strong>Note: </strong> Don't forget to add the @("@typeParam") to the component!
                 <strong>Note: </strong>In this exercise you won't need the <strong>DetailsContent</strong> renderFragment
             </MudText>
-            <MudText>For the exercise, modify the <ComponentFileWithPath T="RenderFragments_Ex3<int>"/> component</MudText>
+            <MudText>For the exercise, modify the <ComponentFileWithPath T="RenderFragments_Ex3_Generic<int>"/> component</MudText>
             <MudText>
                 Code for enumerating all the fields of the passed object will be provided for you, you just have to you use it
             </MudText>
@@ -181,10 +181,10 @@
                 <strong>Although it requires extending a component from the previous exercise, for the separation tests, it will be a separate component, feel free the reuse the code from the previous exercise!</strong>
             </MudText>
             <MudText>
-                You can find the base component for it in <ComponentFileWithPath T="RenderFragments_Ex3<RenderFragments_Ex2.Employee>"/>
+                You can find the base component for it in <ComponentFileWithPath T="RenderFragments_Ex3_Generic<RenderFragments_Ex2_RenderFragment_Parameter.Employee>"/>
             </MudText>
             <TestRunner TTestClass="Test_RenderFragments_Ex3_Generic"
-                        ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_RenderFragments_Ex3_Generic.TitleFragmentName] = _titleFragment, [Test_RenderFragments_Ex3_Generic.ObjectToRenderParamName] = new RenderFragments_Ex2.Employee(1, "Test", "Tiffany", "CEO") })">
+                        ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_RenderFragments_Ex3_Generic.TitleFragmentName] = _titleFragment, [Test_RenderFragments_Ex3_Generic.ObjectToRenderParamName] = new RenderFragments_Ex2_RenderFragment_Parameter.Employee(1, "Test", "Tiffany", "CEO") })">
             </TestRunner>
         </SpacedContent>
     </ChildContent>

@@ -3,23 +3,23 @@ using BlazorCraft.Web.Pages._3_DataBinding;
 using BlazorCraft.Web.Shared._Exercises._3_DataBinding;
 using Bunit;
 using Microsoft.AspNetCore.Components;
-using Employee = BlazorCraft.Web.Shared._Exercises._3_DataBinding.ComponentDataBinding_Ex_LessonFinal.Employee;
+using Employee = BlazorCraft.Web.Shared._Exercises._3_DataBinding.DataBinding_Ex_LessonFinal.Employee;
 
 namespace BlazorCraft.Web.Tests._3_DataBinding;
 
 
 
 [TestForPage(typeof(ComponentDataBinding))]
-public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDataBinding_Ex_LessonFinal>
+public class Test_DataBinding_Ex_LessonFinal : ComponentTestBase<DataBinding_Ex_LessonFinal>
 {
-    private static Type EditorComponentType = typeof(ComponentDataBinding_Ex1);
+    private static Type EditorComponentType = typeof(DataBinding_Ex1);
     
-    [ComponentUsedInMarkupTitle(typeof(ComponentDataBinding_Ex1))]
-    [ComponentUsedInMarkupDescription(typeof(ComponentDataBinding_Ex1))]
+    [ComponentUsedInMarkupTitle(typeof(DataBinding_Ex1))]
+    [ComponentUsedInMarkupDescription(typeof(DataBinding_Ex1))]
     [Precondition]
     public async Task GivenComponentDataBinding_Ex_LessonFinal_WhenDeclared_ThenComponentDataBinding_Ex1ComponentUsed()
     {
-        var component = new ComponentDataBinding_Ex_LessonFinal();
+        var component = new DataBinding_Ex_LessonFinal();
         ValidateComponentUsage(component, EditorComponentType);
         
     }
@@ -34,8 +34,8 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
             new() { Id = 1, FirstName = "Test", LastName = "Theodore", IsEditorVisible = false },
             new() { Id = 2, FirstName = "Test", LastName = "Tiffany", IsEditorVisible = false }
         };
-        var renderedComponent = testContext.RenderComponent<ComponentDataBinding_Ex_LessonFinal>(
-            ComponentParameter.CreateParameter(nameof(ComponentDataBinding_Ex_LessonFinal.Employees), employees)
+        var renderedComponent = testContext.RenderComponent<DataBinding_Ex_LessonFinal>(
+            ComponentParameter.CreateParameter(nameof(DataBinding_Ex_LessonFinal.Employees), employees)
         );
 
         var rows = renderedComponent.FindAll("tr");
@@ -55,8 +55,8 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
             new() { Id = 1, FirstName = "Test", LastName = "Theodore", IsEditorVisible = false },
             new() { Id = 2, FirstName = "Test", LastName = "Tiffany", IsEditorVisible = false }
         };
-        var renderedComponent = testContext.RenderComponent<ComponentDataBinding_Ex_LessonFinal>(
-            ComponentParameter.CreateParameter(nameof(ComponentDataBinding_Ex_LessonFinal.Employees), employees)
+        var renderedComponent = testContext.RenderComponent<DataBinding_Ex_LessonFinal>(
+            ComponentParameter.CreateParameter(nameof(DataBinding_Ex_LessonFinal.Employees), employees)
         );
 
         var buttons = renderedComponent.FindAll("tr button");
@@ -82,8 +82,8 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
             new() { Id = 1, FirstName = "Test", LastName = "Theodore", IsEditorVisible = false },
             new() { Id = 2, FirstName = "Test", LastName = "Tiffany", IsEditorVisible = false }
         };
-        var renderedComponent = testContext.RenderComponent<ComponentDataBinding_Ex_LessonFinal>(
-            ComponentParameter.CreateParameter(nameof(ComponentDataBinding_Ex_LessonFinal.Employees), employees)
+        var renderedComponent = testContext.RenderComponent<DataBinding_Ex_LessonFinal>(
+            ComponentParameter.CreateParameter(nameof(DataBinding_Ex_LessonFinal.Employees), employees)
         );
 
         var buttons = renderedComponent.FindAll("tr button");

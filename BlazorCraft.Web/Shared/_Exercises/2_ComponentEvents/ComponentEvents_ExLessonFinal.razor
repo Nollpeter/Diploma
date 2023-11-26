@@ -1,5 +1,5 @@
 ﻿<div class="grid-container">
-    <ComponentEvents_Ex2_EventCallBack Employees="Employees" ListItemDeleted="@((emp) => { Employees.Remove(emp); _deletedEmployees.Add(emp);})"></ComponentEvents_Ex2_EventCallBack>
+    <ComponentEvents_Ex1_EventCallBack Employees="Employees" ListItemDeleted="@((emp) => { Employees.Remove(emp); _deletedEmployees.Add(emp);})"></ComponentEvents_Ex1_EventCallBack>
 </div>
 <div class="deleted_employees">
     <p>Deleted employees:</p>
@@ -13,9 +13,9 @@
 </div>
 @code {
 
-    private List<ComponentEvents_Ex2_EventCallBack.Employee> _deletedEmployees = new();
+    private List<ComponentEvents_Ex1_EventCallBack.Employee> _deletedEmployees = new();
     [Parameter] 
-    public List<ComponentEvents_Ex2_EventCallBack.Employee> Employees { get; set; } = new()
+    public List<ComponentEvents_Ex1_EventCallBack.Employee> Employees { get; set; } = new()
     {
         new(1, "Test Theodore"),
         new(2, "Test Tiffany"),

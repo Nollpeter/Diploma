@@ -152,20 +152,20 @@
                 </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="components_ex-1">
             <TitleContent>
-                <PanelHeaderWithTestTracking TTestClass="Test_Components_Introduction_Exercise">
+                <PanelHeaderWithTestTracking TTestClass="Test_Components_Introduction_Ex_LessonFinal">
                     <MudText Typo="Typo.h6" Class="fw-bold">Exercise</MudText>
                 </PanelHeaderWithTestTracking>
             </TitleContent>
             <ChildContent>
                 <SpacedContent>
                     @*<ComponentFileWithPath T="ComponentsIntroductionExercise"/>*@
-                    <MudText>Your task is to modify the pre-created component: <ComponentFileWithPath T="ComponentsIntroductionExercise" />, so that it behaves accordingly:</MudText>
+                    <MudText>Your task is to modify the pre-created component: <ComponentFileWithPath T="Components_Introduction_Ex_LessonFinal" />, so that it behaves accordingly:</MudText>
                     <MudText>You can see that you have some code already provided for you, you don't need to touch them, also, please don't!</MudText>
                     <MudText>The component also guides you with comments where you need to put your code, please follow these instructions</MudText>
-                    <MudText>The component should have a parameter defined of type <strong>@("List<int>")</strong> with the name <strong>@Test_Components_Introduction_Exercise.NumbersParameterName</strong></MudText>
-                    <MudText>If the <strong>_showList</strong> field is true, the component should render for each element of the <strong>@Test_Components_Introduction_Exercise.NumbersParameterName</strong> property a @(nameof(ComponentWithParameter)) component with its Number parameter set to the value of the number from the @Test_Components_Introduction_Exercise.NumbersParameterName list</MudText>
-                    <MudText>If the <strong>_showList</strong> field is false, the component should render @Test_Components_Introduction_Exercise.ListIsHiddenMarkup</MudText>
-                    <TestRunner TTestClass="Test_Components_Introduction_Exercise" ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_Components_Introduction_Exercise.NumbersParameterName] = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 } })"/>
+                    <MudText>The component should have a parameter defined of type <strong>@("List<int>")</strong> with the name <strong>@Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName</strong></MudText>
+                    <MudText>If the <strong>_showList</strong> field is true, the component should render for each element of the <strong>@Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName</strong> property a @(nameof(ComponentWithParameter)) component with its Number parameter set to the value of the number from the @Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName list</MudText>
+                    <MudText>If the <strong>_showList</strong> field is false, the component should render @Test_Components_Introduction_Ex_LessonFinal.ListIsHiddenMarkup</MudText>
+                    <TestRunner TTestClass="Test_Components_Introduction_Ex_LessonFinal" ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName] = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 } })"/>
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>

@@ -90,7 +90,7 @@
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="two-way-data-binding-for-components">
             <TitleContent>
-                <PanelHeaderWithTestTracking TTestClass="Test_Components_DataBinding_Ex1">
+                <PanelHeaderWithTestTracking TTestClass="Test_DataBinding_Ex1">
                     <MudText Typo="Typo.h6" Class="fw-bold">Two-way binding for components</MudText>
                 </PanelHeaderWithTestTracking>
             </TitleContent>
@@ -123,7 +123,7 @@
                     <MudDivider></MudDivider>
                     <MudText Typo="Typo.subtitle1" Class="fw-bold">Exercise</MudText>
                     <MudText>In this exercise, you will need to create a stripped down version of a form for employees, where their <strong>Id</strong> and <strong>Name</strong> can be edited, and this data is synchronized with the caller components</MudText>
-                    <MudText>You will need to modify the component <ComponentFileWithPath T="ComponentDataBinding_Ex1"/>, you will find all instructions inside the component</MudText>
+                    <MudText>You will need to modify the component <ComponentFileWithPath T="DataBinding_Ex1"/>, you will find all instructions inside the component</MudText>
                     <MudExpansionPanels>
                         <MudExpansionPanel>
                             <TitleContent><MudText Class="fw-bold" Typo="Typo.subtitle1">Hint</MudText></TitleContent>
@@ -143,12 +143,12 @@
                             </ChildContent>
                         </MudExpansionPanel>
                     </MudExpansionPanels>
-                    <TestRunner TTestClass="Test_Components_DataBinding_Ex1"
+                    <TestRunner TTestClass="Test_DataBinding_Ex1"
                                 ComponentUnderTestParameters="@(new Dictionary<string, object>() {
-                                                                  [Test_Components_DataBinding_Ex1.EmployeeFirstNameParamName] = _fistName,
-                                                                  [Test_Components_DataBinding_Ex1.EmployeeFirstNameChangedName] = EventCallback.Factory.Create<string>(this, s => { _fistName = s; }),
-                                                                  [Test_Components_DataBinding_Ex1.EmployeeLastNameParamName] = _lastName,
-                                                                  [Test_Components_DataBinding_Ex1.EmployeeLastNameChangedName] = EventCallback.Factory.Create<string>(this, s => { _lastName = s; }) })">
+                                                                  [Test_DataBinding_Ex1.EmployeeFirstNameParamName] = _fistName,
+                                                                  [Test_DataBinding_Ex1.EmployeeFirstNameChangedName] = EventCallback.Factory.Create<string>(this, s => { _fistName = s; }),
+                                                                  [Test_DataBinding_Ex1.EmployeeLastNameParamName] = _lastName,
+                                                                  [Test_DataBinding_Ex1.EmployeeLastNameChangedName] = EventCallback.Factory.Create<string>(this, s => { _lastName = s; }) })">
                         <ComponentUnderTestHelperFragment>
                             <p>First name: @_fistName</p>
                             <p>Last name: @_lastName</p>
@@ -159,7 +159,7 @@
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="data-binding-final-exercise">
             <TitleContent>
-                <PanelHeaderWithTestTracking TTestClass="Test_Components_DataBinding_ExFinal">
+                <PanelHeaderWithTestTracking TTestClass="Test_DataBinding_Ex_LessonFinal">
                     <MudText Typo="Typo.h6" Class="fw-bold">Exercise</MudText>
                 </PanelHeaderWithTestTracking>
             </TitleContent>
@@ -171,13 +171,13 @@
                         Each row will also have an Edit button, and by clicking on them, a component editor will be rendered, where changes to the employee first and last name will be reflected in the list as well.
                     </MudText>
                 <MudText>
-                    You will need to modify the component <ComponentFileWithPath T="ComponentDataBinding_Ex_LessonFinal"/>
+                    You will need to modify the component <ComponentFileWithPath T="DataBinding_Ex_LessonFinal"/>
                     <br/>
                     Some code is already prepared for you to use, you will find all other instructions in the component
                 </MudText>
-                <TestRunner TTestClass="Test_Components_DataBinding_ExFinal"
+                <TestRunner TTestClass="Test_DataBinding_Ex_LessonFinal"
                             ComponentUnderTestParameters="@(new Dictionary<string, object>(){
-                                                              [nameof(ComponentDataBinding_Ex_LessonFinal.Employees)] = new List<ComponentDataBinding_Ex_LessonFinal.Employee>(){
+                                                              [nameof(DataBinding_Ex_LessonFinal.Employees)] = new List<DataBinding_Ex_LessonFinal.Employee>(){
                                                                   new() { Id = 1, FirstName = "Test", LastName = "Theodore", IsEditorVisible = false },
                                                                   new() { Id = 2, FirstName = "Test", LastName = "Tiffany", IsEditorVisible = false },
                                                                   new() { Id = 3, FirstName = "Test", LastName = "Timothy", IsEditorVisible = false },

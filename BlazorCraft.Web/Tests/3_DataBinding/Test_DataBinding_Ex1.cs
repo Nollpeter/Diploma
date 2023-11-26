@@ -9,7 +9,7 @@ namespace BlazorCraft.Web.Tests._3_DataBinding;
 
 
 [TestForPage(typeof(ComponentDataBinding))]
-public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBinding_Ex1>
+public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
 {
     public const string EmployeeFirstNameParamName = "FirstName";
     public const string EmployeeFirstNameChangedName = "FirstNameChanged";
@@ -22,7 +22,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     [Precondition]
     public async Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeFirstNameParameterDefined()
     {
-        var component = new ComponentDataBinding_Ex1();
+        var component = new DataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
         
     }
@@ -32,7 +32,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     [Precondition]
     public async Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeLastNameParameterDefined()
     {
-        var component = new ComponentDataBinding_Ex1();
+        var component = new DataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
         
     }
@@ -42,7 +42,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     [Precondition]
     public async Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeFirstNameChangedParameterDefined()
     {
-        var component = new ComponentDataBinding_Ex1();
+        var component = new DataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
         
     }
@@ -52,7 +52,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     [Precondition]
     public async Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeLastNameChangedParameterDefined()
     {
-        var component = new ComponentDataBinding_Ex1();
+        var component = new DataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
         
     }
@@ -66,7 +66,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
 
         string firstName = "Theodore";
 
-        var renderedComponent = testContext.RenderComponent<ComponentDataBinding_Ex1>(
+        var renderedComponent = testContext.RenderComponent<DataBinding_Ex1>(
             ComponentParameter.CreateParameter(EmployeeFirstNameParamName, firstName));
 
         var inputs = renderedComponent.FindAll("input").ToList();
@@ -93,7 +93,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
             firstName = value;
         });
 
-        var renderedComponent = testContext.RenderComponent<ComponentDataBinding_Ex1>(
+        var renderedComponent = testContext.RenderComponent<DataBinding_Ex1>(
             ComponentParameter.CreateParameter(EmployeeFirstNameParamName, firstName),
             ComponentParameter.CreateParameter(EmployeeFirstNameChangedName, idChanged)
         );
@@ -128,7 +128,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
 
         string lastName = "Test";
 
-        var renderedComponent = testContext.RenderComponent<ComponentDataBinding_Ex1>(
+        var renderedComponent = testContext.RenderComponent<DataBinding_Ex1>(
             ComponentParameter.CreateParameter(EmployeeLastNameParamName, lastName));
 
         var input = renderedComponent.Find(".employee-last-name");
@@ -155,7 +155,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
             lastName = n;
         });
 
-        var renderedComponent = testContext.RenderComponent<ComponentDataBinding_Ex1>(
+        var renderedComponent = testContext.RenderComponent<DataBinding_Ex1>(
             ComponentParameter.CreateParameter(EmployeeLastNameParamName, lastName),
             ComponentParameter.CreateParameter(EmployeeLastNameChangedName, nameChanged)
         );

@@ -7,7 +7,7 @@ using Bunit;
 namespace BlazorCraft.Web.Tests._1_Components_Introduction;
 
 [TestForPage(typeof(ComponentsIntroduction))]
-public class Test_Components_Introduction_Exercise : ComponentTestBase<ComponentsIntroductionExercise>
+public class Test_Components_Introduction_Ex_LessonFinal : ComponentTestBase<Components_Introduction_Ex_LessonFinal>
 {
     public const string NumbersParameterName = "Numbers";
     
@@ -19,7 +19,7 @@ public class Test_Components_Introduction_Exercise : ComponentTestBase<Component
     [Precondition]
     public async Task GivenComponentsIntroductionExercise_WhenRendered_ThenNumbersParamterDefined()
     {
-        var component = new ComponentsIntroductionExercise();
+        var component = new Components_Introduction_Ex_LessonFinal();
         ValidateComponentProperty(component, NumbersParameterName, typeof(List<int>));
     }
 
@@ -30,7 +30,7 @@ public class Test_Components_Introduction_Exercise : ComponentTestBase<Component
         TestContext testContext = new TestContext();
         Random r = new Random();
         List<int> list = new List<int>(){ r.Next(1000), r.Next(1000), r.Next(1000)};
-        var renderedComponent = testContext.RenderComponent<ComponentsIntroductionExercise>(
+        var renderedComponent = testContext.RenderComponent<Components_Introduction_Ex_LessonFinal>(
             ComponentParameter.CreateParameter(NumbersParameterName, list));
 
         var innerHtml = renderedComponent.Find(".ex-container").InnerHtml;
@@ -41,13 +41,13 @@ public class Test_Components_Introduction_Exercise : ComponentTestBase<Component
     [Description("This test verifies that clicking on the \"Click me\" button, the list is rendered")]
     public async Task GivenComponentsIntroductionExercise_WhenButtonClicked_ThenListRenders()
     {
-        var component = new ComponentsIntroductionExercise();
+        var component = new Components_Introduction_Ex_LessonFinal();
         ValidateComponentProperty(component, NumbersParameterName, typeof(List<int>));
 
         TestContext testContext = new TestContext();
         Random r = new Random();
         List<int> list = new List<int>(){ r.Next(1000), r.Next(1000), r.Next(1000)};
-        var renderedComponent = testContext.RenderComponent<ComponentsIntroductionExercise>(
+        var renderedComponent = testContext.RenderComponent<Components_Introduction_Ex_LessonFinal>(
             ComponentParameter.CreateParameter(NumbersParameterName, list));
 
         renderedComponent.Find(".btn").Click();

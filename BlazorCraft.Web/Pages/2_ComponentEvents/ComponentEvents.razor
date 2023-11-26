@@ -43,7 +43,7 @@
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="eventCallBack">
             <TitleContent>
-                <PanelHeaderWithTestTracking TTestClass="Test_Components_Events_Ex2">
+                <PanelHeaderWithTestTracking TTestClass="Test_ComponentEvents_Ex1_EventCallBack">
                     <MudText Typo="Typo.h6" Class="fw-bold">EventCallBack and EventCallback@("<T>")</MudText>
                 </PanelHeaderWithTestTracking>
             </TitleContent>
@@ -101,12 +101,12 @@
                     <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
                     <MudText>Your task here is to create a grid component, that for each item has a delete button, and notifies its consumer component that a grid item was deleted</MudText>
                     <MudText>The actual deletion will be handled externally in the next exercise</MudText>
-                    <MudText>In this execrise you will only have to modify the <ComponentFileWithPath T="ComponentEvents_Ex2_EventCallBack"/> component</MudText>
+                    <MudText>In this execrise you will only have to modify the <ComponentFileWithPath T="ComponentEvents_Ex1_EventCallBack"/> component</MudText>
                     <MudText>
                         For the component, you will need
                         <ul>
                             <li>
-                                <MudText>A List@("<int") public property annotated with the [Parameter] attribute with the name <strong>@Test_Components_Events_Ex2.EmployeesParameterName</strong></MudText>
+                                <MudText>A List@("<int") public property annotated with the [Parameter] attribute with the name <strong>@Test_ComponentEvents_Ex1_EventCallBack.EmployeesParameterName</strong></MudText>
                                 <MudText>
                                     An EventCallBack@("<ItemWithIndex>") public property annotated with the [Parameter] attribute (The <strong>ItemWithIndex</strong> type will be provided, you only need to use it)
                                     with the name <strong>ListItemDeleted</strong>
@@ -124,13 +124,13 @@
                           "</tr> \n")
                     </CodeSnippet>
                     @{
-                        var employees = new List<ComponentEvents_Ex2_EventCallBack.Employee>() { new(1, "employee 1"), new(2, "employee 2") };
-                        var eventCallback = EventCallback.Factory.Create<ComponentEvents_Ex2_EventCallBack.Employee>(employees, employee => { employees.Remove(employee); });
+                        var employees = new List<ComponentEvents_Ex1_EventCallBack.Employee>() { new(1, "employee 1"), new(2, "employee 2") };
+                        var eventCallback = EventCallback.Factory.Create<ComponentEvents_Ex1_EventCallBack.Employee>(employees, employee => { employees.Remove(employee); });
                     }
-                    <TestRunner TTestClass="Test_Components_Events_Ex2"
+                    <TestRunner TTestClass="Test_ComponentEvents_Ex1_EventCallBack"
                                 ComponentUnderTestParameters="@(new Dictionary<string, object>() { 
-                                                                  [Test_Components_Events_Ex2.EmployeesParameterName] = employees, 
-                                                                  [Test_Components_Events_Ex2.EventCallBackPropertyName] = eventCallback})" />
+                                                                  [Test_ComponentEvents_Ex1_EventCallBack.EmployeesParameterName] = employees, 
+                                                                  [Test_ComponentEvents_Ex1_EventCallBack.EventCallBackPropertyName] = eventCallback})" />
                         
                     }
                 </SpacedContent>
@@ -149,7 +149,7 @@
                         <ul>
                             <li>
                                 <MudText>
-                                    The component should handle the @Test_Components_Events_Ex2.EventCallBackPropertyName event,
+                                    The component should handle the @Test_ComponentEvents_Ex1_EventCallBack.EventCallBackPropertyName event,
                                     so that the list items are deleted from the @Test_Components_Events_ExLessonFinal.EmployeesParameterName list
                                 </MudText>
                             </li>
@@ -165,7 +165,7 @@
                     <TestRunner TTestClass="Test_Components_Events_ExLessonFinal"
                                 ComponentUnderTestParameters=
                                 "@(new Dictionary<string, object>(){ [Test_Components_Events_ExLessonFinal.EmployeesParameterName]= 
-                                     new List<ComponentEvents_Ex2_EventCallBack.Employee>(){ new (1, "employee 1"), new(2, "employee 2")}})"
+                                     new List<ComponentEvents_Ex1_EventCallBack.Employee>(){ new (1, "employee 1"), new(2, "employee 2")}})"
                                 ></TestRunner>
                 </SpacedContent>
             </ChildContent>

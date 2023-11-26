@@ -3,12 +3,12 @@ using BlazorCraft.Web.Pages._2_ComponentEvents;
 using BlazorCraft.Web.Shared._Exercises._2_ComponentEvents;
 using Bunit;
 using Microsoft.AspNetCore.Components;
-using Employee = BlazorCraft.Web.Shared._Exercises._2_ComponentEvents.ComponentEvents_Ex2_EventCallBack.Employee;
+using Employee = BlazorCraft.Web.Shared._Exercises._2_ComponentEvents.ComponentEvents_Ex1_EventCallBack.Employee;
 
 namespace BlazorCraft.Web.Tests._2_ComponentEvents;
 
 [TestForPage(typeof(ComponentEvents))]
-public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_EventCallBack>
+public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<ComponentEvents_Ex1_EventCallBack>
 {
     public const string EmployeesParameterName = "Employees";
     public const string EventCallBackPropertyName = "ListItemDeleted";
@@ -18,7 +18,7 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
     [Precondition]
     public async Task GivenComponentEvents_Ex2_EventCallBack_WhenDeclared_ThenEmployeesParameterDefined()
     {
-        var component = new ComponentEvents_Ex2_EventCallBack();
+        var component = new ComponentEvents_Ex1_EventCallBack();
         ValidateComponentProperty(component, EmployeesParameterName, typeof(List<Employee>));
         
     }
@@ -28,7 +28,7 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
     [Precondition]
     public async Task GivenComponentEvents_Ex2_EventCallBack_WhenDeclared_ThenEventCallBackParameterDefined()
     {
-        var component = new ComponentEvents_Ex2_EventCallBack();
+        var component = new ComponentEvents_Ex1_EventCallBack();
         ValidateComponentProperty(component, EventCallBackPropertyName, typeof(EventCallback<Employee>));
         
     }
@@ -47,7 +47,7 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
 
         Employee calledEmployee = null;
 
-        var renderedComponent = testContext.RenderComponent<ComponentEvents_Ex2_EventCallBack>(
+        var renderedComponent = testContext.RenderComponent<ComponentEvents_Ex1_EventCallBack>(
             ComponentParameter.CreateParameter(EmployeesParameterName, list),
             ComponentParameter.CreateParameter(EventCallBackPropertyName,
                 EventCallback.Factory.Create<Employee>(testContext, employee => calledEmployee = employee)));
@@ -85,7 +85,7 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
 
         Employee calledEmployee = null;
 
-        var renderedComponent = testContext.RenderComponent<ComponentEvents_Ex2_EventCallBack>(
+        var renderedComponent = testContext.RenderComponent<ComponentEvents_Ex1_EventCallBack>(
             ComponentParameter.CreateParameter(EmployeesParameterName, list),
             ComponentParameter.CreateParameter(EventCallBackPropertyName,
                 EventCallback.Factory.Create<Employee>(testContext, employee => calledEmployee = employee)));

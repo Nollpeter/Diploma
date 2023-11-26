@@ -2,7 +2,7 @@
 using BlazorCraft.Web.Pages._2_ComponentEvents;
 using BlazorCraft.Web.Shared._Exercises._2_ComponentEvents;
 using Bunit;
-using Employee = BlazorCraft.Web.Shared._Exercises._2_ComponentEvents.ComponentEvents_Ex2_EventCallBack.Employee;
+using Employee = BlazorCraft.Web.Shared._Exercises._2_ComponentEvents.ComponentEvents_Ex1_EventCallBack.Employee;
 
 
 namespace BlazorCraft.Web.Tests._2_ComponentEvents;
@@ -13,13 +13,13 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
 {
     public const string EmployeesParameterName = "Employees";
     
-    [ComponentUsedInMarkupTitle(typeof(ComponentEvents_Ex2_EventCallBack))]
-    [ComponentUsedInMarkupDescription(typeof(ComponentEvents_Ex2_EventCallBack))]
+    [ComponentUsedInMarkupTitle(typeof(ComponentEvents_Ex1_EventCallBack))]
+    [ComponentUsedInMarkupDescription(typeof(ComponentEvents_Ex1_EventCallBack))]
     [Precondition]
     public async Task GivenComponentEvents_ExLessonFinal_WhenDeclared_ThenComponentEvents_Ex2_EventCallBackComponentUsed()
     {
         var component = new ComponentEvents_ExLessonFinal();
-        ValidateComponentUsage(component, typeof(ComponentEvents_Ex2_EventCallBack));
+        ValidateComponentUsage(component, typeof(ComponentEvents_Ex1_EventCallBack));
         
     }
 
