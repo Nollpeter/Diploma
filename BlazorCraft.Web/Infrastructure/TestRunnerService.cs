@@ -65,11 +65,17 @@ public class TestRunnerService : ITestRunnerService
         try
         {
             var contextIdMethod = await testDescriptor.Method();
-            TestStateChanged?.Invoke(this, new TestRunStateEventArgs(testDescriptor, contextIdMethod, contextIdMethod.IsSuccessful ? TestRunState.Successful : TestRunState.Error));
+            TestStateChanged?.Invoke(this,
+                new TestRunStateEventArgs(testDescriptor, contextIdMethod,
+                    contextIdMethod.IsSuccessful ? TestRunState.Successful : TestRunState.Error));
+        }
+        catch (TestRunException e)
+        {
+            TestStateChanged?.Invoke(this, new TestRunStateEventArgs(testDescriptor, new TestRunResult(false, e.Message), TestRunState.Error));
         }
         catch (Exception e)
         {
-            TestStateChanged?.Invoke(this, new TestRunStateEventArgs(testDescriptor, new TestRunResult(false, e.Message), TestRunState.Error));
+            TestStateChanged?.Invoke(this, new TestRunStateEventArgs(testDescriptor, new TestRunResult(false, String.Join(Environment.NewLine,e.Message, e.StackTrace)), TestRunState.Error));
         }
 
     }

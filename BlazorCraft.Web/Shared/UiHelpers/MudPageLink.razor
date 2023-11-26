@@ -1,0 +1,30 @@
+﻿@using System.Reflection
+@inherits MudNavLink
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+
+@code {
+
+    [Parameter, EditorRequired]
+    public Type PageType { get; set; } = null!;
+
+    private string GetPageRoute(Type pageType)
+    {
+        var routeAttribute = pageType.GetCustomAttribute<RouteAttribute>();
+        if (routeAttribute != null)
+        {
+            return routeAttribute.Template;
+        }
+        return null;
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Href = GetPageRoute(PageType);
+    }
+
+}

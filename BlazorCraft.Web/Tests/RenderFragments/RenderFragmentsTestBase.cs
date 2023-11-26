@@ -21,24 +21,6 @@ public class RenderFragmentsTestBase<TTestComponent> : ComponentTestBase<TTestCo
         }
     }
 
-    protected void ValidateComponentProperty(object component, string parameterName, Type? parameterType = null )
-    {
-        var employee = component.GetType().GetProperties()
-            .FirstOrDefault(p =>
-                p.Name == parameterName && (p.PropertyType ==(parameterType ?? typeof(RenderFragment))));
-        if (parameterType == null)
-        {
-            throw new TestRunException($"The component Property {parameterName} is not defined in the component");
-        }
-
-        var parameterAttribute = employee.GetCustomAttribute<ParameterAttribute>();
-        if (parameterAttribute == null)
-        {
-            throw new TestRunException(
-                $"The component Property {parameterName} is defined in the component, but it is not annotated with the [Parameter] attribute");
-        }
-    }
-
     public void AssertCorrectMarkup(string expected, string actual)
     {
         if (actual != expected)

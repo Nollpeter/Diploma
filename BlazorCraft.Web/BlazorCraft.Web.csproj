@@ -18,12 +18,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Shared\Examples\Components\2_Events\" />
+	  <Folder Include="Tests\Components\" />
 	  <Folder Include="Tests\Helpers\" />
 	  <Folder Include="wwwroot\img\" />
 	</ItemGroup>
 
     <ItemGroup>
         <EmbeddedResource Include="**\*.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Shared\Examples\Introduction\HelloWorld.razor" />
     </ItemGroup>
 	
 </Project>

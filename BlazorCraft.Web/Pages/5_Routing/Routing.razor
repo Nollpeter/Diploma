@@ -1,9 +1,8 @@
 ﻿@page "/routing"
-@using BlazorCraft.Web.Shared.Components.RenderFragments.ExampleUsages
-@using BlazorCraft.Web.Shared.Components.Routing
-@using BlazorCraft.Web.Shared.Components.Routing.ExampleUsages
 @using BlazorCraft.Web.Tests.Routing
 @using BlazorCraft.Web.Shared._Exercises.Routing
+@using BlazorCraft.Web.Shared.Examples.Routing
+@using BlazorCraft.Web.Shared.Examples.Routing.ExampleUsages
 <MudText Typo="Typo.h4">Routing</MudText>
 <div class="d-grid gap-3">
 <MudText Typo="Typo.h6" Class="fw-bold">What is routing?</MudText>
@@ -33,7 +32,7 @@
                 @("""[global::Microsoft.AspNetCore.Components.RouteAttribute("/resource/subresource")]""" + "\n" +
                   """public partial class DefiningRoute : global::Microsoft.AspNetCore.Components.ComponentBase""")
             </CodeSnippet>
-            <MudText>This also shows evidents, that blazor pages are essentially blazor components that are decorated with a <strong>[RoutAttribute]</strong></MudText>
+            <MudText>This is also evidence, that blazor pages are essentially blazor components that are decorated with a <strong>[RoutAttribute]</strong></MudText>
             <MudText>These routes are configured to be automatically looked up by the application's <strong>Router</strong> type. This is configured in the <strong>App.razor</strong> file</MudText>
             <AdvancedCodeSnippet TComponent="App" RenderOutput="false"/>
             <MudText>You can also define multiple routes for the pages, in this case, they will be reachable by all of its page routes</MudText>

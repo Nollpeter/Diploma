@@ -1,15 +1,29 @@
 ﻿@page "/components/introduction"
+@using BlazorCraft.Web.Shared.Examples.Components.Introduction
+@using BlazorCraft.Web.Pages._4_RenderFragments
+@using BlazorCraft.Web.Shared._Exercises.Components.Introduction
+@using BlazorCraft.Web.Shared.Examples.Components.Introduction.ExampleUsages
 
 <MudContainer Class="d-grid gap-3">
     <MudText Typo="Typo.h4">Blazor Components</MudText>
     <MudText>
-        Blazor components are the building blocks of a Blazor application, encapsulating rendering logic, data, and behavior. These components can be thought of as reusable pieces of user interface (UI), akin to the concept of Web Components but designed to leverage the .NET ecosystem. In a typical Blazor project, components are created using Razor files (.razor) which blend HTML markup with C# code. The logic is kept in a code block or an associated code-behind file, and the UI is defined as Razor markup.
+        Blazor components are the building blocks of a Blazor application, encapsulating rendering logic, data, and behavior.
+        These components can be thought of as reusable pieces of user interface (UI), akin to the concept of Web Components but designed to leverage the .NET ecosystem.
+        In a typical Blazor project, components are created using Razor files (.razor) which blend HTML markup with C# code.
+        The logic is kept in a code block or an associated code-behind file, and the UI is defined as Razor markup.
+
     </MudText>
     <MudText>
-        Components interact with each other through a well-defined mechanism involving parameters, events, and data-binding. Parameters allow you to pass data into a component, while events enable components to communicate back to their parent or to the entire application. Two-way data-binding simplifies keeping the UI and data model in sync, and the powerful templating features let you customize how data is displayed.
+        Components interact with each other through a well-defined mechanism involving parameters, events, and data-binding.
+        Parameters allow you to pass data into a component, while events enable components to communicate back to their parent or to the entire application.
+        Two-way data-binding simplifies keeping the UI and data model in sync, and the powerful templating features let you customize how data is displayed.
+
     </MudText>
     <MudText>
-        In a typical WebAssembly Blazor project, components are written as Razor files (.razor), combining HTML markup with embedded C# logic. These files get compiled into .NET assemblies that are then downloaded and run in the browser through a WebAssembly-based .NET runtime. Just like in any other Blazor hosting model, you can pass data between components using parameters, capture user events, and execute logic based on lifecycle events.
+        In a typical WebAssembly Blazor project, components are written as Razor files (.razor), combining HTML markup with embedded C# logic.
+        These files get compiled into .NET assemblies that are then downloaded and run in the browser through a WebAssembly-based .NET runtime.
+        Just like in any other Blazor hosting model, you can pass data between components using parameters, capture user events, and execute logic based on lifecycle events.
+
     </MudText>
     <MudText>
         Here's a simple example to visualize the concept:
@@ -31,26 +45,130 @@
           """    }""" + "\n" +
           """}""" + "\n")
     </CodeSnippet>
-
     <MudText>
-        In this component, we define some static HTML and a button. The <strong>@("@code")</strong> block contains the C# logic for the component. 
+        In this component, we define some static HTML and a button. The <strong>@("@code")</strong> block contains the C# logic for the component.
         When the button is clicked, the ChangeName function is executed, which updates the name variable, triggering a re-render of the component to reflect the new state.
     </MudText>
     <MudText>
-        This is a high-level overview, but the real power comes when you start composing complex UIs by nesting components, handling events, and binding data. 
+        This is a high-level overview, but the real power comes when you start composing complex UIs by nesting components, handling events, and binding data.
         Despite running client-side, Blazor WebAssembly components can interact with server-side APIs for data, utilize browser capabilities through JavaScript interop, and even integrate with other JavaScript libraries or Web Components.
     </MudText>
+    <MudText>Let's dive into the building blocks and basics of components topic-by-topic</MudText>
     <MudExpansionPanels MultiExpansion="true">
-        <MudExpansionPanelWithStoredState Id="components_ex-1">
+        <MudExpansionPanelWithStoredState Id="components_building blocks">
             <TitleContent>
-                <MudText Typo="Typo.h5" Class="fw-bold">Exercise - Hello world</MudText>
+                <MudText Typo="Typo.h5" Class="fw-bold">The two parts of a component</MudText>
             </TitleContent>
             <ChildContent>
                 <div class="d-grid gap-3">
-                    <MudText Typo="Typo.body1">Create a new component insude Components\Introduction folder with the name HelloWorld.razor</MudText>
-                    <MudText Typo="Typo.body1">The component should only contain a @("<h3>") tag wit the content: "Hello world"!</MudText>
-                    <MudText><strong>Note: </strong> In further exercises you will be provided with already existing components</MudText>
-                    <TestRunner TTestClass="Test_Components_Ex1_HelloWorld"></TestRunner>
+                    <MudText>In Blazor, all components consist of two parts: </MudText>
+                    <ul>
+                        <li>
+                            <MudText>Razor markup</MudText>
+                        </li>
+                        <li>
+                            <MudText>The code behind</MudText>
+                        </li>
+                    </ul>
+                    <MudText>The code behind part can be either inside the {componentName}.razor file inside the @("@code{ }") section, or it can be in a separate file in the {componentName}.razor.cs file</MudText>
+                    <MudText>
+                        <Important>For simplicity, in this application, we will always use the @("@code{ }") section</Important>
+                    </MudText>
+                    <AdvancedCodeSnippet TComponent="BuildingBlocks" RenderOutput="false"/>
+                </div>
+            </ChildContent>
+        </MudExpansionPanelWithStoredState>
+        <MudExpansionPanelWithStoredState Id="components_at_sign">
+            <TitleContent>
+                <MudText Typo="Typo.h5" Class="fw-bold">The @("@")</MudText>
+            </TitleContent>
+            <ChildContent>
+                <div class="d-grid gap-3">
+                    <MudText>In Blazor the @("@") sign is a very important modifier. This tells the compiler, that after this sign, we are going to write C# code, and it should be interpreted as C# code</MudText>
+                    <MudText>Without it, in our markup whatever we write will be interpreted literally</MudText>
+                    <MudText>We can also create sections of C# code inside our markup by enclosing our code in a @("@{ }") section.</MudText>
+                    <MudText>
+                        <strong>Note: </strong> Inside @("@{ }") sections, everything you write will be treated as a mixture of C# code and razor markup, therefore you cannot write simple strings.
+                        <br/>
+                        If you need to render a string inside a @("@{ }") section, you either need to
+                    </MudText>
+                    <ul>
+                        <li>
+                            <MudText Class="fw-bold">Wrap it in an html tag, or another component</MudText>
+                        </li>
+                        <li>
+                            <MudText Class="fw-bold">Render the string using a method. In this case, make sure to put the @("@") sign before the method call, otherwise it won't be rendered</MudText>
+                        </li>
+                    </ul>
+                    <AdvancedCodeSnippet TComponent="AtSign" RenderOutput="true"/>
+                </div>
+            </ChildContent>
+        </MudExpansionPanelWithStoredState>
+        <MudExpansionPanelWithStoredState Id="components-control-flow-statements">
+            <TitleContent>
+                <MudText Typo="Typo.h5" Class="fw-bold">if-else and foreach keyword</MudText>
+            </TitleContent>
+            <ChildContent>
+                <div class="d-grid gap-3">
+                    <MudText>Blazor allows us to use control flow statements natively in our components.</MudText>
+                    <MudText>The two most notables that we are going to use in this application are <strong>if-else</strong> and <strong>foreach</strong></MudText>
+                    <MudText>Be careful, that they count as @("@{ }") sections, therefore content inside them should be placed accordingly (see previous section of this page)</MudText>
+                    <AdvancedCodeSnippet TComponent="ControlFlowStatements" RenderOutput="true"/>
+                </div>
+            </ChildContent>
+        </MudExpansionPanelWithStoredState>
+        <MudExpansionPanelWithStoredState Id="components-render-another-component">
+            <TitleContent>
+                <MudText Typo="Typo.h5" Class="fw-bold">Rendering other components</MudText>
+            </TitleContent>
+            <ChildContent>
+                <div class="d-grid gap-3">
+                    <MudText>If we could only render plain html inside our components, blazor would be a very useless framework</MudText>
+                    <MudText>Its power shines once we start rendering Blazor components inside Blazor components</MudText>
+                    <MudText>
+                        For this, we just have to write the component name wrapped with @("< >") signs, just like they were html tags, and that's it, our component will be rendered!
+                        <br/>
+                        (Of course, it can be more complicated than this, but don't worry, we will dive into it in later sections
+                    </MudText>
+                    <MudText>Let's create a very simple HelloWorld component and render it from another one.</MudText>
+                    <CompanionSnippets>
+                        <Component><AdvancedCodeSnippet TComponent="HelloWorld" RenderOutput="false"></AdvancedCodeSnippet></Component>
+                        <Usage><AdvancedCodeSnippet TComponent="RenderHelloWorld" RenderOutput="true"></AdvancedCodeSnippet></Usage>
+                    </CompanionSnippets>
+                </div>
+            </ChildContent>
+        </MudExpansionPanelWithStoredState>
+        <MudExpansionPanelWithStoredState Id="components-parameters">
+                    <TitleContent>
+                        <MudText Typo="Typo.h5" Class="fw-bold">Component parameters</MudText>
+                    </TitleContent>
+                    <ChildContent>
+                        <div class="d-grid gap-3">
+                            <MudText>Components can have parameters that can be set externall by their caller component</MudText>
+                            <MudText>To define such a parameter, we need to create a <strong>public property</strong> annotated with the <strong>[Parameter]</strong> attribute</MudText>
+                            <MudText><strong>Note: </strong> these parameters can also be made mandatory by also annotating them with the <strong>[EditorRequired]</strong> attribute</MudText>
+                            <MudText>Then, when we want to render such a component we can assign values to the parameters exactly as if they were html attributes</MudText>
+                            <MudText><strong>Note:</strong> there are also parameters that will come to the body of the component, we will cover them in the <MudPageLink PageType="@typeof(RenderFragments)">RenderFragments</MudPageLink>  chapter</MudText>
+                            <CompanionSnippets>
+                                <Component><AdvancedCodeSnippet TComponent="ComponentWithParameter" RenderOutput="false"></AdvancedCodeSnippet></Component>
+                                <Usage><AdvancedCodeSnippet TComponent="ComponentWithParameterUsage" RenderOutput="true"></AdvancedCodeSnippet></Usage>
+                            </CompanionSnippets>
+                        </div>
+                    </ChildContent>
+                </MudExpansionPanelWithStoredState>
+        <MudExpansionPanelWithStoredState Id="components_ex-1">
+            <TitleContent>
+                <MudText Typo="Typo.h5" Class="fw-bold">Exercise</MudText>
+            </TitleContent>
+            <ChildContent>
+                <div class="d-grid gap-3">
+                    <MudText>Your task is to modify the pre-created component: @(nameof(ComponentsIntroductionExercise)).razor, so that it behaves accordingly:</MudText>
+                    <MudText>You can see that you have some code already provided for you, you don't need to touch them, also, please don't!</MudText>
+                    <MudText>The component also guides you with comments where you need to put your code, please follow these instructions</MudText>
+                    <MudText>The component should have a parameter defined of type <strong>@("List<int>")</strong> with the name <strong>@Test_Components_Introduction_Exercise.NumbersParameterName</strong></MudText>
+                    <MudText>If the <strong>_showList</strong> field is true, the component should render for each element of the <strong>@Test_Components_Introduction_Exercise.NumbersParameterName</strong> property a @(nameof(ComponentWithParameter)) component with its Number parameter set to the value of the number from the @Test_Components_Introduction_Exercise.NumbersParameterName list</MudText>
+                    <MudText>If the <strong>_showList</strong> field is false, the component should render @Test_Components_Introduction_Exercise.ListIsHiddenMarkup</MudText>
+                    <TestRunner TTestClass="Test_Components_Introduction_Exercise"></TestRunner>
                 </div>
             </ChildContent>
         </MudExpansionPanelWithStoredState>

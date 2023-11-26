@@ -1,0 +1,14 @@
+﻿<p>_testString</p>
+<p>@_testString</p>
+@{
+    _testString = "Another test string";
+    <p>@_testString</p>
+    RenderString(_testString);
+    @RenderString(_testString)
+}
+
+@code {
+    private string _testString = "My test string";
+
+    private string RenderString(string stringToRender) => $"{stringToRender} rendered with method" ;
+}

@@ -1,0 +1,32 @@
+﻿@if (_numbersShown)
+{
+    <ul>
+        @foreach (var number in _numbers)
+        {
+            <li>@number</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Numbers are hidden</p>
+}
+
+@code {
+    bool _numbersShown = true;
+    List<int> _numbers = new() { 1, 2, 3, 4, 5 };
+
+    // This section will be covered later, it is only here for interactivity of the component
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        System.Timers.Timer timer = new System.Timers.Timer(1000);
+        timer.Elapsed += (sender, e) =>
+        {
+            _numbersShown = !_numbersShown;
+            StateHasChanged();
+        };
+        timer.Start();
+    }
+
+}
