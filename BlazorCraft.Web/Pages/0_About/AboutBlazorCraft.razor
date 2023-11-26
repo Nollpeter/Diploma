@@ -1,6 +1,254 @@
 ﻿@page "/"
-<h3>AboutBlazorCraft</h3>
+@using BlazorCraft.Web.Infrastructure
+<MudText Typo="Typo.h3" Class="fw-bold">A foreword to this application</MudText>
+<SpacedContent Gap="2">
+<MudText Typo="Typo.h6">First of all, welcome to this application and thank you very much for participating in my diploma work!</MudText>
+
+<MudDivider/>
+<MudText Typo="Typo.h5" Class="fw-bold my-2">What this application is</MudText>
+<MudText>
+    This is a research project for my Master's thesis, that wishes to find answers how the learning process of a new technology can be augmented by exercises and continuous feedback,
+    also what effect they have on the learning process.
+    <br/>
+    I am very grateful to you for participating in this research, you cannot imagine how much help it is for me, if you complete this "course", and provide me with your exam results and feedback in the end!
+</MudText>
+<MudText Class="mt-2">
+    The selected technology for this research purpose is <Important>Microsoft Blazor WebAssembly</Important>
+    <br/>
+    This technology is a frontend framework, with which web applications can be developed using <Important>.NET</Important> and <Important>C#</Important>
+</MudText>
+
+<MudDivider/>
+<MudText Typo="Typo.h5" Class="fw-bold my-2">The aim of this application</MudText>
+<MudText>
+    The aim of the application is to teach you the very basics and "look and feel" of blazor, enabling you to develop individual components.
+</MudText>
+<MudText>
+    You are most cetainly won't become an expert at blazor, but it can be a very good start, on which you can build on later
+</MudText>
+
+<MudDivider/>
+<MudText Typo="Typo.h5" Class="fw-bold my-2">The process of the application</MudText>
+<MudText>The application and learning process consists of 11 chapters and an exam exercise.</MudText>
+<MudText>These chapters will walk you through the most fundamental building blocks of blazor, which you will need to put together for the exam exercise</MudText>
+<MudText>
+    There are two versions of this application:
+    <ul>
+        <li>
+            The <Important>@Constants.WITHOUT_TESTS_VERSION</Important> version: In this version, there are only educational materials with sample codes,
+            after which you will have to complete the exam exercise
+            <MudText Class="my-1">
+                There are some of you, that I will specifically ask to complete this version first,
+                this is because of the research, so that I will have comparable reference data how students without the exercises perform compared to those who get exercises in the process.
+            </MudText>
+            <MudText Class="my-1">
+                However, if you are in this group, and interested, I welcome you to complete the version with the exercises as well, and share your experience with the two versions!
+            </MudText>
+        </li>
+        <li>
+            The <Important>@Constants.WITH_TESTS_VERSION</Important> version: In this version, in addition to the educational material and sample codes,
+            you will receive exercises for the chapters (sometimes even subchapters), where you can try out what you have learned,
+            and both during development and after passing all tests, you will be able to try out and experiment with the component that you have created.
+        </li>
+    </ul>
+
+</MudText>
+<SpacedContent Gap="1">
+    <MudText>
+        The version that you are currently using is the <Important>@Constants.VERSION</Important> version.
+        <br/>
+        If I asked you to complete the <Important>@Constants.WITHOUT_TESTS_VERSION</Important>, and you do not see it above, I kindly ask you to pull that branch instead
+    </MudText>
+    <MudText Class="mt-2">
+        After you finish the exam, please click on the "Send results" button.
+    </MudText>
+    <MudText>
+        After clicking on it, you will be redirected to a questionnaire form, where you can provide feedback about the application.
+    </MudText>
+    <MudText>
+        It will ask your name in the questionnaire form, however, if you don't want to share your actual name, that is fine of course, you can input anything here.
+    </MudText>
+    <MudText Class="mb-3">
+        This is mostly for further discussions and feedback, so that if you have any ideas, I know who to contact :)
+    </MudText>
+    <MudText>
+        Whichever version you are using, I kindly ask you to submit your work by December 21 23:59:59 (2023) latest so that I will have time to evaluate the results.
+    </MudText>
+    <MudText>
+        If you did not manage to complete everything fully, that is not a problem at all, I kindly ask you to take a try with the exam, and however long you get, click on the "Send results"
+        button. Incomplete exam results are just as valuable to me, as complete exam results!
+    </MudText>
+    <MudText>
+        <strong>Note: </strong> If you complete both versions of the application and would like to send the second set of results as well (or provide feedback for both versions separately),
+        please use the same name at the end, so that I know that they are from the same person.
+    </MudText>
+    <MudText>
+        I invite you to share any of your findings, and to be honest! I appreciate if you provide any kind of feedback, be that positive or negative!
+    </MudText>
+</SpacedContent>
+<MudDivider/>
+<MudText Typo="Typo.h5" Class="fw-bold my-2">Solving the exercises</MudText>
+<MudText>Since this is a public github repository, I recommend you to create a branch for yourself, solve each exercise in a separate commit, and in the end I am happy to discuss your solution! :)</MudText>
+
+<MudDivider/>
+<MudText Typo="Typo.h5" Class="fw-bold my-2">The feedback and the automated tests</MudText>
+<MudText>
+    The feedback is going to be provided by automated tests: Unit and Integration tests.
+</MudText>
+<MudText>
+    All automated tests use bUnit which enables us to develop automated tests to blazor components.
+</MudText>
+<MudText>
+    They might not be always perfect, but they aim to guide you through the fundamentals and critical points of the topic.
+    Their title and description will also guide you what they test and hint what actually needs to be done by you.
+</MudText>
+<MudText>
+    Should they contain any bugs, or missed something, or maybe you face a technical issue with some mysterious error, don't ever hesitate to contact me!
+    Maybe there is a few minutes quick fix for the issue, that can be pushed to the repo, and others can just merge/rebase to the changes, and that way any technical difficulties will be fixed for everyone!
+</MudText>
+
+<MudDivider />
+<MudText Typo="Typo.subtitle1" Class="fw-bold">Running the tests</MudText>
+<MudText>To run the tests, you have several options to run them.</MudText>
+<MudText>
+    On the top bar of the application, you will find the
+    <ul>
+        <li>
+            "Run all" button, this will run every tests inside the entire application
+        </li>
+        <li>
+            "Run all in page" button, this will only run tests for the page you are currently at
+        </li>
+    </ul>
+    <br/>
+    Also, for every individual panel, where you find tests, you can run them individually, separate from the other chapters or subchapter.
+    Individual tests cannot be run by themselves, the smallest unit for them is per-exercise. For this you can use the "Run all" button for the test runner component, or the
+    play icon for the exercise panel header.
+</MudText>
+<img src="img/intro/running-tests.jpg"/>
+
+<MudDivider/>
+<MudText Typo="Typo.subtitle1" Class="fw-bold">[Precondition] tests</MudText>
+<MudText>
+    For many exercises, you will see tests the the <strong>[Precondition]</strong> prefix
+    <br/>
+    These tests ensure, that you declared everything in your component correctly, if any of these do not pass, the rest of the tests won't be run.
+    <br/>
+    The rest of the tests ensure that your implementation is correct, and behaves as expected
+</MudText>
+<img src="img/intro/preconditions.jpg"/>
+
+<MudDivider/>
+<MudText Typo="Typo.subtitle1" Class="fw-bold">Description for tests</MudText>
+<MudText>
+    For each test, you will also find a short description, if you expand it, that tells you what the test is about and what it verifies.
+    <br/>
+    It also intrinsically gives you a small hint what you need to do, but not too much
+</MudText>
+<img src="img/intro/descriptions.jpg"/>
+
+<MudDivider/>
+<MudText Typo="Typo.subtitle1" Class="fw-bold">Exercise instructions</MudText>
+<MudText>
+    For every exercise, you will need to modify a pre-created component. You will find the exact location of every component in the test description,
+    also you will always see the current component under test in the test runner components.
+    <br/>
+    The instructions for the exercise will both be described for every exercise in its separate panel, as well as inside the component using comments.
+    <br/>
+    For more challenging exercises, you will find hints as well, they are by default hidden, try to solve them without taking a look at them, however, if you are stuck,
+    you can expand them, and hopefully they will guide you in the right direction.
+    <br/>
+    However, if you are really stuck, feel free to contact me personally, and I will be happy to help you.
+
+</MudText>
+<img src="img/intro/component-under-test.jpg"/>
+
+<MudDivider/>
+<MudText Typo="Typo.subtitle1" Class="fw-bold">Test, exercise and chapter states</MudText>
+<MudText>
+    The state of the tests will always be visible wherever you are, so you will always know what else needs to be done.
+    <br/>
+    They are visible for each chapter, as well as for every test runner component as well
+    <br/>
+    Several icons will help you keep track of everything, they signal the state of tests for each chapter, and for each test.
+    <MudSimpleTable>
+        <thead>
+        <tr>
+            <th>Icon</th>
+            <th>Meaning</th>
+            <th>Comment</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <MudIcon Icon="@Icons.Material.Rounded.MenuBook"/>
+            </td>
+            <td>This is the default icon for chapters</td>
+            <td>This icon will only be visible for chapters, if the tests in them have not yet been run. If the chapter does not contain any exercises (0.Blazor WebAssembly, 4. Component LifeCycle and 10. MudBlazor)</td>
+        </tr>
+        <tr>
+            <td>
+                <MudIcon Icon="@Icons.Material.Filled.QuestionMark"/>
+            </td>
+            <td>Tests with this icon have not yet been run</td>
+            <td>This icon will only be visible for individual tests and expandable panel headers that contain exercises</td>
+        </tr>
+        <tr>
+            <td>
+                <MudIcon Icon="@CustomIcons.SpinnerSmall" Color="Color.Primary"/>
+            </td>
+            <td>Tests with this icon are currently being run</td>
+            <td>This icon will be visible on chapters, panel headers, and individual tests as well</td>
+        </tr>
+        <tr>
+            <td>
+                <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Success"/>
+            </td>
+            <td>Tests with this icon are currently being run, or chapters with this icon contain tests that are currently being run</td>
+            <td>This icon will be visible on chapters, panel headers, and individual tests as well</td>
+        </tr>
+        <tr>
+            <td>
+                <MudIcon Icon="@Icons.Material.Filled.Error" Color="Color.Error"/>
+            </td>
+            <td>Tests with this icon have failed, or chapters with this icon contain tests that failed</td>
+            <td>This icon will be visible on chapters, panel headers, and individual tests as well</td>
+        </tr>
+        <tr>
+            <td>
+                <MudIcon Icon="@Icons.Material.Outlined.Warning" Color="Color.Warning"/>
+            </td>
+            <td>Chapters with this icon mean that there were successful exercises with all tests passing, however, not all exercise tests were run</td>
+            <td>This icon will be visible only on chapters</td>
+        </tr>
+        </tbody>
+    </MudSimpleTable>
+</MudText>
+<img src="img/intro/tests-state.jpg"/>
+
+<MudDivider/>
+<MudText Typo="Typo.subtitle1" Class="fw-bold">Taking a look at your component</MudText>
+<MudText>
+    For every exercise, at the top of the test runner components, your component will be rendered as it is, so that you can interact with them as soon as possible, and play around with them
+    <br/>
+    Sometimes, in their current state, they cannot be rendered, in these cases, the application will clearly let you know about it, carry on with the exercise, and once it can be rendered, you will be able to see it there
+</MudText>
+<img src="img/intro/your-component.jpg"/>
+
+<MudDivider/>
+<MudText Typo="Typo.h5" Class="fw-bold my-2">Licensing and reusing the application</MudText>
+<MudText>This is by no means a closed source, software that comes in a box, and by all means, I invite you to treat it as an experiment that you are very much the part of!</MudText>
+<MudText>
+    Commercial re-use is not allowed, however, absolutely feel free to dig around in the code, to understand more deeply how everything works, and also feel free to change things, play around, and experiment with it, how things can be done differently, or how ideas could be implemented
+    <br/>
+    <strong>The only thing that I ask of you, is to do the experimenting </strong> <span class="fw-bold text-decoration-underline">after</span> <strong>that you completed the course, to avoid any kind of technical issues</strong>
+</MudText>
+<MudText>
+    Until I submit the application as my diploma work (2023 December 29), there is a strict restriction that the main codebase can only contain my work, but after this is done, I am more than open to any kind of contributions, so if you have any ideas that could be implemented, this is absolutely the right place to try things out!
+</MudText>
+</SpacedContent>
 
 @code {
-    
+
 }
