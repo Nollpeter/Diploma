@@ -41,22 +41,17 @@
     public EventCallback Closed { get; set; }
 
     private ExamEmployee _employee;
-    protected override async Task OnParametersSetAsync()
-    {
-        await base.OnParametersSetAsync();
-       
-        _employee = await EmployeeService.GetEmployeeForEdit(EmployeeId);
-    }
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+        _employee = await EmployeeService.GetEmployeeForEdit(EmployeeId);
         await LoadRandomPersonImage();
     }
 
     private async Task LoadRandomPersonImage()
     {
-        await JSRuntime.InvokeVoidAsync("ExamHelper.fetchRandomPersonImage", DotNetObjectReference.Create(this));
+        await JSRuntime.InvokeVoidAsync("ExamHelper.fetchRandomPersonImage", DotNetObjectReference.Create(this), _employee.Gender.ToString());
     }
 
     [JSInvokable]

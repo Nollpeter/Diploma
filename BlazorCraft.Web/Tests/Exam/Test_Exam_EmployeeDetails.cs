@@ -27,7 +27,7 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     {
         var setupTestContext = await base.SetupTestContext();
         var examEmployeeService = new ExamEmployeeService().FillTestData();
-        
+        jsMethodCalls = new List<(string methodName, object[] args)>();
         _employeeService = Substitute.For<IExamEmployeeService>();
         _employeeService.GetEmployeeForEdit(Arg.Any<int>()).ReturnsForAnyArgs(async ci =>
         {

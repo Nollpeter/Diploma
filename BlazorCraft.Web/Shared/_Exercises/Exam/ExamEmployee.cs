@@ -86,8 +86,8 @@ public class ExamEmployee
 // For simplicity's sake, let's agree on having only two genders.
 public enum EmployeeGender
 {
-    Male,
     Female,
+    Male,
 }
 
 public enum EmployeePosition

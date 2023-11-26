@@ -1,15 +1,18 @@
 ﻿window.ExamHelper= {
-    async fetchRandomPersonImage(dotnetHelper){
-
-        const url = 'https://thispersondoesnotexist.com/image';
-        const response = await fetch(url, { method: 'GET', mode: 'cors' });
-        const blob = await response.blob();
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = function () {
-            var base64data = reader.result;
-            dotnetHelper.invokeMethodAsync('UpdateImage', base64data);
-        }
+    async fetchRandomPersonImage(dotnetHelper, gender){
+        const randomNumber = Math.floor(Math.random() * 25) + 1;
+        const genderFolder = typeof gender === 'number' ? (gender === 1 ? 'male' : 'female') : (gender === 'male' ? 'male' : 'female');
+        // Set the url to fetch from disk
+        const url = `/img/profile-pictures/${genderFolder}/${randomNumber}.jpeg`;
+        fetch(url).then(response => {
+            response.blob().then(blob => {
+                let reader = new FileReader();
+                reader.onloadend = function () {
+                    dotnetHelper.invokeMethodAsync('UpdateImage', reader.result);
+                }
+                reader.readAsDataURL(blob);
+            });
+        });
     }
 
 }
