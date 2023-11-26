@@ -10,27 +10,27 @@
             <MudText class="fw-bold">@ComponentFileName</MudText>
         </div>
     }
-    <pre>
-            <code class="language-razor">
-               @_originalMarkup
-            </code>
-        </pre>
+    <CodeSnippet Language="razor">
+        @_originalMarkup
+    </CodeSnippet>
+
     @if (RenderOutput)
     {
         <MudGrid Spacing="2">
             <MudItem xs="6">
                 <MudText class="fw-bold text-center">What it looks like visually</MudText>
                 <MudPaper Elevation="0" Class="p-3 subtle-border">
-                    <DynamicComponent Type="@typeof(TComponent)"/>
+                    <div id="codeSnippet_@typeof(TComponent).Name" class="code-container">
+                        <DynamicComponent Type="@typeof(TComponent)"/>
+                    </div>
                 </MudPaper>
             </MudItem>
             <MudItem xs="6">
                 <MudText class="fw-bold text-center">The html behind it</MudText>
-                <pre>
-                        <code class="language-html">
-                          @_renderedHtml
-                        </code>
-                    </pre>
+
+                <CodeSnippet Language="html" @key="_uniqueKey">
+                    @_renderedHtml
+                </CodeSnippet>
             </MudItem>
         </MudGrid>
     }
@@ -55,7 +55,7 @@
     private bool renderingFinished = false;
     private string _originalMarkup;
     private string _renderedHtml;
-
+    private DotNetObjectReference<AdvancedCodeSnippet<TComponent>> objRef;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -79,7 +79,27 @@
         }
         renderingFinished = true;
         StateHasChanged();
+
+        if (RenderOutput)
+        {
+            objRef = DotNetObjectReference.Create(this);
+            await _js.InvokeVoidAsync("domWatcher.watch", $"codeSnippet_{typeof(TComponent).Name}", objRef);
+        }
+
         await _js.InvokeVoidAsync("highlightSnippet");
+        StateHasChanged();
+    }
+
+
+    [JSInvokable]
+    public async Task OnDomChanged(string markup)
+    {
+        _renderedHtml = await _js.InvokeAsync<string>("prettifyHtml", new object?[] { markup });
+        ;
+        _renderedHtml = _renderedHtml.Replace("<!--!-->", "").Trim('\n', '\r');
+        _uniqueKey = new object();
+        await Task.Delay(1);
+        StateHasChanged();
     }
 
     string RenderComponentMarkup()
@@ -110,4 +130,5 @@
         }
     }
 
+    private object _uniqueKey = new object();
 }
