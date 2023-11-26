@@ -53,31 +53,38 @@
     protected override void OnParametersSet()
     {
         var absoluteUri = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        CurrentPageType = GetCurrentPage(absoluteUri);
+        NavigationManager.LocationChanged += (sender, args) =>
+        {
+            var absoluteUri = NavigationManager.ToBaseRelativePath(args.Location);
+            CurrentPageType = GetCurrentPage(absoluteUri);
+            var nextAndPreviousPages = NavigationService.GetNextAndPreviousPages(CurrentPageType);
+            PreviousPage = nextAndPreviousPages.previousPage;
+            NextPage = nextAndPreviousPages.nextPage;
+            StateHasChanged();
+        };
+    }
+
+    private Type GetCurrentPage(string absoluteUri)
+    {
+        
         var assembly = Assembly.GetExecutingAssembly();
 
         var routeTypes = assembly.GetTypes().Where(type => type.GetCustomAttributes<RouteAttribute>().Any());
 
         foreach (var type in routeTypes)
         {
-            
-            var routeAttribute = type.GetCustomAttributes<RouteAttribute>();;
+            var routeAttribute = type.GetCustomAttributes<RouteAttribute>();
+            ;
             if (routeAttribute.Any())
             {
                 if (routeAttribute.Any(p => p.Template.TrimStart('/') == absoluteUri.Trim()))
                 {
-                    CurrentPageType = type;
-                    
-                    break;
+                   return CurrentPageType = type;
                 }
             }
         }
-        NavigationManager.LocationChanged += (sender, args) =>
-        {
-            var nextAndPreviousPages = NavigationService.GetNextAndPreviousPages(CurrentPageType);
-            PreviousPage = nextAndPreviousPages.previousPage;
-            NextPage = nextAndPreviousPages.nextPage;
-            StateHasChanged();
-        };
+        return null!;
     }
 
     protected override void OnAfterRender(bool firstRender)

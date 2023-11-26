@@ -3,6 +3,8 @@
 @using BlazorCraft.Web.DI
 @using BlazorCraft.Web.Shared.Examples._7_DependencyInjection
 @using Microsoft.AspNetCore.Components.Rendering
+@using System.Diagnostics
+@using System.Text
 @typeparam TComponent where TComponent : ComponentBase
 @inject IServiceProvider ServiceProvider
 @if (renderingFinished)
@@ -73,20 +75,24 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+        var startNew = Stopwatch.StartNew();
         _testContext = new TestContext();
         _testContext.Services.AddBlazorCraftServices();
         _testContext.Services.AddScoped<IExampleTransientService>(provider => ServiceProvider.GetRequiredService<IExampleTransientService>());
         _testContext.Services.AddScoped<IExampleScopedService>(provider => ServiceProvider.GetRequiredService<IExampleScopedService>());
         _testContext.Services.AddSingleton(_js);
         
-        _originalMarkup = ReadOriginalMarkup();
+        _originalMarkup = await ReadOriginalMarkup();
         if (RenderOutput)
         {
             string renderedHtml = RenderComponentMarkup();
-            var prettifiedHtml = await _js.InvokeAsync<string>("prettifyHtml", new object?[] { renderedHtml });
+            //var prettifiedHtml = await _js.InvokeAsync<string>("prettifyHtml", new object?[] { renderedHtml });
+            var prettifiedHtml = Format(renderedHtml);
+            await Task.Delay(50);
             _renderedHtml = prettifiedHtml;
         }
         renderingFinished = true;
+        
         StateHasChanged();
 
         if (RenderOutput)
@@ -99,11 +105,43 @@
         StateHasChanged();
     }
 
+    public static string Format(string html)
+    {
+        string tab = "  ";
+        StringBuilder result = new StringBuilder();
+        string indent = "";
 
+        foreach (var element in Regex.Split(html, @">\s*<"))
+        {
+            if (Regex.IsMatch(element, @"^\/\w"))
+            {
+                if (indent.Length >= tab.Length)
+                {
+                    indent = indent.Substring(0, indent.Length - tab.Length);
+                }
+            }
+
+            result.Append(indent).Append('<').Append(element).Append(">\r\n");
+
+            if (Regex.IsMatch(element, @"^<\w[^>]*[^\/]$") && !element.StartsWith("input"))
+            {
+                indent += tab;
+            }
+        }
+
+        var substring = result.ToString().Substring(1, result.Length - 3);
+        Console.WriteLine(substring);
+        return substring;
+        if (result.Length > 3)
+        {
+            return result.ToString().Substring(1, result.Length - 4); // Adjusted to remove the last \r\n and the initial '<'
+        }
+        return string.Empty;
+    }
     [JSInvokable]
     public async Task OnDomChanged(string markup)
     {
-        _renderedHtml = await _js.InvokeAsync<string>("prettifyHtml", new object?[] { markup });
+        _renderedHtml = Format(markup); //await _js.InvokeAsync<string>("prettifyHtml", new object?[] { markup });
         _renderedHtml = _renderedHtml.Replace("<!--!-->", "").Trim('\n', '\r');
         string finalHtml = "";
         var strings = _renderedHtml.Split(Environment.NewLine);
@@ -131,16 +169,14 @@
         }
     }
 
-    private string ReadOriginalMarkup()
+    private async Task<string> ReadOriginalMarkup()
     {
         var manifestResourceNames = typeof(TComponent).Assembly.GetManifestResourceNames();
         var key = manifestResourceNames.FirstOrDefault(x => x.Contains(ComponentFileName));
-        using (var stream = typeof(TComponent).Assembly.GetManifestResourceStream(key))
-        using (var reader = new StreamReader(stream))
-        {
-            var read = reader.ReadToEnd();
-            return read;
-        }
+        await using var stream = typeof(TComponent).Assembly.GetManifestResourceStream(key);
+        using var reader = new StreamReader(stream);
+        var read = await reader.ReadToEndAsync();
+        return read;
     }
 
     private object _uniqueKey = new object();
