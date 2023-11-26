@@ -23,7 +23,6 @@ window.prettifyHtml = function format(html) {
 window.domWatcher = {
     watch: function (elementId, dotNetReference) {
         var targetNode = document.getElementById(elementId);
-console.log(targetNode);
         var codeNode = targetNode//.querySelector('code');
         // Create an observer instance linked to the callback function
         var observer = new MutationObserver(function (mutationsList, observer) {

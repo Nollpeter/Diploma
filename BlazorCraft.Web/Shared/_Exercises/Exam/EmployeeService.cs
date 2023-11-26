@@ -42,7 +42,6 @@ public class ExamEmployeeService : IExamEmployeeService
 
     public Task UpdateEmployee(ExamEmployee employee)
     {
-        Console.WriteLine("Saving employee. Firstname: "+_employees[employee.Id].FirstName+", id: "+ _employees[employee.Id].Id);
         _employees[employee.Id] = employee;
         return Task.CompletedTask;
     }

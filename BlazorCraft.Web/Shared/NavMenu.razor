@@ -11,7 +11,7 @@
 @using BlazorCraft.Web.Pages._0_About
 <MudNavMenu>
     <MudPageNavlink PageType="typeof(AboutBlazorCraft)" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home - START HERE</MudPageNavlink>
-    <MudPageNavlink Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(Introduction)"  NextPage="typeof(Introduction)" >0. Blazor Webassembly</MudPageNavlink>
+    <MudPageNavlink Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(Introduction)"  NextPage="typeof(ComponentsIntroduction)" >0. Blazor Webassembly</MudPageNavlink>
     <MudNavGroup Title="Components" Expanded="true">
         <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(ComponentsIntroduction)" PreviousPage="typeof(Introduction)" NextPage="typeof(ComponentEvents)">
             1. Components Introduction
@@ -38,13 +38,8 @@
     <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(Forms)" PreviousPage="typeof(DependencyInjection)" NextPage="typeof(JsInterop)">
         8. Forms
     </MudNavLinkWithTestTracking>
-    <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(JsInterop)" PreviousPage="typeof(Forms)" >
+    <MudNavLinkWithTestTracking Icon="@Icons.Material.Rounded.MenuBook" PageType="typeof(JsInterop)" PreviousPage="typeof(Forms)" NextPage="typeof(Exam)" >
         9. Javascript Interop
     </MudNavLinkWithTestTracking>
-    @*<MudNavGroup Title="Bonus" Expanded="false">
-        $1$<MudPageLink PageType="" Match="NavLinkMatch.Prefix">Layouts</MudPageLink>
-        <MudPageLink PageType="typeof(ComponentLibraries)">Using UI CompoMudPageLinklibraries</PageL>
-        <MudPageLink PageType="typeof(CssIsolation)">CSS isolation</PageLMudPageLink </MudNavGroup>#1#
-    </MudNavGroup>*@
-    <MudNavLinkWithTestTracking Icon="@Icons.Material.Filled.Assignment" PageType="typeof(Exam)" Class="fw-bold">Exam exercise</MudNavLinkWithTestTracking>
+    <MudNavLinkWithTestTracking Icon="@Icons.Material.Filled.Assignment" PageType="typeof(Exam)" PreviousPage="typeof(JsInterop)" Class="fw-bold">Exam exercise</MudNavLinkWithTestTracking>
 </MudNavMenu>
