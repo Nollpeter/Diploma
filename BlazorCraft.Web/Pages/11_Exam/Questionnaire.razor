@@ -1,0 +1,146 @@
+﻿@page "/questionnaire"
+@using System.ComponentModel.DataAnnotations
+@using System.ComponentModel
+@using System.Linq.Expressions
+@using System.Reflection
+@using BlazorCraft.Web.Infrastructure
+@inject ISendResultsService SendResultsService
+@inject ISnackbar SnackBar
+<MudText Typo="Typo.h4" Class="fw-bold">Question form</MudText>
+<div class="d-grid gap-2">
+    <MudText >Please take a minute to fill out this form, to rate my work, and provide feedback to me.</MudText>
+    <MudText>
+        Please be honest with all of your answers, if you were dissatisfied, don't hesitate to reflect it in the ratings, also, please provide feedback what could have been better.
+        <br/>
+        Also, if you were satisfied, then please reflect that as well in your ratings and feedback
+    </MudText>
+    <EditForm Model="Model" OnValidSubmit="SendResults">
+        <DataAnnotationsValidator/>
+        <div class="d-flex flex-column align-items-center gap-3">
+            
+            <MudList>
+                <MudTextField T="string?" For="() => Model.Name" @bind-Value="@Model.Name" Label="Your name" HelperText="You don't need to write your actual name if you don't want to" />
+                <MudDivider Class="my-1"></MudDivider>
+                @foreach (var rating in Model.Ratings)
+                {
+                    <MudListItem DisableGutters="true">
+                        <div class="d-flex flex-column align-items-center">
+                            <MudText Class="fw-bold mb-2">@rating.Description</MudText>
+
+                            <MudRating @bind-SelectedValue="@rating.SelectedValue" HoveredValueChanged="i => HandleHoveredValueChanged(rating, i)"/>
+                            <MudText Typo="Typo.subtitle2" Class=@(rating.SelectedValue < 1 ? "text-danger mt-1" : "deep-purple-text mt-1")>@rating.GetRatingText()</MudText>
+                        </div>
+                        <MudDivider Class="my-1"></MudDivider>
+                    </MudListItem>
+                }
+                <MudTextField T="string?" For="() => Model.Feedback" @bind-Value="@Model.Feedback" Label="Additional feedback" HelperText="You can leave any kind of feedback here, good or bad, I appreciate if you leave some feedback to me" />
+            </MudList>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!context.IsModified() || !context.Validate() || !Model.AllRatingsFilled())" OnClick="() => context.Validate()">Submit feedback and results</MudButton>
+        </div>
+        
+    </EditForm>
+</div>
+
+@code {
+
+    public class RatingModel
+    {
+        [Range(1, 5)] public int SelectedValue { get; set; } = -1;
+        public int? ActiveValue { get; set; }
+        
+        public string Description { get; set; }
+        
+        public string GetRatingText() => (ActiveValue ?? SelectedValue) switch
+        {
+            1 => "Very bad",
+            2 => "Bad",
+            3 => "Okay",
+            4 => "Good",
+            5 => "Awesome!",
+            _ => "Please give a rating!"
+        };
+    }
+
+    public class QuestionnaireModel
+    {
+        [Required] public string? Name { get; set; }
+
+//TODO 2 branches remove for control
+        [Description("How much did the continous feedback and exercises enhance your learning curve?")]
+        public RatingModel ContinousFeedbackEnhancement { get; set; } = new RatingModel() {SelectedValue = -2};
+
+//TODO 2 branches remove for control
+        [Description("How difficult were the exercises?")]
+        public RatingModel DifficultyOfExercises { get; set; }
+
+        [Description("How would you rate your understanding of the materials that you learned?")]
+        public RatingModel UnderStandingMaterial { get; set; }
+
+        [Description("How clear were the learning materials and the sample codes for you?")]
+        public RatingModel ClearnessOfLearningMaterial { get; set; }
+
+        [Description("How much new did you learn about blazor while using this application?")]
+        public RatingModel HowMuchNewStuffDidYouLearn { get; set; }
+        /*[Required] [Description("")] public RatingModel EffectivenessOfExercises { get; set; }*/
+
+        [Description("How prepared did you feel yourself for the exam ecercise?")]
+        public RatingModel PreparednessForExam { get; set; }
+
+        [Description("How difficult was the exam exercise?")]
+        public RatingModel DifficultyOfExam { get; set; }
+
+        [Description("How would you rate this application overall?")]
+        public RatingModel Overall { get; set; }
+
+        public string? Feedback { get; set; }
+
+        [field: NonSerialized]
+        public List<RatingModel> Ratings { get; private set; }
+
+        public bool AllRatingsFilled()
+        {
+            return Ratings.All(p => p.SelectedValue >= 1 && p.SelectedValue <= 5);
+        }
+        
+        public QuestionnaireModel()
+        {
+            Ratings = new List<RatingModel>();
+            foreach (var rating in GetType().GetProperties().Where(p => p.PropertyType == typeof(RatingModel)))
+            {
+                var descriptionAttribute = rating.GetCustomAttribute<DescriptionAttribute>();
+                var ratingModel = new RatingModel() { Description = descriptionAttribute.Description};
+                rating.SetValue(this, ratingModel);
+                Ratings.Add(ratingModel);
+            }
+        }
+    }
+
+    private QuestionnaireModel Model { get; } = new QuestionnaireModel();
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Model.ContinousFeedbackEnhancement.SelectedValue = -1;
+    }
+
+    private void HandleHoveredValueChanged(RatingModel ratingModel, int? val)
+    {
+        ratingModel.ActiveValue = val;
+        StateHasChanged();
+    }
+
+    private async Task SendResults(EditContext obj)
+    {
+        SnackBar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+        try
+        {
+            await SendResultsService.SendResults(Model);
+            SnackBar.Add("Feedback and exam results were successfully sent. Thank you very much for participation!", Severity.Success);
+        }
+        catch (Exception e)
+        {
+            SnackBar.Add("An error occured during sending results. Please try again or contact me directly!", Severity.Success);
+        }
+       
+    }
+
+}

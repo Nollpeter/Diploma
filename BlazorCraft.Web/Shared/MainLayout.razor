@@ -19,8 +19,9 @@
         <MudSpacer/>
         @if (CurrentPageType == typeof(Exam))
         {
-                <MudButton Class="ms-4 me-2" Variant="Variant.Filled" Color="Color.Tertiary" Disabled="@(!TestRunnerService.ExamCompleted())" >Send results</MudButton>
-                <MudButton Class="mx-2" Variant="Variant.Filled" Color="Color.Secondary" OnClick="async () => await SendResultService.SendResults()">Give up</MudButton>
+            <MudPageLinkButton  Class="ms-4 me-2" Variant="Variant.Filled" Color="Color.Tertiary" PageType="typeof(Questionnaire)">Send results</MudPageLinkButton>
+                @*<MudButton Class="ms-4 me-2" Variant="Variant.Filled" Color="Color.Tertiary" Disabled="@(!TestRunnerService.ExamCompleted())" >Send results</MudButton>
+                <MudButton Class="mx-2" Variant="Variant.Filled" Color="Color.Secondary" OnClick="async () => await SendResultService.SendResults()">Give up</MudButton>*@
         }
         @if (PreviousPage != null)
         {
