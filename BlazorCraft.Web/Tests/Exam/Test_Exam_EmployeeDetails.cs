@@ -48,8 +48,8 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     }
 
     [Title("EmployeeService.GetEmployeeForEdit is called upon rendering")]
-    //TODO Description
-    [Description("")]
+    [Description("This test verifies that the " + nameof(IExamEmployeeService) + "." + nameof(IExamEmployeeService.GetEmployeeForEdit) + " method is invoked when the Employee Details component is rendered. " +
+                 "It ensures that employee data is fetched and displayed correctly as part of the component's initialization process.")]
     [Precondition]
     public async Task GivenEmployeeDetails_WhenRendered_ThenGetEmployeeForEditIsCalled()
     {
@@ -65,6 +65,7 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
             throw new TestRunException("EmployeeService.GetEmployeeForEdit is NOT called upon rendering!");
         }
     }
+
     [ComponentUsedInMarkupTitle(typeof(EmployeeForm))]
     //TODO Description, ami figyelmeztet, hogy csak akkor lesz jó, ha condition renderingnél is be van töltve minden
     [ComponentUsedInMarkupDescription(typeof(EmployeeForm))]
@@ -84,10 +85,11 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
             throw new TestRunException($"The component has no {nameof(EmployeeForm)} component declared");
         }
     }
-    
+
     [Title("UpdateImage is callable from javascript")]
     //TODO Description
-    [Description("")]
+    [Description("This test verifies that the " + nameof(ExamEmployeeDetails) + "." + nameof(ExamEmployeeDetails.UpdateImage) + " method is marked with the " + nameof(JSInvokableAttribute) +
+                 ", ensuring that it can be called from JavaScript in the context of the ExamEmployeeEdit component.")]
     [Precondition]
     public async Task GivenExamEmployeeEdit_WhenRendered_ThenUpdateImageIsCallableFromJs()
     {
@@ -95,8 +97,9 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     }
 
     [Title(nameof(EmployeeForm) + " Employee is bound to " + nameof(IExamEmployeeService) + " Employee")]
-    //TODO Description
-    [Description("")]
+    [Description(
+        "This test verifies that the Employee instance within the " + nameof(EmployeeForm) + " is correctly bound to the Employee object managed by the " + nameof(IExamEmployeeService) + ". It ensures consistent data representation across the " +
+        nameof(EmployeeForm) + " and " + nameof(ExamEmployeeDetails) + " components.")]
     [Precondition]
     public async Task GivenEmployeeDetails_WhenRendered_ThenEmployeeFormEmployeeBoundToEmployeeDetailsEmployee()
     {
@@ -144,8 +147,9 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     }
 
     [Title("Clicking Edit button makes employee form editable")]
-    //TODO Description
-    [Description("")]
+    [Description(
+        "This test verifies that the " + nameof(EmployeeForm) + " is in a non-editable state immediately after rendering. It checks that the IsEditMode property of the " + nameof(EmployeeForm) +
+        " instance is false, ensuring the form remains read-only until explicitly enabled for editing.")]
     public async Task GivenEmployeeDetails_WhenEditButtonClick_ThenEmployeeFormIsEditable()
     {
         var ctx = await SetupTestContext();
@@ -164,8 +168,8 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     }
 
     [Title("Clicking Edit button makes Edit button disabled")]
-    //TODO Description
-    [Description("")]
+    [Description("This test verifies that clicking the Edit button in the " + nameof(ExamEmployeeDetails) +
+                 " component disables the button. It ensures the button's state changes to 'disabled' after being clicked, preventing further edits until the current editing process is completed.")]
     public async Task GivenEmployeeDetails_WhenEditButtonClick_ThenEditButtonDisabled()
     {
         var ctx = await SetupTestContext();
@@ -181,8 +185,8 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     }
 
     [Title("Saving employee form updates EmployeeService employee")]
-    //TODO Description
-    [Description("")]
+    [Description("This test verifies that saving changes in the " + nameof(EmployeeForm) + " component within " + nameof(ExamEmployeeDetails) + " correctly updates the employee in the " + nameof(IExamEmployeeService) +
+                 ". It ensures that modifications made to the employee's details are accurately reflected in the EmployeeService after the save operation is performed.")]
     public async Task GivenEmployeeDetails_()
     {
         var ctx = await SetupTestContext();
@@ -210,8 +214,8 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     }
 
     [Title("Closed event is invoked when pressing Close button")]
-    //TODO Description
-    [Description("")]
+    [Description("This test verifies that the closed event is triggered when the Close button is pressed in the " + nameof(ExamEmployeeDetails) +
+                 " component. It ensures that the appropriate event is invoked, reflecting the expected behavior when a user interacts with the Close button.")]
     public async Task GivenExamEmployeeEdit_WhenCloseButtonPressed_ThenCloseEventInvoked()
     {
         var ctx = await SetupTestContext();
@@ -230,8 +234,8 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     }
 
     [Title("Profile picture is loaded exactly once")]
-    //TODO Description
-    [Description("")]
+    [Description("This test verifies that the profile picture in the " + nameof(ExamEmployeeDetails) +
+                 " component is loaded exactly once when the component is rendered. It checks the number of calls made to the method responsible for fetching the profile picture, ensuring that it is invoked only once regardless of multiple render cycles, thus preventing unnecessary network requests or performance issues.")]
     public async Task GivenEmployeeDetails_WhenRendered_ThenProfilePictureLoadedExactlyOnce()
     {
         var ctx = await SetupTestContext();
@@ -251,9 +255,8 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         {
             throw new TestRunException("Profile picture was loaded multiple times! Hint: Are you calling it from the proper lifecycle method?");
         }
-        
     }
-    
+
     [Title("Clicking Delete button deletes employee")]
     //TODO Description
     [Description("")]
@@ -274,12 +277,11 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         {
             // Success
         }
-        
     }
 
     [Title("Clicking Delete button invokes Closed event")]
-    //TODO Description
-    [Description("")]
+    [Description("This test verifies that clicking the Delete button in the " + nameof(ExamEmployeeDetails) + " component successfully deletes the employee from the " + nameof(IExamEmployeeService) +
+                 ". It simulates a button click and then attempts to retrieve the same employee, expecting a KeyNotFoundException to confirm that the employee no longer exists in the service.")]
     public async Task GivenExamEmployeeEdit_WhenDeleteButtonPressed_ThenClosedEventInvoked()
     {
         var ctx = await SetupTestContext();
@@ -295,7 +297,5 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         {
             throw new TestRunException("Closed event was not invoked!");
         }
-
     }
-
 }
