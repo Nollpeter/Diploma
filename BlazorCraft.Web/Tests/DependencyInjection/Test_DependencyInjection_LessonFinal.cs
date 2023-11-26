@@ -25,7 +25,7 @@ public class Test_DependencyInjection_LessonFinal : ComponentTestBase<Dependency
     [ComponentUsedInMarkupTitle(typeof(RenderFragments_LessonFinal))]
     [ComponentUsedInMarkupDescription(typeof(RenderFragments_LessonFinal))]
     [Precondition]
-    public async Task Test1()
+    public async Task GivenDependencyInjection_Ex_LessonFinal_WhenDeclared_ThenRenderFragments_LessonFinalComponentUsed()
     {
         var component = new DependencyInjection_Ex_LessonFinal();
         ValidateComponentUsage(component, ListComponentType);
@@ -35,7 +35,7 @@ public class Test_DependencyInjection_LessonFinal : ComponentTestBase<Dependency
     [ParameterDefinedTitle(EmployeeServiceName)]
     [ParameterDefinedDescription(EmployeeServiceName, typeof(IEmployeeService))]
     [Precondition]
-    public async Task Test2()
+    public async Task GivenDependencyInjection_Ex_LessonFinal_WhenDeclared_ThenEmployeeServiceParameterDefined()
     {
         var component = new DependencyInjection_Ex_LessonFinal();
         ValidateInjectedProperty(component, EmployeeServiceName, typeof(IEmployeeService));
@@ -45,7 +45,7 @@ public class Test_DependencyInjection_LessonFinal : ComponentTestBase<Dependency
     [Title("EmployeeService is registered as a scoped service")]
     [Description("This test verifies that the EmployeeService is registered as a scoped service")]
     [Precondition]
-    public async Task Test3()
+    public async Task GivenEmployeeService_WhenRegistered_ThenItIsAsScopedService()
     {
         var component = new DependencyInjection_Ex_LessonFinal();
         ValidateComponentUsage(component, ListComponentType);
@@ -55,7 +55,7 @@ public class Test_DependencyInjection_LessonFinal : ComponentTestBase<Dependency
     
     [Title("Employees property is bound to "+nameof(RenderFragments_LessonFinal)+".Employees")]
     [Description("This test verifies that Employees property is bound to "+nameof(RenderFragments_LessonFinal)+".Employees")]
-    public async Task Test4()
+    public async Task GivenEmployeesProperty_WhenBound_ThenItIsToRenderFragmentsLessonFinalEmployees()
     {
         var testContext = GetAndValidateTestContext();
         var employeeService = testContext.Services.GetService<IEmployeeService>();

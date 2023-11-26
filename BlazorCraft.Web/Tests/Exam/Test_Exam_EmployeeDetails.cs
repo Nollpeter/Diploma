@@ -47,8 +47,6 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         return setupTestContext;
     }
 
-    //GetEmployeeForEdit called
-
     [Title("EmployeeService.GetEmployeeForEdit is called upon rendering")]
     //TODO Description
     [Description("")]
@@ -67,11 +65,6 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
             throw new TestRunException("EmployeeService.GetEmployeeForEdit is NOT called upon rendering!");
         }
     }
-
-    //[Precondition] EmployeeForm component is used in markup
-
-    //Preconditon: EmployeeForm is declared
-
     [ComponentUsedInMarkupTitle(typeof(EmployeeForm))]
     //TODO Description, ami figyelmeztet, hogy csak akkor lesz jó, ha condition renderingnél is be van töltve minden
     [ComponentUsedInMarkupDescription(typeof(EmployeeForm))]
@@ -92,7 +85,6 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         }
     }
     
-    //UpdateImage is JSInvokeable
     [Title("UpdateImage is callable from javascript")]
     //TODO Description
     [Description("")]
@@ -102,13 +94,10 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         ValidateMethodWithNameAndAttributeExists(Component, nameof(ExamEmployeeDetails.UpdateImage), typeof(JSInvokableAttribute));
     }
 
-    // Employee is bound to EmployeeForm
-
-    //PRe: Employee of the Form is the Employee set as parameter
-
     [Title(nameof(EmployeeForm) + " Employee is bound to " + nameof(IExamEmployeeService) + " Employee")]
     //TODO Description
     [Description("")]
+    [Precondition]
     public async Task GivenEmployeeDetails_WhenRendered_ThenEmployeeFormEmployeeBoundToEmployeeDetailsEmployee()
     {
         var ctx = await SetupTestContext();
@@ -133,11 +122,6 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         return renderedEmployeeDetails;
     }
 
-
-    // EmployeeForm is NOT Editable on render
-
-    // PRe: Employee form iseditmode = true
-
     [Title(nameof(EmployeeForm) + " is NOT Editable on render")]
     //TODO Description
     [Description("")]
@@ -158,8 +142,6 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
             throw new TestRunException($"{nameof(EmployeeForm)} is editable after render!");
         }
     }
-
-    // Edit switches editmode
 
     [Title("Clicking Edit button makes employee form editable")]
     //TODO Description
@@ -198,10 +180,6 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         }
     }
 
-    // Employee added if employee is valid on EmployeeForm then new employee is added to EmployeeService
-
-    // Edit switches editmode
-
     [Title("Saving employee form updates EmployeeService employee")]
     //TODO Description
     [Description("")]
@@ -231,7 +209,6 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         }
     }
 
-    //Closed event invoked if closed is pressed
     [Title("Closed event is invoked when pressing Close button")]
     //TODO Description
     [Description("")]
@@ -252,7 +229,6 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         }
     }
 
-    // Picutre load invoked
     [Title("Profile picture is loaded exactly once")]
     //TODO Description
     [Description("")]
@@ -277,8 +253,7 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         }
         
     }
-    // Delete deletes employee
-
+    
     [Title("Clicking Delete button deletes employee")]
     //TODO Description
     [Description("")]
@@ -323,5 +298,4 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
 
     }
 
-    // Delete calls closed
 }

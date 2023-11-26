@@ -21,7 +21,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     [ParameterDefinedTitle(EmployeeFirstNameParamName)]
     [ParameterDefinedDescription(EmployeeFirstNameParamName, typeof(string))]
     [Precondition]
-    public async Task Test1()
+    public async Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeFirstNameParameterDefined()
     {
         var component = new ComponentDataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
@@ -31,7 +31,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     [ParameterDefinedTitle(EmployeeLastNameParamName)]
     [ParameterDefinedDescription(EmployeeLastNameParamName, typeof(string))]
     [Precondition]
-    public async Task Test2()
+    public async Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeLastNameParameterDefined()
     {
         var component = new ComponentDataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
@@ -41,7 +41,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     [ParameterDefinedTitle(EmployeeFirstNameChangedName)]
     [ParameterDefinedDescription(EmployeeFirstNameChangedName, typeof(EventCallback<string>))]
     [Precondition]
-    public async Task Test3()
+    public async Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeFirstNameChangedParameterDefined()
     {
         var component = new ComponentDataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
@@ -51,7 +51,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     [ParameterDefinedTitle(EmployeeLastNameChangedName)]
     [ParameterDefinedDescription(EmployeeLastNameChangedName, typeof(EventCallback<string>))]
     [Precondition]
-    public async Task Test4()
+    public async Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeLastNameChangedParameterDefined()
     {
         var component = new ComponentDataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
@@ -61,7 +61,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     [Title(EmployeeFirstNameParamName + " binding Consumer -> Component")]
     [Description("This test verifies that once the Consumer component changes the " + EmployeeFirstNameParamName +
                  " it is reflected in the component ")]
-    public async Task Test5()
+    public async Task GivenEmployeeFirstNameParamNameBinding_WhenConsumerChanges_ThenItIsReflectedInComponent()
     {
         TestContext testContext = new TestContext();
 
@@ -83,7 +83,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     [Title(EmployeeFirstNameParamName + " binding Component -> Consumer")]
     [Description("This test verifies that once the Component changes the " + EmployeeFirstNameParamName +
                  " it is reflected in the Consumer component ")]
-    public async Task Test6()
+    public async Task GivenEmployeeFirstNameParamNameBinding_WhenComponentChanges_ThenItIsReflectedInConsumerComponent()
     {
         TestContext testContext = new TestContext();
 
@@ -123,7 +123,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     [Title(EmployeeLastNameParamName + " binding Consumer -> Component")]
     [Description("This test verifies that once the Consumer component changes the " + EmployeeLastNameParamName +
                  " it is reflected in the component ")]
-    public async Task Test7()
+    public async Task GivenEmployeeLastNameParamNameBinding_WhenConsumerChanges_ThenItIsReflectedInComponent()
     {
         TestContext testContext = new TestContext();
 
@@ -145,7 +145,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     [Title(EmployeeLastNameParamName + " binding Component -> Consumer")]
     [Description("This test verifies that once the Component changes the " + EmployeeLastNameParamName +
                  " it is reflected in the Consumer component ")]
-    public async Task Test8()
+    public async Task GivenEmployeeLastNameParamNameBinding_WhenComponentChanges_ThenItIsReflectedInConsumerComponent()
     {
         TestContext testContext = new TestContext();
 

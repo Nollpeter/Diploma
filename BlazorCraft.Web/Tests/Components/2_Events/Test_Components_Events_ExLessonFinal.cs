@@ -18,7 +18,7 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
     [ComponentUsedInMarkupTitle(typeof(ComponentEvents_Ex2_EventCallBack))]
     [ComponentUsedInMarkupDescription(typeof(ComponentEvents_Ex2_EventCallBack))]
     [Precondition]
-    public async Task Test1()
+    public async Task GivenComponentEvents_ExLessonFinal_WhenDeclared_ThenComponentEvents_Ex2_EventCallBackComponentUsed()
     {
         var component = new ComponentEvents_ExLessonFinal();
         ValidateComponentUsage(component, typeof(ComponentEvents_Ex2_EventCallBack));
@@ -27,7 +27,7 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
 
     [Title("Employee is deleted upon clicking delete")]
     [Description("This test verifies that the employee is deleted from "+EmployeesParameterName+" upon clicking delete")]
-    public async Task Test2()
+    public async Task GivenComponentEvents_ExLessonFinal_WhenDeleteClicked_ThenEmployeeIsDeleted()
     {
         TestContext testContext = new TestContext();
         Random r = new Random();
@@ -55,10 +55,9 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
         
     }
     
-    //Deleted employees modified
-    [Title("Employee is deleted upon clicking delete")]
-    [Description("This test verifies that the employee is deleted from "+EmployeesParameterName+" upon clicking delete")]
-    public async Task Test3()
+    [Title("Deleted employees modified upon clicking delete")]
+    [Description("This test verifies that the employee is deleted from "+EmployeesParameterName+" upon clicking delete and deleted employees are modified")]
+    public async Task GivenComponentEvents_ExLessonFinal_WhenDeleteClicked_ThenEmployeeIsDeletedAndDeletedEmployeesModified()
     {
         TestContext testContext = new TestContext();
         Random r = new Random();

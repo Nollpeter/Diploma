@@ -19,20 +19,20 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
     public const string ContainerId = "ex1-container";
 
 
-    [Title("" + DetailsFragmentName + " fragment defined")]
+    [Title(DetailsFragmentName + " fragment defined")]
     [Description("This test verifies that the " + TitleFragmentName + " has been defined on the component")]
     [Precondition]
-    public async Task Test1()
+    public async Task GivenRenderFragments_Ex3_WhenDeclared_ThenDetailsAndTitleFragmentsAreDefined()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex3<Employee>();
         ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
         
     }
 
-    [Title("" + ObjectToRenderParamName + " parameter defined")]
+    [Title(ObjectToRenderParamName + " parameter defined")]
     [Description("This test verifies that the " + ObjectToRenderParamName + " has been defined on the component")]
     [Precondition]
-    public async Task Test2_1()
+    public async Task GivenRenderFragments_Ex3_WhenDeclared_ThenObjectToRenderParameterDefined()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex3<Employee>();
         ValidateComponentProperty(renderFragmentsEx2, ObjectToRenderParamName, typeof(Employee));
@@ -42,7 +42,7 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
     [Title(TitleFragmentName + " is rendered")]
     [Description("This test verifies that the " + TitleFragmentName +
                  " is rendered for the component without any interaction")]
-    public async Task Test3()
+    public async Task GivenTitleFragment_WhenComponentRendered_ThenTitleFragmentIsRendered()
     {
         TestContext testContext = new TestContext();
 
@@ -61,7 +61,7 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
 
     [Title("Button click renders " + ObjectToRenderParamName)]
     [Description("This test verifies that the " + ObjectToRenderParamName + " is rendered upon clicking the button")]
-    public async Task Test4()
+    public async Task GivenButtonClick_WhenRendered_ThenObjectToRenderParamIsRendered()
     {
         TestContext testContext = new TestContext();
 
@@ -99,7 +99,7 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
     [Title("Second Button click hides " + DetailsFragmentName)]
     [Description("This test verifies that the " + DetailsFragmentName +
                  " is hidden upon clicking the button a second time")]
-    public async Task Test5()
+    public async Task GivenSecondButtonClick_WhenRendered_ThenDetailsFragmentIsHidden()
     {
         TestContext testContext = new TestContext();
 
@@ -144,7 +144,7 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
 
     [Title("Rendering with different type")]
     [Description("This test verifies that the " + ObjectToRenderParamName + " is rendered even if it is not of the type Employee")]
-    public async Task Test6()
+    public async Task GivenObjectType_WhenRendered_ThenObjectRegardlessOfTypeIsRendered()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex3<SecondType>();
         ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));

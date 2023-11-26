@@ -18,12 +18,10 @@ public class Test_Components_Introduction_Exercise : ComponentTestBase<Component
     [ParameterDefinedTitle(NumbersParameterName)]
     [ParameterDefinedDescription(NumbersParameterName, typeof(List<int>))]
     [Precondition]
-    public async Task Test1()
+    public async Task GivenComponentsIntroductionExercise_WhenRendered_ThenNumbersParamterDefined()
     {
         var component = new ComponentsIntroductionExercise();
         ValidateComponentProperty(component, NumbersParameterName, typeof(List<int>));
-        
-        
     }
 
     [Title("List is hidden by default")]
@@ -42,7 +40,7 @@ public class Test_Components_Introduction_Exercise : ComponentTestBase<Component
     
     [Title("Button click renders list")]
     [Description("This test verifies that clicking on the \"Click me\" button, the list is rendered")]
-    public async Task Test3()
+    public async Task GivenComponentsIntroductionExercise_WhenButtonClicked_ThenListRenders()
     {
         var component = new ComponentsIntroductionExercise();
         ValidateComponentProperty(component, NumbersParameterName, typeof(List<int>));

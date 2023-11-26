@@ -194,7 +194,6 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     }
     #region Preconditions
     
-    //DataAnnotationsValidatorUsed
     [ComponentUsedInMarkupTitle(typeof(DataAnnotationsValidator))]
     [ComponentUsedInMarkupDescription(typeof(DataAnnotationsValidator))]
     [Precondition]
@@ -202,7 +201,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     {
         ValidateComponentUsage(Component, typeof(DataAnnotationsValidator));
     }
-    //Editform used
+    
     [ComponentUsedInMarkupTitle(typeof(EditForm))]
     [ComponentUsedInMarkupDescription(typeof(EditForm))]
     [Precondition]
@@ -231,8 +230,8 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         return firstOrDefault;
     }
     
-    // Field for ID
     [Title("Field for Id defined")]
+    //TODO Description
     [Description("")]
     [Precondition]
     public async Task FieldForIdDefined()
@@ -241,8 +240,8 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     }
     
     
-    // FIeld for FIrstname
     [Title("Field for FirstName defined")]
+    //TODO Description
     [Description("")]
     [Precondition]
     public async Task FieldForFirstNameDefined()
@@ -250,8 +249,8 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         await ValidateDeclaredField(TestRunContext.FirstName);
     }
     
-    // Field for last name
     [Title("Field for LastName defined")]
+    //TODO Description
     [Description("")]
     [Precondition]
     public async Task FieldForLastNameDefined()
@@ -259,8 +258,8 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         await ValidateDeclaredField(TestRunContext.LastName);
     }
 
-    // field for Position
     [Title("Field for Position defined")]
+    //TODO Description
     [Description("")]
     [Precondition]
     public async Task FieldForPositionDefined()
@@ -268,8 +267,8 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         await ValidateDeclaredField(TestRunContext.Position);
     }
 
-    // field for Gender
     [Title("Field for Gender defined")]
+    //TODO Description
     [Description("")]
     [Precondition]
     public async Task FieldForGenderDefined()
@@ -277,8 +276,8 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         await ValidateDeclaredField(TestRunContext.Gender);
     }
 
-    // field for BirthDate
     [Title("Field for BirthDate defined")]
+    //TODO Description
     [Description("")]
     [Precondition]
     public async Task FieldForBirthDateDefined()
@@ -286,8 +285,8 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         await ValidateDeclaredField(TestRunContext.BirthDate);
     }
 
-    // field for Salaray
     [Title("Field for Salary defined")]
+    //TODO Description
     [Description("")]
     [Precondition]
     public async Task FieldForSalaryDefined()
@@ -295,8 +294,8 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         await ValidateDeclaredField(TestRunContext.Salary);
     }
 
-    //Field for address
     [Title("Field for Address defined")]
+    //TODO Description
     [Description("")]
     [Precondition]
     public async Task FieldForAddressDefined()
@@ -304,8 +303,8 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         await ValidateDeclaredField(TestRunContext.Address);
     }
 
-    // Field for Hire date
     [Title("Field for HireDate defined")]
+    //TODO Description
     [Description("")]
     [Precondition]
     public async Task FieldForHireDateDefined()
@@ -314,9 +313,9 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     }
     #endregion
 
-    //Iseditmode = false -> All fields disabled
     [Title("All fields disabled if EditMode = false")]
     // TODO Description
+    //TODO Description
     [Description("")]
     public async Task GivenEmployeeForm_WhenEditModeFalse_ThenAllFieldsDisabled()
     {
@@ -345,7 +344,6 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         }
     }
     
-    //iseditmode = false -> Buttons hidden
     [Title("Edit and Cancel buttons are hidden if EditMode = false")]
     public async Task GivenEmployeeForm_WhenEditMOdeFalse_ThenEditAndCancelButtonsHidden()
     {
@@ -363,9 +361,9 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         }
     }
     
-    //iseditmode = true -> Id disabled
     [Title("ID disabled if EditMode = true")]
     // TODO Description
+    //TODO Description
     [Description("")]
     public async Task GivenEmployeeForm_WhenEditModeTrue_ThenIdDisabled()
     {
@@ -377,7 +375,6 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         ValidateDisabled(GetFormField(form, TestRunContext.Id),true);
     }
     
-    //iseditmode = true -> other fields enabled
     [Title("Rest of the fields NOT Disabled if EditMode = true")]
     // TODO Description
     [Description("")]
@@ -398,7 +395,6 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         ValidateDisabled(GetFormField(form, TestRunContext.HireDate),false);
     }
     
-    //iseditmode = true -> buttons displayed
     [Title("Edit and Cancel buttons are displayed if EditMode = true")]
     //TODO Description
     [Description("")]
@@ -425,7 +421,6 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         }
     }
     
-    // Cancelbutton -> cancel event called
     [Title("Clicking cancel invokes Cancel Event")]
     //TODO Description
     [Description("")]
@@ -450,7 +445,6 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         }
     }
     
-    //fields are bound to employee
     [Title("Form fields are bound to Employee")]
     //TODO description 
     [Description("")]
@@ -500,7 +494,6 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         await ValidateDataBinding(form, TestRunContext.Gender, (value) => employee.Gender = value, () => employee.Gender, EmployeeGender.Male, EmployeeGender.Female);
     }
     
-    // invalid fields -> Save -> Errors
     [Title("Entering invalid fields -> Error displayed for fields")]
     //TODO Description
     [Description("")]
@@ -552,8 +545,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
                                        $"Have you annotated the property with the proper Validation attribute?");
         }
     }
-    // valid fields -> Save -> EmployeeValid called
-    // invalid fields -> Save -> Errors
+    
     [Title("Entering valid fields -> EmployeeValid is invoked")]
     //TODO Description
     [Description("")]

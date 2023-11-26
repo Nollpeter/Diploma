@@ -10,7 +10,7 @@ public class Test_RenderFragments_Ex4_Table : RenderFragmentsTestBase<RenderFrag
 {
     [Title("Component renders properly")]
     [Description("This test verifies that the component is rendered properly")]
-    public async Task Test1()
+    public async Task GivenRenderFragments_Ex4_WhenRendered_ThenRenderedProperly()
     {
         TestContext testContext = new TestContext();
         var renderedComponent = testContext.RenderComponent<RenderFragments_Ex4>();

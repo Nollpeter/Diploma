@@ -15,6 +15,10 @@ public class Test_Exam_PuttingItTogether : ExamTestBase<Exercise_Exam>
 {
     private IExamEmployeeService _employeeService;
 
+    public Test_Exam_PuttingItTogether(IJSRuntime jsRuntime) : base(jsRuntime)
+    {
+    }
+
     protected override async Task<TestContext> SetupTestContext()
     {
         var setupTestContext = await base.SetupTestContext();
@@ -40,7 +44,6 @@ public class Test_Exam_PuttingItTogether : ExamTestBase<Exercise_Exam>
         return setupTestContext;
     }
 
-    // Employees are loaded on render
     [Title("Employees are loaded after rendering component")]
     // TODO Description
     [Description("")]
@@ -67,8 +70,7 @@ public class Test_Exam_PuttingItTogether : ExamTestBase<Exercise_Exam>
             
         }
     }
-    
-    //Table items are bound
+
     [Title("Employees are bound to Table")]
     //TODO Description
     [Description("")]
@@ -83,8 +85,7 @@ public class Test_Exam_PuttingItTogether : ExamTestBase<Exercise_Exam>
             throw new TestRunException($"The Items property of the Table is not bound to the Employees property of {nameof(Exercise_Exam)}");
         }
     }
-    
-    // Table headers rendered properly
+
     [Title("Table headers rendered correctly")]
     // TODO Description
     [Description("")]
@@ -129,7 +130,6 @@ public class Test_Exam_PuttingItTogether : ExamTestBase<Exercise_Exam>
         
     }
 
-    //table body rendered properly
     [Title("Table body rendered correctly")]
     // TODO Description
     [Description("")]
@@ -183,9 +183,8 @@ public class Test_Exam_PuttingItTogether : ExamTestBase<Exercise_Exam>
             }
         }
     }
-    
-    
-    //Clicking details icon open employee details
+
+
     [Title("Clicking on details icon opens "+nameof(ExamEmployeeDetails))]
     // TODO Description
     [Description("")]
@@ -200,8 +199,7 @@ public class Test_Exam_PuttingItTogether : ExamTestBase<Exercise_Exam>
             throw new TestRunException($"Clicking Details Icon does not open {nameof(ExamEmployeeDetails)}!");
         }
     }
-    
-    // EmployeeEdit opened with Employee bound on Clicking Details
+
     [Title(nameof(ExamEmployeeDetails)+" employee id is bound to employee id for which details was clicked")]
     // TODO Description
     [Description("")]
@@ -231,7 +229,7 @@ public class Test_Exam_PuttingItTogether : ExamTestBase<Exercise_Exam>
             throw new TestRunException($"Clicking Employee Create button does not open {nameof(ExamEmployeeCreate)}!");
         }
     }
-    
+
     [Title("Empty employee is bound to "+nameof(ExamEmployeeCreate))]
     // TODO Description
     [Description("")]
@@ -251,8 +249,7 @@ public class Test_Exam_PuttingItTogether : ExamTestBase<Exercise_Exam>
             throw new TestRunException($"Employee bound to {nameof(ExamEmployeeCreate)} is not an empty employee! Bind an empty employee to it! (new Employee())");
         }
     }
-    
-    // On EmployeeEdit Close, List is refreshed
+
     [Title("On " + nameof(ExamEmployeeDetails)+"."+nameof(ExamEmployeeDetails.Closed) +" invoked, Employees are loaded")]
     // TODO Description
     [Description("")]
@@ -277,8 +274,7 @@ public class Test_Exam_PuttingItTogether : ExamTestBase<Exercise_Exam>
             throw new TestRunException($"Employees were not loaded! {nameof(Exercise_Exam.Employees)} does not contain new employee!");
         }
     }
-    
-    // ON EmployeeCreate Close, List is refreshed
+
     [Title("On " + nameof(ExamEmployeeDetails)+"."+nameof(ExamEmployeeDetails.Closed) +" invoked, Employees are loaded")]
     // TODO Description
     [Description("")]
@@ -303,13 +299,5 @@ public class Test_Exam_PuttingItTogether : ExamTestBase<Exercise_Exam>
         {
             throw new TestRunException($"Employees were not loaded! {nameof(Exercise_Exam.Employees)} does not contain new employee!");
         }
-    }
-    
-    //E2E tests
-    //Create new employee
-    //Edit employee
-    //Delete employee
-    public Test_Exam_PuttingItTogether(IJSRuntime jsRuntime) : base(jsRuntime)
-    {
     }
 }

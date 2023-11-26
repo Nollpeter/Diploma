@@ -37,7 +37,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
     [ComponentUsedInMarkupTitle(typeof(RenderFragments_LessonFinal))]
     [ComponentUsedInMarkupDescription(typeof(RenderFragments_LessonFinal))]
     [Precondition]
-    public async Task Test1()
+    public async Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenRenderFragments_LessonFinalComponentUsed()
     {
         var component = new JsInterop_Ex_LessonFinal();
         ValidateComponentUsage(component, ListComponentType);
@@ -47,7 +47,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
     [ParameterDefinedTitle(JsRuntimeName)]
     [ParameterDefinedDescription(JsRuntimeName, typeof(IJSRuntime))]
     [Precondition]
-    public async Task Test2()
+    public async Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenJsRuntimeParameterDefined()
     {
         var component = new JsInterop_Ex_LessonFinal();
         ValidateInjectedProperty(component, JsRuntimeName, typeof(IJSRuntime));
@@ -57,7 +57,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
     [PropertyOrFieldOfTypeDefinedTitle(typeof(DotNetObjectReference<JsInterop_Ex_LessonFinal>))]
     [PropertyOrFieldOfTypeDefinedDescription(typeof(DotNetObjectReference<JsInterop_Ex_LessonFinal>))]
     [Precondition]
-    public async Task Test3()
+    public async Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenObjectReferenceFieldOrPropertyDefined()
     {
         var component = new JsInterop_Ex_LessonFinal();
 
@@ -68,7 +68,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
     [MethodWithPropertyDefinedTitle(nameof(JsInvokableMethodName), typeof(JSInvokableAttribute))]
     [MethodWithPropertyDefinedDescription(nameof(JsInvokableMethodName), typeof(JSInvokableAttribute))]
     [Precondition]
-    public async Task Test4()
+    public async Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenJsInvokableMethodAttributeDefined()
     {
         var component = new JsInterop_Ex_LessonFinal();
         ValidateMethodWithNameAndAttributeExists(component, JsInvokableMethodName, typeof(JSInvokableAttribute));
@@ -78,7 +78,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
     [Title("Employees are bound to " + nameof(RenderFragments_LessonFinal) + ".Employees")]
     [Description("This test verifies that Employees are bound to " + nameof(RenderFragments_LessonFinal) +
                  ".Employees")]
-    public async Task Test6()
+    public async Task GivenEmployees_WhenBound_ThenAreBoundToRenderFragmentsLessonFinalEmployees()
     {
         var component = new JsInterop_Ex_LessonFinal();
 

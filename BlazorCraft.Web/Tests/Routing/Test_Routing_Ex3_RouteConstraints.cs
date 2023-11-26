@@ -15,7 +15,7 @@ public class Test_Routing_Ex3_RouteConstraints : RoutingTestBase<Routing_Ex3>
 
     [Title("Route defined")]
     [Description("This test verifies if the component has the /" + Route + " route defined")]
-    public async Task Ex1_Route_Defined()
+    public async Task GivenRouting_Ex3_WhenDefined_ThenIsAccessibleViaRoute()
     {
         var routingEx3 = new Routing_Ex3();
         var routeAttributes = CheckRouteAttributesExist(routingEx3);
@@ -26,7 +26,7 @@ public class Test_Routing_Ex3_RouteConstraints : RoutingTestBase<Routing_Ex3>
 
     [Title("Route parameter name")]
     [Description("This test verifies if the route parameter " + RouteParamName + " is defined with the correct name")]
-    public async Task Ex2_Route_Parameter_Name()
+    public async Task GivenRouteParameter_WhenDefined_ThenHasCorrectName()
     {
         var routingEx3 = new Routing_Ex3();
         var routeAttributes = CheckRouteAttributesExist(routingEx3);
@@ -39,7 +39,7 @@ public class Test_Routing_Ex3_RouteConstraints : RoutingTestBase<Routing_Ex3>
     [Title("Route parameter type")]
     [Description("This test verifies if the route parameter " + RouteParamName +
                  " is defined with the correct type: int")]
-    public async Task Ex3_Route_Parameter_Type()
+    public async Task GivenRouteParameter_WhenDefined_ThenHasCorrectType()
     {
         var routingEx3 = new Routing_Ex3();
         var routeAttributes = CheckRouteAttributesExist(routingEx3);
@@ -53,7 +53,7 @@ public class Test_Routing_Ex3_RouteConstraints : RoutingTestBase<Routing_Ex3>
 
     [Title("Rendered output")]
     [Description("This test verifies if the component actually renders the route parameter in a <p> tag")]
-    public async Task Ex4_Rendered_Output()
+    public async Task GivenRouteParameter_WhenRendered_ThenIsDisplayedInPTag()
     {
         var routingEx3 = new Routing_Ex3();
         var routeAttributes = CheckRouteAttributesExist(routingEx3);

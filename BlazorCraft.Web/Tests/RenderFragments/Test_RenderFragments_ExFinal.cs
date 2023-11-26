@@ -12,10 +12,10 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
     public const string EmployeesParamName = "Employees";
     public const string ContainerName = ".ex-final-container";
     
-    [Title(EmployeesParamName + " parameted is defined")]
+    [Title(EmployeesParamName + " parameter is defined")]
     [Description("This test verifies that the "+EmployeesParamName+" parameter is defined in the component")]
     [Precondition]
-    public async Task Test1()
+    public async Task GivenRenderFragments_LessonFinal_WhenDeclared_ThenEmployeesParameterIsDefined()
     {
         var component = new RenderFragments_LessonFinal();
         ValidateComponentProperty(component, EmployeesParamName, typeof(List<Employee>));
@@ -24,7 +24,7 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
     
     [Title("List view renders properly")]
     [Description("This test validates if the list view for the component renders properly")]
-    public async Task Test2()
+    public async Task GivenListView_WhenComponentRendered_ThenListViewRendersProperly()
     {
         TestContext testContext = new TestContext();
 
@@ -51,7 +51,7 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
     
     [Title("Table view renders properly")]
     [Description("This test validates if the table view for the component renders properly")]
-    public async Task Test3()
+    public async Task GivenTableView_WhenComponentRendered_ThenTableViewRendersProperly()
     {
         TestContext testContext = new TestContext();
 

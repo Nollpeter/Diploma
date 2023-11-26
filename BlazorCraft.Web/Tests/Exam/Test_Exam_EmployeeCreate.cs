@@ -17,7 +17,6 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
         return setupTestContext;
     }
 
-    //Preconditon: EmployeeForm is declared
     [ComponentUsedInMarkupTitle(typeof(EmployeeForm))]
     [ComponentUsedInMarkupDescription(typeof(EmployeeForm))]
     [Precondition]
@@ -37,7 +36,6 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
         }
     }
 
-    //PRe: Employee of the Form is the Employee set as parameter
     [Title("Employee is bound to " + nameof(EmployeeForm))]
     //TODO Description
     [Description("")]
@@ -59,7 +57,6 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
         }
     }
 
-    // PRe: Employee form iseditmode = true
     [Title(nameof(EmployeeForm) + " is Editable on render")]
     //TODO Description
     [Description("")]
@@ -80,9 +77,8 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
             throw new TestRunException($"{nameof(EmployeeForm)} is not editable after render!");
         }
     }
-    //PRecondition: EmployeeService injected?
+    //TODO PRecondition: EmployeeService injected?
 
-    // Valid employee on form -> Employee added, Closed invoked
     [Title("Employee added if employee is valid on " + nameof(EmployeeForm) + " then new employee is added to EmployeeService")]
     //TODO Description
     [Description("")]
@@ -121,7 +117,6 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
     }
 
 
-    // Form canceled -> Closed invoked
     [Title("Closed event invoked if " + nameof(EmployeeForm) + " is cancelled")]
     //TODO Description
     [Description("")]

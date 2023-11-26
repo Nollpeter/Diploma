@@ -19,7 +19,7 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
     [ParameterDefinedTitle(EmployeesParameterName)]
     [ParameterDefinedDescription(EmployeesParameterName, typeof(List<Employee>))]
     [Precondition]
-    public async Task Test1()
+    public async Task GivenComponentEvents_Ex2_EventCallBack_WhenDeclared_ThenEmployeesParameterDefined()
     {
         var component = new ComponentEvents_Ex2_EventCallBack();
         ValidateComponentProperty(component, EmployeesParameterName, typeof(List<Employee>));
@@ -29,7 +29,7 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
     [ParameterDefinedTitle(EventCallBackPropertyName)]
     [ParameterDefinedDescription(EventCallBackPropertyName, typeof(EventCallback<Employee>))]
     [Precondition]
-    public async Task Test2()
+    public async Task GivenComponentEvents_Ex2_EventCallBack_WhenDeclared_ThenEventCallBackParameterDefined()
     {
         var component = new ComponentEvents_Ex2_EventCallBack();
         ValidateComponentProperty(component, EventCallBackPropertyName, typeof(EventCallback<Employee>));
@@ -38,7 +38,7 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
 
     [Title(EmployeesParameterName + " are rendered properly")]
     [Description("This test verifies that you render the values of " + EmployeesParameterName + " properly")]
-    public async Task Test3()
+    public async Task GivenComponentEvents_Ex2_EventCallBack_WhenRendered_ThenEmployeesRenderedCorrectly()
     {
         TestContext testContext = new TestContext();
         Random r = new Random();
@@ -76,7 +76,7 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
 
     [Title(EventCallBackPropertyName + " event is called upon clicking on delete button")]
     [Description("This test verifies that upon clicking on the delete button for a row, the event is actually called")]
-    public async Task Test4()
+    public async Task GivenDeleteButton_WhenClicked_ThenEventCallBackTriggered()
     {
         TestContext testContext = new TestContext();
         Random r = new Random();

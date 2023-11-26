@@ -17,21 +17,19 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
 {
     private static Type EditorComponentType = typeof(ComponentDataBinding_Ex1);
     
-    // Component is used
     [ComponentUsedInMarkupTitle(typeof(ComponentDataBinding_Ex1))]
     [ComponentUsedInMarkupDescription(typeof(ComponentDataBinding_Ex1))]
     [Precondition]
-    public async Task Test1()
+    public async Task GivenComponentDataBinding_Ex_LessonFinal_WhenDeclared_ThenComponentDataBinding_Ex1ComponentUsed()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
         ValidateComponentUsage(component, EditorComponentType);
         
     }
 
-    // Table rows rendered properly
     [Title("Table rows rendered correctly")]
-    [Description("This test verifies that the table rows for each employee were rendered properly")]
-    public async Task Test2()
+    [Description("This test verifies that the table rows for each employee were rendered correctly")]
+    public async Task GivenComponentDataBinding_Ex_LessonFinal_WhenRendered_ThenTableRowsRenderedCorrectly()
     {
         TestContext testContext = new TestContext();
         List<Employee> employees = new List<Employee>()
@@ -50,12 +48,9 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
         
     }
 
-    // By default editor is hidden
-    // Clicking button reveals editor
-    
     [Title("Clicking Edit button reveals editor")]
     [Description("This test verifies that clicking the edit button reveals the editor for the employee")]
-    public async Task Test3()
+    public async Task GivenEditButton_WhenClicked_ThenEmployeeEditorIsRevealed()
     {
         TestContext testContext = new TestContext();
         List<Employee> employees = new List<Employee>()
@@ -80,10 +75,9 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
         
     }
     
-    // Editor changes reflected in table
     [Title("Editor change reflected in table")]
     [Description("This test verifies that once you edit something in the editor will be reflected in the employees table as well")]
-    public async Task Test4()
+    public async Task GivenEditor_WhenTextIsEdited_ThenChangeIsReflectedInEmployeesTable()
     {
         TestContext testContext = new TestContext();
         List<Employee> employees = new List<Employee>()
@@ -123,194 +117,4 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
         
         
     }
- 
-
-    /*[ParameterDefinedTitle(EmployeeFirstNameParamName)]
-    [ParameterDefinedDescription(EmployeeFirstNameParamName, typeof(string))]
-    public async Task Test1()
-    {
-        var component = new ComponentDataBinding_Ex_LessonFinal();
-        ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
-        
-    }
-
-    [ParameterDefinedTitle(EmployeeLastNameParamName)]
-    [ParameterDefinedDescription(EmployeeLastNameParamName, typeof(string))]
-    public async Task Test2()
-    {
-        var component = new ComponentDataBinding_Ex_LessonFinal();
-        ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
-        
-    }
-
-    [ParameterDefinedTitle(EmployeeFirstNameChangedName)]
-    [ParameterDefinedDescription(EmployeeFirstNameChangedName, typeof(EventCallback<string>))]
-    public async Task Test3()
-    {
-        var component = new ComponentDataBinding_Ex_LessonFinal();
-        ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
-        
-    }
-
-    [ParameterDefinedTitle(EmployeeLastNameChangedName)]
-    [ParameterDefinedDescription(EmployeeLastNameChangedName, typeof(EventCallback<string>))]
-    public async Task Test4()
-    {
-        var component = new ComponentDataBinding_Ex_LessonFinal();
-        ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
-        
-    }
-
-    [Title(EmployeeFirstNameParamName + " binding Consumer -> Component")]
-    [Description("This test verifies that once the Consumer component changes the " + EmployeeFirstNameParamName +
-                 " it is reflected in the component ")]
-    public async Task Test5()
-    {
-        var component = new ComponentDataBinding_Ex_LessonFinal();
-
-        ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
-        ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
-
-        TestContext testContext = new TestContext();
-
-        string firstName = "Theodore";
-
-        var renderedComponent = testContext.RenderComponent<ComponentDataBinding_Ex_LessonFinal>(
-            ComponentParameter.CreateParameter(EmployeeFirstNameParamName, firstName));
-
-        var inputs = renderedComponent.FindAll("input").ToList();
-
-        var idValue = inputs[0].GetAttribute("value");
-        if (idValue != firstName.ToString())
-        {
-            throw new TestRunException(
-                $"{EmployeeFirstNameParamName} is not bound properly, its value should be {firstName}, but it is instead {idValue}");
-        }
-
-
-        
-    }
-
-    [Title(EmployeeFirstNameParamName + " binding Component -> Consumer")]
-    [Description("This test verifies that once the Component changes the " + EmployeeFirstNameParamName +
-                 " it is reflected in the Consumer component ")]
-    public async Task Test6()
-    {
-        var component = new ComponentDataBinding_Ex_LessonFinal();
-        ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
-        ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
-
-        TestContext testContext = new TestContext();
-
-        string firstName = "Theodore";
-
-        EventCallback<string> idChanged = EventCallback.Factory.Create<string>(this, value =>
-        {
-            firstName = value;
-        });
-
-        var renderedComponent = testContext.RenderComponent<ComponentDataBinding_Ex_LessonFinal>(
-            ComponentParameter.CreateParameter(EmployeeFirstNameParamName, firstName),
-            ComponentParameter.CreateParameter(EmployeeFirstNameChangedName, idChanged)
-        );
-
-
-
-        var inputs = renderedComponent.FindAll("input").ToList();
-
-        var idValue = inputs[0].GetAttribute("value");
-        if (idValue != firstName.ToString())
-        {
-            throw new TestRunException(
-                $"{EmployeeFirstNameParamName} is not bound properly, its value should be {firstName}, but it is instead {idValue}");
-        }
-
-        var inputText = renderedComponent.FindAll("input");
-        var changedValue = "Changed";
-
-        await inputText[0].InputAsync(new ChangeEventArgs(){Value = changedValue});
-        if (firstName != changedValue)
-        {
-            throw new TestRunException(
-                $"{EmployeeLastNameParamName} is not bound two way. Upon changing the value of the input, the change is not reflected. Are you calling NameChanged?");
-        }
-        
-    }
-
-    [Title(EmployeeLastNameParamName + " binding Consumer -> Component")]
-    [Description("This test verifies that once the Consumer component changes the " + EmployeeLastNameParamName +
-                 " it is reflected in the component ")]
-    public async Task Test7()
-    {
-        var component = new ComponentDataBinding_Ex_LessonFinal();
-
-        ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
-        ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
-
-        TestContext testContext = new TestContext();
-
-        string lastName = "Test";
-
-        var renderedComponent = testContext.RenderComponent<ComponentDataBinding_Ex_LessonFinal>(
-            ComponentParameter.CreateParameter(EmployeeLastNameParamName, lastName));
-
-        var input = renderedComponent.Find(".employee-last-name");
-
-        Console.WriteLine(input.ToMarkup());
-        var nameValue = input.GetAttribute("value");
-        if (nameValue != lastName)
-        {
-            throw new TestRunException(
-                $"{EmployeeLastNameParamName} is not bound properly, its value should be {lastName}, but it is instead {nameValue}");
-        }
-
-
-        
-    }
-
-    [Title(EmployeeLastNameParamName + " binding Component -> Consumer")]
-    [Description("This test verifies that once the Component changes the " + EmployeeLastNameParamName +
-                 " it is reflected in the Consumer component ")]
-    public async Task Test8()
-    {
-       var component = new ComponentDataBinding_Ex_LessonFinal();
-        ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
-        ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
-
-        TestContext testContext = new TestContext();
-
-        string lastName = "Test";
-
-        EventCallback<string> nameChanged = EventCallback.Factory.Create<string>(this, n =>
-        {
-            lastName = n;
-        });
-
-        var renderedComponent = testContext.RenderComponent<ComponentDataBinding_Ex_LessonFinal>(
-            ComponentParameter.CreateParameter(EmployeeLastNameParamName, lastName),
-            ComponentParameter.CreateParameter(EmployeeLastNameChangedName, nameChanged)
-        );
-
-        var input = renderedComponent.Find(".employee-last-name");
-
-        var changedValue = "Changed value";
-        await input.InputAsync(new ChangeEventArgs(){Value = changedValue});
-
-        if (lastName != changedValue)
-        {
-            throw new TestRunException(
-                $"{EmployeeLastNameParamName} is not bound two way. Upon changing the value of the input, the change is not reflected. Are you calling NameChanged?");
-        }
-
-        
-    }*/
-
 }
