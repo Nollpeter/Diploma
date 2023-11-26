@@ -1,0 +1,27 @@
+﻿@if (_isInitied)
+{
+    <p>@_employee.Id, @_employee.Name</p>
+    <p>@_employee2.Id, @_employee2.Name</p>
+}
+
+@code {
+
+    private record Employee(int Id, string Name);
+
+    private bool _isInitied = false;
+    
+    private Employee? _employee;
+    private Employee? _employee2;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        
+        // Simulate loading remote resource
+        await Task.Delay(500);
+        _employee = await Task.FromResult(new Employee(1, "Test Tiffany"));
+        _employee2 = await Task.FromResult(new Employee(2, "Test Timothy"));
+        _isInitied = true;
+    }
+
+}
