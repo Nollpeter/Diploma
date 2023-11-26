@@ -1,0 +1,46 @@
+﻿@inject IJSRuntime JsRuntime
+
+@if (_firstEmployee!=null)
+{
+    <p>Id: @_firstEmployee.Id, Name: @_firstEmployee.Name</p>
+    
+}
+@if (_secondEmployee != null)
+{
+    <p>Id: @_secondEmployee.Id, Name: @_secondEmployee.Name</p>
+}
+
+@code {
+    public record Employee(int Id, string Name);
+    
+    private Employee? _firstEmployee;
+    private Employee? _secondEmployee;
+        
+        
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        var dotNetReference = DotNetObjectReference.Create(this);
+            
+        await JsRuntime.InvokeVoidAsync("JsToBlazor.registerBlazorComponent", dotNetReference);
+        await JsRuntime.InvokeVoidAsync("JsToBlazor.callBlazorMethod", dotNetReference);
+    }
+
+    [JSInvokable]
+    public void SetValueFromJs(Employee value)
+    {
+        _firstEmployee = value;
+        StateHasChanged();
+    }
+    
+    [JSInvokable]
+    public async Task SetValueFromJsAsync(Employee value)
+    {
+        // Do any async work here
+        await Task.Delay(100);
+        
+        _secondEmployee = value;
+        StateHasChanged();
+    }
+}

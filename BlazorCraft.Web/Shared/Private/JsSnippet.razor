@@ -1,0 +1,67 @@
+﻿@if (renderingFinished)
+{
+    @if (ShowComponentName || true)
+    {
+        <div class="d-flex pb-1 align-items-center gap-1 ">
+            <MudIcon Size="Size.Small" Icon="@Icons.Material.Outlined.FileOpen"></MudIcon>
+            <MudText class="fw-bold">@JsFileName</MudText>
+        </div>
+    }
+    <CodeSnippet Language="csharp">
+        @_originalMarkup
+    </CodeSnippet>
+
+}
+
+@code {
+
+    [Inject]
+    private IJSRuntime _js { get; set; }
+
+    [Parameter, EditorRequired] public string JsFileName { get; set; }
+    
+    public string Language { get; set; } = "javascript";
+
+    [Parameter]
+    public bool ShowComponentName { get; set; } = true;
+
+
+    private bool renderingFinished = false;
+    private string _originalMarkup;
+    private string _renderedHtml;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+        }
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        _originalMarkup = ReadOriginalMarkup();
+        renderingFinished = true;
+        StateHasChanged();
+
+
+        await _js.InvokeVoidAsync("highlightSnippet");
+        StateHasChanged();
+    }
+
+
+    private string ReadOriginalMarkup()
+    {
+        var manifestResourceNames = GetType().Assembly.GetManifestResourceNames();
+        var key = manifestResourceNames.FirstOrDefault(x => x.Contains(JsFileName));
+        using (var stream = GetType().Assembly.GetManifestResourceStream(key))
+        using (var reader = new StreamReader(stream))
+        {
+            var read = reader.ReadToEnd();
+            return read;
+        }
+    }
+}

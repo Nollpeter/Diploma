@@ -156,7 +156,6 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
 
         var input = renderedComponent.Find(".employee-last-name");
 
-        Console.WriteLine(input.ToMarkup());
         var nameValue = input.GetAttribute("value");
         if (nameValue != lastName)
         {

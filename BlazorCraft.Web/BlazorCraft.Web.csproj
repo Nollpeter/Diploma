@@ -29,6 +29,7 @@
 
     <ItemGroup>
         <EmbeddedResource Include="**\*.cs" />
+        <EmbeddedResource Include="**\*.js" />
         <EmbeddedResource Include="**\*.razor" />
     </ItemGroup>
 

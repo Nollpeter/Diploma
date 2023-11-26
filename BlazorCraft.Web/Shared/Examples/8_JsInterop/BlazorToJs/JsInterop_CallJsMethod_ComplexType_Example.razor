@@ -1,0 +1,27 @@
+﻿@using BlazorCraft.Web.Infrastructure
+@inject IJSRuntime JsRuntime
+@inject IAsyncLockProvider Lock
+
+@if (_employee != null)
+{
+    <p>Id: @_employee.Id, Name: @_employee.Name</p>
+}
+
+@code {
+
+    private record Employee(int Id, string Name);
+    
+    private Employee? _employee;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await using (await Lock.AcquireLockAsync())
+        {
+            await JsRuntime.InvokeVoidAsync("BlazorToJs.setValue", new Employee(1, "Test Name"));
+            _employee = await JsRuntime.InvokeAsync<Employee>("BlazorToJs.getValue");
+        }
+    }
+
+}

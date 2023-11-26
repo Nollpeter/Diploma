@@ -85,10 +85,6 @@ public class Test_DependencyInjection_LessonFinal : ComponentTestBase<Dependency
     {
         var testContext = new TestContext();
         testContext.Services.AddEmployeeService();
-        foreach (var testContextService in testContext.Services)
-        {
-            Console.WriteLine(testContextService.ServiceType+" " + testContextService.ImplementationType+" "+testContextService.Lifetime);
-        }
         var contains = testContext.Services.FirstOrDefault(p => p.ServiceType == typeof(IEmployeeService) && p.ImplementationType == typeof(EmployeeService) && p.Lifetime == ServiceLifetime.Scoped) != null;
             
            // .Contains(new ServiceDescriptor(typeof(IEmployeeService), typeof(EmployeeService), ServiceLifetime.Scoped));

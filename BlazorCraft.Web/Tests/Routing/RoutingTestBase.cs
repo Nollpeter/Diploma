@@ -80,7 +80,6 @@ public class RoutingTestBase<TTestComponent> : ComponentTestBase<TTestComponent>
         
         if (!routeAttribute.Template.Contains( isString ? $"{routeParamName}?" : $"{routeParamName}:{constraint}"))
         {
-            Console.WriteLine(routeAttribute.Template);
             throw new TestRunException(
                 $"The route parameter is not constrained to the type: {constraint}");
         }

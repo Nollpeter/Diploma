@@ -7,7 +7,7 @@
 
 @inject IEmployeeService EmployeeService
 
-@if (_isInited)
+@*@if (_isInited)*@
 {
     <RenderFragments_LessonFinal Employees="_employees">
 
@@ -20,6 +20,13 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+        //_employees = await EmployeeService.GetEmployees();
+        //_isInited = true;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
         _employees = await EmployeeService.GetEmployees();
         _isInited = true;
     }

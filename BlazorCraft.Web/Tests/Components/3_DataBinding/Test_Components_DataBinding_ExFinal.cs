@@ -24,7 +24,6 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
     public async Task<TestRunResult> Test1()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
-        Console.WriteLine(EditorComponentType);
         ValidateComponentUsage(component, EditorComponentType);
         return TestRunResult.Success;
     }
@@ -48,10 +47,6 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
         );
 
         var rows = renderedComponent.FindAll("tr");
-        foreach (var row in rows)
-        {
-            Console.WriteLine(row.ToMarkup());
-        }
         rows[1].MarkupMatches($"<tr> <td>{employees[0].Id}</td> <td>{employees[0].FirstName}</td> <td>{employees[0].LastName}</td> <td><button class=\"btn btn-primary\">Edit</button></td>  </tr>");
         rows[2].MarkupMatches($"<tr> <td>{employees[1].Id}</td> <td>{employees[1].FirstName}</td> <td>{employees[1].LastName}</td> <td><button class=\"btn btn-primary\">Edit</button></td>  </tr>");
 

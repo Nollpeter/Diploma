@@ -1,7 +1,10 @@
 ﻿@using Bunit
 @using System.Text.RegularExpressions
 @using BlazorCraft.Web.DI
+@using BlazorCraft.Web.Shared.Examples._7_DependencyInjection
+@using Microsoft.AspNetCore.Components.Rendering
 @typeparam TComponent where TComponent : ComponentBase
+@inject IServiceProvider ServiceProvider
 @if (renderingFinished)
 {
     @if (ShowComponentName || true)
@@ -66,11 +69,16 @@
         }
     }
 
-
+    private TestContext _testContext;
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-
+        _testContext = new TestContext();
+        _testContext.Services.AddBlazorCraftServices();
+        _testContext.Services.AddScoped<IExampleTransientService>(provider => ServiceProvider.GetRequiredService<IExampleTransientService>());
+        _testContext.Services.AddScoped<IExampleScopedService>(provider => ServiceProvider.GetRequiredService<IExampleScopedService>());
+        _testContext.Services.AddSingleton(_js);
+        
         _originalMarkup = ReadOriginalMarkup();
         if (RenderOutput)
         {
@@ -96,7 +104,6 @@
     public async Task OnDomChanged(string markup)
     {
         _renderedHtml = await _js.InvokeAsync<string>("prettifyHtml", new object?[] { markup });
-        ;
         _renderedHtml = _renderedHtml.Replace("<!--!-->", "").Trim('\n', '\r');
         _uniqueKey = new object();
         await Task.Delay(1);
@@ -105,9 +112,11 @@
 
     string RenderComponentMarkup()
     {
-        var componentRenderer = new ComponentRenderer();
-        componentRenderer.Services.AddBlazorCraftServices();
-        return componentRenderer.RenderComponent();
+        //var componentRenderer = new ComponentRenderer();
+        //componentRenderer.Services.AddBlazorCraftServices();
+        //componentRenderer.Services.AddSingleton(_js);
+        //return componentRenderer.RenderComponent();
+        return _testContext.RenderComponent<TComponent>().Markup;
     }
 
     public class ComponentRenderer : TestContext

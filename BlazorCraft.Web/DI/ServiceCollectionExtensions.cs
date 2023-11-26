@@ -1,5 +1,8 @@
-﻿using BlazorCraft.Web.Infrastructure;
+﻿using System.Reflection;
+using BlazorCraft.Web.Infrastructure;
+using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Shared._Exercises.DependencyInjection;
+using BlazorCraft.Web.Shared._Exercises.JsInterop;
 using BlazorCraft.Web.Shared.Examples._7_DependencyInjection;
 
 namespace BlazorCraft.Web.DI;
@@ -12,5 +15,24 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddScoped<IPanelStateService, PanelStateService>();
         serviceCollection.AddExampleServices();
         serviceCollection.AddEmployeeService();
+        
+        serviceCollection.AddSingleton<IAsyncLockProvider, AsyncLockProvider>();
+        serviceCollection.AddTests();
+        
+    }
+
+    public static void AddTests(this IServiceCollection serviceCollection)
+    {
+        var types = Assembly.GetExecutingAssembly().GetTypes();
+        foreach (var type in types)
+        {
+            var testForPageAttribute = type.GetCustomAttribute<TestForPageAttribute>();
+            if (testForPageAttribute != null)
+            {
+                serviceCollection.AddScoped(type);
+            }
+        }
+
+        //serviceCollection.AddScoped<Test_JsInterop_Ex_LessonFinal>();
     }
 }

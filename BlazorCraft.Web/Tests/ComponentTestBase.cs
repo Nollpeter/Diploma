@@ -2,6 +2,7 @@
 using BlazorCraft.Web.Infrastructure.Attributes;
 using Bunit;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace BlazorCraft.Web.Tests.Routing;
 
@@ -59,6 +60,33 @@ public class ComponentTestBase<TTestComponent> : TestContext where TTestComponen
         {
             throw new TestRunException(
                 $"The component Property {propertyName} is defined in the component, but it is not annotated with the [Parameter] attribute");
+        }
+    }
+
+    protected string ValidatePropertyOrFieldWithTypeExists(object component, Type fieldOrPropertyType)
+    {
+        var property = component.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+            .FirstOrDefault(p =>
+                (p.PropertyType ==(fieldOrPropertyType)));
+        
+        var field = component.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+            .FirstOrDefault(p =>
+                (p.FieldType ==(fieldOrPropertyType)));
+
+        return property?.Name ?? field?.Name ?? throw new TestRunException(
+            $"There is no field or property with the type {fieldOrPropertyType} defined inside the component." +
+            $"Without defining it, the exercise cannot be successful!");
+    }
+
+    protected void ValidateMethodWithNameAndAttributeExists(object component, string methodName, Type attributeType)
+    {
+        var methodInfos = component.GetType().GetMethods();
+        var method = methodInfos
+            .FirstOrDefault(p => p.Name == methodName && p.GetCustomAttribute<JSInvokableAttribute>() != null);
+
+        if (method == null)
+        {
+            throw new TestRunException($"The component does not have a public method with name {methodName} attributed with the [{attributeType}] attribute annotated");
         }
     }
 }

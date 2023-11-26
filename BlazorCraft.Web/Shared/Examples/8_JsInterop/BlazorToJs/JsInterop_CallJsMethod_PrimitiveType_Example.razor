@@ -1,0 +1,26 @@
+﻿@using BlazorCraft.Web.Infrastructure
+@inject IJSRuntime JsRuntime
+@inject IAsyncLockProvider Lock
+@if (_value != null)
+{
+    <p>@_value</p>
+}
+
+@code {
+
+    private int? _value;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await using (await Lock.AcquireLockAsync())
+        {
+            await JsRuntime.InvokeVoidAsync("BlazorToJs.setValue", 10);
+            _value = await JsRuntime.InvokeAsync<int>("BlazorToJs.getValue");
+        }
+        
+        
+    }
+
+}

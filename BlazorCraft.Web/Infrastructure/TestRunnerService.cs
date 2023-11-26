@@ -93,9 +93,11 @@ public class TestRunnerService : ITestRunnerService
 
     private TestRunSession _testsSession;
     private Dictionary<TestDescriptor, TestRunResult?> _testRunResults;
+    private IServiceProvider _serviceProvider;
 
-    public TestRunnerService()
+    public TestRunnerService(IServiceProvider serviceProvider)
     {
+        _serviceProvider = serviceProvider;
         _testsSession = new TestRunSession(GetEveryTest().ToDictionary(p => p.Key, p => TestRunState.NotStarted));
         _testRunResults = GetEveryTest();
     }
@@ -200,8 +202,11 @@ public class TestRunnerService : ITestRunnerService
                     var titleAttribute = methodInfo.GetCustomAttribute<TitleAttribute>();
                     var descriptionAttribute = methodInfo.GetCustomAttribute<DescriptionAttribute>();
                     var hintAttribute = methodInfo.GetCustomAttribute<HintAttribute>();
+
+                    var testClassInstance = _serviceProvider.GetRequiredService(type);
+                    
                     var func = (Func<Task<TestRunResult>>)Delegate.CreateDelegate(typeof(Func<Task<TestRunResult>>),
-                        null, methodInfo);
+                        testClassInstance, methodInfo);
                     resultList.Add(
                         new(func, titleAttribute?.Title, descriptionAttribute?.Description, hintAttribute?.Hint,
                             testForPageAttribute.Page, type), null);
