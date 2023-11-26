@@ -6,7 +6,36 @@ using Microsoft.JSInterop;
 
 namespace BlazorCraft.Web.Tests.Routing;
 
-public class ComponentTestBase<TTestComponent> : TestContext where TTestComponent : ComponentBase
+public abstract class ComponentTestBase : TestContext
+{
+    
+    public async Task CheckPreconditions()
+    {
+        var preconditionMethods = GetType().GetMethods().Where(p => p.GetCustomAttribute<PreconditionAttribute>() != null);
+        var exceptions = new List<PreconditionException>();
+        foreach (var preconditionMethod in preconditionMethods)
+        {
+            var func = (Func<Task<TestRunResult>>)Delegate.CreateDelegate(typeof(Func<Task<TestRunResult>>),
+                this, preconditionMethod);
+            var title = preconditionMethod.GetCustomAttribute<TitleAttribute>().Title;
+            try
+            {
+                var task = await func();
+            }
+            catch (Exception e)
+            {
+                exceptions.Add(new PreconditionException(e.Message, title));
+            }
+        }
+
+        if (exceptions.Any())
+        {
+            throw new PreconditionsFailedException(exceptions);
+        }
+    }
+}
+
+public class ComponentTestBase<TTestComponent> : ComponentTestBase where TTestComponent : ComponentBase
 {
     protected void ValidateComponentProperty(object component, string parameterName, Type parameterType )
     {
@@ -89,4 +118,5 @@ public class ComponentTestBase<TTestComponent> : TestContext where TTestComponen
             throw new TestRunException($"The component does not have a public method with name {methodName} attributed with the [{attributeType}] attribute annotated");
         }
     }
+
 }

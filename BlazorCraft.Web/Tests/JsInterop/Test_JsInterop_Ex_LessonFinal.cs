@@ -37,6 +37,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
 
     [ComponentUsedInMarkupTitle(typeof(RenderFragments_LessonFinal))]
     [ComponentUsedInMarkupDescription(typeof(RenderFragments_LessonFinal))]
+    [Precondition]
     public async Task<TestRunResult> Test1()
     {
         var component = new JsInterop_Ex_LessonFinal();
@@ -46,6 +47,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
 
     [ParameterDefinedTitle(JsRuntimeName)]
     [ParameterDefinedDescription(JsRuntimeName, typeof(IJSRuntime))]
+    [Precondition]
     public async Task<TestRunResult> Test2()
     {
         var component = new JsInterop_Ex_LessonFinal();
@@ -55,6 +57,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
 
     [PropertyOrFieldOfTypeDefinedTitle(typeof(DotNetObjectReference<JsInterop_Ex_LessonFinal>))]
     [PropertyOrFieldOfTypeDefinedDescription(typeof(DotNetObjectReference<JsInterop_Ex_LessonFinal>))]
+    [Precondition]
     public async Task<TestRunResult> Test3()
     {
         var component = new JsInterop_Ex_LessonFinal();
@@ -65,6 +68,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
 
     [MethodWithPropertyDefinedTitle(nameof(JsInvokableMethodName), typeof(JSInvokableAttribute))]
     [MethodWithPropertyDefinedDescription(nameof(JsInvokableMethodName), typeof(JSInvokableAttribute))]
+    [Precondition]
     public async Task<TestRunResult> Test4()
     {
         var component = new JsInterop_Ex_LessonFinal();
@@ -78,11 +82,6 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
     public async Task<TestRunResult> Test6()
     {
         var component = new JsInterop_Ex_LessonFinal();
-        ValidateInjectedProperty(component, JsRuntimeName, typeof(IJSRuntime));
-        ValidateComponentUsage(component, ListComponentType);
-        ValidateMethodWithNameAndAttributeExists(component, JsInvokableMethodName, typeof(JSInvokableAttribute));
-        ValidatePropertyOrFieldWithTypeExists(component, typeof(DotNetObjectReference<JsInterop_Ex_LessonFinal>));
-
 
         var testContext = new TestContext();
         await SetupMockJsRuntime(testContext);
@@ -165,6 +164,10 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
         await renderedComponent.Instance.CallOnInitializedAsync();
         await WaitForState(() => isLifeCycleComplete);
     }
+}
+
+public static class FluentAssertionExtensions
+{
 }
 
 public static class RenderedComponentExtensions

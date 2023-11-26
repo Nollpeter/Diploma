@@ -1,0 +1,14 @@
+﻿@using BlazorCraft.Web.Infrastructure.Attributes
+@using BlazorCraft.Web.Tests
+<MudText Color="Color.Error">@TestRunResult.ErrorMessage</MudText>
+@* TODO: A better formatting would be nice *@
+<ul>
+@foreach (var ex in TestRunResult.Exception.Preconditions)
+{
+    <li><strong>@ex.Title:</strong> @ex.Message</li>
+}
+</ul>
+
+@code {
+    [Parameter, EditorRequired] public PreconditionsNotMetTestRunResult TestRunResult { get; set; }
+}

@@ -1,0 +1,21 @@
+﻿@using BlazorCraft.Web.Tests
+<MudText Typo="Typo.body1">@TestRunResult.ErrorMessage</MudText>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <MudText Typo="Typo.subtitle1" Class="fw-bold">Expected HTML markup: </MudText>
+                                                <CodeSnippet>
+                                                    @HtmlMarkupMismatchTestRunResult.ExpectedMarkup
+                                                </CodeSnippet>
+                                            </div>
+                                            <div class="col-6">
+                                                <MudText Typo="Typo.subtitle1" Class="fw-bold">Actual HTML markup: </MudText>
+                                                <CodeSnippet>
+                                                    @HtmlMarkupMismatchTestRunResult.ActualMarkup
+                                                </CodeSnippet>
+                                            </div>
+                                        </div>
+
+@code {
+    [Parameter, EditorRequired] public TestRunResult TestRunResult { get; set; }
+    [Parameter, EditorRequired] public HtmlMarkupMismatchTestRunResult HtmlMarkupMismatchTestRunResult { get; set; }
+}

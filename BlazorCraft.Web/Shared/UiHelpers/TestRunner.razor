@@ -25,8 +25,6 @@
                         <BodyContent>
                             <div class="d-flex justify-content-start align-items-center">
                                 <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
-                                @*<MudIconButton OnClick="@(() => TestRunnerService.RunTest(test.Key))" Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Medium" Color="Color.Success"/>
-                                <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>*@
                                 @switch (_session[test.Key])
                                 {
                                     case TestRunState.NotStarted:
@@ -48,7 +46,10 @@
                                     }
                                 }
                                 <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
-                                <MudText Color="@GetTextColor(test)">@test.Key.Title</MudText>
+                                <MudText Color="@GetTextColor(test)">
+                                    @if(test.Key.IsPrecondition){<strong>[Precondition] </strong>}
+                                    @test.Key.Title
+                                </MudText>
                             </div>
                         </BodyContent>
                         <ChildContent >
@@ -56,31 +57,25 @@
                                 <div class="d-flex flex-column gap-3 ">
                                     <MudText Typo="Typo.subtitle1" Class="fw-bold">@test.Key.Description</MudText>
                                     <MudText>Result:</MudText>
-                                    @if (test.Value is HtmlMarkupMismatchTestRunResult htmlMarkupMismatchTestRunResult)
+                                    @switch (test.Value)
                                     {
-                                        <MudText Typo="Typo.body1">@test.Value.ErrorMessage</MudText>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <MudText Typo="Typo.subtitle1" Class="fw-bold">Expected HTML markup: </MudText>
-                                                <CodeSnippet>
-                                                    @htmlMarkupMismatchTestRunResult.ExpectedMarkup
-                                                </CodeSnippet>
-                                            </div>
-                                            <div class="col-6">
-                                                <MudText Typo="Typo.subtitle1" Class="fw-bold">Actual HTML markup: </MudText>
-                                                <CodeSnippet>
-                                                    @htmlMarkupMismatchTestRunResult.ActualMarkup
-                                                </CodeSnippet>
-                                            </div>
-                                        </div>
-                                    }
-                                    else if (test.Value is {ErrorMessage: not null })
-                                    {
-                                        <MudText Typo="Typo.body1">@test.Value.ErrorMessage</MudText>
-                                    }
-                                    else if (test.Value?.IsSuccessful ?? false)
-                                    {
-                                        <MudText Color="Color.Success">Test was successful!</MudText>
+                                        case HtmlMarkupMismatchTestRunResult htmlMarkupMismatchTestRunResult:
+                                            <HtmlMarkupMismatch TestRunResult="@test.Value" HtmlMarkupMismatchTestRunResult="@htmlMarkupMismatchTestRunResult"/>
+                                            break;
+                                        case PreconditionsNotMetTestRunResult preconditionsNotMetTestRunResult:
+                                            <PreconditionsNotMet TestRunResult="preconditionsNotMetTestRunResult" />
+                                            break;
+                                        case {ErrorMessage: not null }:
+                                            <MudText Class="text-start" Typo="@Typo.body1" Color="Color.Error">@test.Value.ErrorMessage</MudText>
+                                            break;
+                                        default:
+                                        {
+                                            if (test.Value?.IsSuccessful ?? false)
+                                            {
+                                                <MudText Color="@Color.Success">Test was successful!</MudText>
+                                            }
+                                            break;
+                                        }
                                     }
                                 </div>
                             </MudPaper>

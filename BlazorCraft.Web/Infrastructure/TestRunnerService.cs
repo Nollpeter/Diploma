@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Tests;
 using BlazorCraft.Web.Tests.Introduction;
+using BlazorCraft.Web.Tests.Routing;
 using Bunit;
 
 namespace BlazorCraft.Web.Infrastructure;
@@ -83,7 +84,7 @@ public record TestRunStateEventArgs(TestDescriptor TestDescriptor, TestRunResult
     TestRunState TestRunState);
 
 public record TestDescriptor(Func<Task<TestRunResult>> Method, string Title, string Description, string? Hint,
-    Type PageClass, Type TestClass)
+    Type PageClass, Type TestClass, bool IsPrecondition, ComponentTestBase testClassInstance)
 {
     public override int GetHashCode() => Title.GetHashCode();
 }
@@ -141,6 +142,11 @@ public class TestRunnerService : ITestRunnerService
     {
         try
         {
+            if (!testDescriptor.IsPrecondition)
+            {
+                await testDescriptor.testClassInstance.CheckPreconditions();
+            }
+
             var contextIdMethod = await testDescriptor.Method();
             OnTestStateChanged(new TestRunStateEventArgs(testDescriptor, contextIdMethod, session,
                 TestRunState.Successful));
@@ -163,6 +169,10 @@ public class TestRunnerService : ITestRunnerService
                 new TestRunStateEventArgs(testDescriptor,
                     new HtmlMarkupMismatchTestRunResult("The rendered HTML markup of the component is not as expected!",
                         expectedHtml, actualHtml), session, TestRunState.Error));
+        }
+        catch (PreconditionsFailedException e)
+        {
+            OnTestStateChanged(new TestRunStateEventArgs(testDescriptor, new PreconditionsNotMetTestRunResult(e),session, TestRunState.Error));
         }
         catch (Exception e)
         {
@@ -202,6 +212,7 @@ public class TestRunnerService : ITestRunnerService
                     var titleAttribute = methodInfo.GetCustomAttribute<TitleAttribute>();
                     var descriptionAttribute = methodInfo.GetCustomAttribute<DescriptionAttribute>();
                     var hintAttribute = methodInfo.GetCustomAttribute<HintAttribute>();
+                    var isPrecondition = methodInfo.GetCustomAttribute<PreconditionAttribute>() != null;
 
                     var testClassInstance = _serviceProvider.GetRequiredService(type);
                     
@@ -209,7 +220,7 @@ public class TestRunnerService : ITestRunnerService
                         testClassInstance, methodInfo);
                     resultList.Add(
                         new(func, titleAttribute?.Title, descriptionAttribute?.Description, hintAttribute?.Hint,
-                            testForPageAttribute.Page, type), null);
+                            testForPageAttribute.Page, type, isPrecondition, (ComponentTestBase)testClassInstance), null);
                 }
             }
         }

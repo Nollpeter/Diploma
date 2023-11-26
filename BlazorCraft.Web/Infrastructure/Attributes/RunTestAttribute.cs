@@ -4,6 +4,11 @@ public class RunTestAttribute : Attribute
 {
 }
 
+public class PreconditionAttribute : Attribute
+{
+    
+}
+
 public class ComponentUsedInMarkupDescriptionAttribute : DescriptionAttribute
 {
     public ComponentUsedInMarkupDescriptionAttribute(Type componentType)
