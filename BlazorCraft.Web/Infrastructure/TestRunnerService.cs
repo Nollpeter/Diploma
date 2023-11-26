@@ -28,7 +28,6 @@ public enum TestRunState
     AtLeastOneNotStarted,
 }
 
-//public record TestRunSession(IDictionary<TestDescriptor, TestRunResult?> TestsRun);
 public class TestRunSession : Dictionary<TestDescriptor, TestRunState>
 {
     public TestRunSession(IDictionary<TestDescriptor, TestRunState> dictionary) : base(dictionary)
@@ -83,18 +82,42 @@ public record TestDescriptor(Func<Task<TestRunResult>> Method, string Title, str
 
 public class TestRunnerService : ITestRunnerService
 {
+
+    private TestRunSession _testsSession;
+    private Dictionary<TestDescriptor, TestRunResult?> _testRunResults;
+
+    public TestRunnerService()
+    {
+        _testsSession = new TestRunSession(GetEveryTest().ToDictionary(p => p.Key, p => TestRunState.NotStarted));
+        _testRunResults = GetEveryTest();
+    }
+
+    public TestRunSession SessionOfPage(Type pageClass)
+    {
+        return new TestRunSession(_testsSession.Where(p => p.Key.PageClass == pageClass)
+            .ToDictionary(p => p.Key, p => p.Value));
+    }
+
+    public TestRunSession SessionOfTestClass(Type testClass)
+    {
+        return new TestRunSession(_testsSession.Where(p => p.Key.TestClass == testClass)
+            .ToDictionary(p => p.Key, p => p.Value));
+    }
+    
+    
+    
     public async Task RunTests(IEnumerable<KeyValuePair<TestDescriptor,TestRunResult?>> tests)
     {
-        TestRunSession session = new(tests.ToDictionary(p => p.Key, p => TestRunState.Running));
+        //TestRunSession session = new(tests.ToDictionary(p => p.Key, p => TestRunState.Running));
         foreach (var test in tests)
         {
-            OnTestStateChanged(new TestRunStateEventArgs(test.Key, null, session, TestRunState.Running));
+            OnTestStateChanged(new TestRunStateEventArgs(test.Key, null, _testsSession, TestRunState.Running));
         }
         await Task.Delay(100);
         foreach (var test in tests)
         {
             //await Task.Run(async () => await RunTest(test.Key));
-            await RunTest(test.Key, session);
+            await RunTest(test.Key, _testsSession);
             await Task.Delay(1);
         }
     }
@@ -179,7 +202,9 @@ public class TestRunnerService : ITestRunnerService
 
     private void OnTestStateChanged(TestRunStateEventArgs eventArgs)
     {
+        
         eventArgs.Session[eventArgs.TestDescriptor] = eventArgs.TestRunState;
+        _testRunResults[eventArgs.TestDescriptor] = eventArgs.TestRunResult;
         TestStateChanged?.Invoke(this, eventArgs);
     }
 
@@ -217,7 +242,8 @@ public class TestRunnerService : ITestRunnerService
 
     public Dictionary<TestDescriptor, TestRunResult?> GetTestRunResultMethods(Type testClass)
     {
-        return GetEveryTest().Where(p => p.Key.TestClass == testClass).ToDictionary(p => p.Key, p => p.Value);
+        //return GetEveryTest().Where(p => p.Key.TestClass == testClass).ToDictionary(p => p.Key, p => p.Value);
+        return _testRunResults.Where(p => p.Key.TestClass == testClass).ToDictionary(p => p.Key, p => p.Value);
     }
 
     public TestRunSession GetSessionForPage(Type pageType)

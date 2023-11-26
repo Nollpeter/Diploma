@@ -26,7 +26,27 @@
                                 <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
                                 @*<MudIconButton OnClick="@(() => TestRunnerService.RunTest(test.Key))" Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Medium" Color="Color.Success"/>
                                 <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>*@
-                                @switch (test.Value)
+                                @switch (_session[test.Key])
+                                {
+                                    case TestRunState.NotStarted:
+                                        <MudIcon Icon="@Icons.Material.Filled.QuestionMark" Color="@Color.Default"/>
+                                        break;
+                                    case TestRunState.Running:
+                                        <MudIcon  Icon="@CustomIcons.SpinnerSmall" Color="Color.Primary" />
+                                        break;
+                                    case TestRunState.Successful:
+                                        <MudIcon Icon="@Icons.Material.Filled.Check" Color="@Color.Success"/>
+                                        break;
+                                    case TestRunState.Error:
+                                        <MudIcon Icon="@Icons.Material.Filled.Error" Color="@Color.Error"/>
+                                        break;
+                                    case TestRunState.AtLeastOneNotStarted:
+                                    default:
+                                    {
+                                        throw new NotImplementedException();
+                                    }
+                                }
+                                @*@switch (test.Value)
                                 {
                                     case null:
                                         <MudIcon Icon="@Icons.Material.Filled.QuestionMark" Color="@Color.Default" Size="Size.Small"/>
@@ -43,7 +63,7 @@
                                         }
                                         break;
                                     }
-                                }
+                                }*@
                                 <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
                                 <MudText Color="@GetTextColor(test)">@test.Key.Title</MudText>
                             </div>
@@ -110,7 +130,8 @@ else
 
 @code {
 
-    Dictionary<TestDescriptor, TestRunResult?> _testDescriptors = null!;
+    Dictionary<TestDescriptor, TestRunResult?> _testDescriptors;// => TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
+    TestRunSession _session;
     bool _isInitialized = false;
 
     [Parameter]
@@ -154,21 +175,28 @@ else
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+        //_testDescriptors = TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
         _testDescriptors = TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
+        _session = TestRunnerService.GetSessionForTestClass(typeof(TTestClass));
         _isInitialized = true;
         StateHasChanged();
 
-        TestRunnerService.TestStateChanged += (sender, args) =>
-        {
-            if (_testDescriptors.ContainsKey(args.TestDescriptor))
-            {
-                if (args.TestRunResult != null)
-                {
-                    _testDescriptors[args.TestDescriptor] = args.TestRunResult;
-                }
-                StateHasChanged();
-            }
-        };
+       TestRunnerService.TestStateChanged += (sender, args) =>
+       {
+           
+           _testDescriptors = TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
+           _session[args.TestDescriptor] = args.TestRunState;
+           //_session = TestRunnerService.GetSessionForTestClass(typeof(TTestClass));
+           StateHasChanged();
+           //if (_testDescriptors.ContainsKey(args.TestDescriptor))
+           //{
+           //    if (args.TestRunResult != null)
+           //    {
+           //        _testDescriptors[args.TestDescriptor] = args.TestRunResult;
+           //    }
+           //    StateHasChanged();
+           //}
+       };
         
     }
 
