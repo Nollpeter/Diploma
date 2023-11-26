@@ -37,14 +37,13 @@ public class Test1 : TestContext
             MethodInfo method = GetType().GetMethods().FirstOrDefault(p => p.Name == nameof(RenderComponent) && p.ContainsGenericParameters && p.GetParameters().Length == 1 && p.GetParameters().First().ParameterType == typeof(ComponentParameter[]));
             MethodInfo genericMethod = method.MakeGenericMethod(componentType);
             IRenderedComponent<IComponent> invoke =
-                (IRenderedComponent<IComponent>)genericMethod.Invoke(this, null);
+                (IRenderedComponent<IComponent>)genericMethod.Invoke(this, new object[] { new ComponentParameter[0] });
 
             var invokeMarkup = invoke.Markup;
             if (invokeMarkup == "<h6>Hello World!</h6>")
             {
                 return (true, null);
             }
-            //invoke.MarkupMatches("<h6>Hello World!</h6>");
             else
             {
                 return (false, $"Nem megfelelő markup. Elvárt: <h6>Hello World!</h6>, Kapott: {invokeMarkup}");

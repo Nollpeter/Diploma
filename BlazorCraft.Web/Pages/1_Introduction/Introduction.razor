@@ -1,19 +1,16 @@
 ﻿@page "/introduction"
+@using Blazored.LocalStorage
 @inject Test1 Test1
+@inject ILocalStorageService LocalStorage
 
-<!-- Oldal layoutja és fejléce -->
 <MudContainer Class="d-grid gap-3">
     <MudText Typo="Typo.h4">Bevezetés a Blazor WebAssembly-hez</MudText>
-    <!-- Bevezető szöveg -->
     <MudText>
         Üdvözlünk a BlazorCraft oktatási platformon! Ebben a bevezető részben megismerkedhetsz a Blazor WebAssembly alapjaival, összetevőivel és a technológia működésével.
     </MudText>
 
-    <!-- Accordion a fejezetekhez -->
-    <MudExpansionPanels Multiple="true">
-
-        <!-- Alfejezet: Mi az a Blazor? -->
-        <MudExpansionPanel>
+    <MudExpansionPanels MultiExpansion="true">
+        <MudExpansionPanel Tag="whatIsBlazorTag" IsInitiallyExpanded="IsExpanded(whatIsBlazorTag)" IsExpandedChanged="(state) => StoreExpansionState(whatIsBlazorTag,state)">
             <TitleContent>
                 <MudText Typo="Typo.h6">Mi az a Blazor?</MudText>
             </TitleContent>
@@ -32,8 +29,7 @@
             </ChildContent>
         </MudExpansionPanel>
 
-        <!-- Alfejezet: WebAssembly -->
-        <MudExpansionPanel>
+        <MudExpansionPanel Tag="webassemblyTabTag" IsInitiallyExpanded="IsExpanded(webassemblyTabTag)" IsExpandedChanged="(state) => StoreExpansionState(webassemblyTabTag, state)">
             <TitleContent>
                 <MudText Typo="Typo.h6">WebAssembly</MudText>
             </TitleContent>
@@ -99,12 +95,40 @@
 {
 
     Dictionary<object, (Func<(bool,string?)>, bool? result, string? resultText, string title, string description)> tests = new();
-
+    IList<string> expandedPanels = new List<string>();
     protected override void OnInitialized()
     {
         base.OnInitialized();
         tests["1"] = (Test1.RunTest, null, resultText:null, title: "1. Teszt, létező komponens", description:"Ez a teszt ellenőrzni, hogy létrehozta-e a komponenst");
         tests["2"] = (Test1.RunTest2, null, resultText: null, title: "2. Teszt, komponens tartalma helyes", description:"Ez a teszt ellenőrzni, hogy valóban azt tartalmazza-e a komponens, ami az elvárt");
+        
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var itemAsync = await LocalStorage.GetItemAsync<Dictionary<string, Dictionary<string, bool>>>("panel_states") ?? new Dictionary<string, Dictionary<string, bool>>();
+        var containsKey = itemAsync.ContainsKey(this.GetType().Name);
+        if (containsKey)
+        {
+            foreach (var (key, value) in itemAsync[this.GetType().Name])
+            {
+                if (value)
+                {
+                    Console.WriteLine(key);
+                    expandedPanels.Add(key);
+                }
+            }
+        }
+        StateHasChanged();
+        await base.OnParametersSetAsync();
+        
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        await base.OnInitializedAsync();
+        
     }
 
     void RunTest(object ID)
@@ -125,13 +149,27 @@
         return result.Value ? "Siker" : "Elbukott";
     }
 
-    /*private string GetIcon(object contextId)
+    private async Task StoreExpansionState(string tag, bool state)
     {
-        var (item1, result, title, description) = tests[contextId];
-        if (result == null)
+        var allStates = await LocalStorage.GetItemAsync<Dictionary<string, Dictionary<string, bool>>>("panel_states") ?? new Dictionary<string, Dictionary<string, bool>>();
+        var currentPage = this.GetType().Name;
+        if (!allStates.ContainsKey(currentPage))
         {
-            return Icons.Filled.Warning;
+            allStates[currentPage] = new Dictionary<string, bool>();
         }
-        return result ? Icons.Filled.Check;
-    }*/
+
+        allStates[currentPage][tag] = state;
+        await LocalStorage.SetItemAsync("panel_states", allStates);
+    }
+    
+    private string webassemblyTabTag = "webAssembly";
+    private string whatIsBlazorTag = "whatIsBlazor";
+
+
+    private bool IsExpanded(string s)
+    {
+        var isExpanded = expandedPanels.Contains(s);
+        Console.WriteLine(isExpanded);
+        return isExpanded;
+    }
 }
