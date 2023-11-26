@@ -21,6 +21,7 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
     
     [Title(""+DetailsFragmentName+" fragment defined")]
     [Description("This test verifies that the "+TitleFragmentName+" has been defined on the component")]
+    [Precondition]
     public async Task Test1()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex2();
@@ -30,6 +31,7 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
     
     [Title(""+DetailsFragmentName+" fragment defined")]
     [Description("This test verifies that the "+DetailsFragmentName+" has been defined on the component")]
+    [Precondition]
     public async Task Test2()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex2();
@@ -39,6 +41,7 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
     
     [Title(""+EmployeeParamName+" parameter defined")]
     [Description("This test verifies that the "+DetailsFragmentName+" has been defined on the component")]
+    [Precondition]
     public async Task Test2_1()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex2();
@@ -50,10 +53,6 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
     [Description("This test verifies that the "+TitleFragmentName+" is rendered for the component without any interaction")]
     public async Task Test3()
     {
-        var renderFragmentsEx2 = new RenderFragments_Ex2();
-        ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
-        ValidateRenderFragmentExists(renderFragmentsEx2, DetailsFragmentName, typeof(RenderFragment<Employee>));
-
         TestContext testContext = new TestContext();
 
         string titleContent = "title_" + new Random().Next(0, 1000);
@@ -75,10 +74,6 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
     [Description("This test verifies that the "+DetailsFragmentName+" is rendered upon clicking the button")]
     public async Task Test4()
     {
-        var renderFragmentsEx2 = new RenderFragments_Ex2();
-        ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
-        ValidateRenderFragmentExists(renderFragmentsEx2, DetailsFragmentName, typeof(RenderFragment<Employee>));
-
         TestContext testContext = new TestContext();
         
         string titleContent = "title_" + new Random().Next(0, 1000);
@@ -113,10 +108,6 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
     [Description("This test verifies that the "+DetailsFragmentName+" is hidden upon clicking the button a second time")]
     public async Task Test5()
     {
-        var renderFragmentsEx2 = new RenderFragments_Ex2();
-        ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
-        ValidateRenderFragmentExists(renderFragmentsEx2, DetailsFragmentName, typeof(RenderFragment<Employee>));
-
         TestContext testContext = new TestContext();
         
         string titleContent = "title_" + new Random().Next(0, 1000);

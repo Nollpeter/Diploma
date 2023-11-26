@@ -21,6 +21,7 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
 
     [Title("" + DetailsFragmentName + " fragment defined")]
     [Description("This test verifies that the " + TitleFragmentName + " has been defined on the component")]
+    [Precondition]
     public async Task Test1()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex3<Employee>();
@@ -30,6 +31,7 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
 
     [Title("" + ObjectToRenderParamName + " parameter defined")]
     [Description("This test verifies that the " + ObjectToRenderParamName + " has been defined on the component")]
+    [Precondition]
     public async Task Test2_1()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex3<Employee>();
@@ -42,9 +44,6 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
                  " is rendered for the component without any interaction")]
     public async Task Test3()
     {
-        var renderFragmentsEx2 = new RenderFragments_Ex3<Employee>();
-        ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
-
         TestContext testContext = new TestContext();
 
         string titleContent = "title_" + new Random().Next(0, 1000);
@@ -64,9 +63,6 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
     [Description("This test verifies that the " + ObjectToRenderParamName + " is rendered upon clicking the button")]
     public async Task Test4()
     {
-        var renderFragmentsEx2 = new RenderFragments_Ex3<Employee>();
-        ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
-
         TestContext testContext = new TestContext();
 
         string titleContent = "title_" + new Random().Next(0, 1000);
@@ -105,9 +101,6 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
                  " is hidden upon clicking the button a second time")]
     public async Task Test5()
     {
-        var renderFragmentsEx2 = new RenderFragments_Ex3<Employee>();
-        ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
-
         TestContext testContext = new TestContext();
 
         string titleContent = "title_" + new Random().Next(0, 1000);

@@ -15,8 +15,9 @@ public class Test_Components_Introduction_Exercise : ComponentTestBase<Component
     [StringSyntax("html")]
     public const string ListIsHiddenMarkup = "<p>The list is hidden</p>";
     
-    [Title(NumbersParameterName+" parameter defined")]
-    [Description("This test verifies that you have defined the "+NumbersParameterName+" Parameter property and annotated it with the [Paramaeter] attribute")]
+    [ParameterDefinedTitle(NumbersParameterName)]
+    [ParameterDefinedDescription(NumbersParameterName, typeof(List<int>))]
+    [Precondition]
     public async Task Test1()
     {
         var component = new ComponentsIntroductionExercise();
@@ -29,9 +30,6 @@ public class Test_Components_Introduction_Exercise : ComponentTestBase<Component
     [Description("This test verifies that by default, the List is hidden in its initial state")]
     public async Task Test2()
     {
-        var component = new ComponentsIntroductionExercise();
-        ValidateComponentProperty(component, NumbersParameterName, typeof(List<int>));
-
         TestContext testContext = new TestContext();
         Random r = new Random();
         List<int> list = new List<int>(){ r.Next(1000), r.Next(1000), r.Next(1000)};
@@ -40,8 +38,6 @@ public class Test_Components_Introduction_Exercise : ComponentTestBase<Component
 
         var innerHtml = renderedComponent.Find(".ex-container").InnerHtml;
         innerHtml.MarkupMatches("<p>The list is hidden</p>");
-
-        
     }
     
     [Title("Button click renders list")]

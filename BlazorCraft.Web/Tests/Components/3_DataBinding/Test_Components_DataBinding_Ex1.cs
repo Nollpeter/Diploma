@@ -20,6 +20,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     
     [ParameterDefinedTitle(EmployeeFirstNameParamName)]
     [ParameterDefinedDescription(EmployeeFirstNameParamName, typeof(string))]
+    [Precondition]
     public async Task Test1()
     {
         var component = new ComponentDataBinding_Ex1();
@@ -29,6 +30,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     
     [ParameterDefinedTitle(EmployeeLastNameParamName)]
     [ParameterDefinedDescription(EmployeeLastNameParamName, typeof(string))]
+    [Precondition]
     public async Task Test2()
     {
         var component = new ComponentDataBinding_Ex1();
@@ -38,6 +40,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     
     [ParameterDefinedTitle(EmployeeFirstNameChangedName)]
     [ParameterDefinedDescription(EmployeeFirstNameChangedName, typeof(EventCallback<string>))]
+    [Precondition]
     public async Task Test3()
     {
         var component = new ComponentDataBinding_Ex1();
@@ -47,6 +50,7 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
     
     [ParameterDefinedTitle(EmployeeLastNameChangedName)]
     [ParameterDefinedDescription(EmployeeLastNameChangedName, typeof(EventCallback<string>))]
+    [Precondition]
     public async Task Test4()
     {
         var component = new ComponentDataBinding_Ex1();
@@ -59,13 +63,6 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
                  " it is reflected in the component ")]
     public async Task Test5()
     {
-        var component = new ComponentDataBinding_Ex1();
-        
-        ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
-        ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
-
         TestContext testContext = new TestContext();
 
         string firstName = "Theodore";
@@ -81,9 +78,6 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
             throw new TestRunException(
                 $"{EmployeeFirstNameParamName} is not bound properly, its value should be {firstName}, but it is instead {idValue}");
         }
-        
-
-        
     }
 
     [Title(EmployeeFirstNameParamName + " binding Component -> Consumer")]
@@ -91,12 +85,6 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
                  " it is reflected in the Consumer component ")]
     public async Task Test6()
     {
-        var component = new ComponentDataBinding_Ex1();
-        ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
-        ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
-
         TestContext testContext = new TestContext();
 
         string firstName = "Theodore";
@@ -110,8 +98,6 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
             ComponentParameter.CreateParameter(EmployeeFirstNameParamName, firstName),
             ComponentParameter.CreateParameter(EmployeeFirstNameChangedName, idChanged)
         );
-
-        
         
         var inputs = renderedComponent.FindAll("input").ToList();
         
@@ -139,13 +125,6 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
                  " it is reflected in the component ")]
     public async Task Test7()
     {
-        var component = new ComponentDataBinding_Ex1();
-        
-        ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
-        ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
-
         TestContext testContext = new TestContext();
 
         string lastName = "Test";
@@ -161,9 +140,6 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
             throw new TestRunException(
                 $"{EmployeeLastNameParamName} is not bound properly, its value should be {lastName}, but it is instead {nameValue}");
         }
-        
-
-        
     }
 
     [Title(EmployeeLastNameParamName + " binding Component -> Consumer")]
@@ -171,12 +147,6 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
                  " it is reflected in the Consumer component ")]
     public async Task Test8()
     {
-       var component = new ComponentDataBinding_Ex1();
-        ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
-        ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
-        ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
-
         TestContext testContext = new TestContext();
 
         string lastName = "Test";
@@ -201,8 +171,6 @@ public class Test_Components_DataBinding_Ex1 : ComponentTestBase<ComponentDataBi
             throw new TestRunException(
                 $"{EmployeeLastNameParamName} is not bound two way. Upon changing the value of the input, the change is not reflected. Are you calling NameChanged?");
         }
-        
-        
     }
 
 }

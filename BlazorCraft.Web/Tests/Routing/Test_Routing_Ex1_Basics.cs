@@ -14,7 +14,7 @@ public class Test_Routing_Ex1_Basics : RoutingTestBase<Routing_Ex1>
 
 
     [Title("First route")]
-    [Description("Your task is to define a route for the " + nameof(Routing_Ex1) +
+    [Description("This test verifies that you defined the first route: " + nameof(Routing_Ex1) +
                  " component, so that it can be reached in the /" + Route1 + " url")]
     public async Task Ex1_First_Route_Defined()
     {
@@ -28,7 +28,7 @@ public class Test_Routing_Ex1_Basics : RoutingTestBase<Routing_Ex1>
     }
 
     [Title("Second route")]
-    [Description("Your task is to define a second route for the " + nameof(Routing_Ex1) +
+    [Description("This test verifies that you defined the second route: " + nameof(Routing_Ex1) +
                  " component, so that it can be reached in the /" + Route2 + " url as well")]
     public async Task Ex2_Second_Route_Defined()
     {

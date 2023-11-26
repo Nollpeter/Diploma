@@ -24,6 +24,7 @@ public class Test_DependencyInjection_LessonFinal : ComponentTestBase<Dependency
     
     [ComponentUsedInMarkupTitle(typeof(RenderFragments_LessonFinal))]
     [ComponentUsedInMarkupDescription(typeof(RenderFragments_LessonFinal))]
+    [Precondition]
     public async Task Test1()
     {
         var component = new DependencyInjection_Ex_LessonFinal();
@@ -33,6 +34,7 @@ public class Test_DependencyInjection_LessonFinal : ComponentTestBase<Dependency
 
     [ParameterDefinedTitle(EmployeeServiceName)]
     [ParameterDefinedDescription(EmployeeServiceName, typeof(IEmployeeService))]
+    [Precondition]
     public async Task Test2()
     {
         var component = new DependencyInjection_Ex_LessonFinal();
@@ -42,6 +44,7 @@ public class Test_DependencyInjection_LessonFinal : ComponentTestBase<Dependency
 
     [Title("EmployeeService is registered as a scoped service")]
     [Description("This test verifies that the EmployeeService is registered as a scoped service")]
+    [Precondition]
     public async Task Test3()
     {
         var component = new DependencyInjection_Ex_LessonFinal();
@@ -54,10 +57,6 @@ public class Test_DependencyInjection_LessonFinal : ComponentTestBase<Dependency
     [Description("This test verifies that Employees property is bound to "+nameof(RenderFragments_LessonFinal)+".Employees")]
     public async Task Test4()
     {
-        var component = new DependencyInjection_Ex_LessonFinal();
-        ValidateInjectedProperty(component, EmployeeServiceName, typeof(IEmployeeService));
-        ValidateComponentUsage(component, ListComponentType);
-
         var testContext = GetAndValidateTestContext();
         var employeeService = testContext.Services.GetService<IEmployeeService>();
         var employees = await employeeService.GetEmployees();

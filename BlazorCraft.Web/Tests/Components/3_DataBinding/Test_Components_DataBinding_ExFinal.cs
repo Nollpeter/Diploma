@@ -20,6 +20,7 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
     // Component is used
     [ComponentUsedInMarkupTitle(typeof(ComponentDataBinding_Ex1))]
     [ComponentUsedInMarkupDescription(typeof(ComponentDataBinding_Ex1))]
+    [Precondition]
     public async Task Test1()
     {
         var component = new ComponentDataBinding_Ex_LessonFinal();
@@ -32,9 +33,6 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
     [Description("This test verifies that the table rows for each employee were rendered properly")]
     public async Task Test2()
     {
-        var component = new ComponentDataBinding_Ex_LessonFinal();
-        ValidateComponentUsage(component, EditorComponentType);
-
         TestContext testContext = new TestContext();
         List<Employee> employees = new List<Employee>()
         {
@@ -59,9 +57,6 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
     [Description("This test verifies that clicking the edit button reveals the editor for the employee")]
     public async Task Test3()
     {
-        var component = new ComponentDataBinding_Ex_LessonFinal();
-        ValidateComponentUsage(component, EditorComponentType);
-
         TestContext testContext = new TestContext();
         List<Employee> employees = new List<Employee>()
         {
@@ -90,9 +85,6 @@ public class Test_Components_DataBinding_ExFinal : ComponentTestBase<ComponentDa
     [Description("This test verifies that once you edit something in the editor will be reflected in the employees table as well")]
     public async Task Test4()
     {
-        var component = new ComponentDataBinding_Ex_LessonFinal();
-        ValidateComponentUsage(component, EditorComponentType);
-
         TestContext testContext = new TestContext();
         List<Employee> employees = new List<Employee>()
         {

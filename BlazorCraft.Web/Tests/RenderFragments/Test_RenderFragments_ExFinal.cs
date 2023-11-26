@@ -14,6 +14,7 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
     
     [Title(EmployeesParamName + " parameted is defined")]
     [Description("This test verifies that the "+EmployeesParamName+" parameter is defined in the component")]
+    [Precondition]
     public async Task Test1()
     {
         var component = new RenderFragments_LessonFinal();
@@ -25,9 +26,6 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
     [Description("This test validates if the list view for the component renders properly")]
     public async Task Test2()
     {
-        var component = new RenderFragments_LessonFinal();
-        ValidateComponentProperty(component, EmployeesParamName, typeof(List<Employee>));
-
         TestContext testContext = new TestContext();
 
         var r = new Random();
@@ -55,9 +53,6 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
     [Description("This test validates if the table view for the component renders properly")]
     public async Task Test3()
     {
-        var component = new RenderFragments_LessonFinal();
-        ValidateComponentProperty(component, EmployeesParamName, typeof(List<Employee>));
-
         TestContext testContext = new TestContext();
 
         var r = new Random();

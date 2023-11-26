@@ -14,8 +14,10 @@ namespace BlazorCraft.Web.Tests.Components._2_Events;
 public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentEvents_ExLessonFinal>
 {
     public const string EmployeesParameterName = "Employees";
-    [Title(nameof(ComponentEvents_Ex2_EventCallBack) + " component is used")]
-    [Description("This test verifies tha in your markup you actually used the "+nameof(ComponentEvents_Ex2_EventCallBack) + " component")]
+    
+    [ComponentUsedInMarkupTitle(typeof(ComponentEvents_Ex2_EventCallBack))]
+    [ComponentUsedInMarkupDescription(typeof(ComponentEvents_Ex2_EventCallBack))]
+    [Precondition]
     public async Task Test1()
     {
         var component = new ComponentEvents_ExLessonFinal();
@@ -27,9 +29,6 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
     [Description("This test verifies that the employee is deleted from "+EmployeesParameterName+" upon clicking delete")]
     public async Task Test2()
     {
-        var component = new ComponentEvents_ExLessonFinal();
-        ValidateComponentUsage(component, typeof(ComponentEvents_Ex2_EventCallBack));
-        
         TestContext testContext = new TestContext();
         Random r = new Random();
         List<Employee> list = new List<Employee>()
@@ -61,9 +60,6 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
     [Description("This test verifies that the employee is deleted from "+EmployeesParameterName+" upon clicking delete")]
     public async Task Test3()
     {
-        var component = new ComponentEvents_ExLessonFinal();
-        ValidateComponentUsage(component, typeof(ComponentEvents_Ex2_EventCallBack));
-        
         TestContext testContext = new TestContext();
         Random r = new Random();
         var employee1 = new Employee(r.Next(1000), $"test_{r.Next(1000)}");

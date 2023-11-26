@@ -16,9 +16,9 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
     public const string EmployeesParameterName = "Employees";
     public const string EventCallBackPropertyName = "ListItemDeleted";
 
-    [Title(EmployeesParameterName + " parameter defined")]
-    [Description("This test verifies that you have defined the " + EmployeesParameterName +
-                 " Parameter property and annotated it with the [Paramaeter] attribute")]
+    [ParameterDefinedTitle(EmployeesParameterName)]
+    [ParameterDefinedDescription(EmployeesParameterName, typeof(List<Employee>))]
+    [Precondition]
     public async Task Test1()
     {
         var component = new ComponentEvents_Ex2_EventCallBack();
@@ -26,9 +26,9 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
         
     }
 
-    [Title(EventCallBackPropertyName + " parameter defined")]
-    [Description("This test verifies that you have defined the " + EventCallBackPropertyName +
-                 " Parameter property and annotated it with the [Paramaeter] attribute")]
+    [ParameterDefinedTitle(EventCallBackPropertyName)]
+    [ParameterDefinedDescription(EventCallBackPropertyName, typeof(EventCallback<Employee>))]
+    [Precondition]
     public async Task Test2()
     {
         var component = new ComponentEvents_Ex2_EventCallBack();
@@ -40,9 +40,6 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
     [Description("This test verifies that you render the values of " + EmployeesParameterName + " properly")]
     public async Task Test3()
     {
-        var component = new ComponentEvents_Ex2_EventCallBack();
-        ValidateComponentProperty(component, EmployeesParameterName, typeof(List<Employee>));
-        
         TestContext testContext = new TestContext();
         Random r = new Random();
         List<Employee> list = new List<Employee>()
@@ -81,10 +78,6 @@ public class Test_Components_Events_Ex2 : ComponentTestBase<ComponentEvents_Ex2_
     [Description("This test verifies that upon clicking on the delete button for a row, the event is actually called")]
     public async Task Test4()
     {
-        var component = new ComponentEvents_Ex2_EventCallBack();
-        ValidateComponentProperty(component, EmployeesParameterName, typeof(List<Employee>));
-        ValidateComponentProperty(component, EventCallBackPropertyName, typeof(EventCallback<Employee>));
-
         TestContext testContext = new TestContext();
         Random r = new Random();
         List<Employee> list = new List<Employee>()
