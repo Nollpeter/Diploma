@@ -1,4 +1,36 @@
-﻿@using System.Linq.Expressions
+﻿@typeparam TEnum where TEnum: struct, Enum
+@using MudBlazor
+@inherits MudSelect<TEnum?>
+@{
+    base.BuildRenderTree(__builder);
+}
+@code {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        ChildContent = Items;
+    }
+
+    protected RenderFragment Items => builder =>
+    {
+        int seq = 0;
+        
+        // Add a null option
+        builder.OpenComponent<MudSelectItem<TEnum?>>(seq++);
+        builder.AddAttribute(seq++, "Value", (TEnum?)null);
+        builder.CloseComponent();
+
+        // Add the enum values
+        foreach (var enumValue in Enum.GetValues<TEnum>())
+        {
+            builder.OpenComponent<MudSelectItem<TEnum?>>(seq++);
+            builder.AddAttribute(seq++, "Value", enumValue);
+            builder.AddContent(seq++, enumValue.ToString());
+            builder.CloseComponent();
+        }
+    };
+}
+@*@using System.Linq.Expressions
 @typeparam TEnum where TEnum: struct, Enum
     <MudSelect T="@(TEnum?)" Value="Value" ValueChanged="ValueChanged" Disabled="Disabled" Label="@Label" RequiredError="@($"{Label}) is required")" For="For">
     
@@ -20,4 +52,4 @@
     [Parameter]
     public string Label { get; set; }
 
-}
+}*@

@@ -1,5 +1,5 @@
 ﻿@using BlazorCraft.Web.Shared._Exercises.Exam
-@inject IExamEmployeeService EmployeeService
+
 
 <MudContainer>
     <MudPaper Style="min-height: 800px; overflow:hidden; position:relative;">
@@ -54,6 +54,8 @@
     private bool _detailsPanelOpen = false;
     private bool _createPanelOpen = false;
 
+    [Inject] public IExamEmployeeService EmployeeService { get; set; }
+    
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();

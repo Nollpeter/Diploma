@@ -74,10 +74,6 @@ public class Test_Routing_Ex3_RouteConstraints : RoutingTestBase<Routing_Ex3>
                 throw new TestRunException(
                     $"The component does not render the parameter correctly. Expected markup: {expectedOutput}, Actual markup: {renderedComponentMarkup}");
             }
-            else
-            {
-                
-            }
         }
     }
 }

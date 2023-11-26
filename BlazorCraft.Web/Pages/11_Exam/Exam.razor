@@ -1,5 +1,6 @@
 ﻿@page "/exam"
 @using BlazorCraft.Web.Shared._Exercises.Exam
+@using BlazorCraft.Web.Tests.Exam
 <MudText Typo="Typo.h4">Exam exercise</MudText>
 <div class="d-grid gap-3">
     <MudText>
@@ -9,7 +10,7 @@
         In this chapter, you will learn nothing new, but put together everything you have learned so far.
     </MudText>
     <MudText>
-        In this exam, you will create a minified stripped down employee management page, where employees can be 
+        In this exam, you will create a minified stripped down employee management page, where employees can be
         <ul>
             <li>Listed in a grid</li>
             <li>Created</li>
@@ -20,7 +21,7 @@
     </MudText>
     <MudText>The layout will be predefined for you, as it is out-of-scope for this application to teach the usage of CSS libraries and/or CSS itself</MudText>
     <MudText>The layout will often use components of MudBlazor, but don't worry, everything will be explained how they can be used, also the general look of the component will be much better this way</MudText>
-    
+
     <MudExpansionPanels MultiExpansion="true">
         <MudExpansionPanelWithStoredState Id="exam-exercise">
             @*<PanelHeaderWithTestTracking TTestClass="null">*@
@@ -29,6 +30,15 @@
             </TitleContent>
             @*</PanelHeaderWithTestTracking>*@
             <ChildContent>
+                <MudExpansionPanelWithStoredState Id="employee-form">
+                    <TitleContent>
+                        <PanelHeaderWithTestTracking TTestClass="Test_Exam_EmployeeForm">Employee form</PanelHeaderWithTestTracking>
+                    </TitleContent>
+                    <ChildContent>
+                        <TestRunner TTestClass="Test_Exam_EmployeeForm"></TestRunner>
+                    </ChildContent>
+                </MudExpansionPanelWithStoredState>
+
                 <div class="d-grid gap-3">
                     <Exercise_Exam></Exercise_Exam>
                 </div>
@@ -38,5 +48,5 @@
 </div>
 
 @code {
-    
+
 }
