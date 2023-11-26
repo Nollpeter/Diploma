@@ -1,0 +1,20 @@
+﻿@typeparam T
+@Title
+@*Notice how we render a RenderFragment inside a RenderFragment*@
+@ListTemplate(
+    @:@{
+        foreach (var item in ListItems)
+        {
+            @ListItemTemplate(item);
+        }
+    }
+)
+
+@code {
+
+    [Parameter, EditorRequired] public RenderFragment Title { get; set; }
+    [Parameter, EditorRequired] public List<T> ListItems { get; set; }
+    [Parameter, EditorRequired] public RenderFragment<T> ListItemTemplate { get; set; }
+    [Parameter, EditorRequired] public RenderFragment<RenderFragment> ListTemplate { get; set; } // Notice how we pass a RenderFragment to a RenderFragment
+
+}

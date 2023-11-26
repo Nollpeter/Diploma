@@ -1,0 +1,11 @@
+﻿<div>@Title</div>
+@foreach (var item in ListItems)
+{
+    <div>a: @item.a, b: @item.b</div>
+}
+@code{
+    
+    [Parameter, EditorRequired] public string Title { get; set; }
+    [Parameter, EditorRequired] public List<TestClass> ListItems { get; set; }
+
+}

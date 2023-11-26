@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
+    <link href="css/prism.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -28,21 +29,33 @@
         <a class="dismiss">🗙</a>
     </div>
     <script>
-        window.highlightSnippet = function(){
-            document.querySelectorAll('pre.code>code').forEach((el)=>{
-                console.log("found")
-                hljs.highlightBlock(el);
+        window.highlightSnippet = function (){
+            Prism.highlightAll();
+        }
+        window.prettifyHtml = function format(html) {
+            var tab = '  ';
+            var result = '';
+            var indent= '';
+
+            html.split(/>\s*</).forEach(function(element) {
+                if (element.match( /^\/\w/ )) {
+                    indent = indent.substring(tab.length);
+                }
+
+                result += indent + '<' + element + '>\r\n';
+
+                if (element.match( /^<?\w[^>]*[^\/]$/ ) && !element.startsWith("input")  ) {
+                    indent += tab;
+                }
             });
+
+            return result.substring(1, result.length-3);
         }
     </script>
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_framework/aspnetcore-browser-refresh.js"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/highlight.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/languages/csharp.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/languages/razor.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/languages/css.min.js"></script>
-    
+    <script src="js/prism.js"></script>
    
 </body>
 

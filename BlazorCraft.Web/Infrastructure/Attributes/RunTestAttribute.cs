@@ -34,3 +34,13 @@ public class HintAttribute : Attribute
 
     public string Hint { get; }
 }
+
+public class TestForPageAttribute : Attribute
+{
+    public TestForPageAttribute(Type page)
+    {
+        Page = page;
+    }
+    
+    public Type Page { get; set; }
+}

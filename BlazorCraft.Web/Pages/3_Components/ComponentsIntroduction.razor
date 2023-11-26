@@ -1,0 +1,63 @@
+﻿@page "/components/introduction"
+
+<MudContainer Class="d-grid gap-3">
+    <MudText Typo="Typo.h4">Blazor Components</MudText>
+    <MudText>
+        Blazor components are the building blocks of a Blazor application, encapsulating rendering logic, data, and behavior. These components can be thought of as reusable pieces of user interface (UI), akin to the concept of Web Components but designed to leverage the .NET ecosystem. In a typical Blazor project, components are created using Razor files (.razor) which blend HTML markup with C# code. The logic is kept in a code block or an associated code-behind file, and the UI is defined as Razor markup.
+    </MudText>
+    <MudText>
+        Components interact with each other through a well-defined mechanism involving parameters, events, and data-binding. Parameters allow you to pass data into a component, while events enable components to communicate back to their parent or to the entire application. Two-way data-binding simplifies keeping the UI and data model in sync, and the powerful templating features let you customize how data is displayed.
+    </MudText>
+    <MudText>
+        In a typical WebAssembly Blazor project, components are written as Razor files (.razor), combining HTML markup with embedded C# logic. These files get compiled into .NET assemblies that are then downloaded and run in the browser through a WebAssembly-based .NET runtime. Just like in any other Blazor hosting model, you can pass data between components using parameters, capture user events, and execute logic based on lifecycle events.
+    </MudText>
+    <MudText>
+        Here's a simple example to visualize the concept:
+    </MudText>
+    <CodeSnippet Language="razor">
+        @("""<!-- GreetingComponent.razor -->""" + "\n" +
+          """@code {""" + "\n" +
+          """    private string name = "World";""" + "\n" +
+          """}""" + "\n" +
+          "\n" +
+          """<h1>Hello, @name!</h1>""" + "\n" +
+          "\n" +
+          """<button @onclick="ChangeName">Change Name</button>""" + "\n" +
+          "\n" +
+          """@code {""" + "\n" +
+          """    private void ChangeName()""" + "\n" +
+          """    {""" + "\n" +
+          """        name = "Blazor";""" + "\n" +
+          """    }""" + "\n" +
+          """}""" + "\n")
+    </CodeSnippet>
+
+    <MudText>
+        In this component, we define some static HTML and a button. The <strong>@("@code")</strong> block contains the C# logic for the component. 
+        When the button is clicked, the ChangeName function is executed, which updates the name variable, triggering a re-render of the component to reflect the new state.
+    </MudText>
+    <MudText>
+        This is a high-level overview, but the real power comes when you start composing complex UIs by nesting components, handling events, and binding data. 
+        Despite running client-side, Blazor WebAssembly components can interact with server-side APIs for data, utilize browser capabilities through JavaScript interop, and even integrate with other JavaScript libraries or Web Components.
+    </MudText>
+    <MudExpansionPanels MultiExpansion="true">
+        <MudExpansionPanelWithStoredState Id="components_ex-1">
+            <TitleContent>
+                <MudText Typo="Typo.h5" Class="fw-bold">Exercise - Hello world</MudText>
+            </TitleContent>
+            <ChildContent>
+                <div class="d-grid gap-3">
+                    <MudText Typo="Typo.body1">Create a new component insude Components\Introduction folder with the name HelloWorld.razor</MudText>
+                    <MudText Typo="Typo.body1">The component should only contain a @("<h3>") tag wit the content: "Hello world"!</MudText>
+                    <MudText><strong>Note: </strong> In further exercises you will be provided with already existing components</MudText>
+                    <TestRunner TTestClass="Test_Components_Ex1_HelloWorld"></TestRunner>
+                </div>
+            </ChildContent>
+        </MudExpansionPanelWithStoredState>
+    </MudExpansionPanels>
+</MudContainer>
+
+
+@code {
+
+}

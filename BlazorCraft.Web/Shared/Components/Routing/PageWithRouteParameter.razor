@@ -1,0 +1,7 @@
+﻿@page "/page-with-route-parameter/{RouteParameter}"
+
+<p>@RouteParameter</p>
+
+@code {
+    [Parameter] public string RouteParameter { get; set; }
+}

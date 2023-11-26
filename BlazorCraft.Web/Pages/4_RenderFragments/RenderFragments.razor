@@ -1,0 +1,185 @@
+﻿@page "/render-fragments"
+@using BlazorCraft.Web.Shared.Components.RenderFragments.ExampleUsages
+<MudText Typo="Typo.h4">Render Fragments</MudText>
+<div class="d-grid gap-3">
+<MudText>
+    So far, we've developed components that generate their entire rendered output based on parameters.
+    However, components aren't always that straightforward.
+    There are situations where we need to create components that combine user-supplied markup with their own rendered content.
+</MudText>
+<MudText>
+    Passing content to a component as an HTML encoded string parameter would be messy and unmanageable.
+    For instance:
+</MudText>
+<CodeSnippet>
+    @("""<Collapsible content="Lots of encoded HTML for your entire view here" />""")
+</CodeSnippet>
+<MudText>
+    Furthermore, in addition to the maintenance challenges, the embedded HTML would be limited to basic markup only, excluding the use of Blazor components.
+    This approach is essentially impractical and clearly not the recommended approach.
+    The correct solution is to employ a RenderFragment.
+</MudText>
+<MudText>In the following sections we will create a List component as an example</MudText>
+<MudText>The first parts of the exercise might seem like they make little sense, but don't worry, it will all make sense in the end!</MudText>
+
+<MudExpansionPanels MultiExpansion="true">
+<MudExpansionPanelWithStoredState Id="listComponent">
+    <TitleContent>
+        <MudText Typo="Typo.h5" Class="fw-bold">A simple list component with Title RenderFragment</MudText>
+    </TitleContent>
+    <ChildContent>
+        <div class="d-grid gap-3">
+            <MudText>
+                First of all, we would like to have a ListComponent. Our List component will have a title and List items. In this example we will use a record type name <strong>TestClass</strong> for list items
+            </MudText>
+            <MudText>
+                As a first approach we can simply define a List property for the ListComponent and a Title string Property, then use a markup like this:
+            </MudText>
+            <CodeSnippet>
+                @("""public record TestClass(int a, int b);""")
+            </CodeSnippet>
+            <AdvancedCodeSnippet TComponent="ListComponent1" ShowComponentName="true" />
+            <AdvancedCodeSnippet TComponent="ListComponent1Usage" ShowComponentName="false" RenderOutput="true"></AdvancedCodeSnippet>
+            
+            <MudText>
+                Technically a List component, but it confronts us instantly with 2 problems:
+                - What if we want the Title to be a bit bigger, like a <strong>@("<h2>")</strong> tag?
+                - What if we don't want to use <strong>@("<div>")</strong> tags, but instead we want to use <strong>@("<p>")</strong> tags?
+                In this case we would need to create a completely different List Component. <strong>This cannot work in the long term!</strong>
+                Instead let's address the two problems separately
+            </MudText>
+            <MudText>
+                By using a <strong>RenderFragment</strong> property instead of a <strong>string</strong> property, we can externally define what should exactly be in the Title. It can be virtually everything, as long as it is a valid Blazor markup.
+            </MudText>
+            @*<CodeSnippet>
+                @("""@Title""" + "\n" +
+                  """@foreach (var item in ListItems)""" + "\n" +
+                  """{""" + "\n" +
+                  """    <div>a: @item.a, b: @item.b</div>""" + "\n" +
+                  """}""" + "\n" +
+                  """@code{""" + "\n" +
+                  "\n" +
+                  """    [Parameter, EditorRequired] public RenderFragment Title { get; set; }""" + "\n" +
+                  """    [Parameter, EditorRequired] public List<TestClass> ListItems { get; set; }""" + "\n" +
+                  "\n" +
+                  """}""" + "\n")
+            </CodeSnippet>*@
+            <AdvancedCodeSnippet TComponent="ListComponent2" ShowComponentName="true" />
+            <MudText>Which can be used like this:</MudText>
+            <AdvancedCodeSnippet TComponent="ListComponent2Usage" RenderOutput="true" />
+            <MudText>Now, we can define the title any way that we want.</MudText>
+            <MudText>In the next section, we will make the List items customizable as well</MudText>
+        </div>
+    </ChildContent>
+</MudExpansionPanelWithStoredState>
+<MudExpansionPanelWithStoredState Id="listComponent_items_templateable">
+    <TitleContent>
+        <MudText Typo="Typo.h5" Class="fw-bold">Passing data to RenderFragments</MudText>
+    </TitleContent>
+    <ChildContent>
+        <div class="d-grid gap-3">
+            <MudText>The next step is that we make the List items customizable as well. We may want to use <strong>@("<p>")</strong> tags, instead of <strong>@("div>")</strong></MudText>
+            <AdvancedCodeSnippet TComponent="ListComponent3" ShowComponentName="true"/>
+            <MudText>
+                By using the <strong>@("RenderFragment<TestClass>")</strong>, we can tell the component, the we are going to externally set how the section is going to be rendered <strong>and</strong> what type we want to use in the context of its rendering.
+                While defining renderfragments with a generic type parameter in blazor, we will automatically have a <strong>@("@context")</strong> variable
+            </MudText>
+            <MudText>
+                Using our new component will look like this
+            </MudText>
+            <AdvancedCodeSnippet TComponent="ListComponent3Usage" RenderOutput="true"/>
+            <MudText>
+                <strong>Note: </strong> the <strong>context</strong> variable is just the default name for the parameter passed to the renderfragment, this can be renamed without any problems.
+                This is useful (and necessary) if you have multiple layers of Renderfragments, so that name collisions can be avoided
+            </MudText>
+            <CodeSnippet>
+                @("""@* ... *@""" + "\n" +
+                  """<ListItemTemplate context="myCustomContextName">""" + "\n" +
+                  """    <p>a: @myCustomContextName.a, b: @myCustomContextName.b</p>""" + "\n" +
+                  """</ListItemTemplate>""" + "\n" +
+                  """@* ... *@""" + "\n")
+            </CodeSnippet>
+        </div>
+    </ChildContent>
+</MudExpansionPanelWithStoredState>
+<MudExpansionPanelWithStoredState Id="listComponent_typeParam">
+    <TitleContent>
+        <MudText Typo="Typo.h5" Class="fw-bold">Making the component generic to use it with any type</MudText>
+    </TitleContent>
+    <ChildContent>
+        <div class="d-grid gap-3">
+            <MudText>
+                While it is a significant step forward that we can customize how each item in the list will be rendered,
+                the component still binds us to the <strong>TestClass</strong> type, which is a show stopper regarding its reusability and versatility
+            </MudText>
+            <MudText>
+                To address this issue, we can use the <strong>typeParam keyword to make the Blazor component generic, just the way we would make any C# type generic</strong>.
+            </MudText>
+            <MudText>The modified component will look like this</MudText>
+            <AdvancedCodeSnippet TComponent="ListComponent4<int>" ShowComponentName="true" />
+            <MudText>
+                Now if we create a new type to use it with
+            </MudText>
+            <CodeSnippet>
+                @("""public record TestClass2(int c, int d, int e);""")
+            </CodeSnippet>
+            <MudText>Then we can use the new List component like this:</MudText>
+            <AdvancedCodeSnippet TComponent="ListComponent4Usage" RenderOutput="true" />
+            <MudText><strong>Note: </strong> generic constraints works with blazor component typeparams as well, just as C# generic contraints</MudText>
+            <CodeSnippet>
+                @("""@typeparam T where T: ComponentBase, IComponent""")
+            </CodeSnippet>
+        </div>
+    </ChildContent>
+</MudExpansionPanelWithStoredState>
+<MudExpansionPanelWithStoredState Id="listComponent_placeholders">
+    <TitleContent>
+        <MudText Typo="Typo.h5" Class="fw-bold">Passing placeholders to RenderFragments</MudText>
+    </TitleContent>
+    <ChildContent>
+        <div class="d-grid gap-3">
+            <MudText>
+                Our List component is getting very close to perfection, however it is only a list component in the sense of a C# list, where objects (or rows in our context) follow each other.
+                In the world of the web, we very often need to encapsulate our list within an html element, like the following:
+            </MudText>
+            <CodeSnippet>
+                @("""<ul>""" + "\n" +
+                  """    <li>1</li>""" + "\n" +
+                  """    <li>2</li>""" + "\n" +
+                  """    <li>3</li>""" + "\n" +
+                  """</ul>""" + "\n")
+            </CodeSnippet>
+            <MudText>
+                See how the list items are wrapped in the <strong>@("<ul>")</strong> tag?
+            </MudText>
+            <MudText>
+                As a quick fix, we could of course try and wrap our entire ListComponent within a <strong>@("<ul>")</strong> tag.
+            </MudText>
+            <AdvancedCodeSnippet TComponent="ListComponent4QuickFix" ShowComponentName="false" RenderOutput="true" />
+            <MudText>By just looking and the rendered html content visually, we could assume it worked, but if we dig into the markup of it, we can see that something is fishy:</MudText>
+            <MudText>
+                The Title became a list item! This solution won't hold in more complex scenarios, we need to find a way, to wrap <strong>only</strong> the list items around with the <strong>@("<ul>")</strong> tag.
+                For this we are going to pass a RenderFragment to a RenderFragment to solve the problem
+            </MudText>
+            <AdvancedCodeSnippet TComponent="ListComponent5<int>" ShowComponentName="true" RenderOutput="false" />
+            <MudText>
+                Another trick that we use here is the @("@:@{}") operator.
+                It is in fact two character sequences. First @("@:") tells the Razor parser to treat the following text as Razor mark-up, and then @("@{") is the start of a C# code block - which will obviously end somewhere with a complementary }.
+                Ultimately this gives us a chunk of Razor mark-up, which is equivalent to a RenderFragment with C# code inside it that can perform operations such as loops.
+            </MudText>
+            <MudText>
+                And then we can use this modified component the following way to achieve the desired result
+            </MudText>
+            <AdvancedCodeSnippet TComponent="ListComponent5Usage" RenderOutput="true" />
+        </div>
+        
+    </ChildContent>
+    
+</MudExpansionPanelWithStoredState>
+</MudExpansionPanels>
+</div>
+
+
+@code {
+
+}

@@ -1,0 +1,13 @@
+﻿<MudPaper Elevation="3" Class="p-3">
+    <CascadingValue TValue="CompanionSnippets" Value="this">
+        <MudText Class="fw-bold">Component:</MudText>
+        @Component
+        <MudDivider/>
+        @Usage
+    </CascadingValue>
+</MudPaper>
+
+@code {
+    [Parameter,EditorRequired] public RenderFragment Component { get; set; }
+    [Parameter,EditorRequired] public RenderFragment Usage { get; set; }
+}

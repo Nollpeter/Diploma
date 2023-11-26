@@ -1,0 +1,19 @@
+﻿<p>Elapsed seconds: @elapsedSeconds</p>
+
+@code {
+    private int elapsedSeconds;
+    private System.Timers.Timer timer;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        timer = new System.Timers.Timer(1000); // Timer fires every 1 second (1000 milliseconds) 
+        timer.Elapsed += (sender, e) =>
+        {
+            elapsedSeconds++; // Increase the elapsed time every second. 
+            StateHasChanged(); // Notify Blazor that the component needs to be re-rendered
+        };
+        timer.Start();
+    }
+
+}

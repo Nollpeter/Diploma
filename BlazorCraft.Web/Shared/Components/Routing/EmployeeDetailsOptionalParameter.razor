@@ -1,0 +1,37 @@
+﻿@page "/employee/details-optional-param/{EmployeeId:int?}"
+@* Notice the ? after the parameter *@
+
+@if (_selectedEmployee == null)
+{
+    <p>Employee not found</p>
+}
+else
+{
+    <p>Employee id: @_selectedEmployee.Id, Name: @_selectedEmployee.FirstName @_selectedEmployee.LastName, Position: @_selectedEmployee.Position</p>
+}
+
+@code {
+
+    public record Employee(int Id, string FirstName, string LastName, string Position);
+
+    [Parameter]
+    public int? EmployeeId { get; set; } //Notice that now it is nullable
+
+    private Employee? _selectedEmployee;
+
+    private List<Employee> Employees => new()
+    {
+        new(1, "Test", "Theodore", "CEO"),
+        new(2, "Test", "Thomas", "CFO"),
+        new(3, "Test", "Tiffany", "CTO"),
+        new(4, "Test", "Tim", "Janitor")
+    };
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        EmployeeId ??= 3; // ??= checks if the value is null and if it is, then the right side of the operator is assigned (3), otherwise nothing changes
+        _selectedEmployee = Employees.FirstOrDefault(p => p.Id == EmployeeId);
+    }
+
+}

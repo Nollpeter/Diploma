@@ -12,7 +12,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddMudServices();
-builder.Services.AddTransient<Test1>();
+builder.Services.AddScoped<ITestRunnerService, TestRunnerService>();
+builder.Services.AddTransient<Test_Components_Ex1_HelloWorld>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<IPanelStateService, PanelStateService>();
 

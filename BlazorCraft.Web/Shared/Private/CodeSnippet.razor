@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Components.Rendering
-<pre class="code">
-    <code class="@Language">
+<pre>
+    <code class="language-@Language">
        @ChildContent
     </code>
 </pre>
@@ -18,6 +18,6 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await _js.InvokeVoidAsync("highlightSnippet");
+       await _js.InvokeVoidAsync("highlightSnippet");
     }
 }

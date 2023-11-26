@@ -1,0 +1,87 @@
+﻿@page "/components/cascading-values"
+
+<MudText Typo="Typo.h4" Class="fw-bold">Cascading values</MudText>
+<MudText>
+    Cascading values and parameters in Blazor offer a way to pass data across a component tree without having to pass parameters down manually at every level.
+    This can be particularly useful for shared settings or information that multiple components need to access but aren't necessarily directly related in terms of parent-child relationships.
+    A typical use case might be something like a user's theme preference, where multiple components, even deep down the tree, might need to know the current theme to style themselves correctly.
+</MudText>
+<MudText>
+    To set up a cascading value, you'd use the <strong>@("<CascadingValue>")</strong> component in the parent component to wrap around the components that should receive the value.
+    The Value parameter of <strong>@("<CascadingValue>")</strong> is used to specify what value should be cascaded down.
+    The parent component thus acts like a data provider, and any child components within its scope can access this shared data.
+</MudText>
+<MudText>
+    For child components to actually use this cascaded value, they would define a <strong>[CascadingParameter]</strong> property.
+    This property gets automatically populated with the cascaded value, provided the types match.
+    If multiple cascading values of the same type are found up the component tree, the nearest one is used.
+    This allows for a very efficient way to share values or state between components, making your application more maintainable and less prone to errors from manual parameter passing.
+</MudText>
+
+<MudExpansionPanels MultiExpansion="true">
+    <MudExpansionPanelWithStoredState Id="cascading-by-name">
+        <TitleContent>
+            <MudText Typo="Typo.h5" Class="fw-bold">Cascading values by <span class="text-decoration-underline">name</span></MudText>
+        </TitleContent>
+        <ChildContent>
+            <div class="d-grid gap-3">
+                <MudText>
+                    In Blazor, it's possible to explicitly name cascading values, giving you finer control over which components receive the value.
+                    This is particularly useful when you have multiple cascading values of the same type, but you want to specify which one goes where.
+                    By assigning a name to the CascadingValue component using the Name parameter, you make sure only the components looking for that specific named value will receive it.
+                </MudText>
+                <MudText>
+                    To consume a named cascading value, you use the Name property in the <strong>[CascadingParameter]</strong> attribute on the child component's property.
+                    The name must match the name specified in the providing component's CascadingValue for the data to flow.
+                    If the names do not match, the child component will not receive the value, allowing you to better scope your cascading parameters and avoid accidental data overwrites or reads.
+                </MudText>
+                <MudText>
+                    Here's a simple example: Suppose you have a parent component that provides two cascading values, both of type int, but serving different purposes.
+                    One could represent a "UserId" and another could represent an "OrderId".
+                    By naming these values, you can ensure that a child component receives only the UserId or the OrderId as needed, without getting them mixed up.
+                    You'd declare it like this in the parent:
+                    <strong>@("""<CascadingValue Name="UserId" Value="@userId">""")</strong> and receive it in the child like this: <strong>[CascadingParameter(Name = "UserId")] public int UserId { get; set; }.</strong>
+                    This makes your components more maintainable and your application less error-prone.
+                </MudText>
+            </div>
+        </ChildContent>
+    </MudExpansionPanelWithStoredState>
+    <MudExpansionPanelWithStoredState Id="cascading-by-type">
+        <TitleContent>
+            <MudText Typo="Typo.h5" Class="fw-bold">Cascading values by <span class="text-decoration-underline">type</span></MudText>
+        </TitleContent>
+        <ChildContent>
+            <MudText>
+                Cascading values by type is the default behavior in Blazor, which means that if you don't specify a name for the cascading value, it will be matched by its type
+                This is convenient for situations where the type itself is enough to uniquely identify the value, or when you're sure that there won't be multiple cascading values of the same type
+                When you provide a cascading value this way, any nested component that declares a <strong>[CascadingParameter]</strong> of the same type will automatically receive the value
+            </MudText>
+            <MudText>
+                However, one of the drawbacks of type-based cascading is the risk of type collisions when you have multiple instances of the same type being cascaded
+                It can be challenging to control which cascading value is consumed by a nested component, as it will receive the closest ancestor's cascading value of that type
+                This could lead to unexpected behaviors if not carefully managed, especially in larger and more complex component hierarchies
+            </MudText>
+        </ChildContent>
+    </MudExpansionPanelWithStoredState>
+    <MudExpansionPanelWithStoredState Id="overriding-cascading-values">
+        <TitleContent>
+            <MudText Typo="Typo.h5" Class="fw-bold">Overriding cascading values</MudText>
+        </TitleContent>
+        <ChildContent>
+            <MudText>
+                Overriding cascading values in Blazor is a powerful feature that allows a nested component to change a cascading value it has received before passing it along to its own children.
+                This is useful in scenarios where you need to modify the context for a specific part of your component tree without affecting the rest of the application.
+                For instance, you may have a theme that should be slightly modified in one section of your app but remain the same everywhere else.
+            </MudText>
+            <MudText>
+                To override a cascading value, you can simply create another <strong>@("<CascadingValue>")</strong> tag at a deeper level in the component tree and provide a new value.
+                This will override the value for that subtree, but it won't affect the cascading values for sibling components or other parts of the tree.
+                Essentially, the closest <strong>@("<CascadingValue>")</strong> takes precedence for any given type or name, allowing you to have granular control over your app's behavior.
+            </MudText>
+        </ChildContent>
+    </MudExpansionPanelWithStoredState>
+</MudExpansionPanels>
+
+@code {
+
+}

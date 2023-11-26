@@ -1,24 +1,19 @@
-﻿<MudNavMenu>
+﻿@using BlazorCraft.Web.Pages._3_Components
+@using BlazorCraft.Web.Pages._4_RenderFragments
+@using BlazorCraft.Web.Pages._5_Routing
+<MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
     <MudNavLink Href="introduction" Match="NavLinkMatch.Prefix">Introduction</MudNavLink>
     <MudNavLink Href="layouts" Match="NavLinkMatch.Prefix">Layouts</MudNavLink>
-    <MudNavGroup Title="Komponensek" Expanded="true">
-        <MudNavLink Href="/components/event-handling">Event handling</MudNavLink>
-        <MudNavLink Href="/components/two-way-data-binding">Two-way data-binging</MudNavLink>
-        <MudNavLink Href="/components/cascading-values">Cascaded values</MudNavLink>
-        <MudNavLink Href="/components/two-way-data-binding">Kétirányú adatkötés</MudNavLink>
-        <MudNavLink Href="/components/multi-threaded-rendering">Többszálú renderelés</MudNavLink>
-        <MudNavLink Href="/components/render-trees">Render fák</MudNavLink>
+    <MudNavGroup Title="Components" Expanded="true">
+        <MudNavLinkWithTestTracking PageType="typeof(ComponentsIntroduction)" >Components Introduction</MudNavLinkWithTestTracking>
+        <MudNavLinkWithTestTracking PageType="typeof(ComponentEvents)" >Component events</MudNavLinkWithTestTracking>
+        <MudNavLinkWithTestTracking PageType="typeof(ComponentDataBinding)" >Data-binding</MudNavLinkWithTestTracking>
+        <MudNavLinkWithTestTracking PageType="typeof(ComponentLifecycle)" >Component lifecycle</MudNavLinkWithTestTracking>
+        <MudNavLinkWithTestTracking PageType="typeof(ComponentCascadingValues)">Cascaded values</MudNavLinkWithTestTracking>
+        <MudNavLinkWithTestTracking PageType="typeof(RenderFragments)">Generic components with render fragments</MudNavLinkWithTestTracking>
     </MudNavGroup>
-    <MudNavGroup Title="Általános komponensek és Renderfragmentek" Expanded="true">
-        <MudNavLink Href="advanced-components/generic-components">Generikus komponensek</MudNavLink>
-        <MudNavLink Href="advanced-components/render-fragments">Tartalom szegmensek</MudNavLink>
-    </MudNavGroup>
-    <MudNavGroup Title="Routing" Expanded="true">
-        <MudNavLink Href="routing/route-parameters">Route paraméterek</MudNavLink>
-        <MudNavLink Href="routing/route-templates">Route sablonok</MudNavLink>
-        <MudNavLink Href="routing/navigation-event">Navigációs események</MudNavLink>
-    </MudNavGroup>
+    <MudNavLinkWithTestTracking PageType="typeof(Routing)">Routing</MudNavLinkWithTestTracking>
     <MudNavGroup Title="Űrlapok" Expanded="true">
         <MudNavLink Href="forms/edit-form">EditForm</MudNavLink>
         <MudNavLink Href="forms/validation">Validáció</MudNavLink>

@@ -1,0 +1,156 @@
+﻿@using Bunit
+@using System.Text.RegularExpressions
+@typeparam TComponent where TComponent : ComponentBase
+@if (renderingFinished)
+{
+    @if (CompanionContainer == null)
+    {
+        <MudPaper Elevation="3" Class="p-3">
+
+            @if (ShowComponentName || true)
+            {
+                <div class="d-flex pb-1 align-items-center gap-1">
+                    <MudIcon Size="Size.Small" Icon="@Icons.Material.Outlined.FileOpen"></MudIcon>
+                    <MudText class="fw-bold">@ComponentFileName</MudText>
+                </div>
+            }
+            <pre>
+                    <code class="language-razor">
+                       @_originalMarkup
+                    </code>
+                </pre>
+            @if (RenderOutput)
+            {
+                <MudGrid Spacing="2">
+                    <MudItem xs="6">
+                        <MudText class="fw-bold text-center">What it looks like visually</MudText>
+                        <MudPaper Elevation="0" Class="p-3 border-1">
+                            <DynamicComponent Type="@typeof(TComponent)"/>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudText class="fw-bold text-center">The html behind it</MudText>
+                        <pre>
+                            <code class="language-html">
+                              @_renderedHtml
+                            </code>
+                        </pre>
+                    </MudItem>
+                </MudGrid>
+            }
+        </MudPaper>
+    }
+    else
+    {
+        @if (ShowComponentName || true)
+        {
+            <div class="d-flex pb-1 align-items-center gap-1">
+                <MudIcon Size="Size.Small" Icon="@Icons.Material.Outlined.FileOpen"></MudIcon>
+                <MudText class="fw-bold">@ComponentFileName</MudText>
+            </div>
+        }
+        <pre>
+            <code class="language-razor">
+               @_originalMarkup
+            </code>
+        </pre>
+        @if (RenderOutput)
+        {
+            <MudGrid Spacing="2">
+                <MudItem xs="6">
+                    <MudText class="fw-bold text-center">What it looks like visually</MudText>
+                    <MudPaper Elevation="0" Class="p-3 border-1">
+                        <DynamicComponent Type="@typeof(TComponent)"/>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudText class="fw-bold text-center">The html behind it</MudText>
+                    <pre>
+                        <code class="language-html">
+                          @_renderedHtml
+                        </code>
+                    </pre>
+                </MudItem>
+            </MudGrid>
+        }
+    }
+}
+@code {
+
+    [Inject]
+    private IJSRuntime _js { get; set; }
+
+    [Parameter]
+    public string Language { get; set; } = "razor";
+
+    [Parameter]
+    public bool ShowComponentName { get; set; } = true;
+
+    [Parameter]
+    public bool RenderOutput { get; set; } = false;
+
+    [CascadingParameter]
+    public CompanionSnippets? CompanionContainer { get; set; }
+
+    private string ComponentFileName => $"{Regex.Replace(typeof(TComponent).Name, @"`\d+", "")}.razor";
+
+    private bool renderingFinished = false;
+    private string _originalMarkup;
+    private string _renderedHtml;
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+        }
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        _originalMarkup = ReadOriginalMarkup();
+        if (RenderOutput)
+        {
+            string renderedHtml = RenderComponentMarkup();
+            var prettifiedHtml = await _js.InvokeAsync<string>("prettifyHtml", new object?[] { renderedHtml });
+            _renderedHtml = prettifiedHtml /*.Replace("&", "&amp;").Replace("<", "&lt;")*/;
+        }
+        renderingFinished = true;
+        StateHasChanged();
+        await _js.InvokeVoidAsync("highlightSnippet");
+    }
+
+    string RenderComponentMarkup()
+    {
+        return new ComponentRenderer().RenderComponent();
+    }
+
+    public class ComponentRenderer : TestContext
+    {
+        public string RenderComponent()
+        {
+            return RenderComponent<TComponent>().Markup;
+        }
+    }
+
+    private string ReadOriginalMarkup()
+    {
+        var manifestResourceNames = typeof(TComponent).Assembly.GetManifestResourceNames();
+        var key = manifestResourceNames.FirstOrDefault(x => x.Contains(ComponentFileName));
+        using (var stream = typeof(TComponent).Assembly.GetManifestResourceStream(key))
+        using (var reader = new StreamReader(stream))
+        {
+            var read = reader.ReadToEnd();
+            read = read /*.Replace("&", "&amp;").Replace("<", "&lt;")*/;
+
+
+            return read;
+        }
+    }
+
+}
+

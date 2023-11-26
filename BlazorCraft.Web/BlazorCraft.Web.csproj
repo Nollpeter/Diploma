@@ -5,7 +5,8 @@
         <LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-	</PropertyGroup>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    </PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Blazored.LocalStorage" Version="4.4.0" />
@@ -18,6 +19,9 @@
 	<ItemGroup>
 	  <Folder Include="wwwroot\img\" />
 	</ItemGroup>
-	
+
+    <ItemGroup>
+        <EmbeddedResource Include="**\*.razor" />
+    </ItemGroup>
 	
 </Project>

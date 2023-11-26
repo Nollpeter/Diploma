@@ -1,24 +1,30 @@
-﻿@inherits LayoutComponentBase
+﻿@using BlazorCraft.Web.Infrastructure
+@using System.Reflection
+@inherits LayoutComponentBase
+@inject ITestRunnerService TestRunnerService
+@inject NavigationManager NavigationManager
 
-<MudThemeProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />
+<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
 
 <MudLayout>
     <MudAppBar Elevation="0">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/" Target="_blank" />
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank" />
+        <MudIconButton Class="mx-2" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
+        <MudButton Class="mx-2" OnClick="TestRunnerService.RunAll" Color="Color.Secondary" Variant="Variant.Filled">Run all</MudButton>
+        <MudButton Class="mx-2" OnClick="() => TestRunnerService.RunAllInPage(CurrentPageType)" Color="Color.Tertiary" Variant="Variant.Filled">Run all in page</MudButton>
+        <MudSpacer/>
+        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/" Target="_blank"/>
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank"/>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
         <MudDrawerHeader>
             <MudText Typo="Typo.h6">BlazorCraft.Web</MudText>
         </MudDrawerHeader>
-        <NavMenu />
+        <NavMenu/>
     </MudDrawer>
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-8 pt-8 d-grid gap-3">
             @Body
         </MudContainer>
     </MudMainContent>
@@ -31,4 +37,29 @@
     {
         _drawerOpen = !_drawerOpen;
     }
+
+    private Type CurrentPageType;
+
+    protected override void OnParametersSet()
+    {
+        var absoluteUri = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        var assembly = Assembly.GetExecutingAssembly();
+
+        var routeTypes = assembly.GetTypes().Where(type => type.GetCustomAttributes<RouteAttribute>().Any());
+
+        foreach (var type in routeTypes)
+        {
+            
+            var routeAttribute = type.GetCustomAttributes<RouteAttribute>();;
+            if (routeAttribute.Any())
+            {
+                if (routeAttribute.Any(p => p.Template.TrimStart('/') == absoluteUri.Trim()))
+                {
+                    CurrentPageType = type;
+                    break;
+                }
+            }
+        }
+    }
+
 }

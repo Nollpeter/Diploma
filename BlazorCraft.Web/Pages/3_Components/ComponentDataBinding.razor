@@ -1,0 +1,62 @@
+﻿@page "/components/data-binding"
+
+<div class="d-grid gap-3">
+    <MudText Typo="Typo.h4">Component Data binding</MudText>
+    <MudText>
+        Data binding in Blazor serves as the bridge between your C# backend code and HTML frontend markup.
+        It enables you to pass data back and forth, making it an integral part of creating dynamic and interactive web applications.
+        With data binding, you can easily display C# variables in your HTML or capture user input to manipulate in your C# code.
+    </MudText>
+    <MudText>
+        Data binding is often one of the first things people learn when diving into Blazor because it is foundational for any interactive web application.
+        It eliminates the need for complicated JavaScript to synchronize your HTML and C# code, providing a more straightforward and idiomatic approach to building web apps.
+    </MudText>
+
+    <MudExpansionPanels MultiExpansion="true">
+        <MudExpansionPanelWithStoredState Id="one-way-data-binding">
+            <TitleContent>
+                <MudText Typo="Typo.h5" Class="fw-bold">One-Way Data Binding</MudText>
+            </TitleContent>
+            <ChildContent>
+                <div class="d-grid gap-3">
+                    <MudText>
+                        One-way data binding is the simplest form of data binding in Blazor. It allows you to take a C# variable or expression and display it within your HTML markup.
+                        The use of the <strong>@("@")</strong> symbol in the markup enables this.
+                        For instance, if you have a variable called name, you can display its value in an HTML paragraph using <strong>@("@name")</strong>.
+                    </MudText>
+                    <MudText>
+                        One-way data binding is particularly useful when you want to display data that changes over time without requiring any user interaction.
+                        For example, you might fetch data from an API and update a variable in your C# code; using one-way data binding, that updated data will automatically reflect in the UI.
+                    </MudText>
+                    <MudText>
+                        While one-way data binding is powerful, it's a bit limited in that it only allows data to flow in one direction: from your C# code to the HTML markup.
+                        If you need to capture user input or allow data to flow both ways, you'll need to look into two-way data binding.
+                    </MudText>
+                </div>
+                @*TODO Példakód, feladat*@
+            </ChildContent>
+        </MudExpansionPanelWithStoredState>
+        <MudExpansionPanelWithStoredState Id="two-way-data-binding">
+            <TitleContent>
+                <MudText Typo="Typo.h5" Class="fw-bold">Two-Way Data Binding</MudText>
+            </TitleContent>
+            <ChildContent>
+                <div class="d-grid gap-3">
+                    <MudText>
+                        Two-way data binding takes it a step further by allowing changes to automatically synchronize between the HTML markup and the corresponding C# variable.
+                        This is accomplished using the @("@bind") attribute.
+                        For instance, if you have an input field in your HTML and you bind it to a C# variable with @("@bind=\"username\""), any changes in the input field will update the username variable and vice versa.
+                    </MudText>
+                    <MudText>
+                        This bi-directional data flow is especially beneficial in forms, settings pages, and anywhere you need to capture and reflect user input.
+                        It enables a more interactive and responsive user experience, without requiring you to write additional code to handle these updates.
+                    </MudText>
+                    <MudText>
+                        In summary, two-way data binding is a powerful feature that adds a layer of interactivity and dynamism to your web applications.
+                        It makes handling user input and data manipulation significantly simpler and more efficient, leading to cleaner and more maintainable code.
+                    </MudText>
+                </div>
+            </ChildContent>
+        </MudExpansionPanelWithStoredState>
+    </MudExpansionPanels>
+</div>

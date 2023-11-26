@@ -1,0 +1,35 @@
+﻿@page "/employee/details/{EmployeeId:int}"
+
+@if (_selectedEmployee == null)
+{
+    <p>Employee not found</p>
+}
+else
+{
+    <p>Employee id: @_selectedEmployee.Id, Name: @_selectedEmployee.FirstName @_selectedEmployee.LastName, Position: @_selectedEmployee.Position</p>
+}
+
+@code {
+
+    public record Employee(int Id, string FirstName, string LastName, string Position);
+
+    [Parameter]
+    public int EmployeeId { get; set; }
+
+    private Employee? _selectedEmployee;
+
+    private List<Employee> Employees => new()
+    {
+        new(1, "Test", "Theodore", "CEO"),
+        new(2, "Test", "Thomas", "CFO"),
+        new(3, "Test", "Tiffany", "CTO"),
+        new(4, "Test", "Tim", "Janitor")
+    };
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        _selectedEmployee = Employees.FirstOrDefault(p => p.Id == EmployeeId);
+    }
+
+}
