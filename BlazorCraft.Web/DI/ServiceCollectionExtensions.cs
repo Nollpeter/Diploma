@@ -2,6 +2,7 @@
 using BlazorCraft.Web.Infrastructure;
 using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Shared._Exercises.DependencyInjection;
+using BlazorCraft.Web.Shared._Exercises.Exam;
 using BlazorCraft.Web.Shared._Exercises.JsInterop;
 using BlazorCraft.Web.Shared.Examples._7_DependencyInjection;
 
@@ -15,6 +16,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddScoped<IPanelStateService, PanelStateService>();
         serviceCollection.AddExampleServices();
         serviceCollection.AddEmployeeService();
+        serviceCollection.AddExamEmployeeService();
         serviceCollection.AddScoped<INavigationService, NavigationService>();
         Shared._Exercises.Forms.ServiceCollectionExtensions.AddEmployeeService(serviceCollection);
         serviceCollection.AddSingleton<IAsyncLockProvider, AsyncLockProvider>();

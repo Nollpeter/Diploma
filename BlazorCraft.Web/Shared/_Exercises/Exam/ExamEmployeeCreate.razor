@@ -1,0 +1,24 @@
+﻿@inject IExamEmployeeService EmployeeService
+<MudContainer>
+    <EmployeeForm Employee="Employee" IsEditMode="true" EmployeeValid="CreateEmployee" Cancel="Cancel"></EmployeeForm>
+</MudContainer>
+
+@code {
+    [Parameter] public EventCallback Closed { get; set; }
+    [Parameter] public EventCallback EmployeeCreated { get; set; }
+    [Parameter] public ExamEmployee Employee { get; set; }
+
+    private async Task CreateEmployee()
+    {
+        await EmployeeService.AddEmployee(Employee);
+        await EmployeeCreated.InvokeAsync();
+        
+        await Closed.InvokeAsync();
+    }
+
+    private async Task Cancel()
+    {
+        await Closed.InvokeAsync();
+    }
+
+}

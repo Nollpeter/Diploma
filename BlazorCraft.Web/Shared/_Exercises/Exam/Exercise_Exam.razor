@@ -1,0 +1,96 @@
+﻿@using BlazorCraft.Web.Shared._Exercises.Exam
+@inject IExamEmployeeService EmployeeService
+
+<MudContainer>
+    <MudPaper Style="min-height: 800px; overflow:hidden; position:relative;">
+        <MudDrawerContainer Class="mud-height-full">
+            <MudDrawer @bind-Open="@_detailsPanelOpen" Width="50%" Fixed="false" Anchor="Anchor.End" Elevation="0" Variant="@DrawerVariant.Persistent">
+                @if (_detailsPanelOpen)
+                {
+                    <MudDrawerHeader>
+                        <MudText Typo="Typo.h6">Employee Details</MudText>
+                    </MudDrawerHeader>
+                    <ExamEmployeeDetails Closed="@DetailsClosed" EmployeeId="@_selectedEmployee.Id"></ExamEmployeeDetails>
+                }
+            </MudDrawer>
+            <MudDrawer @bind-Open="@_createPanelOpen" Width="50%" Fixed="false" Anchor="Anchor.Start" Elevation="0" Variant="@DrawerVariant.Persistent">
+                <MudDrawerHeader>
+                    <MudText Typo="Typo.h6">Create new Employee</MudText>
+                </MudDrawerHeader>
+                <ExamEmployeeCreate EmployeeCreated="async () => await LoadEmployees()" Closed="@CreateClosed" Employee="new ExamEmployee()"></ExamEmployeeCreate>
+            </MudDrawer>
+            <div>
+                <MudTable T="ExamEmployee" Items="_employees" Class="w-100">
+                    <HeaderContent>
+                        <MudTh>Id</MudTh>
+                        <MudTh>FirstName</MudTh>
+                        <MudTh>LastName</MudTh>
+                        <MudTh>Position</MudTh>
+                        <MudTh>Salary</MudTh>
+                        <MudTh>
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenCreateEmployee">Create new</MudButton>
+                        </MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd>@context.Id</MudTd>
+                        <MudTd>@context.FirstName</MudTd>
+                        <MudTd>@context.LastName</MudTd>
+                        <MudTd>@context.Position</MudTd>
+                        <MudTd>@context.Salary</MudTd>
+                        <MudTd>
+                            <MudIconButton Icon="@Icons.Material.Outlined.RemoveRedEye" Variant="Variant.Text" Color="Color.Primary" OnClick="async () => await OpenDetails(context)"></MudIconButton>
+                        </MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </div>
+        </MudDrawerContainer>
+    </MudPaper>
+
+</MudContainer>
+
+@code {
+    private List<ExamEmployee> _employees;
+    private ExamEmployee _selectedEmployee;
+    private bool _detailsPanelOpen = false;
+    private bool _createPanelOpen = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        await LoadEmployees();
+    }
+
+    protected async Task LoadEmployees()
+    {
+        _employees = await EmployeeService.GetEmployees();
+    }
+
+    protected async Task DetailsClosed()
+    {
+        _detailsPanelOpen = false;
+        await LoadEmployees();
+    }
+
+    protected async Task CreateClosed()
+    {
+        _createPanelOpen = false;
+        await LoadEmployees();
+    }
+
+    private void OpenCreateEmployee()
+    {
+        if (_detailsPanelOpen)
+        {
+            _detailsPanelOpen = false;
+        }
+        _createPanelOpen = true;
+        StateHasChanged();
+    }
+
+    private async Task OpenDetails(ExamEmployee context)
+    {
+        _selectedEmployee = await EmployeeService.GetEmployee(context.Id);
+        _detailsPanelOpen = true;
+    }
+
+}

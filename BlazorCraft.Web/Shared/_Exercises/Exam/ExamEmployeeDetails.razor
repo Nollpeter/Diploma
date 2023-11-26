@@ -1,0 +1,80 @@
+﻿@inject IJSRuntime JSRuntime
+@inject IExamEmployeeService EmployeeService
+@if (_employee != null)
+{
+    <MudContainer>
+    <div class="d-flex align-items-center justify-content-between">
+        <div>
+            @if (!string.IsNullOrEmpty(_employee.ProfilePicture))
+            {
+                <img src="@_employee.ProfilePicture" width="72px" height="72px" alt="Random Person"/>
+            }
+            else
+            {
+                <MudProgressCircular/>
+            }
+        </div>
+        <div class="d-flex align-items-center justify-content-center flex-grow-1">
+            <MudText Typo="Typo.h5">@_employee.FirstName @_employee.LastName</MudText>
+        </div>
+        <div class="d-flex flex-column justify-content-start align-items-center gap-2">
+            <MudButton Size="Size.Small" Variant="Variant.Filled" Color="Color.Secondary" OnClick="Closed">Close</MudButton>
+            <MudButton Size="Size.Small" Variant="Variant.Filled" Color="Color.Primary" Disabled="_isEditMode" OnClick="() => { _isEditMode = true; }">Edit</MudButton>
+            <MudButton Size="Size.Small" Variant="Variant.Filled" Color="Color.Primary" OnClick="DeleteEmployee">Delete</MudButton>
+        </div>
+    </div>
+    
+        <EmployeeForm @bind-Employee="_employee" IsEditMode="_isEditMode" EmployeeValid="SaveEmployee" Cancel="CancelEmployeeEdit"></EmployeeForm>
+    </MudContainer>
+}
+
+@code {
+
+    [Parameter]
+    public int EmployeeId { get; set; }
+
+    [Parameter]
+    public EventCallback Closed { get; set; }
+
+    private ExamEmployee _employee;
+    
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        await LoadRandomPersonImage();
+        _employee = await EmployeeService.GetEmployeeForEdit(EmployeeId);
+    }
+
+    private async Task LoadRandomPersonImage()
+    {
+        await JSRuntime.InvokeVoidAsync("ExamHelper.fetchRandomPersonImage", DotNetObjectReference.Create(this));
+    }
+
+    [JSInvokable]
+    public void UpdateImage(string imageBase64)
+    {
+        _employee.ProfilePicture = imageBase64;
+        StateHasChanged();
+    }
+
+    private bool _isEditMode;
+
+    private async Task SaveEmployee()
+    {
+        _isEditMode = false;
+        await EmployeeService.UpdateEmployee(_employee);
+    }
+
+    private async Task DeleteEmployee()
+    {
+        EmployeeService.DeleteEmployee(_employee);
+        await Closed.InvokeAsync();
+    }
+
+    private async Task CancelEmployeeEdit()
+    {
+        _isEditMode = false;
+        _employee = await EmployeeService.GetEmployeeForEdit(EmployeeId);
+    }
+
+}
