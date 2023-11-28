@@ -2,3 +2,5 @@
 **/obj/**
 *.DotSettings.user
 .idea/**
+.vs/**
+*.user
