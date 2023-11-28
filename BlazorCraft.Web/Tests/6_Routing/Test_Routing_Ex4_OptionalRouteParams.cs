@@ -12,31 +12,31 @@ public class Test_Routing_Ex4_OptionalRouteParams : RoutingTestBase<Routing_Ex4>
 
     [Title("Route defined")]
     [Description("This test verifies if the component has the /" + Route + " route defined")]
-    public async Task GivenRouting_Ex4_WhenDefined_ThenIsAccessibleViaRoute()
+    public Task GivenRouting_Ex4_WhenDefined_ThenIsAccessibleViaRoute()
     {
         var routingEx4 = new Routing_Ex4();
         var routeAttributes = CheckRouteAttributesExist(routingEx4);
         ExactlyOneRouteAttributeExists(routeAttributes);
         CheckRouteByTemplate(routeAttributes, Route);
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [Title("Route parameter name")]
     [Description("This test verifies if the route parameter " + RouteParamName + " is defined with the correct name")]
-    public async Task GivenRouteParameter_WhenDefined_ThenHasCorrectName()
+    public Task GivenRouteParameter_WhenDefined_ThenHasCorrectName()
     {
         var routingEx4 = new Routing_Ex4();
         var routeAttributes = CheckRouteAttributesExist(routingEx4);
         ExactlyOneRouteAttributeExists(routeAttributes);
         CheckRouteByTemplate(routeAttributes, Route);
         FindRouteParameterByName(routingEx4, RouteParamName);
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [Title("Route parameter type")]
     [Description("This test verifies if the route parameter " + RouteParamName +
                  " is defined with the correct type: int")]
-    public async Task GivenRouteParameter_WhenDefined_ThenHasCorrectType()
+    public Task GivenRouteParameter_WhenDefined_ThenHasCorrectType()
     {
         var routingEx4 = new Routing_Ex4();
         var routeAttributes = CheckRouteAttributesExist(routingEx4);
@@ -45,12 +45,12 @@ public class Test_Routing_Ex4_OptionalRouteParams : RoutingTestBase<Routing_Ex4>
         var parameterByName = FindRouteParameterByName(routingEx4, RouteParamName);
         ValidateRouteParameterType(parameterByName, typeof(int?));
         ValidateRouteParameterConstraint(routeAttributes.First(), RouteParamName, "int?");
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [Title("Empty parameter output")]
     [Description("This test verifies if the parameter is left empty, the component renders accordingly")]
-    public async Task GivenEmptyParameter_WhenRendered_ThenComponentRendersAccordingly()
+    public Task GivenEmptyParameter_WhenRendered_ThenComponentRendersAccordingly()
     {
         var routingEx4 = new Routing_Ex4();
         var routeAttributes = CheckRouteAttributesExist(routingEx4);
@@ -70,11 +70,13 @@ public class Test_Routing_Ex4_OptionalRouteParams : RoutingTestBase<Routing_Ex4>
             throw new TestRunException(
                 $"The component does not render the parameter correctly. Expected markup: {expectedOutput}, Actual markup: {renderedComponentMarkup}");
         }
-    }
+
+		return Task.CompletedTask;
+	}
 
     [Title("Int parameter output")]
     [Description("This test verifies if the parameter is left empty, the component renders accordingly")]
-    public async Task GivenIntParameter_WhenRendered_ThenComponentRendersAccordingly()
+    public Task GivenIntParameter_WhenRendered_ThenComponentRendersAccordingly()
     {
         var routingEx4 = new Routing_Ex4();
         var routeAttributes = CheckRouteAttributesExist(routingEx4);
@@ -94,5 +96,7 @@ public class Test_Routing_Ex4_OptionalRouteParams : RoutingTestBase<Routing_Ex4>
             throw new TestRunException(
                 $"The component does not render the parameter correctly. Expected markup: {expectedOutput}, Actual markup: {renderedComponentMarkup}");
         }
-    }
+
+		return Task.CompletedTask;
+	}
 }

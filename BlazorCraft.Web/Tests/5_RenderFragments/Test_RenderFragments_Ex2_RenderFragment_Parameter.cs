@@ -20,36 +20,36 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
     [Title(""+TitleFragmentName+" fragment defined")]
     [Description("This test verifies that the "+TitleFragmentName+" has been defined on the component")]
     [Precondition]
-    public async Task GivenRenderFragments_Ex2_WhenDeclared_ThenTitleFragmentIsDefined()
+    public Task GivenRenderFragments_Ex2_WhenDeclared_ThenTitleFragmentIsDefined()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex2();
         ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
-        
-    }
+		return Task.CompletedTask;
+	}
     
     [Title(""+DetailsFragmentName+" fragment defined")]
     [Description("This test verifies that the "+DetailsFragmentName+" has been defined on the component")]
     [Precondition]
-    public async Task GivenRenderFragments_Ex2_WhenDeclared_ThenDetailsFragmentIsDefined()
+    public Task GivenRenderFragments_Ex2_WhenDeclared_ThenDetailsFragmentIsDefined()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex2();
         ValidateRenderFragmentExists(renderFragmentsEx2, DetailsFragmentName, typeof(RenderFragment<Employee>));
-        
-    }
+		return Task.CompletedTask;
+	}
     
     [Title(""+EmployeeParamName+" parameter defined")]
     [Description("This test verifies that the "+DetailsFragmentName+" has been defined on the component")]
     [Precondition]
-    public async Task GivenRenderFragments_Ex2_WhenDeclared_ThenEmployeeParameterAndDetailsFragmentDefined()
+    public Task GivenRenderFragments_Ex2_WhenDeclared_ThenEmployeeParameterAndDetailsFragmentDefined()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex2();
         ValidateComponentProperty(renderFragmentsEx2, EmployeeParamName, typeof(Employee));
-        
-    }
+		return Task.CompletedTask;
+	}
     
     [Title(TitleFragmentName + " is rendered")]
     [Description("This test verifies that the "+TitleFragmentName+" is rendered for the component without any interaction")]
-    public async Task GivenTitleFragment_WhenComponentRendered_ThenTitleFragmentIsRendered()
+    public Task GivenTitleFragment_WhenComponentRendered_ThenTitleFragmentIsRendered()
     {
         TestContext testContext = new TestContext();
 
@@ -64,13 +64,12 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
         titleFragment.Invoke(new RenderTreeBuilder());
         var element = renderedComponent.Find(".title").InnerHtml;
         element.MarkupMatches($"<p>{titleContent}</p>");
-
-        
-    }
+		return Task.CompletedTask;
+	}
     
     [Title("Button click renders "+DetailsFragmentName)]
     [Description("This test verifies that the "+DetailsFragmentName+" is rendered upon clicking the button")]
-    public async Task GivenButtonClick_WhenRendered_ThenDetailsFragmentIsRendered()
+    public Task GivenButtonClick_WhenRendered_ThenDetailsFragmentIsRendered()
     {
         TestContext testContext = new TestContext();
         
@@ -97,14 +96,12 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
         element.MarkupMatches($"<p>{titleContent}</p>");
         var innerHtml = renderedComponent.Find(".details").InnerHtml;
         innerHtml.MarkupMatches($"<p>{detailsContent(employee)}</p>");
-
-
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [Title("Second Button click hides "+DetailsFragmentName)]
     [Description("This test verifies that the "+DetailsFragmentName+" is hidden upon clicking the button a second time")]
-    public async Task GivenSecondButtonClick_WhenRendered_ThenDetailsFragmentIsHidden()
+    public Task GivenSecondButtonClick_WhenRendered_ThenDetailsFragmentIsHidden()
     {
         TestContext testContext = new TestContext();
         
@@ -137,10 +134,8 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
         titleResult.MarkupMatches($"<p>{titleContent}</p>");
         var detailsResult = renderedComponent.Find(".details").InnerHtml;
         detailsResult.MarkupMatches(string.Empty, "The details content is not hidden after second click");
-        
-
-        
-    }
+		return Task.CompletedTask;
+	}
 
     private static RenderFragment<Employee> CreateDetailsFragment(Func<Employee, string> detailsContent)
     {

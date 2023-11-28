@@ -82,7 +82,7 @@ public class TestLoggingRepository : ITestLoggingRepository
             kvp => JsonSerializer.Deserialize<List<KeyValuePair<string,string>>>(kvp.Value)
         );
 
-        return result;
+        return result!;
     }
 }
 

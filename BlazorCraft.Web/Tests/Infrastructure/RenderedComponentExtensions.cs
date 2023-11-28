@@ -19,7 +19,7 @@ public static class RenderedComponentExtensions
             throw new InvalidOperationException("The OnInitializedAsync method does not return a Task.");
         }
 
-        var task = (Task)method.Invoke(component, null);
+        var task = (Task)method.Invoke(component, null)!;
         await task;
     }
 
@@ -39,7 +39,7 @@ public static class RenderedComponentExtensions
             throw new InvalidOperationException("The OnParametersSetAsync method does not return a Task.");
         }
 
-        var task = (Task)method.Invoke(component, null);
+        var task = (Task)method.Invoke(component, null)!;
         await task;
     }
 }

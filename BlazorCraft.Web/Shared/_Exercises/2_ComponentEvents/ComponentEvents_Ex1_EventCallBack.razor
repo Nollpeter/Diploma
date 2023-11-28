@@ -30,6 +30,7 @@
 
     public record Employee(int Id, string Name);
     
-    [Parameter] public List<Employee> Employees { get; set; }
+    [Parameter] public List<Employee> Employees { get; set; } = null!;
+
     [Parameter] public EventCallback<Employee> ListItemDeleted { get; set; }
 }

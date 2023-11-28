@@ -21,12 +21,12 @@
     private bool _detailsVisible = false;
 
     [Parameter]
-    public RenderFragment TitleContent { get; set; }
+    public RenderFragment TitleContent { get; set; } = null!;
 
     [Parameter]
-    public RenderFragment<Employee> DetailsContent { get; set; }
+    public RenderFragment<Employee> DetailsContent { get; set; } = null!;
 
     [Parameter]
-    public Employee EmployeeToRender { get; set; }
+    public Employee EmployeeToRender { get; set; } = null!;
 
 }

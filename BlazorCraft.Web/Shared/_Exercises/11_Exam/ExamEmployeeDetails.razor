@@ -41,7 +41,7 @@
     [Parameter]
     public EventCallback Closed { get; set; }
 
-    private ExamEmployee _employee;
+    private ExamEmployee _employee = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -52,13 +52,13 @@
 
     private async Task LoadRandomPersonImage()
     {
-        await JSRuntime.InvokeVoidAsync("ExamHelper.fetchRandomPersonImage", DotNetObjectReference.Create(this), _employee.Gender.ToString());
+        await JSRuntime!.InvokeVoidAsync("ExamHelper.fetchRandomPersonImage", DotNetObjectReference.Create(this), _employee.Gender.ToString());
     }
 
     [JSInvokable]
     public void UpdateImage(string imageBase64)
     {
-        _employee.ProfilePicture = imageBase64;
+        _employee!.ProfilePicture = imageBase64;
         StateHasChanged();
     }
 
@@ -67,12 +67,12 @@
     private async Task SaveEmployee()
     {
         _isEditMode = false;
-        await EmployeeService.UpdateEmployee(_employee);
+        await EmployeeService.UpdateEmployee(_employee!);
     }
 
     private async Task DeleteEmployee()
     {
-        EmployeeService.DeleteEmployee(_employee);
+        await EmployeeService.DeleteEmployee(_employee!);
         await Closed.InvokeAsync();
     }
 

@@ -16,26 +16,26 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
     [ParameterDefinedTitle(EmployeesParameterName)]
     [ParameterDefinedDescription(EmployeesParameterName, typeof(List<Employee>))]
     [Precondition]
-    public async Task GivenComponentEvents_Ex2_EventCallBack_WhenDeclared_ThenEmployeesParameterDefined()
+    public Task GivenComponentEvents_Ex2_EventCallBack_WhenDeclared_ThenEmployeesParameterDefined()
     {
         var component = new ComponentEvents_Ex1_EventCallBack();
         ValidateComponentProperty(component, EmployeesParameterName, typeof(List<Employee>));
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [ParameterDefinedTitle(EventCallBackPropertyName)]
     [ParameterDefinedDescription(EventCallBackPropertyName, typeof(EventCallback<Employee>))]
     [Precondition]
-    public async Task GivenComponentEvents_Ex2_EventCallBack_WhenDeclared_ThenEventCallBackParameterDefined()
+    public Task GivenComponentEvents_Ex2_EventCallBack_WhenDeclared_ThenEventCallBackParameterDefined()
     {
         var component = new ComponentEvents_Ex1_EventCallBack();
         ValidateComponentProperty(component, EventCallBackPropertyName, typeof(EventCallback<Employee>));
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [Title(EmployeesParameterName + " are rendered properly")]
     [Description("This test verifies that you render the values of " + EmployeesParameterName + " properly")]
-    public async Task GivenComponentEvents_Ex2_EventCallBack_WhenRendered_ThenEmployeesRenderedCorrectly()
+    public Task GivenComponentEvents_Ex2_EventCallBack_WhenRendered_ThenEmployeesRenderedCorrectly()
     {
         TestContext testContext = new TestContext();
         Random r = new Random();
@@ -45,12 +45,9 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
             new(r.Next(1000), $"test_{r.Next(1000)}"),
         };
 
-        Employee calledEmployee = null;
 
         var renderedComponent = testContext.RenderComponent<ComponentEvents_Ex1_EventCallBack>(
-            ComponentParameter.CreateParameter(EmployeesParameterName, list),
-            ComponentParameter.CreateParameter(EventCallBackPropertyName,
-                EventCallback.Factory.Create<Employee>(testContext, employee => calledEmployee = employee)));
+            ComponentParameter.CreateParameter(EmployeesParameterName, list));
 
 
         var tbody = renderedComponent.FindAll("tbody");
@@ -67,13 +64,13 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
                             $"      <td><button class=\"btn btn-primary\">Delete</button></td>" +
                             $"  </tr>" +
                             $"</tbody>");
-        
-        
-    }
+
+		return Task.CompletedTask;
+	}
 
     [Title(EventCallBackPropertyName + " event is called upon clicking on delete button")]
     [Description("This test verifies that upon clicking on the delete button for a row, the event is actually called")]
-    public async Task GivenDeleteButton_WhenClicked_ThenEventCallBackTriggered()
+    public Task GivenDeleteButton_WhenClicked_ThenEventCallBackTriggered()
     {
         TestContext testContext = new TestContext();
         Random r = new Random();
@@ -83,7 +80,7 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
             new(r.Next(1000), $"test_{r.Next(1000)}"),
         };
 
-        Employee calledEmployee = null;
+        Employee? calledEmployee = null;
 
         var renderedComponent = testContext.RenderComponent<ComponentEvents_Ex1_EventCallBack>(
             ComponentParameter.CreateParameter(EmployeesParameterName, list),
@@ -92,7 +89,12 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
 
 
         var buttons = renderedComponent.FindAll(".btn");
-        buttons.FirstOrDefault().Click();
+		if (!buttons.Any())
+		{
+			throw new TestRunException("There is no delete button!");
+		}
+		
+        buttons.First().Click();
 
         if (calledEmployee == null)
         {
@@ -104,6 +106,6 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
             throw new TestRunException(EventCallBackPropertyName + " was called but not with the correct employee");
         }
 
-        
-    }
+		return Task.CompletedTask;
+	}
 }

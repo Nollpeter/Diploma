@@ -41,11 +41,11 @@
             </div>
             <MudTreeView Items="_testDescriptors.ToHashSet()" Hover="true">
                 <ItemTemplate Context="test">
-                    <MudTreeViewItem T="KeyValuePair<TestDescriptor, TestRunResult>">
+                    <MudTreeViewItem T="KeyValuePair<TestDescriptor, TestRunResult?>">
                         <BodyContent>
                             <div class="d-flex justify-content-start align-items-center">
                                 <MudDivider Vertical="true" Class="bg-dark fw-bold mx-2"/>
-                                @switch (_session[test.Key])
+                                @switch (_session[test.Key!])
                                 {
                                     case TestRunState.NotStarted:
                                         <MudIcon Icon="@Icons.Material.Filled.QuestionMark" Color="@Color.Default"/>
@@ -131,7 +131,7 @@ else
 
 @code {
 
-    Dictionary<TestDescriptor, TestRunResult?> _testDescriptors;
+    Dictionary<TestDescriptor, TestRunResult?> _testDescriptors = null!;
     TestRunSession _session => TestRunnerService.GetSessionForTestClass(typeof(TTestClass));
     bool _isInitialized = false;
 
@@ -141,45 +141,18 @@ else
     [Parameter]
     public RenderFragment? ComponentUnderTestHelperFragment { get; set; }
 
-    /*private RenderFragment CreateComponent(Type componentType, IDictionary<string, object> parameters) => builder =>
-    {
-        int seq = 1;
-        builder.OpenComponent(seq, componentType);
-        //componentType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetCustomAttribute<InjectAttribute>())
-        if (parameters != null)
-        {
-            foreach (var parameter in parameters)
-            {
-                builder.AddAttribute(++seq, parameter.Key, parameter.Value);
-            }
-        }
-        
-        var injectProperties = componentType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-            .Where(p => p.GetCustomAttribute<InjectAttribute>() != null);
-
-        foreach (var prop in injectProperties)
-        {
-            var service = ServiceProvider.GetService(prop.PropertyType);
-            if (service != null)
-            {
-                builder.AddAttribute(++seq, prop.Name, service);
-            }
-        }
-        builder.CloseComponent();
-    };*/
-
     [Parameter]
     public string TestComponentName { get; set; } = GetComponentUnderTest().Name;
 
     public static Type GetComponentUnderTest()
     {
-        Type typeToCheck = typeof(TTestClass);
+        Type? typeToCheck = typeof(TTestClass);
 
         while (typeToCheck != null && typeToCheck != typeof(object))
         {
             if (typeToCheck.IsGenericType)
             {
-                return typeToCheck.GetGenericArguments().FirstOrDefault();
+                return typeToCheck.GetGenericArguments().First();
             }
 
             typeToCheck = typeToCheck.BaseType;
@@ -202,7 +175,7 @@ else
         };
     }
 
-    private Color GetTextColor(KeyValuePair<TestDescriptor, TestRunResult> value)
+    private Color GetTextColor(KeyValuePair<TestDescriptor, TestRunResult?> value)
     {
         if (value.Value == null)
         {

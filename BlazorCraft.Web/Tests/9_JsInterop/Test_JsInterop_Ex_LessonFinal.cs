@@ -34,43 +34,43 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
     [ComponentUsedInMarkupTitle(typeof(RenderFragments_LessonFinal))]
     [ComponentUsedInMarkupDescription(typeof(RenderFragments_LessonFinal))]
     [Precondition]
-    public async Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenRenderFragments_LessonFinalComponentUsed()
+    public Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenRenderFragments_LessonFinalComponentUsed()
     {
         var component = new JsInterop_Ex_LessonFinal();
         ValidateComponentUsage(component, ListComponentType);
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [ParameterDefinedTitle(JsRuntimeName)]
     [ParameterDefinedDescription(JsRuntimeName, typeof(IJSRuntime))]
     [Precondition]
-    public async Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenJsRuntimeParameterDefined()
+    public Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenJsRuntimeParameterDefined()
     {
         var component = new JsInterop_Ex_LessonFinal();
         ValidateInjectedProperty(component, JsRuntimeName, typeof(IJSRuntime));
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [PropertyOrFieldOfTypeDefinedTitle(typeof(DotNetObjectReference<JsInterop_Ex_LessonFinal>))]
     [PropertyOrFieldOfTypeDefinedDescription(typeof(DotNetObjectReference<JsInterop_Ex_LessonFinal>))]
     [Precondition]
-    public async Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenObjectReferenceFieldOrPropertyDefined()
+    public Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenObjectReferenceFieldOrPropertyDefined()
     {
         var component = new JsInterop_Ex_LessonFinal();
 
         ValidatePropertyOrFieldWithTypeExists(component, typeof(DotNetObjectReference<JsInterop_Ex_LessonFinal>));
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [MethodWithPropertyDefinedTitle(nameof(JsInvokableMethodName), typeof(JSInvokableAttribute))]
     [MethodWithPropertyDefinedDescription(nameof(JsInvokableMethodName), typeof(JSInvokableAttribute))]
     [Precondition]
-    public async Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenJsInvokableMethodAttributeDefined()
+    public Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenJsInvokableMethodAttributeDefined()
     {
         var component = new JsInterop_Ex_LessonFinal();
         ValidateMethodWithNameAndAttributeExists(component, JsInvokableMethodName, typeof(JSInvokableAttribute));
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [Title("Employees are bound to " + nameof(RenderFragments_LessonFinal) + ".Employees")]
     [Description("This test verifies that Employees are bound to " + nameof(RenderFragments_LessonFinal) +
@@ -116,7 +116,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
 
             throw;
         }
-        catch (NullReferenceException e)
+        catch (NullReferenceException)
         {
             throw new TestRunException(
                 "Error while binding the property Employees to the List component, you probably need to define your markup so that it only renders the list component once employees are set");
@@ -125,7 +125,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
         
     }
 
-    private async Task SetupMockJsRuntime(TestContext testContext)
+    private Task SetupMockJsRuntime(TestContext testContext)
     {
         IJSRuntime runtime = Substitute.For<IJSRuntime>();
         jsMethodCalls = new List<(string methodName, object[] args)>();
@@ -141,7 +141,8 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
                 return await _jsRuntime.InvokeAsync<IJSVoidResult>(identifier, args);
             });
         testContext.Services.AddSingleton(runtime);
-    }
+		return Task.CompletedTask;
+	}
 
     private async Task ManuallyRerunLifeCycleForValidations<TComponent>(IRenderedComponent<TComponent> renderedComponent) where TComponent:ComponentBase
     {

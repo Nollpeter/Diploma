@@ -1,20 +1,20 @@
 ﻿<form>
     <label class="form-label">First field</label>
-    <input type="text" class="form-control" @bind="Model.FirstField"/>
+    <input type="text" class="form-control" @bind="_model.FirstField"/>
     <label class="form-label">Second field</label>
-    <input type="number" class="form-control" @bind="Model.SecondField"/>
+    <input type="number" class="form-control" @bind="_model.SecondField"/>
     <button class="btn btn-primary" type="submit" disabled="@true">Submit</button>
 </form>
 
-<p>First field: @Model.FirstField, Second field: @Model.SecondField</p>
+<p>First field: @(_model.FirstField ?? string.Empty), Second field: @_model.SecondField</p>
 
 @code
 {
     public class ModelClass
     {
-        public string FirstField { get; set; }
+        public string? FirstField { get; set; }
         public int SecondField { get; set; }
     }
 
-    private ModelClass Model = new();
+    private ModelClass _model = new();
 }

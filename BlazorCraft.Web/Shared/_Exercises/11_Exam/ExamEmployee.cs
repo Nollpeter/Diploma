@@ -6,17 +6,17 @@ public class ExamEmployee
 {
     public int Id { get; set; }
     [Required]
-    public string FirstName { get; set; }
-    [Required]public string LastName { get; set; }
+    public string? FirstName { get; set; }
+    [Required]public string? LastName { get; set; }
     [Required]public EmployeePosition? Position { get; set; }
     [Required]public EmployeeGender? Gender { get; set; }
-    public string ProfilePicture { get; set; }
+    public string? ProfilePicture { get; set; }
     [Required]
     [Range(10000,50000)]
     public int? Salary { get; set; }
     [Required]public DateTime? BirthDate { get; set; }
     [Required]public DateTime? HireDate { get; set; }
-    public string  Address { get; set; }
+    public string? Address { get; set; }
 
     public ExamEmployee()
     {

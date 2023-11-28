@@ -10,7 +10,7 @@
 @code {
 
     [Parameter, EditorRequired]
-    public Type PageType { get; set; } = null!;
+    public required Type PageType { get; set; }
     
     private string GetPageRoute(Type pageType)
     {
@@ -19,7 +19,7 @@
         {
             return routeAttribute.Template;
         }
-        return null;
+        return string.Empty;
     }
 
     protected override void OnParametersSet()

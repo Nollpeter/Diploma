@@ -20,47 +20,47 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
     [ParameterDefinedTitle(EmployeeFirstNameParamName)]
     [ParameterDefinedDescription(EmployeeFirstNameParamName, typeof(string))]
     [Precondition]
-    public async Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeFirstNameParameterDefined()
+    public Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeFirstNameParameterDefined()
     {
         var component = new DataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
-        
-    }
+		return Task.CompletedTask;
+	}
     
     [ParameterDefinedTitle(EmployeeLastNameParamName)]
     [ParameterDefinedDescription(EmployeeLastNameParamName, typeof(string))]
     [Precondition]
-    public async Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeLastNameParameterDefined()
+    public Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeLastNameParameterDefined()
     {
         var component = new DataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
-        
-    }
+		return Task.CompletedTask;
+	}
     
     [ParameterDefinedTitle(EmployeeFirstNameChangedName)]
     [ParameterDefinedDescription(EmployeeFirstNameChangedName, typeof(EventCallback<string>))]
     [Precondition]
-    public async Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeFirstNameChangedParameterDefined()
+    public Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeFirstNameChangedParameterDefined()
     {
         var component = new DataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
-        
-    }
+		return Task.CompletedTask;
+	}
     
     [ParameterDefinedTitle(EmployeeLastNameChangedName)]
     [ParameterDefinedDescription(EmployeeLastNameChangedName, typeof(EventCallback<string>))]
     [Precondition]
-    public async Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeLastNameChangedParameterDefined()
+    public Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeLastNameChangedParameterDefined()
     {
         var component = new DataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [Title(EmployeeFirstNameParamName + " binding Consumer -> Component")]
     [Description("This test verifies that once the Consumer component changes the " + EmployeeFirstNameParamName +
                  " it is reflected in the component ")]
-    public async Task GivenEmployeeFirstNameParamNameBinding_WhenConsumerChanges_ThenItIsReflectedInComponent()
+    public Task GivenEmployeeFirstNameParamNameBinding_WhenConsumerChanges_ThenItIsReflectedInComponent()
     {
         TestContext testContext = new TestContext();
 
@@ -77,7 +77,9 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
             throw new TestRunException(
                 $"{EmployeeFirstNameParamName} is not bound properly, its value should be {firstName}, but it is instead {idValue}");
         }
-    }
+
+		return Task.CompletedTask;
+	}
 
     [Title(EmployeeFirstNameParamName + " binding Component -> Consumer")]
     [Description("This test verifies that once the Component changes the " + EmployeeFirstNameParamName +
@@ -122,7 +124,7 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
     [Title(EmployeeLastNameParamName + " binding Consumer -> Component")]
     [Description("This test verifies that once the Consumer component changes the " + EmployeeLastNameParamName +
                  " it is reflected in the component ")]
-    public async Task GivenEmployeeLastNameParamNameBinding_WhenConsumerChanges_ThenItIsReflectedInComponent()
+    public Task GivenEmployeeLastNameParamNameBinding_WhenConsumerChanges_ThenItIsReflectedInComponent()
     {
         TestContext testContext = new TestContext();
 
@@ -139,7 +141,9 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
             throw new TestRunException(
                 $"{EmployeeLastNameParamName} is not bound properly, its value should be {lastName}, but it is instead {nameValue}");
         }
-    }
+
+		return Task.CompletedTask;
+	}
 
     [Title(EmployeeLastNameParamName + " binding Component -> Consumer")]
     [Description("This test verifies that once the Component changes the " + EmployeeLastNameParamName +

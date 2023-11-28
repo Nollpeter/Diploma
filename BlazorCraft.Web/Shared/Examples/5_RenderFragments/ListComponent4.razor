@@ -8,8 +8,9 @@
 }
 @code{
 
-    [Parameter, EditorRequired] public RenderFragment Title { get; set; }
-    [Parameter, EditorRequired] public RenderFragment<T> ListItemTemplate { get; set; } // Notice the new generic parameter
-    [Parameter, EditorRequired] public List<T> ListItems { get; set; } // Notice the new generic parameter
+    [Parameter, EditorRequired] public required RenderFragment Title { get; set; }
+
+    [Parameter, EditorRequired] public required RenderFragment<T> ListItemTemplate { get; set; } // Notice the new generic parameter
+    [Parameter, EditorRequired] public required List<T> ListItems { get; set; } // Notice the new generic parameter
 
 }

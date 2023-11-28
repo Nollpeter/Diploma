@@ -23,7 +23,7 @@ else
     [Parameter]public bool AllDataShown { get; set; }
     [Parameter]public int? Id { get; set; }
     [Parameter]public string? CompanyAccountId { get; set; }
-    private Employee _selectedEmployee;
+    private Employee? _selectedEmployee;
 
     public record Employee(int Id, string CompanyAccountId, string FirstName, string LastName, string Position);
 

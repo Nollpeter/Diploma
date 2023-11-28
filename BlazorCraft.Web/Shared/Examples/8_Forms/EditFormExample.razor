@@ -1,22 +1,22 @@
-﻿<EditForm Model="@Model">
+﻿<EditForm Model="@_model">
     <label class="form-label">Text field</label>
-    <InputText class="form-control" @bind-Value="Model.TextField"/>
+    <InputText class="form-control" @bind-Value="_model.TextField"/>
     <label class="form-label">Number field</label>
-    <InputNumber class="form-control" @bind-Value="Model.NumberField"/>
+    <InputNumber class="form-control" @bind-Value="_model.NumberField"/>
     <label class="form-label">Date field</label>
-    <InputDate class="form-control" @bind-Value="Model.DateField"/>
+    <InputDate class="form-control" @bind-Value="_model.DateField"/>
     <button class="btn btn-primary" disabled="@true" type="submit">Submit</button>
 </EditForm>
-<p>Text field: @Model.TextField, Number field: @Model.NumberField, Date field: @Model.DateField</p>
+<p>Text field: @(_model.TextField ?? string.Empty), Number field: @_model.NumberField, Date field: @_model.DateField</p>
 
 @code {
 
     public class ModelClass
     {
-        public string TextField { get; set; }
+        public string? TextField { get; set; }
         public int NumberField { get; set; }
         public DateTime DateField { get; set; }
     }
 
-    private ModelClass Model = new();
+    private ModelClass _model = new();
 }

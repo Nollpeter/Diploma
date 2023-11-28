@@ -17,16 +17,16 @@ public class Test_DataBinding_Ex_LessonFinal : ComponentTestBase<DataBinding_Ex_
     [ComponentUsedInMarkupTitle(typeof(DataBinding_Ex1))]
     [ComponentUsedInMarkupDescription(typeof(DataBinding_Ex1))]
     [Precondition]
-    public async Task GivenComponentDataBinding_Ex_LessonFinal_WhenDeclared_ThenComponentDataBinding_Ex1ComponentUsed()
+    public Task GivenComponentDataBinding_Ex_LessonFinal_WhenDeclared_ThenComponentDataBinding_Ex1ComponentUsed()
     {
         var component = new DataBinding_Ex_LessonFinal();
         ValidateComponentUsage(component, EditorComponentType);
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [Title("Table rows rendered correctly")]
     [Description("This test verifies that the table rows for each employee were rendered correctly")]
-    public async Task GivenComponentDataBinding_Ex_LessonFinal_WhenRendered_ThenTableRowsRenderedCorrectly()
+    public Task GivenComponentDataBinding_Ex_LessonFinal_WhenRendered_ThenTableRowsRenderedCorrectly()
     {
         TestContext testContext = new TestContext();
         List<Employee> employees = new List<Employee>()
@@ -41,13 +41,12 @@ public class Test_DataBinding_Ex_LessonFinal : ComponentTestBase<DataBinding_Ex_
         var rows = renderedComponent.FindAll("tr");
         rows[1].MarkupMatches($"<tr> <td>{employees[0].Id}</td> <td>{employees[0].FirstName}</td> <td>{employees[0].LastName}</td> <td><button class=\"btn btn-primary\">Edit</button></td>  </tr>");
         rows[2].MarkupMatches($"<tr> <td>{employees[1].Id}</td> <td>{employees[1].FirstName}</td> <td>{employees[1].LastName}</td> <td><button class=\"btn btn-primary\">Edit</button></td>  </tr>");
-
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [Title("Clicking Edit button reveals editor")]
     [Description("This test verifies that clicking the edit button reveals the editor for the employee")]
-    public async Task GivenEditButton_WhenClicked_ThenEmployeeEditorIsRevealed()
+    public Task GivenEditButton_WhenClicked_ThenEmployeeEditorIsRevealed()
     {
         TestContext testContext = new TestContext();
         List<Employee> employees = new List<Employee>()
@@ -68,9 +67,8 @@ public class Test_DataBinding_Ex_LessonFinal : ComponentTestBase<DataBinding_Ex_
 
         renderedComponent.Find(".employee-first-name");
         renderedComponent.Find(".employee-last-name");
-        
-        
-    }
+		return Task.CompletedTask;
+	}
     
     [Title("Editor change reflected in table")]
     [Description("This test verifies that once you edit something in the editor will be reflected in the employees table as well")]

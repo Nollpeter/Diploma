@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Components.Rendering
+@inject IJSRuntime JsRuntime
+
 <pre>
     <code class="language-@Language">
        @ChildContent
@@ -7,17 +9,14 @@
 
 @code {
 
-    [Inject]
-    private IJSRuntime _js { get; set; }
-
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    [Parameter, EditorRequired]
+    public required RenderFragment ChildContent { get; set; }
 
     [Parameter]
     public string Language { get; set; } = "razor";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-       await _js.InvokeVoidAsync("highlightSnippet");
+       await JsRuntime!.InvokeVoidAsync("highlightSnippet");
     }
 }

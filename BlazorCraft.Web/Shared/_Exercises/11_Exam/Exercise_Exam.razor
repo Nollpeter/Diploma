@@ -10,7 +10,8 @@
                     <MudDrawerHeader>
                         <MudText Typo="Typo.h6">Employee Details</MudText>
                     </MudDrawerHeader>
-                    <ExamEmployeeDetails @key="@(_selectedEmployee?.Id ?? 0)" Closed="@DetailsClosed" EmployeeId="@_selectedEmployee.Id"></ExamEmployeeDetails>
+
+                    <ExamEmployeeDetails @key="@(_selectedEmployee?.Id ?? 0)" Closed="@DetailsClosed" EmployeeId="@_selectedEmployee!.Id"></ExamEmployeeDetails>
                 }
             </MudDrawer>
             <MudDrawer @bind-Open="@_createPanelOpen" Width="50%" Fixed="false" Anchor="Anchor.Start" Elevation="0" Variant="@DrawerVariant.Persistent">
@@ -19,6 +20,7 @@
                     <MudDrawerHeader>
                         <MudText Typo="Typo.h6">Create new Employee</MudText>
                     </MudDrawerHeader>
+
                     <ExamEmployeeCreate Closed="@CreateClosed" Employee="new ExamEmployee()"></ExamEmployeeCreate>
                 }
             </MudDrawer>
@@ -28,7 +30,7 @@
                         @* Add as headers here: Id, FirstName, LastName, Position, Salary, and one extra header for Create Employee *@
                         @* For Create employee, use this template (filling in everything that is missing): *@
                         @* <MudButton id="@CreateButtonId" Variant="Variant.Filled" Color="Color.Primary">Create new</MudButton> *@
-                         
+
                         <MudTh>Id</MudTh>
                         <MudTh>First Name</MudTh>
                         <MudTh>Last Name</MudTh>
@@ -40,10 +42,10 @@
                     </HeaderContent>
                     <RowTemplate>
                         <MudTd>@context.Id</MudTd>
-                        <MudTd>@context.FirstName</MudTd>
-                        <MudTd>@context.LastName</MudTd>
-                        <MudTd>@context.Position</MudTd>
-                        <MudTd>@context.Salary</MudTd>
+                        <MudTd>@(context.FirstName!)</MudTd>
+                        <MudTd>@(context.LastName!)</MudTd>
+                        <MudTd>@(context.Position!)</MudTd>
+                        <MudTd>@(context.Salary!)</MudTd>
                         <MudTd>
                             <MudIconButton id="@DetailsId(context.Id)" Icon="@Icons.Material.Outlined.RemoveRedEye" Variant="Variant.Text" Color="Color.Primary" OnClick="async () => await OpenDetails(context.Id)"></MudIconButton>
                         </MudTd>
@@ -57,16 +59,19 @@
 
 @code {
 
-        public const string CreateButtonId = "create";
+    public const string CreateButtonId = "create";
+
     public static string DetailsId(int employeeId) => $"details_{employeeId}";
-    
-    public List<ExamEmployee> Employees { get; private set; }
-    private ExamEmployee _selectedEmployee;
+
+    public List<ExamEmployee> Employees { get; private set; } = null!;
+
+    private ExamEmployee? _selectedEmployee;
     private bool _detailsPanelOpen = false;
     private bool _createPanelOpen = false;
 
-    [Inject] public IExamEmployeeService EmployeeService { get; set; }
-    
+    [Inject]
+    public IExamEmployeeService EmployeeService { get; set; } = null!;
+
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
@@ -96,6 +101,7 @@
         {
             _detailsPanelOpen = false;
         }
+
         _createPanelOpen = true;
         StateHasChanged();
     }

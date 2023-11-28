@@ -10,5 +10,6 @@
 </ul>
 
 @code {
-    [Parameter, EditorRequired] public PreconditionsNotMetTestRunResult TestRunResult { get; set; }
+    [Parameter, EditorRequired]
+    public PreconditionsNotMetTestRunResult TestRunResult { get; set; } = null!;
 }

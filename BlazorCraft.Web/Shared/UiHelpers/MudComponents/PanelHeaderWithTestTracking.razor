@@ -15,7 +15,7 @@
 @code {
 
     [Parameter, EditorRequired]
-    public RenderFragment ChildContent { get; set; }
+    public required RenderFragment ChildContent { get; set; }
 
     private TestRunSession _session => TestRunnerService.GetSessionForTestClass(typeof(TTestClass));
     private string _icon = Icons.Material.Outlined.QuestionMark;

@@ -7,10 +7,10 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        ChildContent = Items;
+        ChildContent = EnumItems;
     }
 
-    protected RenderFragment Items => builder =>
+    protected RenderFragment EnumItems => builder =>
     {
         int seq = 0;
         

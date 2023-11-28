@@ -19,40 +19,40 @@ public class Test_DependencyInjection_Ex_LessonFinal : ComponentTestBase<Depende
     [ComponentUsedInMarkupTitle(typeof(RenderFragments_LessonFinal))]
     [ComponentUsedInMarkupDescription(typeof(RenderFragments_LessonFinal))]
     [Precondition]
-    public async Task GivenDependencyInjection_Ex_LessonFinal_WhenDeclared_ThenRenderFragments_LessonFinalComponentUsed()
+    public Task GivenDependencyInjection_Ex_LessonFinal_WhenDeclared_ThenRenderFragments_LessonFinalComponentUsed()
     {
         var component = new DependencyInjection_Ex_LessonFinal();
         ValidateComponentUsage(component, ListComponentType);
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [ParameterDefinedTitle(EmployeeServiceName)]
     [ParameterDefinedDescription(EmployeeServiceName, typeof(IEmployeeService))]
     [Precondition]
-    public async Task GivenDependencyInjection_Ex_LessonFinal_WhenDeclared_ThenEmployeeServiceParameterDefined()
+    public Task GivenDependencyInjection_Ex_LessonFinal_WhenDeclared_ThenEmployeeServiceParameterDefined()
     {
         var component = new DependencyInjection_Ex_LessonFinal();
         ValidateInjectedProperty(component, EmployeeServiceName, typeof(IEmployeeService));
-        
-    }
+		return Task.CompletedTask;
+	}
 
     [Title("EmployeeService is registered as a scoped service")]
     [Description("This test verifies that the EmployeeService is registered as a scoped service")]
     [Precondition]
-    public async Task GivenEmployeeService_WhenRegistered_ThenItIsAsScopedService()
+    public Task GivenEmployeeService_WhenRegistered_ThenItIsAsScopedService()
     {
         var component = new DependencyInjection_Ex_LessonFinal();
         ValidateComponentUsage(component, ListComponentType);
         GetAndValidateTestContext();
-        
-    }
+		return Task.CompletedTask;
+	}
     
     [Title("Employees property is bound to "+nameof(RenderFragments_LessonFinal)+".Employees")]
     [Description("This test verifies that Employees property is bound to "+nameof(RenderFragments_LessonFinal)+".Employees")]
     public async Task GivenEmployeesProperty_WhenBound_ThenItIsToRenderFragmentsLessonFinalEmployees()
     {
         var testContext = GetAndValidateTestContext();
-        var employeeService = testContext.Services.GetService<IEmployeeService>();
+        var employeeService = testContext.Services.GetRequiredService<IEmployeeService>();
         var employees = await employeeService.GetEmployees();
         try
         {
@@ -62,7 +62,7 @@ public class Test_DependencyInjection_Ex_LessonFinal : ComponentTestBase<Depende
             await Task.Delay(1000);
             var findComponent = renderedComponent.FindComponent<RenderFragments_LessonFinal>();
             var componentEmployees = findComponent.Instance.Employees;
-            componentEmployees.Should().FormattedBeEquivalentTo(employees,"The list of employees bound to the list component is not equal to its expected value!");
+            componentEmployees.Should()!.FormattedBeEquivalentTo(employees,"The list of employees bound to the list component is not equal to its expected value!");
             
         }
         catch (NullReferenceException e)

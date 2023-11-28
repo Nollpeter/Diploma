@@ -12,15 +12,9 @@ namespace BlazorCraft.Web.Tests._11_Exam;
 [TestForPage(typeof(Pages._11_Exam.Exam))]
 public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
 {
-    private IExamEmployeeService _employeeService;
-    private readonly IServiceProvider _serviceProvider;
-    private Func<bool> GetEmployeeForEditCalled;
-    private Func<bool> UpdateEmployeeCalled;
-
-    public Test_Exam_EmployeeDetails(IJSRuntime jsRuntime, IServiceProvider serviceProvider) : base(jsRuntime)
-    {
-        _serviceProvider = serviceProvider;
-    }
+    private IExamEmployeeService _employeeService = null!;
+	private Func<bool> GetEmployeeForEditCalled = null!;
+	private Func<bool> UpdateEmployeeCalled = null!;
 
     protected override async Task<TestContext> SetupTestContext()
     {
@@ -90,10 +84,11 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     [Description("This test verifies that the " + nameof(ExamEmployeeDetails) + "." + nameof(ExamEmployeeDetails.UpdateImage) + " method is marked with the " + nameof(JSInvokableAttribute) +
                  ", ensuring that it can be called from JavaScript in the context of the ExamEmployeeEdit component.")]
     [Precondition]
-    public async Task GivenExamEmployeeEdit_WhenRendered_ThenUpdateImageIsCallableFromJs()
-    {
-        ValidateMethodWithNameAndAttributeExists(Component, nameof(ExamEmployeeDetails.UpdateImage), typeof(JSInvokableAttribute));
-    }
+    public Task GivenExamEmployeeEdit_WhenRendered_ThenUpdateImageIsCallableFromJs()
+	{
+		ValidateMethodWithNameAndAttributeExists(Component, nameof(ExamEmployeeDetails.UpdateImage), typeof(JSInvokableAttribute));
+		return Task.CompletedTask;
+	}
 
     [Title(nameof(EmployeeForm) + " Employee is bound to " + nameof(IExamEmployeeService) + " Employee")]
     [Description(
@@ -116,7 +111,6 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
 
     private async Task<IRenderedComponent<ExamEmployeeDetails>> RenderedEmployeeDetails(TestContext ctx, Action<ComponentParameterCollectionBuilder<ExamEmployeeDetails>>? parameterBuilder)
     {
-        ExamEmployee employee;
         var renderedEmployeeDetails = ctx.RenderComponent<ExamEmployeeDetails>(
             parameterBuilder);
         renderedEmployeeDetails.SetParametersAndRender();

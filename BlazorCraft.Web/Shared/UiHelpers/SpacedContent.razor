@@ -4,6 +4,8 @@
 
 @code {
     [Parameter] public int Gap { get; set; } = 3;
-    [Parameter, EditorRequired] public RenderFragment ChildContent { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; } = null!;
 
 }

@@ -43,13 +43,13 @@
     public class Employee
     {
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
 
-    // You can use this variable to show/hide the editor
+        // You can use this variable to show/hide the editor
         public bool IsEditorVisible { get; set; }
     }
 
     [Parameter]
-    public List<Employee> Employees { get; set; }
+    public List<Employee> Employees { get; set; } = null!;
 }

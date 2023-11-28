@@ -2,13 +2,13 @@
 
 @code {
     private int elapsedSeconds;
-    private System.Timers.Timer timer;
+    private System.Timers.Timer timer = null!;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         // Timer fires every 1 second (1000 milliseconds)
-        timer = new System.Timers.Timer(1000);  
+        timer = new(1000);  
         timer.Elapsed += (sender, e) =>
         {
             elapsedSeconds++;  

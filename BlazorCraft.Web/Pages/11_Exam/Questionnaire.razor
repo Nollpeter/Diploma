@@ -47,8 +47,8 @@
         [Range(1, 5)] public int SelectedValue { get; set; } = -1;
         public int? ActiveValue { get; set; }
         
-        public string Description { get; set; }
-        
+        public string Description { get; set; } = null!;
+
         public string GetRatingText() => (ActiveValue ?? SelectedValue) switch
         {
             1 => "Very bad",
@@ -66,30 +66,30 @@
 
 //TODO 2 branches remove for control
         [Description("How much did the continous feedback and exercises enhance your learning curve?")]
-        public RatingModel ContinousFeedbackEnhancement { get; set; } = new RatingModel() {SelectedValue = -2};
+        public RatingModel ContinousFeedbackEnhancement { get; set; } = new() {SelectedValue = -2};
 
 //TODO 2 branches remove for control
         [Description("How difficult were the exercises?")]
-        public RatingModel DifficultyOfExercises { get; set; }
+        public RatingModel DifficultyOfExercises { get; set; } = null!;
 
         [Description("How would you rate your understanding of the materials that you learned?")]
-        public RatingModel UnderStandingMaterial { get; set; }
+        public RatingModel UnderStandingMaterial { get; set; } = null!;
 
         [Description("How clear were the learning materials and the sample codes for you?")]
-        public RatingModel ClearnessOfLearningMaterial { get; set; }
+        public RatingModel ClearnessOfLearningMaterial { get; set; } = null!;
 
         [Description("How much new did you learn about blazor while using this application?")]
-        public RatingModel HowMuchNewStuffDidYouLearn { get; set; }
+        public RatingModel HowMuchNewStuffDidYouLearn { get; set; } = null!;
         /*[Required] [Description("")] public RatingModel EffectivenessOfExercises { get; set; }*/
 
         [Description("How prepared did you feel yourself for the exam ecercise?")]
-        public RatingModel PreparednessForExam { get; set; }
+        public RatingModel PreparednessForExam { get; set; } = null!;
 
         [Description("How difficult was the exam exercise?")]
-        public RatingModel DifficultyOfExam { get; set; }
+        public RatingModel DifficultyOfExam { get; set; } = null!;
 
         [Description("How would you rate this application overall?")]
-        public RatingModel Overall { get; set; }
+        public RatingModel Overall { get; set; } = null!;
 
         public string? Feedback { get; set; }
 
@@ -103,18 +103,18 @@
         
         public QuestionnaireModel()
         {
-            Ratings = new List<RatingModel>();
+            Ratings = new();
             foreach (var rating in GetType().GetProperties().Where(p => p.PropertyType == typeof(RatingModel)))
             {
                 var descriptionAttribute = rating.GetCustomAttribute<DescriptionAttribute>();
-                var ratingModel = new RatingModel() { Description = descriptionAttribute.Description};
+                var ratingModel = new RatingModel() { Description = descriptionAttribute!.Description};
                 rating.SetValue(this, ratingModel);
                 Ratings.Add(ratingModel);
             }
         }
     }
 
-    private QuestionnaireModel Model { get; } = new QuestionnaireModel();
+    private QuestionnaireModel Model { get; } = new();
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -135,7 +135,7 @@
             await SendResultsService.SendResults(Model);
             SnackBar.Add("Feedback and exam results were successfully sent. Thank you very much for participation!", Severity.Success);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             SnackBar.Add("An error occured during sending results. Please try again or contact me directly!", Severity.Error);
         }

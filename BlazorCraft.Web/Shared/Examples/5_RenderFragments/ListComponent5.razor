@@ -12,9 +12,12 @@
 
 @code {
 
-    [Parameter, EditorRequired] public RenderFragment Title { get; set; }
-    [Parameter, EditorRequired] public List<T> ListItems { get; set; }
-    [Parameter, EditorRequired] public RenderFragment<T> ListItemTemplate { get; set; }
-    [Parameter, EditorRequired] public RenderFragment<RenderFragment> ListTemplate { get; set; } // Notice how we pass a RenderFragment to a RenderFragment
+    [Parameter, EditorRequired] public required RenderFragment Title { get; set; }
+
+    [Parameter, EditorRequired] public required List<T> ListItems { get; set; }
+
+    [Parameter, EditorRequired] public required RenderFragment<T> ListItemTemplate { get; set; }
+
+    [Parameter, EditorRequired] public required RenderFragment<RenderFragment> ListTemplate { get; set; } // Notice how we pass a RenderFragment to a RenderFragment
 
 }

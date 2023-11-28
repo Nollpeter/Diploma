@@ -16,10 +16,11 @@ public class AsyncLockProvider : IAsyncLockProvider, IAsyncDisposable
         return asyncLock;
     }
 
-    public async ValueTask DisposeAsync()
-    {
-        _semaphoreSlim.Dispose();
-    }
+    public ValueTask DisposeAsync()
+	{
+		_semaphoreSlim.Dispose();
+		return ValueTask.CompletedTask;
+	}
 }
 
 public class AsyncLock : IAsyncDisposable
@@ -31,8 +32,9 @@ public class AsyncLock : IAsyncDisposable
         _semaphoreSlim = semaphoreSlim;
     }
 
-    public async ValueTask DisposeAsync()
-    {
-        _semaphoreSlim.Release();
-    }
+    public ValueTask DisposeAsync()
+	{
+		_semaphoreSlim.Release();
+		return ValueTask.CompletedTask;
+	}
 }

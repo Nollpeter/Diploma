@@ -10,10 +10,6 @@ namespace BlazorCraft.Web.Tests._11_Exam;
 [TestForPage(typeof(Pages._11_Exam.Exam))]
 public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
 {
-    public Test_Exam_EmployeeCreate(IJSRuntime jsRuntime) : base(jsRuntime)
-    {
-    }
-
     protected override async Task<TestContext> SetupTestContext()
     {
         var setupTestContext = await base.SetupTestContext();
@@ -106,10 +102,10 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
 
         await renderedComponent.InvokeAsync(async () => await findComponent.Instance.EmployeeValid.InvokeAsync());
         try
-        {
-            var examEmployee = await employeeService.GetEmployee(employee.Id);
-        }
-        catch (KeyNotFoundException e)
+		{
+			await employeeService.GetEmployee(employee.Id);
+		}
+        catch (KeyNotFoundException)
         {
             throw new TestRunException("Employee was not added to EmployeeService!");
         }

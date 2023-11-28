@@ -28,7 +28,7 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
     [Title("Employee properties annotated with Validation attributes")]
     [Description("This test verifies that you have annotated the Employee type with the proper Validation attributes")]
     [Precondition]
-    public async Task GivenEmployeeProperties_WhenAnnotated_ThenValidationAttributesAreApplied()
+    public Task GivenEmployeeProperties_WhenAnnotated_ThenValidationAttributesAreApplied()
     {
         Employee employee = new Employee();
         ValidatePropertyAnnotatedWithAttribute(employee, nameof(Employee.Salary), typeof(RequiredAttribute));
@@ -37,29 +37,32 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
         ValidatePropertyAnnotatedWithAttribute(employee, nameof(Employee.LastName), typeof(RequiredAttribute));
         ValidatePropertyAnnotatedWithAttribute(employee, nameof(Employee.BirthDate), typeof(RequiredAttribute));
         ValidatePropertyAnnotatedWithAttribute(employee, nameof(Employee.Position), typeof(RequiredAttribute));
-    }
+		return Task.CompletedTask;
+	}
 
 
     [ComponentUsedInMarkupTitle(typeof(DataAnnotationsValidator))]
     [ComponentUsedInMarkupDescription(typeof(DataAnnotationsValidator))]
     [Precondition]
-    public async Task GivenForms_Ex_LessonFinal_WhenDeclared_ThenDataAnnotationsValidatorComponentUsed()
-    {
-        ValidateComponentUsage(Component, typeof(DataAnnotationsValidator));
-    }
+    public Task GivenForms_Ex_LessonFinal_WhenDeclared_ThenDataAnnotationsValidatorComponentUsed()
+	{
+		ValidateComponentUsage(Component, typeof(DataAnnotationsValidator));
+		return Task.CompletedTask;
+	}
 
     [ComponentUsedInMarkupTitle(typeof(ListComponent5<Employee>))]
     [ComponentUsedInMarkupDescription(typeof(ListComponent5<Employee>))]
     [Precondition]
-    public async Task GivenForms_Ex_LessonFinal_WhenDeclared_ThenListComponent5Used()
-    {
-        ValidateComponentUsage(Component, typeof(ListComponent5<Employee>));
-    }
+    public Task GivenForms_Ex_LessonFinal_WhenDeclared_ThenListComponent5Used()
+	{
+		ValidateComponentUsage(Component, typeof(ListComponent5<Employee>));
+		return Task.CompletedTask;
+	}
 
     [Title("Create button is rendered for the list component Title")]
     [Description("This test verifies that the create button is rendered for the list component Title")]
     [Precondition]
-    public async Task GivenListComponentTitle_WhenRendered_ThenCreateButtonIsPresent()
+    public Task GivenListComponentTitle_WhenRendered_ThenCreateButtonIsPresent()
     {
         var renderedComponent = SetupTestContext().RenderComponent<Forms_Ex_LessonFinal>();
         var buttons = renderedComponent.FindAll("button");
@@ -68,7 +71,9 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
         {
             throw new TestRunException("There is no \"Create\" button on the component!");
         }
-    }
+
+		return Task.CompletedTask;
+	}
 
     [Title("Table is rendered properly")]
     [Description("This test verifies teh employees table is rendered properly with all its fields")]
@@ -112,7 +117,7 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
 
     [Title("Form is hidden by default")]
     [Description("This test verifies that the edit form for employees is hidden by default")]
-    public async Task GivenEmployeeEditForm_WhenDefaultRendered_ThenItIsHidden()
+    public Task GivenEmployeeEditForm_WhenDefaultRendered_ThenItIsHidden()
     {
         var renderedComponent = SetupTestContext().RenderComponent<Forms_Ex_LessonFinal>();
 
@@ -121,7 +126,9 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
         {
             throw new TestRunException("The edit form for employees should be hidden by default");
         }
-    }
+
+		return Task.CompletedTask;
+	}
 
     private IElement GetButtonWithLabel(IRenderedComponent<Forms_Ex_LessonFinal> renderedComponent, string label)
     {
@@ -313,7 +320,7 @@ public class Test_Forms_Ex_LessonFinal : ComponentTestBase<Forms_Ex_LessonFinal>
             var tbody = renderedComponent.Find("tbody");
             AssertTableWithEmployees(employees, tbody);
         }
-        catch (KeyNotFoundException e)
+        catch (KeyNotFoundException)
         {
             throw new TestRunException("The valid employee cannot be found in the employee service after saving");
         }

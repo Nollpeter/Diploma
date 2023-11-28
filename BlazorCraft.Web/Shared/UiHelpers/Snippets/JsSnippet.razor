@@ -1,4 +1,6 @@
-﻿@if (renderingFinished)
+﻿@inject IJSRuntime JsRuntime
+
+@if (renderingFinished)
 {
     @if (ShowComponentName || true)
     {
@@ -7,7 +9,7 @@
             <MudText class="fw-bold">@JsFileName</MudText>
         </div>
     }
-    <CodeSnippet Language="csharp">
+    <CodeSnippet Language="javascript">
         @_originalMarkup
     </CodeSnippet>
 
@@ -15,29 +17,15 @@
 
 @code {
 
-    [Inject]
-    private IJSRuntime _js { get; set; }
-
-    [Parameter, EditorRequired] public string JsFileName { get; set; }
-    
-    public string Language { get; set; } = "javascript";
+    [Parameter, EditorRequired]
+    public required string JsFileName { get; set; }
 
     [Parameter]
     public bool ShowComponentName { get; set; } = true;
 
 
     private bool renderingFinished = false;
-    private string _originalMarkup;
-    private string _renderedHtml;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-        if (firstRender)
-        {
-        }
-    }
-
+    private string _originalMarkup = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -48,7 +36,7 @@
         StateHasChanged();
 
 
-        await _js.InvokeVoidAsync("highlightSnippet");
+        await JsRuntime!.InvokeVoidAsync("highlightSnippet");
         StateHasChanged();
     }
 
@@ -57,8 +45,13 @@
     {
         var manifestResourceNames = GetType().Assembly.GetManifestResourceNames();
         var key = manifestResourceNames.FirstOrDefault(x => x.Contains(JsFileName));
+
+        if (key == null)
+        {
+            throw new FileNotFoundException(JsFileName);
+        }
         using (var stream = GetType().Assembly.GetManifestResourceStream(key))
-        using (var reader = new StreamReader(stream))
+        using (var reader = new StreamReader(stream!))
         {
             var read = reader.ReadToEnd();
             return read;

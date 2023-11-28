@@ -15,7 +15,7 @@
 
 @code {
 
-    private List<Employee> _employees;
+    private List<Employee>? _employees;
     
     
     // Create a method, that will be invokeable from the javascript runtime
@@ -23,7 +23,7 @@
     // The method should make sure, that the employees can be bound to the list component
     // Hint: Remember how the properties were bound in the previous chapter's exercise
 
-    private DotNetObjectReference<JsInterop_Ex_LessonFinal> _dotNetObjectReference;
+    private DotNetObjectReference<JsInterop_Ex_LessonFinal> _dotNetObjectReference = null!;
     
     [JSInvokable]
     public void SetValueFromJs(List<Employee> employees)

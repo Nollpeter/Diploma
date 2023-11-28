@@ -235,7 +235,7 @@ public class TestRunnerService : ITestRunnerService
                     var func = (Func<Task>)Delegate.CreateDelegate(typeof(Func<Task>),
                         testClassInstance, methodInfo);
                     resultList.Add(
-                        new(func, titleAttribute?.Title, descriptionAttribute?.Description, hintAttribute?.Hint,
+                        new(func, titleAttribute?.Title ?? string.Empty, descriptionAttribute?.Description ?? string.Empty, hintAttribute?.Hint,
                             testForPageAttribute.Page, type, isPrecondition, (ComponentTestBase)testClassInstance), null);
                 }
             }

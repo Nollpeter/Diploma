@@ -1,4 +1,5 @@
 ﻿@using System.Text.RegularExpressions
+@inject IJSRuntime JsRuntime
 
 @if (renderingFinished)
 {
@@ -17,10 +18,7 @@
 
 @code {
 
-    [Inject]
-    private IJSRuntime _js { get; set; }
-
-    [Parameter, EditorRequired] public Type T { get; set; }
+    [Parameter, EditorRequired] public required Type T { get; set; }
     
     [Parameter]
     public string Language { get; set; } = "csharp";
@@ -32,16 +30,7 @@
     private string ComponentFileName => $"{Regex.Replace(T.Name, @"`\d+", "")}.cs";
 
     private bool renderingFinished = false;
-    private string _originalMarkup;
-    private string _renderedHtml;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-        if (firstRender)
-        {
-        }
-    }
+    private string _originalMarkup = null!;
 
 
     protected override async Task OnInitializedAsync()
@@ -53,7 +42,7 @@
         StateHasChanged();
 
 
-        await _js.InvokeVoidAsync("highlightSnippet");
+        await JsRuntime!.InvokeVoidAsync("highlightSnippet");
         StateHasChanged();
     }
 
@@ -62,8 +51,13 @@
     {
         var manifestResourceNames = T.Assembly.GetManifestResourceNames();
         var key = manifestResourceNames.FirstOrDefault(x => x.Contains(ComponentFileName));
+
+        if (key == null)
+        {
+            throw new FileNotFoundException(ComponentFileName);
+        }
         using (var stream = T.Assembly.GetManifestResourceStream(key))
-        using (var reader = new StreamReader(stream))
+        using (var reader = new StreamReader(stream!))
         {
             var read = reader.ReadToEnd();
             return read;

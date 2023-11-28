@@ -64,11 +64,11 @@
     <ListItemTemplate>
         <tr>
             <td>@context.Id</td>
-            <td>@context.FirstName</td>
-            <td>@context.LastName</td>
-            <td>@context.Position</td>
-            <td>@context.Salary</td>
-            <td>@context.BirthDate</td>
+            <td>@(context.FirstName!)</td>
+            <td>@(context.LastName!)</td>
+            <td>@(context.Position!)</td>
+            <td>@(context.Salary!)</td>
+            <td>@(context.BirthDate!)</td>
         </tr>
     </ListItemTemplate>
 </ListComponent5>
@@ -76,21 +76,21 @@
 @code {
 
     private Employee? _selectedEmployee;
-    
-    private List<Employee> _employees;
+
+    private List<Employee> _employees = null!;
 
     public class Employee
     {
         public int Id { get; set; }
 
         [Required]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [Required]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [Required]
-        public string Position { get; set; }
+        public string? Position { get; set; }
         
         [Range(20000, 40000)]
         [Required]
@@ -110,15 +110,16 @@
 
     private async Task SaveEmployee()
     {
-        await EmployeeService.AddEmployee(_selectedEmployee);
+        await EmployeeService.AddEmployee(_selectedEmployee!);
         _selectedEmployee = null;
         _employees = await EmployeeService.GetEmployees();
         StateHasChanged();
     }
 
-    private async Task CreateEmployee()
+    private Task CreateEmployee()
     {
         _selectedEmployee = new Employee();
+        return Task.CompletedTask;
     }
 
 }

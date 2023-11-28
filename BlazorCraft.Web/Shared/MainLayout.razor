@@ -15,7 +15,10 @@
     <MudAppBar Elevation="0">
         <MudIconButton Class="mx-2" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
         <MudButton Class="mx-2" OnClick="TestRunnerService.RunAll" Color="Color.Secondary" Variant="Variant.Filled">Run all</MudButton>
-        <MudButton Class="mx-2" OnClick="() => TestRunnerService.RunAllInPage(CurrentPageType)" Color="Color.Tertiary" Variant="Variant.Filled">Run all in page</MudButton>
+        @if (CurrentPageType != null)
+        {
+            <MudButton Class="mx-2" OnClick="() => TestRunnerService.RunAllInPage(CurrentPageType)" Color="Color.Tertiary" Variant="Variant.Filled">Run all in page</MudButton>
+        }
         <MudSpacer/>
         @if (CurrentPageType == typeof(Exam))
         {
@@ -38,7 +41,7 @@
     </MudDrawer>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large" Class="my-8 pt-8 d-grid gap-3">
-            @Body
+            @(Body!)
         </MudContainer>
     </MudMainContent>
 </MudLayout>
@@ -51,7 +54,7 @@
         _drawerOpen = !_drawerOpen;
     }
 
-    private Type CurrentPageType;
+    private Type? CurrentPageType;
     private Type? NextPage;
     private Type? PreviousPage;
     

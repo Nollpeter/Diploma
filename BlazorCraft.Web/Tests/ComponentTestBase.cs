@@ -18,7 +18,7 @@ public abstract class ComponentTestBase : TestContext
         {
             var func = (Func<Task>)Delegate.CreateDelegate(typeof(Func<Task>),
                 this, preconditionMethod);
-            var title = preconditionMethod.GetCustomAttribute<TitleAttribute>().Title;
+            var title = preconditionMethod.GetCustomAttribute<TitleAttribute>()!.Title;
             try
             {
                 await func();
@@ -66,9 +66,15 @@ public class ComponentTestBase<TTestComponent> : ComponentTestBase where TTestCo
         var componentTypeName = componentType.IsGenericType ? componentType.Name.Split('`')[0] : componentType.Name;
         var componentThatShouldBeUsedName = componentThatShouldBeUsedInMarkup.IsGenericType ? componentThatShouldBeUsedInMarkup.Name.Split('`')[0] : componentThatShouldBeUsedInMarkup.Name;
 
-        var key = manifestResourceNames.FirstOrDefault(x => x.Contains(componentTypeName + ".razor"));
+		string fileName = componentTypeName + ".razor";
+		var key = manifestResourceNames.FirstOrDefault(x => x.Contains(fileName));
+
+		if (key == null)
+		{
+			throw new FileNotFoundException(fileName);
+		}
         using (var stream = componentType.Assembly.GetManifestResourceStream(key))
-        using (var reader = new StreamReader(stream))
+        using (var reader = new StreamReader(stream!))
         {
             var read = reader.ReadToEnd();
             

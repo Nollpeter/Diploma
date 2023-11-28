@@ -5,7 +5,7 @@
 }
 @code{
     
-    [Parameter, EditorRequired] public string Title { get; set; }
-    [Parameter, EditorRequired] public List<TestClass> ListItems { get; set; }
+    [Parameter, EditorRequired] public required string Title { get; set; }
+    [Parameter, EditorRequired] public required List<TestClass> ListItems { get; set; }
 
 }

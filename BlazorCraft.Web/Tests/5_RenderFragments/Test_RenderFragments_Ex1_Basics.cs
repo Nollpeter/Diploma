@@ -18,26 +18,26 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
     [Title(TitleFragmentName+" fragment defined")]
     [Infrastructure.Attributes.Description("This test verifies that the "+TitleFragmentName+" has been defined on the component")]
     [Precondition]
-    public async Task GivenRenderFragments_Ex1_WhenDeclared_ThenTitleFragmentIsDefined()
+    public Task GivenRenderFragments_Ex1_WhenDeclared_ThenTitleFragmentIsDefined()
     {
         var renderFragmentsEx1 = new RenderFragments_Ex1();
         ValidateRenderFragmentExists(renderFragmentsEx1, TitleFragmentName, typeof(RenderFragment));
-        
-    }
+		return Task.CompletedTask;
+	}
     
     [Title(DetailsFragmentName+" fragment defined")]
     [Infrastructure.Attributes.Description("This test verifies that the "+DetailsFragmentName+" has been defined on the component")]
     [Precondition]
-    public async Task GivenRenderFragments_Ex1_WhenDeclared_ThenDetailsFragmentIsDefined()
+    public Task GivenRenderFragments_Ex1_WhenDeclared_ThenDetailsFragmentIsDefined()
     {
         var renderFragmentsEx1 = new RenderFragments_Ex1();
         ValidateRenderFragmentExists(renderFragmentsEx1, DetailsFragmentName, typeof(RenderFragment));
-        
-    }
+		return Task.CompletedTask;
+	}
     
     [Title(TitleFragmentName + " is rendered")]
     [Infrastructure.Attributes.Description("This test verifies that the "+TitleFragmentName+" is rendered for the component without any interaction")]
-    public async Task GivenTitleFragment_WhenComponentRendered_ThenTitleFragmentIsRendered()
+    public Task GivenTitleFragment_WhenComponentRendered_ThenTitleFragmentIsRendered()
     {
         TestContext testContext = new TestContext();
 
@@ -52,13 +52,12 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
         titleFragment.Invoke(new RenderTreeBuilder());
         var element = renderedComponent.Find(".title").InnerHtml;
         element.MarkupMatches($"<p>{titleContent}</p>");
-
-        
-    }
+		return Task.CompletedTask;
+	}
     
     [Title("Button click renders "+DetailsFragmentName)]
     [Infrastructure.Attributes.Description("This test verifies that the "+DetailsFragmentName+" is rendered upon clicking the button")]
-    public async Task GivenButtonClick_WhenRendered_ThenDetailsFragmentIsRendered()
+    public Task GivenButtonClick_WhenRendered_ThenDetailsFragmentIsRendered()
     {
         TestContext testContext = new TestContext();
         
@@ -81,15 +80,13 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
         element.MarkupMatches($"<p>{titleContent}</p>");
         var innerHtml = renderedComponent.Find(".details").InnerHtml;
         innerHtml.MarkupMatches($"<p>{detailsContent}</p>");
-
-
-        
-    }
+		return Task.CompletedTask;
+	}
 
 
     [Title("Second Button click hides "+DetailsFragmentName)]
     [Infrastructure.Attributes.Description("This test verifies that the "+DetailsFragmentName+" is hidden upon clicking the button a second time")]
-    public async Task GivenSecondButtonClick_WhenRendered_ThenDetailsFragmentIsHidden()
+    public Task GivenSecondButtonClick_WhenRendered_ThenDetailsFragmentIsHidden()
     {
         TestContext testContext = new TestContext();
         
@@ -121,9 +118,7 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
         titleResult.MarkupMatches($"<p>{titleContent}</p>");
         var detailsResult = renderedComponent.Find(".details").InnerHtml;
         detailsResult.MarkupMatches(string.Empty);
-        
-
-        
-    }
+		return Task.CompletedTask;
+	}
     
 }

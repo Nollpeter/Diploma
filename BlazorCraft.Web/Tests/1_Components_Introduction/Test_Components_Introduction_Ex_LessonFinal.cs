@@ -17,15 +17,16 @@ public class Test_Components_Introduction_Ex_LessonFinal : ComponentTestBase<Com
     [ParameterDefinedTitle(NumbersParameterName)]
     [ParameterDefinedDescription(NumbersParameterName, typeof(List<int>))]
     [Precondition]
-    public async Task GivenComponentsIntroductionExercise_WhenRendered_ThenNumbersParamterDefined()
+    public Task GivenComponentsIntroductionExercise_WhenRendered_ThenNumbersParamterDefined()
     {
         var component = new Components_Introduction_Ex_LessonFinal();
         ValidateComponentProperty(component, NumbersParameterName, typeof(List<int>));
-    }
+		return Task.CompletedTask;
+	}
 
     [Title("List is hidden by default")]
     [Description("This test verifies that by default, the List is hidden in its initial state")]
-    public async Task Test2()
+    public Task Test2()
     {
         TestContext testContext = new TestContext();
         Random r = new Random();
@@ -35,11 +36,12 @@ public class Test_Components_Introduction_Ex_LessonFinal : ComponentTestBase<Com
 
         var innerHtml = renderedComponent.Find(".ex-container").InnerHtml;
         innerHtml.MarkupMatches("<p>The list is hidden</p>");
-    }
+		return Task.CompletedTask;
+	}
     
     [Title("Button click renders list")]
     [Description("This test verifies that clicking on the \"Click me\" button, the list is rendered")]
-    public async Task GivenComponentsIntroductionExercise_WhenButtonClicked_ThenListRenders()
+    public Task GivenComponentsIntroductionExercise_WhenButtonClicked_ThenListRenders()
     {
         var component = new Components_Introduction_Ex_LessonFinal();
         ValidateComponentProperty(component, NumbersParameterName, typeof(List<int>));
@@ -57,6 +59,6 @@ public class Test_Components_Introduction_Ex_LessonFinal : ComponentTestBase<Com
                                 $"<p>parameter value: {list[1]}</p>"+
                                 $"<p>parameter value: {list[2]}</p>");
 
-        
-    }
+		return Task.CompletedTask;
+	}
 }

@@ -1,12 +1,12 @@
 ﻿@using System.Reflection
 
 <div class="d-flex">
-    <button class="btn btn-primary list-view" @onclick="() => isListView = true">List view</button>
-    <button class="btn btn-primary table-view" @onclick="() => isListView = false">Table view</button>
+    <button class="btn btn-primary list-view" @onclick="() => _isListView = true">List view</button>
+    <button class="btn btn-primary table-view" @onclick="() => _isListView = false">Table view</button>
 </div>
 <div class="ex-final-container">
     @* List component implementations should come here *@
-    @if (isListView)
+    @if (_isListView)
     {
         <ListComponent5 T="Employee" ListItems="Employees">
             <Title><h2>Employees</h2></Title>
@@ -60,9 +60,9 @@
 
 
     [Parameter]
-    public List<Employee> Employees { get; set; }
+    public List<Employee> Employees { get; set; } = null!;
 
-    bool isListView = true;
+    bool _isListView = true;
 
     public record Employee(int Id, string FirstName, string LastName, string Position);
 

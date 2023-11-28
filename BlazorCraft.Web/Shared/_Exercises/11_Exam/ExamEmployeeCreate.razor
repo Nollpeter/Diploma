@@ -6,7 +6,9 @@
 
 @code {
     [Parameter] public EventCallback Closed { get; set; }
-    [Parameter] public ExamEmployee Employee { get; set; }
+
+    [Parameter]
+    public ExamEmployee Employee { get; set; } = null!;
 
     private async Task CreateEmployee()
     {

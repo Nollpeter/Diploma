@@ -17,6 +17,8 @@
 
 @code {
     private bool _detailsVisible = false;
-    [Parameter]public RenderFragment TitleContent { get; set; }
-    [Parameter]public RenderFragment DetailsContent { get; set; }
+    [Parameter]public RenderFragment TitleContent { get; set; } = null!;
+
+    [Parameter]public RenderFragment DetailsContent { get; set; } = null!;
+
 }

@@ -4,9 +4,9 @@
 @code {
 
     [Inject]
-    IExampleTransientService TransientService { get; set; }
+    IExampleTransientService TransientService { get; set; } = null!;
 
     [Inject]
-    IExampleScopedService ScopedService { get; set; }
+    IExampleScopedService ScopedService { get; set; } = null!;
 
 }

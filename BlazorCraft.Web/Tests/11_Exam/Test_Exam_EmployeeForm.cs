@@ -14,15 +14,9 @@ using NSubstitute;
 
 namespace BlazorCraft.Web.Tests._11_Exam;
 
-public class ExamTestBase<TComponent> : ComponentTestBase<TComponent> where TComponent : ComponentBase, new()
+public abstract class ExamTestBase<TComponent> : ComponentTestBase<TComponent> where TComponent : ComponentBase, new()
 {
-    private readonly IJSRuntime _jsRuntime;
-    protected List<(string methodName, object[] args)> jsMethodCalls;
-
-    public ExamTestBase(IJSRuntime jsRuntime)
-    {
-        _jsRuntime = jsRuntime;
-    }
+    protected List<(string methodName, object[] args)> jsMethodCalls = null!;
 
     protected virtual async Task<TestContext> SetupTestContext()
     {
@@ -33,7 +27,7 @@ public class ExamTestBase<TComponent> : ComponentTestBase<TComponent> where TCom
         await SetupMockJsRuntime(ctx);
         return ctx;
     }
-    private async Task SetupMockJsRuntime(TestContext testContext)
+    private Task SetupMockJsRuntime(TestContext testContext)
     {
         IJSRuntime runtime = Substitute.For<IJSRuntime>();
         jsMethodCalls = new List<(string methodName, object[] args)>();
@@ -50,7 +44,8 @@ public class ExamTestBase<TComponent> : ComponentTestBase<TComponent> where TCom
                 //return await _jsRuntime.InvokeAsync<IJSVoidResult>(identifier, args);
             });
         testContext.Services.AddSingleton(runtime);
-    }
+		return Task.CompletedTask;
+	}
     private class DummyJSVoidResult : IJSVoidResult
     {
         // No members are needed, as IJSVoidResult is a marker interface
@@ -88,8 +83,10 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     public abstract class NumericFormField<T> : IFormFieldDeclaration<MudNumericField<T>, T>
     {
         public abstract string Label { get; }
-        public MudNumericField<T> Instance { get; set; }
-        public IRenderedComponent<MudNumericField<T>> RenderedComponent { get; set; }
+
+		public MudNumericField<T> Instance { get; set; } = null!;
+
+		public IRenderedComponent<MudNumericField<T>> RenderedComponent { get; set; } = null!;
 
         public T Value
         {
@@ -100,44 +97,46 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     public abstract class TextFormField : IFormFieldDeclaration<MudTextField<string?>, string?>
     {
         public abstract string Label { get; }
-        public MudTextField<string?> Instance { get; set; }
+
+		public MudTextField<string?> Instance { get; set; } = null!;
         public string? Value
         {
             get => Instance.Value;
             set => Instance.Value = value;
         }
-        public IRenderedComponent<MudTextField<string?>> RenderedComponent { get; set; }
-    }
+
+		public IRenderedComponent<MudTextField<string?>> RenderedComponent { get; set; } = null!;
+	}
 
     public abstract class EnumFormField<TEnum> : IFormFieldDeclaration<MudEnumSelect<TEnum>,TEnum?> where TEnum : struct, Enum
     {
         public abstract string Label { get; }
-        public MudEnumSelect<TEnum> Instance { get; set; }
-        public TEnum? Value {
+        public MudEnumSelect<TEnum> Instance { get; set; } = null!;
+
+		public TEnum? Value {
             get => Instance.Value;
             set => Instance.Value = value;
         }
-        public IRenderedComponent<MudEnumSelect<TEnum>> RenderedComponent { get; set; }
-    }
+        public IRenderedComponent<MudEnumSelect<TEnum>> RenderedComponent { get; set; } = null!;
+	}
     
     public abstract class DateFormField : IFormFieldDeclaration<MudDatePicker, DateTime?>
     {
         public abstract string Label { get; }
-        public MudDatePicker Instance { get; set; }
+        public MudDatePicker Instance { get; set; } = null!;
 
-        public DateTime? Value
+		public DateTime? Value
         {
             get => Instance.Date;
             set => Instance.Date = value;
         }
 
-        public IRenderedComponent<MudDatePicker> RenderedComponent { get; set; }
-    }
+        public IRenderedComponent<MudDatePicker> RenderedComponent { get; set; } = null!;
+	}
 
     public class Id : NumericFormField<int>
     {
         public override string Label => "Id";
-        public int? Value { get; set; }
     }
     public class FirstName : TextFormField
     {
@@ -195,18 +194,20 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     [ComponentUsedInMarkupTitle(typeof(DataAnnotationsValidator))]
     [ComponentUsedInMarkupDescription(typeof(DataAnnotationsValidator))]
     [Precondition]
-    public async Task DataAnnotationsValidatorUsed()
-    {
-        ValidateComponentUsage(Component, typeof(DataAnnotationsValidator));
-    }
+    public Task DataAnnotationsValidatorUsed()
+	{
+		ValidateComponentUsage(Component, typeof(DataAnnotationsValidator));
+		return Task.CompletedTask;
+	}
     
     [ComponentUsedInMarkupTitle(typeof(EditForm))]
     [ComponentUsedInMarkupDescription(typeof(EditForm))]
     [Precondition]
-    public async Task EditFormUsed()
-    {
-        ValidateComponentUsage(Component, typeof(EditForm));
-    }
+    public Task EditFormUsed()
+	{
+		ValidateComponentUsage(Component, typeof(EditForm));
+		return Task.CompletedTask;
+	}
     private async Task ValidateDeclaredField<TComponentType,TValue>(IFormFieldDeclaration<TComponentType,TValue> field) where TComponentType : IComponent
     {
         var ctx = await SetupTestContext();
@@ -436,6 +437,12 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
 
         var buttons = form.FindComponents<MudButton>();
         var cancelButton = buttons.FirstOrDefault(p => p.FindAll("#cancel").Any());
+
+		if (cancelButton == null)
+		{
+			throw new TestRunException("There is no cancel button!");
+		}
+		
         await cancelButton.Find("#cancel").ClickAsync(new MouseEventArgs());
         if (!isCancelInvoked)
         {
@@ -462,20 +469,20 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
             Func<TValue> getValueOfEmployee,
             TValue value1, TValue value2) where TComponent : IComponent 
         {
-            var formComponent = GetFormField(form, field);
-            var eventCallback = formComponent.GetValueChanged<TComponent,TValue>();
+            var formField = GetFormField(form, field);
+            var eventCallback = formField.GetValueChanged<TComponent,TValue>();
             await form.InvokeAsync(async () => await eventCallback.InvokeAsync(value1));
             var valueOfEmployee = getValueOfEmployee();
-            if (!valueOfEmployee.Equals(value1))
+            if (!valueOfEmployee!.Equals(value1))
             {
                 throw new TestRunException($"Data binding does not work in the direction of form input -> employee for field {field.Label}");
             }
 
             setValueOfEmployee(value2);
             
-            form.SetParametersAndRender(builder => builder.Add(form => form.Employee, employee));
-            var value = formComponent.GetValue<TComponent, TValue>();
-            if (!value2.Equals(value))
+            form.SetParametersAndRender(builder => builder.Add(p => p.Employee, employee));
+            var value = formField.GetValue<TComponent, TValue>();
+            if (!value2!.Equals(value))
             {
                 throw new TestRunException($"Data binding does not work in the direction of employee -> form input for field {field.Label}");
             }
@@ -598,10 +605,6 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         }
         
     }
-
-    public Test_Exam_EmployeeForm(IJSRuntime jsRuntime) : base(jsRuntime)
-    {
-    }
 }
 
 public static class FormFieldExtensions
@@ -609,14 +612,24 @@ public static class FormFieldExtensions
     public static string GetLabel<T>(this IRenderedComponent<T> component) where T : IComponent
     {
         var propertyInfo = component.Instance.GetType().GetProperties().FirstOrDefault(p => p.Name == nameof(MudField.Label));
-        var label = propertyInfo.GetValue(component.Instance).ToString();
-        return label;
+
+		if (propertyInfo == null)
+		{
+			throw new KeyNotFoundException(nameof(MudField.Label));
+		}
+
+		return propertyInfo.GetValue(component.Instance)!.ToString()!;
     }
 
     public static bool GetDisabled<T>(this IRenderedComponent<T> component) where T : IComponent
     {
         var propertyInfo = component.Instance.GetType().GetProperties().FirstOrDefault(p => p.Name == nameof(MudField.Disabled));
-        var disabled = (bool)propertyInfo.GetValue(component.Instance);
+		if (propertyInfo == null)
+		{
+			throw new KeyNotFoundException(nameof(MudField.Disabled));
+		}
+		
+        var disabled = (bool)propertyInfo.GetValue(component.Instance)!;
         return disabled;
     }
 
@@ -628,28 +641,39 @@ public static class FormFieldExtensions
             var valueChangedName = component.Instance is MudDatePicker ? nameof(MudDatePicker.DateChanged) : nameof(MudTextField<string>.ValueChanged);
             return p.Name == valueChangedName;
         });
-        var valueChanged = (EventCallback<TValue>)propertyInfo.GetValue(component.Instance);
+
+		if (propertyInfo == null)
+		{
+			throw new KeyNotFoundException(nameof(MudTextField<string>.ValueChanged));
+		}
+		
+        var valueChanged = (EventCallback<TValue>)propertyInfo.GetValue(component.Instance)!;
         return valueChanged;
     }
     public static TValue GetValue<TComponent, TValue>(this IRenderedComponent<TComponent> component) where TComponent : IComponent
     {
-        var propertyInfo = component.Instance.GetType().GetProperties().FirstOrDefault(p =>
-        {
-            var valueName = component.Instance is MudDatePicker ? nameof(MudDatePicker.Date) : nameof(MudTextField<string>.Value);
-            return p.Name == valueName;
-        });
-        var valueChanged = (TValue)propertyInfo.GetValue(component.Instance);
+		var valueName = component.Instance is MudDatePicker ? nameof(MudDatePicker.Date) : nameof(MudTextField<string>.Value);
+		var propertyInfo = component.Instance.GetType().GetProperties().FirstOrDefault(p => p.Name == valueName);
+		
+		if (propertyInfo == null)
+		{
+			throw new KeyNotFoundException(valueName);
+		}
+		
+        var valueChanged = (TValue)propertyInfo.GetValue(component.Instance)!;
         return valueChanged;
     }
     
     public static string GetErrorText<TComponent>(this IRenderedComponent<TComponent> component) where TComponent : IComponent
     {
-        var propertyInfo = component.Instance.GetType().GetProperties().FirstOrDefault(p =>
-        {
-            var valueName = nameof(MudTextField<string>.ErrorText);
-            return p.Name == valueName;
-        });
-        return propertyInfo.GetValue(component.Instance)?.ToString();
+		var valueName = nameof(MudTextField<string>.ErrorText);
+		var propertyInfo = component.Instance.GetType().GetProperties().FirstOrDefault(p => p.Name == valueName);
+		
+		if (propertyInfo == null)
+		{
+			throw new KeyNotFoundException(valueName);
+		}
+        return propertyInfo.GetValue(component.Instance)?.ToString() ?? string.Empty;
     }
     
 }

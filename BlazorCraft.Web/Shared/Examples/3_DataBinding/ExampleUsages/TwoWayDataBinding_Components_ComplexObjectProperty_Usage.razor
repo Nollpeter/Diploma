@@ -1,11 +1,11 @@
 ﻿<TwoWayDataBinding_Components @bind-Count="_employee.Id" />
 <p>@_employee.Id</p>
-<p>@_employee.Name</p>
+<p>@(_employee.Name ?? string.Empty)</p>
 @code {
     public class Employee
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 
     private Employee _employee = new Employee() { Id = 1, Name = "Test Theodore" };

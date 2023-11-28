@@ -38,7 +38,7 @@ public class SendResultsService : ISendResultsService
         byte[] byteArray = Encoding.UTF8.GetBytes(serialize);
         
         // Generate filename for the blob
-        string fileName = $"{FormatStringForFilename(model.Name)}{DateTime.Now:yyyyMMddhhmmssff}.json";
+        string fileName = $"{FormatStringForFilename(model.Name!)}{DateTime.Now:yyyyMMddhhmmssff}.json";
 
         using var memoryStream = new MemoryStream(byteArray);
         // Upload to Azure Blob Storage

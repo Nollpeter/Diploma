@@ -12,11 +12,7 @@ namespace BlazorCraft.Web.Tests._11_Exam;
 [TestForPage(typeof(Pages._11_Exam.Exam))]
 public class Test_Exam_PuttingItTogether : ExamTestBase<Exercise_Exam>
 {
-    private IExamEmployeeService _employeeService;
-
-    public Test_Exam_PuttingItTogether(IJSRuntime jsRuntime) : base(jsRuntime)
-    {
-    }
+    private IExamEmployeeService _employeeService = null!;
 
     protected override async Task<TestContext> SetupTestContext()
     {

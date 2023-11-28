@@ -11,9 +11,9 @@
             @if (_detailsVisible)
             {
                 <ul>
-                    @foreach (var property in GetProperties(ObjectToRender))
+                    @foreach (var property in GetProperties(ObjectToRender!))
                     {
-                        <li>@property.Name: @GetPropertyValue(property, ObjectToRender)</li>
+                        <li>@property.Name: @GetPropertyValue(property, ObjectToRender!)</li>
                     }
                 </ul>
             }
@@ -25,11 +25,11 @@
     private bool _detailsVisible = false;
 
     [Parameter]
-    public RenderFragment TitleContent { get; set; }
+    public RenderFragment TitleContent { get; set; } = null!;
 
     [Parameter]
-    public TContent ObjectToRender { get; set; }
-    
+    public TContent ObjectToRender { get; set; } = default!;
+
     public IList<PropertyInfo> GetProperties(object objectToRender)
     {
         // You can use the .Name property on the result list items to show its name like Id, FirstName, LastName, Postion

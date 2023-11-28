@@ -5,8 +5,9 @@
 }
 @code{
 
-    [Parameter, EditorRequired] public RenderFragment Title { get; set; }
-    [Parameter, EditorRequired] public RenderFragment<TestClass> ListItemTemplate { get; set; } // Notice the new property here
-    [Parameter, EditorRequired] public List<TestClass> ListItems { get; set; }
+    [Parameter, EditorRequired] public required RenderFragment Title { get; set; }
+
+    [Parameter, EditorRequired] public required RenderFragment<TestClass> ListItemTemplate { get; set; } // Notice the new property here
+    [Parameter, EditorRequired] public required List<TestClass> ListItems { get; set; }
 
 }
