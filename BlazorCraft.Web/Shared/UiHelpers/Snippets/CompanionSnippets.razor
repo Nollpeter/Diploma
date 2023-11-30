@@ -1,12 +1,13 @@
-﻿@typeparam TComponent where TComponent: ComponentBase
-@typeparam TUsage where TUsage: ComponentBase
+﻿@typeparam TComponent where TComponent : ComponentBase
+    @typeparam TUsage where TUsage : ComponentBase
 
-<MudPaper Elevation="3" Class="p-3 mw-100">
-    <MudText Typo="Typo.subtitle1" Class="fw-bold">Component:</MudText>
-    <AdvancedCodeSnippet TComponent="TComponent" RenderOutput="false"/>
-    <MudDivider/>
-    <MudText Typo="Typo.subtitle1" Class="fw-bold">Usage of component:</MudText>
-    <AdvancedCodeSnippet TComponent="TUsage" RenderOutput="true"/>
+<MudPaper Elevation="3" Class="p-3 pt-1 mw-100 subtle-border">
+    <SpacedContent Gap="2">
+        <MudText Typo="Typo.subtitle1" Class="fw-bold">Component:</MudText>
+        <AdvancedCodeSnippet TComponent="TComponent" RenderOutput="false"/>
+        <MudText Typo="Typo.subtitle1" Class="fw-bold">Usage of component:</MudText>
+        <AdvancedCodeSnippet TComponent="TUsage" RenderOutput="true"/>
+    </SpacedContent>
 </MudPaper>
 
 @code {

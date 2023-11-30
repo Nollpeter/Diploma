@@ -19,7 +19,7 @@
                 <li>
                     @foreach (var property in GetProperties())
                     {
-                        <span>@(property.Name): @GetPropertyValue(property, context)</span>
+                        <span>@(property.Name): @GetPropertyValue(property, context), </span>
                     }
                 </li>
             </ListItemTemplate>
@@ -38,7 +38,7 @@
                     </tr>
                     </ListItemTemplate>
                     <ListTemplate>
-                        <table class="table">
+                        <table class="table table-dark">
                             <thead>
                             <tr>
                                 @foreach (var property in GetProperties())
