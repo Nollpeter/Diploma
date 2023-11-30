@@ -30,7 +30,7 @@
     <MudText>
         Here's a simple example to visualize the concept:
     </MudText>
-    <AdvancedCodeSnippet TComponent="GreetingsComponent" RenderOutput="true"></AdvancedCodeSnippet>
+    <CodeSnippetWithOutput TComponent="GreetingsComponent" RenderOutput="true"></CodeSnippetWithOutput>
     
     <MudText>
         In this component, we define some static HTML and a button. The <strong>@("@code")</strong> block contains the C# logic for the component.
@@ -61,7 +61,7 @@
                     <MudText>
                         <Important>For simplicity, in this application, we will always use the @("@code{ }") section</Important>
                     </MudText>
-                    <AdvancedCodeSnippet TComponent="BuildingBlocks" RenderOutput="false"/>
+                    <CodeSnippetWithOutput TComponent="BuildingBlocks" RenderOutput="false"/>
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
@@ -87,7 +87,7 @@
                             <MudText Class="fw-bold">Render the string using a method. In this case, make sure to put the <strong>@("@")</strong> sign before the method call, otherwise it won't be rendered</MudText>
                         </li>
                     </ul>
-                    <AdvancedCodeSnippet TComponent="AtSign" RenderOutput="true"/>
+                    <CodeSnippetWithOutput TComponent="AtSign" RenderOutput="true"/>
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
@@ -100,7 +100,7 @@
                     <MudText>Blazor allows us to use control flow statements natively in our components.</MudText>
                     <MudText>The two most notables that we are going to use in this application are <strong>if-else</strong> and <strong>foreach</strong></MudText>
                     <MudText>Be careful, that they count as <strong>@("@{ }")</strong> sections, therefore content inside them should be placed accordingly (see previous section of this page)</MudText>
-                    <AdvancedCodeSnippet TComponent="ControlFlowStatements" RenderOutput="true"/>
+                    <CodeSnippetWithOutput TComponent="ControlFlowStatements" RenderOutput="true"/>
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
@@ -145,7 +145,6 @@
             </TitleContent>
             <ChildContent>
                 <SpacedContent>
-                    @*<ComponentFileWithPath T="ComponentsIntroductionExercise"/>*@
                     <MudText>Your task is to modify the pre-created component: <ComponentFileWithPath T="Components_Introduction_Ex_LessonFinal" /></MudText>
                     <MudText>You can see that you have some code already provided for you, you don't need to modify those parts, in order to avoid any kind of technical difficulties, please don't!</MudText>
                     <MudText>The component also guides you with comments where you need to put your code, please follow these instructions</MudText>

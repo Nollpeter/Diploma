@@ -95,7 +95,7 @@
     <ChildContent>
         <SpacedContent>
             <MudText>The next step is that we make the List items customizable as well. We may want to use <strong>@("<p>")</strong> tags, instead of <strong>@("div>")</strong></MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent3" ShowComponentName="true"/>
+            <CodeSnippetWithOutput TComponent="ListComponent3" ShowComponentName="true"/>
             <MudText>
                 By using the <strong>@("RenderFragment<TestClass>")</strong>, we can tell the component, the we are going to externally set how the section is going to be rendered <strong>and</strong> what type we want to use in the context of its rendering.
                 While defining <strong>RenderFragments</strong> with a generic type parameter in blazor, we will automatically have a <strong>@("@context")</strong> variable
@@ -103,7 +103,7 @@
             <MudText>
                 Using our new component will look like this
             </MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent3Usage" RenderOutput="true"/>
+            <CodeSnippetWithOutput TComponent="ListComponent3Usage" RenderOutput="true"/>
             <MudText>
                 <strong>Note: </strong> the <strong>context</strong> variable is just the default name for the parameter passed to the <strong>RenderFragment</strong>, this can be renamed without any problems.
                 This is useful (and necessary) if you have multiple layers of <strong>RenderFragments</strong>, so that name collisions can be avoided
@@ -152,7 +152,7 @@
                 To address this issue, we can use the <strong>@("@")typeparam</strong> keyword to make the Blazor component generic, just the way we would make any C# type generic.
             </MudText>
             <MudText>The modified component will look like this</MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent4<int>" ShowComponentName="true"/>
+            <CodeSnippetWithOutput TComponent="ListComponent4<int>" ShowComponentName="true"/>
             <MudText>
                 Now if we create a new type to use it with
             </MudText>
@@ -160,7 +160,7 @@
                 @("""public record TestClass2(int c, int d, int e);""")
             </CodeSnippet>
             <MudText>Then we can use the new List component like this:</MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent4Usage" RenderOutput="true"/>
+            <CodeSnippetWithOutput TComponent="ListComponent4Usage" RenderOutput="true"/>
             <MudText><strong>Note: </strong> generic constraints works with blazor component <strong>@("@")typeparam</strong> as well, just as C# generic constraints</MudText>
             <CodeSnippet>
                 @("""@typeparam T where T: ComponentBase, IComponent""")
@@ -221,13 +221,13 @@
             <MudText>
                 As a quick fix, we could of course try and wrap our entire ListComponent within a <strong>@("<ul>")</strong> tag.
             </MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent4QuickFix" ShowComponentName="false" RenderOutput="true"/>
+            <CodeSnippetWithOutput TComponent="ListComponent4QuickFix" ShowComponentName="false" RenderOutput="true"/>
             <MudText>By just looking and the rendered html content visually, we could assume it worked, but if we dig into the markup of it, we can see that something is fishy:</MudText>
             <MudText>
                 The Title became a list item! This solution won't hold in more complex scenarios, we need to find a way, to wrap <strong>only</strong> the list items around with the <strong>@("<ul>")</strong> tag.
                 For this we are going to pass a RenderFragment to a RenderFragment to solve the problem
             </MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent5<int>" ShowComponentName="true" RenderOutput="false"/>
+            <CodeSnippetWithOutput TComponent="ListComponent5<int>" ShowComponentName="true" RenderOutput="false"/>
             <MudText>
                 Another trick that we use here is the @("@:@{}") operator.
                 It is in fact two character sequences. First @("@:") tells the Razor parser to treat the following text as Razor mark-up, and then @("@{") is the start of a C# code block - which will naturally end somewhere with a complementary }.
@@ -236,7 +236,7 @@
             <MudText>
                 And then we can use this modified component the following way to achieve the desired result
             </MudText>
-            <AdvancedCodeSnippet TComponent="ListComponent5Usage" RenderOutput="true"/>
+            <CodeSnippetWithOutput TComponent="ListComponent5Usage" RenderOutput="true"/>
 
             <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
             <MudText>

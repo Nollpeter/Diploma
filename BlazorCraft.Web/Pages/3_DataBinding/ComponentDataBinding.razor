@@ -37,8 +37,8 @@
                         While one-way data binding is powerful, it's a bit limited in that it only allows data to flow in one direction: from the C# code to the razor markup
                         For more advanced use-cases, two-way data binding is required, which will be discussed in the next section
                     </MudText>
+                    <CodeSnippetWithOutput TComponent="ControlFlowStatements" RenderOutput="true"/>
                 </SpacedContent>
-                <AdvancedCodeSnippet TComponent="ControlFlowStatements" RenderOutput="true"/>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="two-way-data-binding">
@@ -57,7 +57,7 @@
                     <MudText>
                         Let's see an example how we can bind an employee's name to an input field, and whenever we change something in the field, will be automatically reflected
                     </MudText>
-                    <AdvancedCodeSnippet TComponent="TwoWayDataBindingExample" RenderOutput="true"></AdvancedCodeSnippet>
+                    <CodeSnippetWithOutput TComponent="TwoWayDataBindingExample" RenderOutput="true"/>
                     <MudText>
                         Feel free to play around with the component, we can see that data coming from blazor (Click on the button to trigger it) is reflected
                         and vice versa, once we type in the inbox, it will be reflected in the blazor code automatically.
@@ -108,7 +108,7 @@
                     <MudText Typo="Typo.subtitle1" Class="fw-bold">Binding property values</MudText>
                     <MudText>In the real world, we rarely have a simple int variable, rather, we have complex objects that have properties of simple types, like an int</MudText>
                     <MudText>We can easily bind those properties as well</MudText>
-                    <AdvancedCodeSnippet TComponent="TwoWayDataBinding_Components_ComplexObjectProperty_Usage" RenderOutput="true"></AdvancedCodeSnippet>
+                    <CodeSnippetWithOutput TComponent="TwoWayDataBinding_Components_ComplexObjectProperty_Usage" RenderOutput="true"></CodeSnippetWithOutput>
                     <MudText Typo="Typo.h6" Class="fw-bold">Exercise</MudText>
                     <MudText>In this exercise, you will need to create a stripped down version of a form for employees, where their <strong>Id</strong> and <strong>Name</strong> can be edited, and this data is synchronized with the caller components</MudText>
                     <MudText>You will need to modify the component <ComponentFileWithPath T="DataBinding_Ex1"/>, you will find all instructions inside the component</MudText>

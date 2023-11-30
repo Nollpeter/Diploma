@@ -23,21 +23,15 @@ window.prettifyHtml = function format(html) {
 window.domWatcher = {
     watch: function (elementId, dotNetReference) {
         var targetNode = document.getElementById(elementId);
-        var codeNode = targetNode//.querySelector('code');
+        var codeNode = targetNode
         // Create an observer instance linked to the callback function
         var observer = new MutationObserver(function (mutationsList, observer) {
-            for (var mutation of mutationsList) {
-                //if (mutation.type == 'childList' || mutation.type == 'attributes' ) {
-                var innerHTML = codeNode.innerHTML;
-                // Now you have the new innerHTML, you can pass it back to Blazor
-                dotNetReference.invokeMethodAsync('OnDomChanged', innerHTML);
-                //}
-            }
+            var innerHTML = codeNode.innerHTML;
+            dotNetReference.invokeMethodAsync('OnDomChanged', innerHTML);
         });
-
+        
         // Start observing the target node for configured mutations
         observer.observe(targetNode, {attributes: true, childList: true, subtree: true});
 
-        // To stop observing use observer.disconnect()
     }
 };

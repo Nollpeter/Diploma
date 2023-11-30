@@ -38,7 +38,7 @@
                         For MudBlazor components, the same can be achieved with the <strong>@("Class")</strong> attribute
                     </MudText>
                     <MudText>If we want to make the text bold, we can give it the <strong>"fw-bold"</strong> Class</MudText>
-                    <AdvancedCodeSnippet TComponent="MudText_Typo" RenderOutput="true"></AdvancedCodeSnippet>
+                    <CodeSnippetWithOutput TComponent="MudText_Typo" RenderOutput="true"></CodeSnippetWithOutput>
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
@@ -50,11 +50,11 @@
                 <SpacedContent>
                     <MudText>MudBlazor also makes it easier for us to declare buttons, that look nice and easy to work with</MudText>
                     <MudText>There are three variants of buttons: <strong>Filled, Outlined, Text</strong></MudText>
-                    <AdvancedCodeSnippet TComponent="MudButton_Variants" RenderOutput="true" SkipHtml="true"></AdvancedCodeSnippet>
+                    <CodeSnippetWithOutput TComponent="MudButton_Variants" RenderOutput="true" SkipHtml="true"></CodeSnippetWithOutput>
                     <MudText>It's color can be set via the <strong>Color</strong> attribute</MudText>
-                    <AdvancedCodeSnippet TComponent="MudButton_Colors" RenderOutput="true" SkipHtml="true"></AdvancedCodeSnippet>
+                    <CodeSnippetWithOutput TComponent="MudButton_Colors" RenderOutput="true" SkipHtml="true"></CodeSnippetWithOutput>
                     <MudText>We can assign click handlers with <strong>OnClick</strong> attribute. It is an <strong>EventCallback</strong>, so sync and async methods can be assigned to it as well.</MudText>
-                    <AdvancedCodeSnippet TComponent="MudButton_OnClick" RenderOutput="true" SkipHtml="true"></AdvancedCodeSnippet>
+                    <CodeSnippetWithOutput TComponent="MudButton_OnClick" RenderOutput="true" SkipHtml="true"></CodeSnippetWithOutput>
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
@@ -73,7 +73,7 @@
                             <li><strong>RowTemplate</strong> where we can define headers in <strong>@("<MudTd>")</strong> tags. Also, we can use the <strong>@("context")</strong> variable to render each property</li>
                         </ul>
                     </MudText>
-                    <AdvancedCodeSnippet TComponent="MudTable_Example" RenderOutput="true"></AdvancedCodeSnippet>
+                    <CodeSnippetWithOutput TComponent="MudTable_Example" RenderOutput="true"></CodeSnippetWithOutput>
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
@@ -98,19 +98,19 @@
                     <MudText>We can bind their values with two way data-binding using the <strong>@("@bind-Value")</strong> markup</MudText>
                     <MudText>For validation to work, we will use the <strong>@("For")</strong> attribute. We will need to provide it with the same Expression as <strong>@("<ValidationMessage>")</strong></MudText>
                     <MudText>For labels, we can use the <strong>@("Label")</strong> attribute instead of a separate tag for labels</MudText>
-                    <AdvancedCodeSnippet TComponent="MudTextField_Example" RenderOutput="true" SkipHtml="true"></AdvancedCodeSnippet>
+                    <CodeSnippetWithOutput TComponent="MudTextField_Example" RenderOutput="true" SkipHtml="true"></CodeSnippetWithOutput>
                     <MudText Typo="Typo.subtitle1" Class="fw-bold">Date inputs</MudText>
                     <MudText>For date inputs, we can use the <strong>@("<MudDatePicker>")</strong> component</MudText>
                     <MudText>We can bind its value with two way data-binding using the <strong>@("@bind-Date")</strong> markup</MudText>
                     <MudText>Validation and labeling works the same way as it did with <strong>@("<MudTextField>")</strong> and <strong>@("<MudNumericField>")</strong></MudText>
-                    <AdvancedCodeSnippet TComponent="MudDatePicker_Example" RenderOutput="true" SkipHtml="true"></AdvancedCodeSnippet>
+                    <CodeSnippetWithOutput TComponent="MudDatePicker_Example" RenderOutput="true" SkipHtml="true"></CodeSnippetWithOutput>
                     <MudText Typo="Typo.subtitle1" Class="fw-bold">Lists and Enum values</MudText>
                     <MudText>For lists, the <strong>@("<MudSelect>")</strong> component can be used</MudText>
-                    <AdvancedCodeSnippet TComponent="MudSelect_Example" RenderOutput="true" SkipHtml="true"></AdvancedCodeSnippet>
+                    <CodeSnippetWithOutput TComponent="MudSelect_Example" RenderOutput="true" SkipHtml="true"></CodeSnippetWithOutput>
                     <MudText>However, during the exam, we will specifially need selectable values for enums</MudText>
                     <MudText>For this purpose a modified version of <strong>@("<MudSelect>")</strong> is pre-provided for you, to make your life easier. It will automatically enumerate all enum values as well as the empty value</MudText>
                     <MudText>Everything works the same as with <strong>@("<MudTextField>")</strong> and <strong>@("<MudNumericField>")</strong>, but in the end, you will bind to a nullable Enum value</MudText>
-                    <AdvancedCodeSnippet TComponent="MudEnumSelect_Example" RenderOutput="true" SkipHtml="true"></AdvancedCodeSnippet>
+                    <CodeSnippetWithOutput TComponent="MudEnumSelect_Example" RenderOutput="true" SkipHtml="true"></CodeSnippetWithOutput>
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>

@@ -25,7 +25,7 @@
             <MudText>
                 To define the pages route, we need to use the <strong>@("""@page /{route}""")</strong> like this:
             </MudText>
-            <AdvancedCodeSnippet TComponent="DefiningRoute"/>
+            <CodeSnippetWithOutput TComponent="DefiningRoute"/>
             <MudText>
                 In the background this is going to become a <strong>[RouteAttribute]</strong>
             </MudText>
@@ -35,9 +35,9 @@
             </CodeSnippet>
             <MudText>This is also evidence, that blazor pages are essentially blazor components that are decorated with a <strong>[RoutAttribute]</strong></MudText>
             <MudText>These routes are configured to be automatically looked up by the application's <strong>Router</strong> type. This is configured in the <strong>App.razor</strong> file</MudText>
-            <AdvancedCodeSnippet TComponent="App" RenderOutput="false"/>
+            <CodeSnippetWithOutput TComponent="App" RenderOutput="false"/>
             <MudText>You can also define multiple routes for the pages, in this case, they will be reachable by all of its page routes</MudText>
-            <AdvancedCodeSnippet TComponent="MultipleRoutes" RenderOutput="false"/>
+            <CodeSnippetWithOutput TComponent="MultipleRoutes" RenderOutput="false"/>
             <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
             <MudText>Your task here is to modify the component <ComponentFileWithPath T="Routing_Ex1" /> so that it has can be reached via two route urls:</MudText>
             <ul>
@@ -108,9 +108,9 @@
                 So, it's not just about specifying what parameters you'll accept, but also what kind of data those parameters should be.
                 This way, the page only loads if the conditions are met.
             </MudText>
-            <AdvancedCodeSnippet TComponent="EmployeeDetails" RenderOutput="false"/>
+            <CodeSnippetWithOutput TComponent="EmployeeDetails" RenderOutput="false"/>
             <MudText>Then we can use the page like below. Alternatively you can visit the page <MudLink Href="/employee/details/2">here</MudLink></MudText>
-            <AdvancedCodeSnippet TComponent="EmployeeDetailsUsage" RenderOutput="true"/>
+            <CodeSnippetWithOutput TComponent="EmployeeDetailsUsage" RenderOutput="true"/>
             <MudText Typo="Typo.h6" Class="fw-bold">Valid constraint types</MudText>
             <MudTable T="UsableConstraints" Items="_usableConstraints">
                 <HeaderContent>
@@ -172,13 +172,13 @@
                 <strong>Note: </strong> By default, parameter types are strings if no type constraint is specified, therefore if you want to have an optional string route parameter,
                 you can define it without the type constraint, like this: <strong>/route/{MyParam?}</strong>
             </MudText>
-            <AdvancedCodeSnippet TComponent="EmployeeDetailsOptionalParameter" RenderOutput="false"/>
+            <CodeSnippetWithOutput TComponent="EmployeeDetailsOptionalParameter" RenderOutput="false"/>
             <MudText>This way, if no value is assigned to it, it will get the default value.</MudText>
             <MudText>
                 <strong>Note: </strong> In the example the default value is explicitly set. If no logic is defined, then the parameter will get the default value of the corresponding type.
                 With int? it is null, if we defined it as int, then the default value assigned would be 0
             </MudText>
-            <AdvancedCodeSnippet TComponent="EmployeeDetailsWithOptionalParameterUsage" RenderOutput="true"/>
+            <CodeSnippetWithOutput TComponent="EmployeeDetailsWithOptionalParameterUsage" RenderOutput="true"/>
             <MudText>You can also check out the page and play with the route parameter <MudLink Href="employee/details-optional-param">here</MudLink></MudText>
             <MudDivider/>
             <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>

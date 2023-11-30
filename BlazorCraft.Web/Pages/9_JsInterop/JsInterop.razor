@@ -32,7 +32,7 @@
                     <MudText>
                         The <strong>@nameof(IJSRuntime)</strong> service is by default registered for our application, whenever we wish to use it, we only have to inject it.
                     </MudText>
-                    <AdvancedCodeSnippet TComponent="JsInterop_InjectIJSRuntimeExample"/>
+                    <CodeSnippetWithOutput TComponent="JsInterop_InjectIJSRuntimeExample"/>
                     <MudText>
                         Note that all calls to the javascript runtime are async methods
                     </MudText>
@@ -66,9 +66,9 @@
                         <strong>Note: </strong> Don't be bothered by the locking mechanism, it will only ensure, that the two examples will run their javascript get-set
                         methods, without interfering with each other.
                     </MudText>
-                    <AdvancedCodeSnippet TComponent="JsInterop_CallJsMethod_PrimitiveType_Example" RenderOutput="true"/>
+                    <CodeSnippetWithOutput TComponent="JsInterop_CallJsMethod_PrimitiveType_Example" RenderOutput="true"/>
                     <MudText>While of course it is a powerful tool like this, there is of course nothing stopping us to pass it a complex type like an (you guessed it!) <strong>Employee</strong></MudText>
-                    <AdvancedCodeSnippet TComponent="JsInterop_CallJsMethod_ComplexType_Example" RenderOutput="true"/>
+                    <CodeSnippetWithOutput TComponent="JsInterop_CallJsMethod_ComplexType_Example" RenderOutput="true"/>
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
@@ -93,7 +93,7 @@
                     <MudText>First, let's define our new javascript object:</MudText>
                     <JsSnippet JsFileName="js-interop-js-to-blazor"></JsSnippet>
                     <MudText>Then let's use it from a blazor component</MudText>
-                    <AdvancedCodeSnippet TComponent="JsInterop_JsToBlazor_Example" RenderOutput="true"/>
+                    <CodeSnippetWithOutput TComponent="JsInterop_JsToBlazor_Example" RenderOutput="true"/>
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>

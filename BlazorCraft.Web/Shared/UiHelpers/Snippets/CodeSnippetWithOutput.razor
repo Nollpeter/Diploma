@@ -8,7 +8,7 @@
 @using MudBlazor.Services
 @typeparam TComponent where TComponent : ComponentBase
 @inject IServiceProvider ServiceProvider
-@if (renderingFinished)
+@if (_renderingFinished)
 {
     <MudDivider/>
     @if (ShowComponentName || true)
@@ -64,48 +64,55 @@
 
     private string ComponentFileName => $"{Regex.Replace(typeof(TComponent).Name, @"`\d+", "")}.razor";
 
-    private bool renderingFinished = false;
+    private bool _renderingFinished = false;
     private string _originalMarkup = null!;
     private string? _renderedHtml;
-    private DotNetObjectReference<AdvancedCodeSnippet<TComponent>> objRef = null!;
+    private DotNetObjectReference<CodeSnippetWithOutput<TComponent>> _objRef = null!;
     private TestContext _testContext = null!;
+    private object _uniqueKey = new();
+
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        _testContext = new();
-        _testContext.Services.AddBlazorCraftServices();
-        _testContext.Services.AddScoped<IExampleTransientService>(provider => ServiceProvider.GetRequiredService<IExampleTransientService>());
-        _testContext.Services.AddScoped<IExampleScopedService>(provider => ServiceProvider.GetRequiredService<IExampleScopedService>());
-        _testContext.Services.AddSingleton(_js);
-        _testContext.Services.AddMudServices();
-        _testContext.JSInterop.SetupVoid("mudPopover.initialize", _ => true);
-        _testContext.JSInterop.SetupVoid("mudKeyInterceptor.connect", _ => true);
+        _testContext = SetupTestContext();
 
         _originalMarkup = await ReadOriginalMarkup();
         if (RenderOutput && !SkipHtml)
         {
             string renderedHtml = RenderComponentMarkup();
-            var prettifiedHtml = Format(renderedHtml);
+            var prettifiedHtml = FormatHtml(renderedHtml);
             await Task.Delay(50);
             _renderedHtml = prettifiedHtml;
         }
 
-        renderingFinished = true;
-
+        _renderingFinished = true;
         StateHasChanged();
 
         if (RenderOutput && !SkipHtml)
         {
-            objRef = DotNetObjectReference.Create(this);
-            await _js.InvokeVoidAsync("domWatcher.watch", $"codeSnippet_{typeof(TComponent).Name}", objRef);
+            _objRef = DotNetObjectReference.Create(this);
+            await _js.InvokeVoidAsync("domWatcher.watch", $"codeSnippet_{typeof(TComponent).Name}", _objRef);
         }
 
         await _js.InvokeVoidAsync("highlightSnippet");
         StateHasChanged();
     }
 
-    public static string Format(string html)
+    private TestContext SetupTestContext()
+    {
+        var testContext = new TestContext();
+        testContext.Services.AddBlazorCraftServices();
+        testContext.Services.AddScoped<IExampleTransientService>(provider => ServiceProvider.GetRequiredService<IExampleTransientService>());
+        testContext.Services.AddScoped<IExampleScopedService>(provider => ServiceProvider.GetRequiredService<IExampleScopedService>());
+        testContext.Services.AddSingleton(_js);
+        testContext.Services.AddMudServices();
+        testContext.JSInterop.SetupVoid("mudPopover.initialize", _ => true);
+        testContext.JSInterop.SetupVoid("mudKeyInterceptor.connect", _ => true);
+        return testContext;
+    }
+
+    public static string FormatHtml(string html)
     {
         string tab = "  ";
         StringBuilder result = new StringBuilder();
@@ -131,22 +138,19 @@
 
         var substring = result.ToString().Substring(1, result.Length - 4);
         return substring;
-        /*if (result.Length > 3)
-        {
-            return result.ToString().Substring(1, result.Length - 4); // Adjusted to remove the last \r\n and the initial '<'
-        }
-        return string.Empty;*/
     }
 
     [JSInvokable]
     public async Task OnDomChanged(string markup)
     {
-        _renderedHtml = Format(markup); //await _js.InvokeAsync<string>("prettifyHtml", new object?[] { markup });
+        _renderedHtml = FormatHtml(markup); 
         _renderedHtml = _renderedHtml.Replace("<!--!-->", "").Trim('\n', '\r');
         string finalHtml = "";
         var strings = _renderedHtml.Split(Environment.NewLine);
         finalHtml = string.Join(Environment.NewLine, strings.Where(p => !string.IsNullOrWhiteSpace(p)));
         _renderedHtml = finalHtml;
+        
+        //This forces re-rendering the html snippet
         _uniqueKey = new object();
         await Task.Delay(1);
         StateHasChanged();
@@ -173,5 +177,4 @@
         return read;
     }
 
-    private object _uniqueKey = new();
 }
