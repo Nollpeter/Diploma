@@ -72,11 +72,31 @@ hr {
 
 ul {
     list-style: circle !important;
-    margin-left: 16px; 
+    margin-left: 16px;
 }
-.mud-typography ul{
+
+.mud-typography ul {
     margin-top: 8px;
 }
+
+ul > li:first-child { 
+    margin-bottom: 4px;
+}
+
+ul > li:last-child { 
+    margin-top: 4px;
+}
+ul > li:not(:first-child):not(:last-child) {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+/*
+li {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}*/
+
 pre[class*="language-razor"] {
     max-width: 100%;
     overflow-x: auto;
@@ -88,12 +108,17 @@ pre[class*="language-razor"] {
 
 .mud-divider {
     border: 1px solid #e0e0e0 !important;
-    
+
 }
+
 .sticky .mud-expand-panel-header {
     background-color: var(--mud-palette-background-grey);
     top: 64px;
     position: sticky !important;
     z-index: 1000;
     border-bottom: 1px #e0e0e0 solid !important;
+}
+
+.mud-expand-panel-content {
+    padding-top: 16px !important;
 }

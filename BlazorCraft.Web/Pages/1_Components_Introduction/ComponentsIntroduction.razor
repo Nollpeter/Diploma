@@ -10,7 +10,8 @@
     <MudText>
         Blazor components are the building blocks of a Blazor application, encapsulating rendering logic, data, and behavior.
         These components can be thought of as reusable pieces of user interface (UI), akin to the concept of Web Components but designed to leverage the .NET ecosystem.
-        In a typical Blazor project, components are created using Razor files (.razor) which blend HTML markup with C# code.
+        <br/>
+        In a typical Blazor project, components are created using Razor files <strong>(.razor)</strong> which blend HTML markup with C# code.
         The logic is kept in a code block or an associated code-behind file, and the UI is defined as Razor markup.
 
     </MudText>
@@ -29,23 +30,8 @@
     <MudText>
         Here's a simple example to visualize the concept:
     </MudText>
-    <CodeSnippet Language="razor">
-        @("""<!-- GreetingComponent.razor -->""" + "\n" +
-          """@code {""" + "\n" +
-          """    private string name = "World";""" + "\n" +
-          """}""" + "\n" +
-          "\n" +
-          """<h1>Hello, @name!</h1>""" + "\n" +
-          "\n" +
-          """<button @onclick="ChangeName">Change Name</button>""" + "\n" +
-          "\n" +
-          """@code {""" + "\n" +
-          """    private void ChangeName()""" + "\n" +
-          """    {""" + "\n" +
-          """        name = "Blazor";""" + "\n" +
-          """    }""" + "\n" +
-          """}""" + "\n")
-    </CodeSnippet>
+    <AdvancedCodeSnippet TComponent="GreetingsComponent" RenderOutput="true"></AdvancedCodeSnippet>
+    
     <MudText>
         In this component, we define some static HTML and a button. The <strong>@("@code")</strong> block contains the C# logic for the component.
         When the button is clicked, the ChangeName function is executed, which updates the name variable, triggering a re-render of the component to reflect the new state.
@@ -81,24 +67,24 @@
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="components_at_sign">
             <TitleContent>
-                <MudText Typo="Typo.h6" Class="fw-bold">The @("@")</MudText>
+                <MudText Typo="Typo.h6" Class="fw-bold">The @("@") sign</MudText>
             </TitleContent>
             <ChildContent>
                 <SpacedContent>
-                    <MudText>In Blazor the @("@") sign is a very important modifier. This tells the compiler, that after this sign, we are going to write C# code, and it should be interpreted as C# code</MudText>
-                    <MudText>Without it, in our markup whatever we write will be interpreted literally</MudText>
-                    <MudText>We can also create sections of C# code inside our markup by enclosing our code in a @("@{ }") section.</MudText>
+                    <MudText>In Blazor the @("@") sign is a very important modifier. This tells the compiler, that after this sign, we are going to write C# code, thus it should be treated as C# code</MudText>
+                    <MudText>Without it, in our markup whatever we write will be rendered literally</MudText>
+                    <MudText>We can also create entire sections of C# code inside our markup by enclosing our code in a <strong>@("@{ }")</strong> section.</MudText>
                     <MudText>
-                        <strong>Note: </strong> Inside @("@{ }") sections, everything you write will be treated as a mixture of C# code and razor markup, therefore you cannot write simple strings.
+                        <strong>Note: </strong> Inside <strong>@("@{ }")</strong> sections, everything you write will be treated as a mixture of C# code and razor markup, therefore you cannot write simple strings.
                         <br/>
-                        If you need to render a string inside a @("@{ }") section, you either need to
+                        If you need to render a string inside a <strong>@("@{ }")</strong> section, you either need to
                     </MudText>
                     <ul>
                         <li>
                             <MudText Class="fw-bold">Wrap it in an html tag, or another component</MudText>
                         </li>
                         <li>
-                            <MudText Class="fw-bold">Render the string using a method. In this case, make sure to put the @("@") sign before the method call, otherwise it won't be rendered</MudText>
+                            <MudText Class="fw-bold">Render the string using a method. In this case, make sure to put the <strong>@("@")</strong> sign before the method call, otherwise it won't be rendered</MudText>
                         </li>
                     </ul>
                     <AdvancedCodeSnippet TComponent="AtSign" RenderOutput="true"/>
@@ -113,7 +99,7 @@
                 <SpacedContent>
                     <MudText>Blazor allows us to use control flow statements natively in our components.</MudText>
                     <MudText>The two most notables that we are going to use in this application are <strong>if-else</strong> and <strong>foreach</strong></MudText>
-                    <MudText>Be careful, that they count as @("@{ }") sections, therefore content inside them should be placed accordingly (see previous section of this page)</MudText>
+                    <MudText>Be careful, that they count as <strong>@("@{ }")</strong> sections, therefore content inside them should be placed accordingly (see previous section of this page)</MudText>
                     <AdvancedCodeSnippet TComponent="ControlFlowStatements" RenderOutput="true"/>
                 </SpacedContent>
             </ChildContent>
@@ -146,7 +132,7 @@
                             <MudText>To define such a parameter, we need to create a <strong>public property</strong> annotated with the <strong>[Parameter]</strong> attribute</MudText>
                             <MudText><strong>Note: </strong> these parameters can also be made mandatory by also annotating them with the <strong>[EditorRequired]</strong> attribute</MudText>
                             <MudText>Then, when we want to render such a component we can assign values to the parameters exactly as if they were html attributes</MudText>
-                            <MudText><strong>Note:</strong> there are also parameters that will come to the body of the component, we will cover them in the <MudPageLink PageType="@typeof(RenderFragments)">RenderFragments</MudPageLink>  chapter</MudText>
+                            <MudText><strong>Note:</strong> there are also parameters that can be put inside the body of the component, we will cover them in the <MudPageLink PageType="@typeof(RenderFragments)">RenderFragments</MudPageLink>  chapter</MudText>
                             <CompanionSnippets TComponent="ComponentWithParameter" TUsage="ComponentWithParameterUsage"/>
                         </SpacedContent>
                     </ChildContent>
@@ -154,18 +140,21 @@
         <MudExpansionPanelWithStoredState Id="components_ex-1">
             <TitleContent>
                 <PanelHeaderWithTestTracking TTestClass="Test_Components_Introduction_Ex_LessonFinal">
-                    <MudText Typo="Typo.h6" Class="fw-bold">Exercise</MudText>
+                    <MudText Typo="Typo.h6" Class="fw-bold">Lesson final exercise</MudText>
                 </PanelHeaderWithTestTracking>
             </TitleContent>
             <ChildContent>
                 <SpacedContent>
                     @*<ComponentFileWithPath T="ComponentsIntroductionExercise"/>*@
-                    <MudText>Your task is to modify the pre-created component: <ComponentFileWithPath T="Components_Introduction_Ex_LessonFinal" />, so that it behaves accordingly:</MudText>
-                    <MudText>You can see that you have some code already provided for you, you don't need to touch them, also, please don't!</MudText>
+                    <MudText>Your task is to modify the pre-created component: <ComponentFileWithPath T="Components_Introduction_Ex_LessonFinal" /></MudText>
+                    <MudText>You can see that you have some code already provided for you, you don't need to modify those parts, in order to avoid any kind of technical difficulties, please don't!</MudText>
                     <MudText>The component also guides you with comments where you need to put your code, please follow these instructions</MudText>
-                    <MudText>The component should have a parameter defined of type <strong>@("List<int>")</strong> with the name <strong>@Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName</strong></MudText>
-                    <MudText>If the <strong>_showList</strong> field is true, the component should render for each element of the <strong>@Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName</strong> property a @(nameof(ComponentWithParameter)) component with its Number parameter set to the value of the number from the @Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName list</MudText>
-                    <MudText>If the <strong>_showList</strong> field is false, the component should render @Test_Components_Introduction_Ex_LessonFinal.ListIsHiddenMarkup</MudText>
+                    <MudText>The component should have a parameter defined of type <strong>@("List<int>")</strong> with the name <Important>@Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName</Important></MudText>
+                    <ul>
+                        <li><MudText>If the <strong>_showList</strong> field is <Important>true</Important>, the component should render for each element of the <Important>@Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName</Important> property a <Important>@(nameof(ComponentWithParameter))</Important> component with its <Important>@Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName</Important> parameter set to the value of the number from the @Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName list</MudText></li>
+                        <li><MudText>If the <strong>_showList</strong> field is <Important>false</Important>, the component should render @Test_Components_Introduction_Ex_LessonFinal.ListIsHiddenMarkup</MudText></li>    
+                    </ul>
+                    
                     <TestRunner TTestClass="Test_Components_Introduction_Ex_LessonFinal" ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName] = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 } })"/>
                 </SpacedContent>
             </ChildContent>

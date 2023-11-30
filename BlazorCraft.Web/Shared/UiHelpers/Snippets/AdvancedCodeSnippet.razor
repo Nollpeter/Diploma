@@ -10,6 +10,7 @@
 @inject IServiceProvider ServiceProvider
 @if (renderingFinished)
 {
+    <MudDivider/>
     @if (ShowComponentName || true)
     {
         <div class="d-flex pb-1 align-items-center gap-1 ">
@@ -17,6 +18,7 @@
             <MudText class="fw-bold">@ComponentFileName</MudText>
         </div>
     }
+
     <CodeSnippet Language="razor">
         @_originalMarkup
     </CodeSnippet>
@@ -44,24 +46,21 @@
             }
         </MudGrid>
     }
+
+    <MudDivider/>
 }
 
 @code {
 
-    [Inject]
-    private IJSRuntime _js { get; set; } = null!;
+    [Inject] private IJSRuntime _js { get; set; } = null!;
 
-    [Parameter]
-    public string Language { get; set; } = "razor";
+    [Parameter] public string Language { get; set; } = "razor";
 
-    [Parameter]
-    public bool ShowComponentName { get; set; } = true;
+    [Parameter] public bool ShowComponentName { get; set; } = true;
 
-    [Parameter]
-    public bool RenderOutput { get; set; } = false;
+    [Parameter] public bool RenderOutput { get; set; } = false;
 
-    [Parameter] 
-    public bool SkipHtml { get; set; } = false;
+    [Parameter] public bool SkipHtml { get; set; } = false;
 
     private string ComponentFileName => $"{Regex.Replace(typeof(TComponent).Name, @"`\d+", "")}.razor";
 
@@ -82,7 +81,7 @@
         _testContext.Services.AddMudServices();
         _testContext.JSInterop.SetupVoid("mudPopover.initialize", _ => true);
         _testContext.JSInterop.SetupVoid("mudKeyInterceptor.connect", _ => true);
-        
+
         _originalMarkup = await ReadOriginalMarkup();
         if (RenderOutput && !SkipHtml)
         {
@@ -91,8 +90,9 @@
             await Task.Delay(50);
             _renderedHtml = prettifiedHtml;
         }
+
         renderingFinished = true;
-        
+
         StateHasChanged();
 
         if (RenderOutput && !SkipHtml)
@@ -129,7 +129,7 @@
             }
         }
 
-        var substring = result.ToString().Substring(1, result.Length - 3);
+        var substring = result.ToString().Substring(1, result.Length - 4);
         return substring;
         /*if (result.Length > 3)
         {
@@ -137,6 +137,7 @@
         }
         return string.Empty;*/
     }
+
     [JSInvokable]
     public async Task OnDomChanged(string markup)
     {
@@ -165,6 +166,7 @@
         {
             throw new FileNotFoundException(ComponentFileName);
         }
+
         await using var stream = typeof(TComponent).Assembly.GetManifestResourceStream(key);
         using var reader = new StreamReader(stream!);
         var read = await reader.ReadToEndAsync();

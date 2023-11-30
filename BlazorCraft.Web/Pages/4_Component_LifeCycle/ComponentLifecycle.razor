@@ -34,14 +34,14 @@
                             If the parent changes the component's parameters at a later time, this method is skipped.
                         </MudText>
                         <MudText>
-                            Note: When the component is a @("@page"), and our Blazor app navigates to a new URL that renders the same page, Blazor will reuse the current object instance for that page.
-                            Because the object is the same instance, Blazor does not call IDisposable.Dispose on the object, nor does it execute its OnInitialized method again.
+                            Note: When the component is a <strong>@("@page")</strong>, and our Blazor app navigates to a new URL that renders the same page, Blazor will reuse the current object instance for that page.
+                            Because the object is the same instance, Blazor does not call <strong>IDisposable.Dispose</strong> on the object, nor does it execute its <strong>OnInitialized</strong> method again.
                         </MudText>
                         <MudDivider/>
                         <MudText Typo="Typo.h6" Class="fw-bold">OnParametersSet / OnParametersSetAsync</MudText>
                         <MudText>
-                            This method will be executed immediately after OnInitializedAsync if this is a new instance of a component.
-                            If it is an existing component that is being re-rendered because its parent is re-rendering then the OnInitialized* methods will not be executed, and this method will be executed immediately after SetParametersAsync instead
+                            This method will be executed immediately after <strong>OnInitializedAsync</strong> if this is a new instance of a component.
+                            If it is an existing component that is being re-rendered because its parent is re-rendering then the <strong>OnInitialized*</strong> methods will not be executed, and this method will be executed immediately after <strong>SetParametersAsync</strong> instead
                         </MudText>
                         <MudDivider/>
                         <MudText Typo="Typo.h6" Class="fw-bold">StateHasChanged</MudText>
@@ -58,7 +58,7 @@
                             Note that this method is not executed the first time a component is created and rendered.
                         </MudText>
                         <MudText>
-                            Instructing Blazor not to go through the BuildRenderTree process can save processing time and improve the user's experience when we know that our state is either unaltered since the last render, or only altered in a way that would cause identical output to be rendered.
+                            Instructing Blazor not to go through the <strong>BuildRenderTree</strong> process can save processing time and improve the user's experience when we know that our state is either unaltered since the last render, or only altered in a way that would cause identical output to be rendered.
                         </MudText>
                         <MudText Class="italic">
                             * This method is not executed the first time the component is rendered.
@@ -77,7 +77,7 @@
                             In cases where additional component hook-up is required (for example, via JavaScript) it is useful to know this is the first render.
                         </MudText>
                         <MudText>
-                            It is not until after the OnAfterRender methods have executed that it is safe to use any references to components set via the @("@ref") directive.
+                            It is not until after the <strong>OnAfterRender</strong> methods have executed that it is safe to use any references to components set via the <strong>@("@ref")</strong> directive.
                         </MudText>
                         <CodeSnippet>
                             @("""<ChildComponent @ref=MyReferenceToChildComponent/>""" + "\n" +
@@ -88,7 +88,7 @@
                               """    ChildComponent MyReferenceToChildComponent;""" + "\n" +
                               """}""" + "\n")
                         </CodeSnippet>
-                        <MudText>And it is not until after the OnAfterRender methods have been executed with firstRender set to true that it is safe to use any references to HTML elements set via the @("@ref") directive.</MudText>
+                        <MudText>And it is not until after the <strong>OnAfterRender</strong> methods have been executed with <strong>firstRender</strong> set to <strong>true</strong> that it is safe to use any references to HTML elements set via the <strong>@("@ref")</strong> directive.</MudText>
                         <CodeSnippet>
                             @("""<h1 @ref=MyReferenceToAnHtmlElement>Hello</h1>""" + "\n" +
                               "\n" +
@@ -103,7 +103,7 @@
                         <MudText>
                             There may be cases, where the rendering would start sooner than your component state is fully initialized, which would lead to <strong>NullReferenceException</strong> during rendering.
                             For example you might want to initialize an employee from a remote repository. You could of course do this in the <strong>SetParametersAsync</strong> method which runs before rendering, but you might want to Initialize it only once.
-                            In this case you would override the OnInitializedAsync method, however in this case it is not guaranteed, that rendering happens <strong>after</strong> your resource is initialized.
+                            In this case you would override the <strong>OnInitializedAsync</strong> method, however in this case it is not guaranteed, that rendering happens <strong>after</strong> your resource is initialized.
                             In this scenario, it is a common practice to delay rendering of the component (or parts of the component that use the loaded resource)
                         </MudText>
                         <MudText>
@@ -164,11 +164,15 @@
                     </tbody>
                 </MudSimpleTable>
                 <MudText>
-                    <strong>Note:</strong> The <strong>base.SetParametersAsync</strong> method must be executed before any await instructions in the method <strong>SetParametersAsync</strong>, otherwise an InvalidOperationException will be thrown.
+                    <strong>Note:</strong> The <strong>base.SetParametersAsync</strong> method must be executed before any await instructions in the method <strong>SetParametersAsync</strong>, otherwise an <strong>InvalidOperationException</strong> will be thrown.
                     The simple rule is that <strong>SetParametersAsync</strong> is the only method that cannot suspend the lifecycle process by awaiting a Task.
                 </MudText>
                 <MudText>All other async methods can suspend the lifecycle process until execution exits the method, and the first await will cause a render via <strong>BuildRenderTree</strong> to prevent the user from having to wait to see updates.</MudText>
-                <MudText>OnRenderAsync might look like an exception as it performs no further action in either case. If we consider the fact that rendering is the end of execution chain then we can think of it as completing the chain rather than doing nothing. As for rendering on await, if desired then this must be done explicitly by the programmer by calling StateHasChanged, otherwise an await in an OnAfterRenderAsync would cause an endless loop.</MudText>
+                <MudText>
+                    <strong>OnRenderAsync</strong> might look like an exception as it performs no further action in either case. If we consider the fact that rendering is the end of execution chain then we can think of it as completing the chain rather than doing nothing.
+                    <br/>
+                    As for rendering on await, if desired then this must be done explicitly by the programmer by calling <strong>StateHasChanged</strong>, otherwise an await in an OnAfterRenderAsync would cause an endless loop.
+                </MudText>
                 <MudDivider></MudDivider>
 
 

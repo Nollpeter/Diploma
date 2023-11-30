@@ -26,7 +26,7 @@
                     <MudText>
                         To register an object, we are going to need an instance of an <strong>IServiceCollection</strong> object
                         This is provided for us by the Blazor framework, inside the <strong>Program.cs</strong> via the
-                        <strong>@nameof(WebAssemblyHostBuilder)::@nameof(WebAssemblyHostBuilder.Services)}</strong>
+                        <strong>@nameof(WebAssemblyHostBuilder).@nameof(WebAssemblyHostBuilder.Services)</strong>
                         We can set up registration of objects directly inside the <strong>Program.cs</strong>, but typically we create
                         extension methods for the <strong>IServiceCollection</strong> type per business domain, and do the registration
                         in extension methods, which are called from the <strong>Program.cs</strong>
@@ -43,15 +43,17 @@
                           "{\n" +
                           "    public static void AddBlazorCraftServices(this IServiceCollection serviceCollection)\n" +
                           "    {\n" +
+                          "        ...\n"+
                           "        serviceCollection.AddScoped<ITestRunnerService, TestRunnerService>();\n" +
                           "        serviceCollection.AddScoped<IPanelStateService, PanelStateService>();\n" +
+                          "        ...\n"+
                           "    }\n" +
                           "}\n")
                     </CodeSnippet>
                     <MudText>
                         We register two services here, by their interface. So whenever we request an object of type <strong>@nameof(ITestRunnerService)</strong>,
                         an object of type <strong>@nameof(TestRunnerService)</strong> will be provided. Whichever dependencies the type <strong>@nameof(TestRunnerService)</strong>
-                        has will be automatically provided by the framework as well.
+                        has will be automatically provided by the framework as well. If the dependency is not registered via Dependency injection, an error will be raised.
                     </MudText>
                     <MudDivider/>
 
@@ -59,7 +61,6 @@
                     <MudText>
                         You may have noticed, that the method used on <strong>IServiceCollection</strong> is quite a particular one: <strong>AddScoped</strong>
                         There are 3 main lifetimes of injected services in .NET:
-
                     </MudText>
                     <MudSimpleTable>
                         <thead>
@@ -120,19 +121,19 @@
                     <MudText>There are two ways to achieve this:</MudText>
                     <ul>
                         <li>
-                            <MudText>using the <strong>@("@inject")</strong> keyword with the Property name.</MudText>
+                            <MudText Class="pb-2">using the <strong>@("@inject")</strong> keyword with the Property name.</MudText>
                             <AdvancedCodeSnippet TComponent="BlazorDependencyInjectionInjectKeywordExample" RenderOutput="true"/>
                             <MudText>This way, an auto-property with the name specified after the @("@inject") keyword will be created for you</MudText>
                             <MudText><strong>Note: </strong> this way, the automatically created property will be protected, instead of public!</MudText>
                         </li>
                         <li class="pt-2">
-                            <MudText>using the <strong>[Inject]</strong> attribute</MudText>
+                            <MudText Class="pb-2">using the <strong>[Inject]</strong> attribute</MudText>
                             <AdvancedCodeSnippet TComponent="BlazorDependencyInjectionInjectParameterExample" RenderOutput="true"></AdvancedCodeSnippet>
                             <MudText>This way, you have the opportunity to make the property public or to customize the getter and setter for the property</MudText>
                         </li>
                     </ul>
                     <MudText>
-                        We can also see by the example the difference between a Transient dependency and a scoped dependency.
+                        We can also see by the example the difference between a Transient dependency and a scoped dependency. (The html and visuals are rendered separately but with the same service instance, that is why you see differing values for them)
                     </MudText>
                     <MudText>
                         Since for the scoped dependency, no new object is created for separate injections, it will still show the same value that we set in the constructor
@@ -166,7 +167,7 @@
                         "\n"+
                         "   public MyClass(IExampleTransientService service)\n"+
                         "   {\n"+
-                        "   _service = service;\n"+
+                        "       _service = service;\n"+
                         "   }\n"+
                         "}\n")
                     </CodeSnippet>

@@ -3,7 +3,6 @@
 @using BlazorCraft.Web.Shared.Examples._2_ComponentEvents
 @using BlazorCraft.Web.Shared.Examples._2_ComponentEvents.ExampleUsages
 @using BlazorCraft.Web.Tests._2_ComponentEvents
-2_ComponentEvents2_ComponentEvents.ExampleUsages2_ComponentEvents
 
 <MudContainer Class="d-grid gap-3">
     <MudText Typo="Typo.h4">Blazor component events</MudText>
@@ -12,8 +11,9 @@
         Imagine component events as a system of signals and listeners within your web application. When something noteworthy happens within a component, such as a button click or data update, it can emit a signal or event. Other components that are interested in knowing when this event occurs can act as listeners, ready to respond accordingly.
         This system of signaling and listening allows components to communicate effectively, even if they are not directly connected or aware of each other's existence.
     </MudText>
+    
     <MudText>They are beneficial to use, because they make the components more <Important>modular</Important>, <Important>interactive</Important> and <Important>flexible</Important></MudText>
-
+    
     <MudExpansionPanels MultiExpansion="true">
         <MudExpansionPanelWithStoredState Id="components_eventBinding">
             <TitleContent>
@@ -22,9 +22,9 @@
             <ChildContent>
                 <SpacedContent>
                     <MudText>
-                        Event binding is one of the foundational elements for creating interactive user interfaces in Blazor applications.
-                        It provides us the ability to bind HTML events directly to C# methods in your component class.
-                        This can be achieved via using the @("@onclick"), @("@onkeydown"), etc. attributes in our razor markup
+                        <strong>Event binding</strong> is one of the foundational elements for creating interactive user interfaces in Blazor applications.
+                        It provides us the ability to <Important>bind HTML events directly to C# methods</Important> in your component class.
+                        This can be achieved via using the <strong>@("@onclick")</strong>, <strong>@("@onkeydown")</strong>, etc. attributes in our razor markup
                         We can even pass arguments to the C# method, like event arguments or custom values.
                     </MudText>
                     <MudText>
@@ -33,11 +33,11 @@
                         This makes updates faster and minimizes the performance overhead.
                     </MudText>
                     <MudText>
-                        Note that this kind of event binding works on both HTML elements and in blazor components as well.
-                        For HTML elements, you can use the standard HTML events along with the @("@") sign to tell Blazor, that the event handler will be a C# method.
+                        Note that this kind of event binding works on both HTML elements and in blazor components.
+                        For HTML elements, you can use the standard HTML events along with the <strong>@("@")</strong> sign to tell Blazor, that the event handler will be a C# method.
                     </MudText>
                     <MudText>
-                        Event handlers will be standard C# methods, they can be synchronous and asynchronous as well.
+                        Event handlers methods will be standard C# methods, they can be synchronous and asynchronous as well.
                     </MudText>
                     <AdvancedCodeSnippet TComponent="EventBindingExample" RenderOutput="true"></AdvancedCodeSnippet>
                 </SpacedContent>
@@ -66,12 +66,20 @@
                         </ul>
                     </MudText>
                     <MudText>
-                        Once declare a public property of type <strong>EventCallback@("<T>")</strong> and annotate with the [Parameter] attribute, we can specify for consuming components in Razor mark-up which method to call when the event is triggered.
+                        <strong>Note: </strong> If you are familiar with native C# events, <strong>EventCallbacks</strong> are very similar to them, however <strong>EventCallbacks</strong> are:
+                        <ul>
+                            <li><MudText><Important>Single cast</Important>, meaning you can only assign a single handler to them</MudText></li>
+                            <li><MudText><Important>Structs</Important>, therefore there is no need for null checking for them, validating if they have a handler registered is done internally</MudText></li>
+                            <li><MudText>A handler can be assigned to them <strong>directly</strong> from the blazor markup</MudText></li>
+                        </ul>
+                    </MudText>
+                    <MudText>
+                        Once declare a public property of type <strong>EventCallback@("<T>")</strong> and annotate with the <strong>[Parameter]</strong> attribute, we can specify for consuming components in Razor mark-up which method to call when the event is triggered.
                     </MudText>
                     <MudText>
                         <strong>EventCallback</strong> and <strong>EventCallback@("<T>")</strong> will serve us a crucial role in component architecture, particularly in achieving loosely-coupled designs.
                         They provide a way for child components to notify parent components about something that needs their attention.
-                        For example, if you have a list component with a delete button for each item, clicking the delete button could trigger an EventCallback that the parent component listens to in order to remove the item from the database.
+                        For example, if you have a list component with a delete button for each item, clicking the delete button could trigger an <strong>EventCallback</strong> that the parent component listens to in order to remove the item from the database.
                     </MudText>
                     <MudText>
                         The <strong>EventCallback@("<T>")</strong> type can also pass data to the consumer component.
@@ -93,7 +101,7 @@
                                 <MudText>
                                     For <strong>EventCallback@("<T>")</strong> this will be a method with a parameter of type <strong>T</strong>
                                     <br/>
-                                    So for <strong>EventCallback@("<int>")</strong> it will be a method with an <strong>int</strong> parameter
+                                    For example, for a  <strong>EventCallback@("<int>")</strong> it will be a method with an <strong>int</strong> parameter
                                 </MudText>
                             </li>
                         </ul>
@@ -108,16 +116,18 @@
                         For the component, you will need
                         <ul>
                             <li>
-                                <MudText>A List@("<int") public property annotated with the [Parameter] attribute with the name <strong>@Test_ComponentEvents_Ex1_EventCallBack.EmployeesParameterName</strong></MudText>
+                                <MudText>A <strong>List@("<int")</strong> <Important>public property</Important> annotated with the <strong>[Parameter]</strong> attribute with the name <strong>@Test_ComponentEvents_Ex1_EventCallBack.EmployeesParameterName</strong></MudText>
+                            </li>
+                            <li>
                                 <MudText>
-                                    An EventCallBack@("<ItemWithIndex>") public property annotated with the [Parameter] attribute (The <strong>ItemWithIndex</strong> type will be provided, you only need to use it)
-                                    with the name <strong>ListItemDeleted</strong>
+                                    An <strong>EventCallBack@("<Employee>")</strong> public property annotated with the <strong>[Parameter]</strong> attribute (The <strong>Employee</strong> type will be provided, you only need to use it)
+                                    with the name <strong>@Test_ComponentEvents_Ex1_EventCallBack.EventCallBackPropertyName</strong>
                                 </MudText>
                             </li>
                         </ul>
                     </MudText>
                     <MudText>You only have to render grid rows, you will be guided by the table header, how a row should look like</MudText>
-                    <MudText><strong>Note:</strong> valid table rows look like this inside the @("tbody") tag</MudText>
+                    <MudText><strong>Note:</strong> valid table rows look like this inside the <strong>@("<tbody>")</strong> tag</MudText>
                     <CodeSnippet>
                         @("<tr> \n" +
                           "    <td>...</td> \n" +
@@ -141,7 +151,7 @@
         <MudExpansionPanelWithStoredState Id="components_ex-final">
             <TitleContent>
                 <PanelHeaderWithTestTracking TTestClass="Test_Components_Events_ExLessonFinal">
-                    <MudText Typo="Typo.h6" Class="fw-bold">Exercise</MudText>
+                    <MudText Typo="Typo.h6" Class="fw-bold">Lesson final exercise</MudText>
                 </PanelHeaderWithTestTracking>
             </TitleContent>
             <ChildContent>

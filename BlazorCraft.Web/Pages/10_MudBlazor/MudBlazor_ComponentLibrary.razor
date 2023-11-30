@@ -6,23 +6,23 @@
     <MudText>
         So far for every UI element we used either plain html, or built-in Microsoft components
         <br/>
-        While they work perfectly fine, it is a real hassle to customize them, challlenging to reuse and they are visually not so appealing out-of-box
+        While they work perfectly fine, it is a real hassle to customize them, challenging to reuse and they are visually not so appealing out-of-box
     </MudText>
     <MudText>
         As with any other UI frameworks, there are already existing third party component libraries that we can use, blazor is no exception.
     </MudText>
     <MudText>
-        The component library that we are going to use is called MudBlazor. We are going to use it, because it is free, open-source and easy to use component library, with nice material design, and last but not least, I like it.
+        The component library that we are going to use is called <strong>MudBlazor</strong>. We are going to use it, because it is free, open-source and easy to use component library, with nice material design, and last but not least, I like it.
         Hope you will too! :)
     </MudText>
     <MudText>
         We are not going to go into its very depth, we are only going to cover some important elements that will be used in the exam exercise
     </MudText>
     <MudText>
-        If you are interested in the rest of the components provided by MudBlazor, you can check out the full palette <MudLink Href="https://mudblazor.com/docs/overview" Underline="Underline.Always" Color="Color.Primary">here</MudLink>
+        If you are interested in the rest of the components provided by <strong>MudBlazor</strong>, you can check out the full palette <MudLink Href="https://mudblazor.com/docs/overview" Underline="Underline.Always" Color="Color.Primary">here</MudLink>
     </MudText>
     <MudText>
-        There will be no exercises for this chapter, as you will need only some very basic components of MudBlazor, for which you can very easily reconfigure them, to suit the needs to the exam exercise
+        There will be no exercises for this chapter, as you will need only some very basic components of <strong>MudBlazor</strong>, for which you can very easily reconfigure them, to suit the needs to the exam exercise
     </MudText>
     <MudExpansionPanels>
         <MudExpansionPanelWithStoredState Id="texts">
@@ -31,13 +31,13 @@
             </TitleContent>
             <ChildContent>
                 <SpacedContent>
-                    <MudText>So far for text content, we used the <strong>@("<p>")</strong> tag. It works fine, however MudBlazor provides us with a very nice text toolset with the <strong>@("<MudText>")</strong> component</MudText>
-                    <MudText>We can configure the text type with the <strong>Typo attribute</strong>. If we do not configure it, it will be automatically Typo.body1</MudText>
+                    <MudText>So far for text content, we mostly used the <strong>@("<p>")</strong> tag. It works fine, however MudBlazor provides us with a very nice text toolset with the <strong>@("<MudText>")</strong> component</MudText>
+                    <MudText>We can configure the text type with the <strong>Typo attribute</strong>. If we do not configure it, it will be automatically <strong>Typo.body1</strong></MudText>
                     <MudText>
                         Whenever we wanted to add an html component a css class, we used the <strong>@("class")</strong> attribute.
                         For MudBlazor components, the same can be achieved with the <strong>@("Class")</strong> attribute
                     </MudText>
-                    <MudText>If we want to make the text bold, we can give it the "fw-bold" Class</MudText>
+                    <MudText>If we want to make the text bold, we can give it the <strong>"fw-bold"</strong> Class</MudText>
                     <AdvancedCodeSnippet TComponent="MudText_Typo" RenderOutput="true"></AdvancedCodeSnippet>
                 </SpacedContent>
             </ChildContent>
@@ -49,13 +49,11 @@
             <ChildContent>
                 <SpacedContent>
                     <MudText>MudBlazor also makes it easier for us to declare buttons, that look nice and easy to work with</MudText>
-                    <MudText>There are three variants of buttons: Filled, Outlined, Text</MudText>
+                    <MudText>There are three variants of buttons: <strong>Filled, Outlined, Text</strong></MudText>
                     <AdvancedCodeSnippet TComponent="MudButton_Variants" RenderOutput="true" SkipHtml="true"></AdvancedCodeSnippet>
-                    <MudDivider></MudDivider>
-                    <MudText>It's color can be set via the Color attribute</MudText>
+                    <MudText>It's color can be set via the <strong>Color</strong> attribute</MudText>
                     <AdvancedCodeSnippet TComponent="MudButton_Colors" RenderOutput="true" SkipHtml="true"></AdvancedCodeSnippet>
-                    <MudDivider></MudDivider>
-                    <MudText>We can assign click handlers with OnClick attribute. It is an <strong>EventCallback</strong>, so sync and async methods can be assigned to it as well.</MudText>
+                    <MudText>We can assign click handlers with <strong>OnClick</strong> attribute. It is an <strong>EventCallback</strong>, so sync and async methods can be assigned to it as well.</MudText>
                     <AdvancedCodeSnippet TComponent="MudButton_OnClick" RenderOutput="true" SkipHtml="true"></AdvancedCodeSnippet>
                 </SpacedContent>
             </ChildContent>
@@ -101,7 +99,6 @@
                     <MudText>For validation to work, we will use the <strong>@("For")</strong> attribute. We will need to provide it with the same Expression as <strong>@("<ValidationMessage>")</strong></MudText>
                     <MudText>For labels, we can use the <strong>@("Label")</strong> attribute instead of a separate tag for labels</MudText>
                     <AdvancedCodeSnippet TComponent="MudTextField_Example" RenderOutput="true" SkipHtml="true"></AdvancedCodeSnippet>
-                    <MudDivider></MudDivider>
                     <MudText Typo="Typo.subtitle1" Class="fw-bold">Date inputs</MudText>
                     <MudText>For date inputs, we can use the <strong>@("<MudDatePicker>")</strong> component</MudText>
                     <MudText>We can bind its value with two way data-binding using the <strong>@("@bind-Date")</strong> markup</MudText>
@@ -112,7 +109,7 @@
                     <AdvancedCodeSnippet TComponent="MudSelect_Example" RenderOutput="true" SkipHtml="true"></AdvancedCodeSnippet>
                     <MudText>However, during the exam, we will specifially need selectable values for enums</MudText>
                     <MudText>For this purpose a modified version of <strong>@("<MudSelect>")</strong> is pre-provided for you, to make your life easier. It will automatically enumerate all enum values as well as the empty value</MudText>
-                    <MudText>Everything works the same as with <strong>@("<MudTextField>")</strong> and <strong>@("<MudNumericField>")</strong>, but in the end, you will bind to a nullabel Enum value</MudText>
+                    <MudText>Everything works the same as with <strong>@("<MudTextField>")</strong> and <strong>@("<MudNumericField>")</strong>, but in the end, you will bind to a nullable Enum value</MudText>
                     <AdvancedCodeSnippet TComponent="MudEnumSelect_Example" RenderOutput="true" SkipHtml="true"></AdvancedCodeSnippet>
                 </SpacedContent>
             </ChildContent>

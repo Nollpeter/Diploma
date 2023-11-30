@@ -81,7 +81,7 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
         
         buttons.First().Click();
 
-        var innerHtml = renderedComponent.Find(".deleted_employees ul");
+        var innerHtml = renderedComponent.Find(".deleted-employees ul");
         innerHtml.MarkupMatches($"<ul><li>{employee1.Name}</li></ul>");
 		return Task.CompletedTask;
 	}

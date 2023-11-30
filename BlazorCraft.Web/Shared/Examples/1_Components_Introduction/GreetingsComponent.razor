@@ -1,0 +1,14 @@
+﻿@code {
+    private string name = "World";
+}
+
+<h1>Hello, @name!</h1>
+
+<button class="btn btn-primary btn-dark" @onclick="ChangeName">Change Name</button>
+
+@code {
+    private void ChangeName()
+    {
+        name = "Blazor";
+    }
+}

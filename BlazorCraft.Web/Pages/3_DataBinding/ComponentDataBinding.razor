@@ -8,8 +8,9 @@
     <MudText Typo="Typo.h4">Component Data binding</MudText>
     <MudText>
         With data binding, we can make the connection between our C# code and HTML (or blazor component) markup.
+        <br/>
         We can pass data back and forth, making it an integral part of creating dynamic and interactive web applications.
-        With data binding, we can easily display C# variables in your HTML or capture user input to manipulate in our C# code.
+        With data binding, we can easily display C# variables in HTML or capture user input to manipulate in our C# code.
     </MudText>
     <MudText>
         It eliminates the need for complicated JavaScript to synchronize data between HTML and C# code, providing a more direct and natural method of crafting web applications
@@ -18,7 +19,7 @@
     <MudExpansionPanels MultiExpansion="true">
         <MudExpansionPanelWithStoredState Id="one-way-data-binding">
             <TitleContent>
-                <MudText Typo="Typo.h6" Class="fw-bold">One-Way Data Binding</MudText>
+                <MudText Typo="Typo.h6" Class="fw-bold">One-Way Data Binding in HTML</MudText>
             </TitleContent>
             <ChildContent>
                 <SpacedContent>
@@ -42,13 +43,13 @@
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="two-way-data-binding">
             <TitleContent>
-                <MudText Typo="Typo.h6" Class="fw-bold">Two-way Data Binding</MudText>
+                <MudText Typo="Typo.h6" Class="fw-bold">Two-way Data Binding in HTML</MudText>
             </TitleContent>
             <ChildContent>
                 <SpacedContent>
                     <MudText>
                         With two-way data binding, we can take binding the the next level by automatically synchronizing data back and forth between HTML and C#, or between blazor components.
-                        To use it, we will need the @("@bind") keyword.
+                        To use it, we will need the <strong>@("@bind")</strong> keyword.
                     </MudText>
                     <MudText>
                         It's power shines primarily in forms, where data changes by user interaction, and we can skip the tedious synchronization with it.
@@ -62,68 +63,53 @@
                         and vice versa, once we type in the inbox, it will be reflected in the blazor code automatically.
                     </MudText>
                     <MudText><strong>Note: </strong> Notice the <strong>@("@")bind-value:event="oninput"</strong>. This is required for the change to be instantaneous rather than only taking effect after the input loses focus</MudText>
-                    @*<MudDivider></MudDivider>
-                    <MudText Typo="Typo.subtitle1" Class="fw-bold">Customizing event handlers</MudText>
-                    <MudText>While what we saw is cool in itself, however, it can be taken one step further, we might also want to create our custom handler when the value of the input changes</MudText>
-                    <MudText>While it could be achieved with the native html <strong>@("<input>")</strong> field, for any other types than string, it is tricky to implement it</MudText>
-                    <MudText>Fortunately, Microsoft already implemented it with the <strong>@("<Input*>")</strong> types</MudText>
-                    <MudText>In our example, a slightly modified version of the @("<InputText>") will be used, so that the changes are instantaneous for better demonstration</MudText>
-                    <MudText>Let's see it in action</MudText>
-                    <AdvancedCodeSnippet TComponent="TwoWayDataBinding_CustomEventHandler" RenderOutput="true"></AdvancedCodeSnippet>
-                    <MudText>
-                        Using this component requires three things to work:
-                        <ul>
-
-                            <li>
-                                <CodeSnippet>@("""bind-Value="@name" """)</CodeSnippet>
-                            </li>
-                            <li>
-                                <CodeSnippet>@("""ValueChanged="OnNameChanged" """)</CodeSnippet>
-                            </li>
-                            <li>
-                                <CodeSnippet>@("""ValueExpression="() => name" """)</CodeSnippet>
-                            </li>
-                        </ul>
-                    </MudText>
-                    <MudText>This can be particularly useful, when we want to execute additional actions before or after the value is changed (For instance raising an event to the consumer component)</MudText>
-                    <MudText>For the exercises, you will only need the <strong>@nameof(InstantInputText)</strong> and <strong>@nameof(InstantInputNumber<int>)</strong> types</MudText>*@
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="two-way-data-binding-for-components">
             <TitleContent>
                 <PanelHeaderWithTestTracking TTestClass="Test_DataBinding_Ex1">
-                    <MudText Typo="Typo.h6" Class="fw-bold">Two-way binding for components</MudText>
+                    <MudText Typo="Typo.h6" Class="fw-bold">One-way and Two-way binding for components</MudText>
                 </PanelHeaderWithTestTracking>
             </TitleContent>
             <ChildContent>
                 <SpacedContent>
                     <MudText>
+                        To use one way data-binding for blazor components in the direction of <strong>Parent -> Child</strong>, we can simply use public properties annotated with the <strong>[Parameter]</strong> attribute and bind them in our markup. (we covered this in the previous chapters)
+                        <br/>
+                        Whenever the value of the bound value updates inside the <strong>parent</strong> component, it will be automatically reflected in the <strong>child</strong> component
+                    </MudText>
+                    <MudDivider/>
+                    <MudText>
                         To use two-way data-binding for blazor components, we need to do things a little bit differently, but it is also very easy.
                     </MudText>
                     <MudText>
-                        Since we don't have the events like onchange or oninput by default in Blazor components, we need to do this manually
+                        Since we don't have the events like <strong>onchange</strong> or <strong>oninput</strong> by default in Blazor components, we need to do this manually
                     </MudText>
                     <MudText Typo="Typo.subtitle1" Class="fw-bold">Matching change event by convention</MudText>
                     <MudText>
                         To make two-way data binding happen, we are going to need two things:
                         <ul>
                             <li>
-                                <MudText>A public property annotated with the [Parameter] attribute (so far it is the same as one-way data binding)</MudText>
+                                <MudText>A <Important>public property</Important> annotated with the <strong>[Parameter]</strong> attribute (so far it is the same as one-way data binding)</MudText>
                             </li>
                             <li>
-                                <MudText>An EventCallback with the name {PropertyName}Changed, with a generic argument of the property and also annotated with the [Parameter] attribute</MudText>
+                                <MudText>A <Important>public property</Important> of type <strong>EventCallback</strong> with the name <Important>{PropertyName}Changed</Important> and with a generic argument of the property and also annotated with the <strong>[Parameter]</strong> attribute</MudText>
                             </li>
                         </ul>
                     </MudText>
                     <MudText>We need to use the syntax @("@")bind-{PropertyName} with the consumer component and we are done, data changes for the property will be automatically synchronized both-ways</MudText>
+                    <MudText Color="Color.Error">
+                        <Important>Attention:</Important> make note of the <strong>@("@")</strong> sign before writing <strong>bind-{PropertyName}</strong>.
+                        <br/>
+                        This is very important, otherwise being omitted, the framework will try to do one-way data-binding for a property called <strong>bind-{PropertyName}</strong> which it will naturally not find
+                    </MudText>
                     <CompanionSnippets TComponent="TwoWayDataBinding_Components" TUsage="TwoWayDataBinding_Components_Usage"/>
                     <MudText Typo="Typo.subtitle1" Class="fw-bold">Binding property values</MudText>
                     <MudText>In the real world, we rarely have a simple int variable, rather, we have complex objects that have properties of simple types, like an int</MudText>
                     <MudText>We can easily bind those properties as well</MudText>
                     <AdvancedCodeSnippet TComponent="TwoWayDataBinding_Components_ComplexObjectProperty_Usage" RenderOutput="true"></AdvancedCodeSnippet>
-                    <MudDivider></MudDivider>
-                    <MudText Typo="Typo.subtitle1" Class="fw-bold">Exercise</MudText>
+                    <MudText Typo="Typo.h6" Class="fw-bold">Exercise</MudText>
                     <MudText>In this exercise, you will need to create a stripped down version of a form for employees, where their <strong>Id</strong> and <strong>Name</strong> can be edited, and this data is synchronized with the caller components</MudText>
                     <MudText>You will need to modify the component <ComponentFileWithPath T="DataBinding_Ex1"/>, you will find all instructions inside the component</MudText>
                     <MudExpansionPanels>
@@ -146,11 +132,7 @@
                         </MudExpansionPanel>
                     </MudExpansionPanels>
                     <TestRunner TTestClass="Test_DataBinding_Ex1"
-                                ComponentUnderTestParameters="@(new Dictionary<string, object>() {
-                                                                  [Test_DataBinding_Ex1.EmployeeFirstNameParamName] = _fistName,
-                                                                  [Test_DataBinding_Ex1.EmployeeFirstNameChangedName] = EventCallback.Factory.Create<string>(this, s => { _fistName = s; }),
-                                                                  [Test_DataBinding_Ex1.EmployeeLastNameParamName] = _lastName,
-                                                                  [Test_DataBinding_Ex1.EmployeeLastNameChangedName] = EventCallback.Factory.Create<string>(this, s => { _lastName = s; }) })">
+                                ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_DataBinding_Ex1.EmployeeFirstNameParamName] = _fistName, [Test_DataBinding_Ex1.EmployeeFirstNameChangedName] = EventCallback.Factory.Create<string>(this, s => { _fistName = s; }), [Test_DataBinding_Ex1.EmployeeLastNameParamName] = _lastName, [Test_DataBinding_Ex1.EmployeeLastNameChangedName] = EventCallback.Factory.Create<string>(this, s => { _lastName = s; }) })">
                         <ComponentUnderTestHelperFragment>
                             <p>First name: @_fistName</p>
                             <p>Last name: @_lastName</p>
@@ -162,30 +144,25 @@
         <MudExpansionPanelWithStoredState Id="data-binding-final-exercise">
             <TitleContent>
                 <PanelHeaderWithTestTracking TTestClass="Test_DataBinding_Ex_LessonFinal">
-                    <MudText Typo="Typo.h6" Class="fw-bold">Exercise</MudText>
+                    <MudText Typo="Typo.h6" Class="fw-bold">Lesson final exercise</MudText>
                 </PanelHeaderWithTestTracking>
             </TitleContent>
             <ChildContent>
-                    <MudText>In this exercise, you will use the component created in the previous set.</MudText>
+                <SpacedContent>
+                    <MudText>In this exercise, you will need use the component created in the previous exercise.</MudText>
                     <MudText>
                         We are going to create a component, that can render a list of employees with their first and last names
                         <br/>
                         Each row will also have an Edit button, and by clicking on them, a component editor will be rendered, where changes to the employee first and last name will be reflected in the list as well.
                     </MudText>
-                <MudText>
-                    You will need to modify the component <ComponentFileWithPath T="DataBinding_Ex_LessonFinal"/>
-                    <br/>
-                    Some code is already prepared for you to use, you will find all other instructions in the component
-                </MudText>
-                <TestRunner TTestClass="Test_DataBinding_Ex_LessonFinal"
-                            ComponentUnderTestParameters="@(new Dictionary<string, object>(){
-                                                              [nameof(DataBinding_Ex_LessonFinal.Employees)] = new List<DataBinding_Ex_LessonFinal.Employee>(){
-                                                                  new() { Id = 1, FirstName = "Test", LastName = "Theodore", IsEditorVisible = false },
-                                                                  new() { Id = 2, FirstName = "Test", LastName = "Tiffany", IsEditorVisible = false },
-                                                                  new() { Id = 3, FirstName = "Test", LastName = "Timothy", IsEditorVisible = false },
-                                                              
-                                                              }
-                                                          })"></TestRunner>
+                    <MudText>
+                        You will need to modify the component <ComponentFileWithPath T="DataBinding_Ex_LessonFinal"/>
+                        <br/>
+                        Some code is already prepared for you to use, you will find all other instructions in the component
+                    </MudText>
+                    <TestRunner TTestClass="Test_DataBinding_Ex_LessonFinal"
+                                ComponentUnderTestParameters="@(new Dictionary<string, object>() { [nameof(DataBinding_Ex_LessonFinal.Employees)] = new List<DataBinding_Ex_LessonFinal.Employee>() { new() { Id = 1, FirstName = "Test", LastName = "Theodore", IsEditorVisible = false }, new() { Id = 2, FirstName = "Test", LastName = "Tiffany", IsEditorVisible = false }, new() { Id = 3, FirstName = "Test", LastName = "Timothy", IsEditorVisible = false }, } })"></TestRunner>
+                </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
     </MudExpansionPanels>

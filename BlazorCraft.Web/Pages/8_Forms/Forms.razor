@@ -13,7 +13,7 @@
     So far, we have only covered how to display data that has already been provided, now it is time to dig ourselves into how to
     create and edit data, and also how to validate it.
     Please note, that this is a much more complex and larger topic than you will see here. The scope of this application is to provide you
-    knowledge for the basics that you can build on later if you decide to learn blazor more throroughly.
+    knowledge for the basics that you can build on later if you decide to learn blazor more thoroughly.
     Forms will be no exception to this, however, everything that you will need for the exam exercise will naturally be covered in the chapters.
 </MudText>
 <MudExpansionPanels MultiExpansion="true">
@@ -28,10 +28,10 @@
                 The core concept for html forms is the following:
                 <ul>
                     <li>
-                        <MudText>Define a form with the @("<form>") tag</MudText>
+                        <MudText>Define a form with the <strong>@("<form>")</strong> tag</MudText>
                     </li>
                     <li>
-                        <MudText>Add input fields for the form with the @("<input>") tag</MudText>
+                        <MudText>Add input fields for the form with the <strong>@("<input>")</strong> tag</MudText>
                     </li>
                     <li>
                         <MudText>Dedicate a button that handles the submission of the form</MudText>
@@ -43,23 +43,23 @@
             <MudText>This is so far basically the same example that we used for two way data binding. The Submit button would just reload the page, so it is disabled.</MudText>
             <MudText>
                 The core idea with blazor is actually the same, but of course with blazor components, and with tons
-                of customizeability.
+                of customizability.
             </MudText>
             <MudText>
                 <ul>
                     <li>
-                        <MudText>Instead of the @("<form>") tag, we are going to use the @("<EditForm>") component</MudText>
-                        <MudText>To declare an EditForm in blazor, we must either provide it a Model, or a ValidationContext</MudText>
+                        <MudText>Instead of the <strong>@("<form>")</strong> tag, we are going to use the <strong>@("<EditForm>")</strong> component</MudText>
+                        <MudText>To declare an <strong>EditForm</strong> in blazor, we must either provide it a <Important>Model</Important>, or a <Important>ValidationContext</Important></MudText>
                         <MudText>
                             A model is passed if we do not require a custom validation logic, while passing an EditContext allows us to customize
                             how and when the form is validated exactly
                         </MudText>
                         <MudText>
-                            <strong>Note: </strong>The usecase of passing an EditContext will NOT be covered
+                            <strong>Note: </strong>The use-case of passing an EditContext will NOT be covered
                         </MudText>
                     </li>
                     <li>
-                        <MudText>Instead of @("<input>") tags, we are going to use the @("<Input*>") components</MudText>
+                        <MudText>Instead of <strong>@("<input>")</strong> tags, we are going to use the <strong>@("<Input*>")</strong> components</MudText>
                         <MudText>
                             There are several Input component provided by blazor built-in, here is a list of them:
                         </MudText>
@@ -100,12 +100,12 @@
                             <tr>
                                 <td class="fw-bold">@("<InputSelect>")</td>
                                 <td class="fw-bold"> enum or a list of items.</td>
-                                <td>Used for dropdown lists. It can bind to any enumerable property, requires the use of @("<option>") elements to define the selectable options.</td>
+                                <td>Used for dropdown lists. It can bind to any enumerable property, requires the use of <strong>@("<option>")</strong> elements to define the selectable options.</td>
                             </tr>
                             <tr>
                                 <td class="fw-bold">@("<InputRadio>")and @("<InputRadioGroup>")</td>
                                 <td class="fw-bold"> enums or other grouped values</td>
-                                <td> Used for radio button inputs. Radio buttons are used for choosing one option from a set, and @("<InputRadioGroup>") helps group them logically.</td>
+                                <td> Used for radio button inputs. Radio buttons are used for choosing one option from a set, and <strong>@("<InputRadioGroup>")</strong> helps group them logically.</td>
                             </tr>
                             </tbody>
                         </MudSimpleTable>
@@ -238,10 +238,10 @@
                 To show validation errors we have two options (We can use both of course, if we want to):
                 <ul>
                     <li>
-                        <MudText>Displaying validation messages per field. This can be achieved by the @("<ValidationMessage>") tag</MudText>
+                        <MudText>Displaying validation messages per field. This can be achieved by the <strong>@("<ValidationMessage>")</strong> tag</MudText>
                     </li>
                     <li>
-                        <MudText>Displaying all validation messages for the entire form. This can be achieved by the @("<ValidationSummary>") tag</MudText>
+                        <MudText>Displaying all validation messages for the entire form. This can be achieved by the <strong>@("<ValidationSummary>")</strong> tag</MudText>
                     </li>
                 </ul>
             </MudText>

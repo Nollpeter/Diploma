@@ -1,7 +1,7 @@
 ﻿<div class="grid-container">
     <ComponentEvents_Ex1_EventCallBack Employees="Employees" ListItemDeleted="@((emp) => { Employees.Remove(emp); _deletedEmployees.Add(emp);})"></ComponentEvents_Ex1_EventCallBack>
 </div>
-<div class="deleted_employees">
+<div class="deleted-employees">
     <p>Deleted employees:</p>
     <ul>
         @* List deleted employee names here in <li> tags *@

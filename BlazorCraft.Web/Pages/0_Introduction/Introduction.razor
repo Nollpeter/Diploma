@@ -3,7 +3,7 @@
 <MudContainer Class="d-grid gap-3">
     <MudText Typo="Typo.h4">Introduction to Blazor WebAssembly</MudText>
     <MudText>
-        Welcome to the BlazorCraft educational platform! In this introductory section, you can get acquainted with the fundamentals of Blazor WebAssembly, its components, and how the technology works.
+        Welcome to the BlazorCraft educational platform! In this introductory section, you can get acquainted with the fundamentals of <strong>Blazor WebAssembly</strong>, how the technology works.
     </MudText>
 
     <MudExpansionPanels MultiExpansion="true">
@@ -17,7 +17,7 @@
                 </MudText>
                 <!----><MudDivider DividerType="DividerType.Middle" Class="my-6"/><!---->
                 <SpacedContent>
-                    <MudText Typo="Typo.h6">What Blazor is not:</MudText>
+                    <MudText Typo="Typo.h6" Class="fw-bold">What Blazor is not:</MudText>
                     <MudText>Blazor differs from Microsoft's previous attempt, Silverlight, as it doesn't rely on a browser plugin for client-side execution. Silverlight required a plugin, limiting its compatibility, especially on iOS devices.</MudText>
                     <MudText>Blazor operates without the need for any client-side plugins. It can run server-side, with the server handling execution, or directly in the browser through <MudText Inline="true" Class="fw-bold text-decoration-underline">WebAssembly</MudText>. Since WebAssembly is a web standard, it's supported by all major browsers, ensuring that client-side Blazor apps work on Windows, Linux, Mac, Android, and iOS.</MudText>
                 </SpacedContent>
@@ -45,11 +45,11 @@
                 <MudText>Blazor has two hosting models: <Important>Server-side</Important> and <Important>WebAssembly</Important>. Server-side Blazor was launched in September 2019, while WebAssembly became official in May 2020.</MudText>
                 <!----><MudDivider DividerType="DividerType.Middle" Class="my-6"/><!---->
                 <SpacedContent>
-                    <MudText Typo="Typo.h6">Server-Side</MudText>
+                    <MudText Typo="Typo.h6" Class="fw-bold">Server-Side</MudText>
                     <MudImage Src="\img\blazor-server-side.png"></MudImage>
                     <MudText>
                         Blazor <Important>server-side</Important> is the first
-                        of the two hosting models provided by Blazor, a web framework developed by Microsoft.
+                        of the two hosting models provided by Blazor.
                         In this model, the majority of the application's code runs on the server rather than in the user's browser.
                         When a user interacts with a Blazor server-side application, such as clicking a button or filling out a form, these interactions are sent to the server, where the application processes them.
                         The server then sends back HTML updates to the client, which are used to update the user interface.
@@ -57,7 +57,10 @@
                     </MudText>
                     <div class="row">
                         <div class="col-6">
-                            <MudText Typo="Typo.h6" Class="text-center"><MudIcon Icon="@Icons.Material.Filled.ArrowCircleUp" Color="Color.Success"/>Pros</MudText>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <MudIcon Icon="@Icons.Material.Filled.ArrowCircleUp" Color="Color.Success" Class="pe-1"/>
+                                <MudText Typo="Typo.h6" Class="text-center">Pros</MudText>
+                            </div>
                             <MudList>
                                 <MudListItem>
                                     <MudText>
@@ -80,7 +83,10 @@
                             </MudList>
                         </div>
                         <div class="col-6">
-                            <MudText Typo="Typo.h6" Class="text-center"><MudIcon Icon="@Icons.Material.Filled.ArrowCircleDown" Color="Color.Error"/>Cons</MudText>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <MudIcon Icon="@Icons.Material.Filled.ArrowCircleDown" Color="Color.Error" Class="pe-1"/>
+                                <MudText Typo="Typo.h6" Class="text-center">Cons</MudText>
+                            </div>
                             <MudList>
                                 <MudListItem>
                                     <MudText>
@@ -111,7 +117,7 @@
                     <MudText Typo="Typo.h6"><MudIcon Icon="@Icons.Material.Rounded.MenuBook"></MudIcon>WebAssembly</MudText>
                     <MudImage Src="\img\blazor-webassembly.png"></MudImage>
                     <MudText>
-                        Blazor <Important>WebAssembly</Important> is the second of the hosting models provided by Blazor, a web framework developed by Microsoft.
+                        Blazor <Important>WebAssembly</Important> is the second of the hosting models provided by Blazor.
                         Unlike Blazor server-side, which relies on server-side processing, Blazor WebAssembly enables client-side execution of web applications entirely within the user's browser.
                         When a user accesses a Blazor WebAssembly application, the entire application, including its components and logic, is downloaded and executed within the browser.
                         This approach allows for more dynamic and interactive web applications without the need for constant communication with a server.
@@ -119,7 +125,10 @@
                     </MudText>
                     <div class="row">
                         <div class="col-6">
-                            <MudText Typo="Typo.h6" Class="text-center"><MudIcon Icon="@Icons.Material.Filled.ArrowCircleUp" Color="Color.Success"/>Pros</MudText>
+                             <div class="d-flex align-items-center justify-content-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.ArrowCircleUp" Color="Color.Success" Class="pe-1"/>
+                                                            <MudText Typo="Typo.h6" Class="text-center">Pros</MudText>
+                                                        </div>
                             <MudList>
                                 <MudListItem>
                                     <MudText>
@@ -142,11 +151,14 @@
                             </MudList>
                         </div>
                         <div class="col-6">
-                            <MudText Typo="Typo.h6" Class="text-center"><MudIcon Icon="@Icons.Material.Filled.ArrowCircleDown" Color="Color.Error"/>Cons</MudText>
+                            <div class="d-flex align-items-center justify-content-center">
+                                                            <MudIcon Icon="@Icons.Material.Filled.ArrowCircleDown" Color="Color.Error" Class="pe-1"/>
+                                                            <MudText Typo="Typo.h6" Class="text-center">Cons</MudText>
+                                                        </div>
                             <MudList>
                                 <MudListItem>
                                     <MudText>
-                                        <Important>Larger Initial Load</Important>
+                                        <Important>Longer Initial Load</Important>
                                     </MudText>
                                     <MudText>Blazor WebAssembly applications tend to have a larger initial download size compared to server-side applications because they include the entire application in the initial payload. This can affect load times, especially on slower connections.</MudText>
                                 </MudListItem>

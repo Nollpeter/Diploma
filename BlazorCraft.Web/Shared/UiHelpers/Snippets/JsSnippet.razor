@@ -2,6 +2,7 @@
 
 @if (renderingFinished)
 {
+    <MudDivider/>
     @if (ShowComponentName || true)
     {
         <div class="d-flex pb-1 align-items-center gap-1 ">
@@ -12,7 +13,7 @@
     <CodeSnippet Language="javascript">
         @_originalMarkup
     </CodeSnippet>
-
+    <MudDivider/>
 }
 
 @code {
