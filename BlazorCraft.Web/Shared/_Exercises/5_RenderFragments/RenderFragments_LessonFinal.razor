@@ -6,6 +6,7 @@
 </div>
 <div class="ex-final-container">
     @* List component implementations should come here *@
+    @* for each property, use a template like this: <span class="mx-1">{rendered value},</span> *@
     @if (_isListView)
     {
         <ListComponent5 T="Employee" ListItems="Employees">
@@ -19,7 +20,7 @@
                 <li>
                     @foreach (var property in GetProperties())
                     {
-                        <span>@(property.Name): @GetPropertyValue(property, context), </span>
+                        <span class="mx-1">@(property.Name): @GetPropertyValue(property, context),</span>
                     }
                 </li>
             </ListItemTemplate>

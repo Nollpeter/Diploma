@@ -39,8 +39,8 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
         var element = renderedComponent.Find(ContainerName).InnerHtml;
         element.MarkupMatches("<h2>Employees</h2>" +
                               "<ul>" +
-                              $"<li><span>Id: {employees[0].Id}</span><span>FirstName: {employees[0].FirstName}</span><span>LastName: {employees[0].LastName}</span><span>Position: {employees[0].Position}</span></li>"+
-                              $"<li><span>Id: {employees[1].Id}</span><span>FirstName: {employees[1].FirstName}</span><span>LastName: {employees[1].LastName}</span><span>Position: {employees[1].Position}</span></li>"+
+                              $"<li><span class=\"mx-1\">Id: {employees[0].Id},</span><span class=\"mx-1\">FirstName: {employees[0].FirstName},</span><span class=\"mx-1\">LastName: {employees[0].LastName},</span><span class=\"mx-1\">Position: {employees[0].Position},</span></li>"+
+                              $"<li><span class=\"mx-1\">Id: {employees[1].Id},</span><span class=\"mx-1\">FirstName: {employees[1].FirstName},</span><span class=\"mx-1\">LastName: {employees[1].LastName},</span><span class=\"mx-1\">Position: {employees[1].Position},</span></li>"+
                               "</ul>"
             );
 
@@ -65,7 +65,7 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
         
         var element = renderedComponent.Find(ContainerName).InnerHtml;
         element.MarkupMatches("<h2>Employees</h2>" +
-                              """<table class="table">""" +
+                              """<table class="table table-dark">""" +
                               $"<thead><tr><th>{nameof(Employee.Id)}</th><th>{nameof(Employee.FirstName)}</th><th>{nameof(Employee.LastName)}</th><th>{nameof(Employee.Position)}</th></tr></thead>"+
                               "<tbody>"+
                               $"<tr><td>{employees[0].Id}</td><td>{employees[0].FirstName}</td><td>{employees[0].LastName}</td><td>{employees[0].Position}</td></tr>"+

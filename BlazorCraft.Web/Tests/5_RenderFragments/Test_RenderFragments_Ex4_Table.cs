@@ -14,7 +14,7 @@ public class Test_RenderFragments_Ex4_Table : RenderFragmentsTestBase<RenderFrag
         TestContext testContext = new TestContext();
         var renderedComponent = testContext.RenderComponent<RenderFragments_Ex4>();
         renderedComponent.MarkupMatches("<h2>Items table</h2>" +
-                                        "<table class=\"table\">" +
+                                        "<table class=\"table table-dark\">" +
                                         "    <thead>" +
                                         "    <tr>" +
                                         "        <th>List items</th>" +
