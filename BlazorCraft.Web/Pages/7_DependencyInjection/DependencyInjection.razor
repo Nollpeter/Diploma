@@ -2,12 +2,7 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Hosting
 @using BlazorCraft.Web.DI
 @using BlazorCraft.Web.Infrastructure
-@using BlazorCraft.Web.Pages._4_Component_LifeCycle
-@using BlazorCraft.Web.Pages._5_RenderFragments
-@using BlazorCraft.Web.Shared._Exercises._7_DependencyInjection
-@using BlazorCraft.Web.Shared._Exercises.DependencyInjection
 @using BlazorCraft.Web.Shared.Examples._7_DependencyInjection
-@using BlazorCraft.Web.Tests._7_DependencyInjection
 <MudText Typo="Typo.h4">Dependency Injection</MudText>
 <SpacedContent>
     <MudText>
@@ -172,51 +167,6 @@
                         "   }\n"+
                         "}\n")
                     </CodeSnippet>
-                </SpacedContent>
-            </ChildContent>
-        </MudExpansionPanelWithStoredState>
-        <MudExpansionPanelWithStoredState Id="di-exercise">
-            <TitleContent>
-                <PanelHeaderWithTestTracking TTestClass="Test_DependencyInjection_Ex_LessonFinal">
-                    <MudText Typo="Typo.h6" Class="fw-bold">Lesson final exercise</MudText>
-                </PanelHeaderWithTestTracking>
-            </TitleContent>
-            <ChildContent>
-                <SpacedContent>
-                    <MudText>
-                        Your exercise here will be to Reuse the List component that you created in the Final exercise for <MudPageLink PageType="typeof(RenderFragments)">Render fragments</MudPageLink>:
-                        <strong>@nameof(RenderFragments_LessonFinal)</strong>
-                    </MudText>
-                    <MudText>
-                        However, this time, we will use dependency injection to obtain an instance of @nameof(IEmployeeService)
-                        and then bind the List of employees returned by @nameof(IEmployeeService) to the list component and show that as
-                        a list or table view
-                    </MudText>
-                    <MudText>
-                        For the exercise, you will need to modify the component <ComponentFileWithPath T="DependencyInjection_Ex_LessonFinal"/> and also
-                        you will have to register @nameof(IEmployeeService) in
-                        @(nameof(DependencyInjection_EmployeeServiceRegistration)).@nameof(DependencyInjection_EmployeeServiceRegistration.AddEmployeeService)
-                    </MudText>
-                    <MudText>
-                        Every further instruction for you is provided in <ComponentFileWithPath T="DependencyInjection_Ex_LessonFinal"/>
-                    </MudText>
-                    <MudText>Good luck!</MudText>
-                    <MudExpansionPanel>
-                        <TitleContent>Hint, if you are stuck</TitleContent>
-                        <ChildContent>
-                            <MudText>
-                                While sync methods (any method that does not return a task and does not have the async keyword) can be called inside the razor markup,
-                                This is not the case for async methods, since they are typically long running operations. Therefore, you will need to store its result in a field,
-                                which needs to be initiated in a lifecycle method.
-                            </MudText>
-                            <MudText>
-                                We have covered a technique, to mitigate this issue in the <MudPageLink  PageType="typeof(ComponentLifecycle)">Component lifecycle</MudPageLink> chapter
-                            </MudText>
-                        </ChildContent>
-                    </MudExpansionPanel>
-                    <TestRunner TTestClass="Test_DependencyInjection_Ex_LessonFinal"
-                                ComponentUnderTestParameters="@(new Dictionary<string, object>() { })">
-                    </TestRunner>
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>

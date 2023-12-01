@@ -1,8 +1,6 @@
 ﻿@page "/components/component-events"
-@using BlazorCraft.Web.Shared._Exercises._2_ComponentEvents
 @using BlazorCraft.Web.Shared.Examples._2_ComponentEvents
 @using BlazorCraft.Web.Shared.Examples._2_ComponentEvents.ExampleUsages
-@using BlazorCraft.Web.Tests._2_ComponentEvents
 
 <MudContainer Class="d-grid gap-3">
     <MudText Typo="Typo.h4">Blazor component events</MudText>
@@ -46,9 +44,7 @@
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="eventCallBack">
             <TitleContent>
-                <PanelHeaderWithTestTracking TTestClass="Test_ComponentEvents_Ex1_EventCallBack">
                     <MudText Typo="Typo.h6" Class="fw-bold">EventCallBack and EventCallback@("<T>")</MudText>
-                </PanelHeaderWithTestTracking>
             </TitleContent>
             <ChildContent>
                 <SpacedContent>
@@ -109,77 +105,6 @@
                     </MudText>
                     <CompanionSnippets TComponent="EventCallBackExample" TUsage="EventCallBackExampleUsage"/> 
                     <MudDivider/>
-                    <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
-                    <MudText>Your task here is to create a grid component, that for each item has a delete button, and notifies its consumer component that a grid item was deleted</MudText>
-                    <MudText>The actual deletion will be handled externally in the next exercise</MudText>
-                    <MudText>In this execrise you will only have to modify the <ComponentFileWithPath T="ComponentEvents_Ex1_EventCallBack"/> component</MudText>
-                    <MudText>
-                        For the component, you will need
-                        <ul>
-                            <li>
-                                <MudText>A <strong>List@("<int")</strong> <Important>public property</Important> annotated with the <strong>[Parameter]</strong> attribute with the name <strong>@Test_ComponentEvents_Ex1_EventCallBack.EmployeesParameterName</strong></MudText>
-                            </li>
-                            <li>
-                                <MudText>
-                                    An <strong>EventCallBack@("<Employee>")</strong> public property annotated with the <strong>[Parameter]</strong> attribute (The <strong>Employee</strong> type will be provided, you only need to use it)
-                                    with the name <strong>@Test_ComponentEvents_Ex1_EventCallBack.EventCallBackPropertyName</strong>
-                                </MudText>
-                            </li>
-                        </ul>
-                    </MudText>
-                    <MudText>You only have to render grid rows, you will be guided by the table header, how a row should look like</MudText>
-                    <MudText><strong>Note:</strong> valid table rows look like this inside the <strong>@("<tbody>")</strong> tag</MudText>
-                    <CodeSnippet>
-                        @("<tr> \n" +
-                          "    <td>...</td> \n" +
-                          "    <td>...</td> \n" +
-                          "    ... \n" +
-                          "</tr> \n")
-                    </CodeSnippet>
-                    @{
-                        var employees = new List<ComponentEvents_Ex1_EventCallBack.Employee>() { new(1, "employee 1"), new(2, "employee 2") };
-                        var eventCallback = EventCallback.Factory.Create<ComponentEvents_Ex1_EventCallBack.Employee>(employees, employee => { employees.Remove(employee); });
-                    }
-                    <TestRunner TTestClass="Test_ComponentEvents_Ex1_EventCallBack"
-                                ComponentUnderTestParameters="@(new Dictionary<string, object>() { 
-                                                                  [Test_ComponentEvents_Ex1_EventCallBack.EmployeesParameterName] = employees, 
-                                                                  [Test_ComponentEvents_Ex1_EventCallBack.EventCallBackPropertyName] = eventCallback})" />
-                        
-                    }
-                </SpacedContent>
-            </ChildContent>
-        </MudExpansionPanelWithStoredState>
-        <MudExpansionPanelWithStoredState Id="components_ex-final">
-            <TitleContent>
-                <PanelHeaderWithTestTracking TTestClass="Test_Components_Events_ExLessonFinal">
-                    <MudText Typo="Typo.h6" Class="fw-bold">Lesson final exercise</MudText>
-                </PanelHeaderWithTestTracking>
-            </TitleContent>
-            <ChildContent>
-                <SpacedContent>
-                    <MudText>
-                        Your task is to modify the pre-created component: <ComponentFileWithPath T="ComponentEvents_ExLessonFinal"/>, so that it behaves accordingly:
-                        <ul>
-                            <li>
-                                <MudText>
-                                    The component should handle the @Test_ComponentEvents_Ex1_EventCallBack.EventCallBackPropertyName event,
-                                    so that the list items are deleted from the @Test_Components_Events_ExLessonFinal.EmployeesParameterName list
-                                </MudText>
-                            </li>
-                            <li>
-                                <MudText>
-                                    The component should also list the already deleted employees, you will find the instructions inside the component how you need to render them
-                                </MudText>
-                            </li>
-                        </ul>
-                    </MudText>
-                    <MudText>You can see that you have some code already provided for you, you don't need to touch them, also, please don't!</MudText>
-                    <MudText>The component also guides you with comments where you need to put your code, please follow these instructions</MudText>
-                    <TestRunner TTestClass="Test_Components_Events_ExLessonFinal"
-                                ComponentUnderTestParameters=
-                                "@(new Dictionary<string, object>(){ [Test_Components_Events_ExLessonFinal.EmployeesParameterName]= 
-                                     new List<ComponentEvents_Ex1_EventCallBack.Employee>(){ new (1, "employee 1"), new(2, "employee 2")}})"
-                                ></TestRunner>
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>

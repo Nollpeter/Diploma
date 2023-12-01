@@ -1,8 +1,6 @@
 ﻿@page "/components/data-binding"
-@using BlazorCraft.Web.Shared._Exercises._3_DataBinding
 @using BlazorCraft.Web.Shared.Examples._3_DataBinding
 @using BlazorCraft.Web.Shared.Examples._3_DataBinding.ExampleUsages
-@using BlazorCraft.Web.Tests._3_DataBinding
 
 <SpacedContent>
     <MudText Typo="Typo.h4">Component Data binding</MudText>
@@ -69,9 +67,7 @@
         </MudExpansionPanelWithStoredState>
         <MudExpansionPanelWithStoredState Id="two-way-data-binding-for-components">
             <TitleContent>
-                <PanelHeaderWithTestTracking TTestClass="Test_DataBinding_Ex1">
                     <MudText Typo="Typo.h6" Class="fw-bold">One-way and Two-way binding for components</MudText>
-                </PanelHeaderWithTestTracking>
             </TitleContent>
             <ChildContent>
                 <SpacedContent>
@@ -110,66 +106,8 @@
                     <MudText>In the real world, we rarely have a simple int variable, rather, we have complex objects that have properties of simple types, like an int</MudText>
                     <MudText>We can easily bind those properties as well</MudText>
                     <CodeSnippetWithOutput TComponent="TwoWayDataBinding_Components_ComplexObjectProperty_Usage" RenderOutput="true"></CodeSnippetWithOutput>
-                    <MudText Typo="Typo.h6" Class="fw-bold">Exercise</MudText>
-                    <MudText>In this exercise, you will need to create a stripped down version of a form for employees, where their <strong>Id</strong> and <strong>Name</strong> can be edited, and this data is synchronized with the caller components</MudText>
-                    <MudText>You will need to modify the component <ComponentFileWithPath T="DataBinding_Ex1"/>, you will find all instructions inside the component</MudText>
-                    <MudExpansionPanels>
-                        <MudExpansionPanel>
-                            <TitleContent><MudText Class="fw-bold" Typo="Typo.subtitle1">Hint</MudText></TitleContent>
-                            <ChildContent>
-                                <MudText>
-                                    Even if you bind the First and Last Name to the inputs, the consumer component will not be notified automatically, you will still need to call the the EventCallBacks when the properties are changed
-                                </MudText>
-                            </ChildContent>
-                        </MudExpansionPanel>
-                        <MudExpansionPanel>
-                            <TitleContent><MudText Class="fw-bold" Typo="Typo.subtitle1">Hint 2 if you are really stuck</MudText></TitleContent>
-                            <ChildContent>
-                                <MudText>
-                                    Instead of auto properties (The ones that are declared with the { get; set; } syntax, declare properties with backing fields for the first and last name, and inside the setter method, call the EventCallBacks.
-                                    Be careful! Only change it if the value actually changed, otherwise, the application will freeze!
-                                </MudText>
-                            </ChildContent>
-                        </MudExpansionPanel>
-                    </MudExpansionPanels>
-                    <TestRunner TTestClass="Test_DataBinding_Ex1"
-                                ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_DataBinding_Ex1.EmployeeFirstNameParamName] = _fistName, [Test_DataBinding_Ex1.EmployeeFirstNameChangedName] = EventCallback.Factory.Create<string>(this, s => { _fistName = s; }), [Test_DataBinding_Ex1.EmployeeLastNameParamName] = _lastName, [Test_DataBinding_Ex1.EmployeeLastNameChangedName] = EventCallback.Factory.Create<string>(this, s => { _lastName = s; }) })">
-                        <ComponentUnderTestHelperFragment>
-                            <p>First name: @_fistName</p>
-                            <p>Last name: @_lastName</p>
-                        </ComponentUnderTestHelperFragment>
-                    </TestRunner>
-                </SpacedContent>
-            </ChildContent>
-        </MudExpansionPanelWithStoredState>
-        <MudExpansionPanelWithStoredState Id="data-binding-final-exercise">
-            <TitleContent>
-                <PanelHeaderWithTestTracking TTestClass="Test_DataBinding_Ex_LessonFinal">
-                    <MudText Typo="Typo.h6" Class="fw-bold">Lesson final exercise</MudText>
-                </PanelHeaderWithTestTracking>
-            </TitleContent>
-            <ChildContent>
-                <SpacedContent>
-                    <MudText>In this exercise, you will need use the component created in the previous exercise.</MudText>
-                    <MudText>
-                        We are going to create a component, that can render a list of employees with their first and last names
-                        <br/>
-                        Each row will also have an Edit button, and by clicking on them, a component editor will be rendered, where changes to the employee first and last name will be reflected in the list as well.
-                    </MudText>
-                    <MudText>
-                        You will need to modify the component <ComponentFileWithPath T="DataBinding_Ex_LessonFinal"/>
-                        <br/>
-                        Some code is already prepared for you to use, you will find all other instructions in the component
-                    </MudText>
-                    <TestRunner TTestClass="Test_DataBinding_Ex_LessonFinal"
-                                ComponentUnderTestParameters="@(new Dictionary<string, object>() { [nameof(Test_DataBinding_Ex_LessonFinal.EmployeesParamName)] = new List<DataBinding_Ex_LessonFinal.Employee>() { new() { Id = 1, FirstName = "Test", LastName = "Theodore", IsEditorVisible = false }, new() { Id = 2, FirstName = "Test", LastName = "Tiffany", IsEditorVisible = false }, new() { Id = 3, FirstName = "Test", LastName = "Timothy", IsEditorVisible = false }, } })"></TestRunner>
                 </SpacedContent>
             </ChildContent>
         </MudExpansionPanelWithStoredState>
     </MudExpansionPanels>
 </SpacedContent>
-@code
-{
-    string _fistName = "Test";
-    string _lastName = "Theodore";
-}

@@ -64,14 +64,6 @@
     {
         [Required] public string? Name { get; set; }
 
-//TODO 2 branches remove for control
-        [Description("How much did the continous feedback and exercises enhance your learning curve?")]
-        public RatingModel ContinousFeedbackEnhancement { get; set; } = new() {SelectedValue = -2};
-
-//TODO 2 branches remove for control
-        [Description("How difficult were the exercises?")]
-        public RatingModel DifficultyOfExercises { get; set; } = null!;
-
         [Description("How would you rate your understanding of the materials that you learned?")]
         public RatingModel UnderStandingMaterial { get; set; } = null!;
 
@@ -114,11 +106,6 @@
     }
 
     private QuestionnaireModel Model { get; } = new();
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        Model.ContinousFeedbackEnhancement.SelectedValue = -1;
-    }
 
     private void HandleHoveredValueChanged(RatingModel ratingModel, int? val)
     {

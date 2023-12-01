@@ -1,9 +1,7 @@
 ﻿@page "/components/introduction"
-@using BlazorCraft.Web.Shared._Exercises._1_Components_Introduction
 5_RenderFragments
 @using BlazorCraft.Web.Pages._5_RenderFragments
 @using BlazorCraft.Web.Shared.Examples._1_Components_Introduction.ExampleUsages
-@using BlazorCraft.Web.Tests._1_Components_Introduction
 
 <MudContainer Class="d-grid gap-3">
     <MudText Typo="Typo.h4">Blazor Components</MudText>
@@ -137,27 +135,6 @@
                         </SpacedContent>
                     </ChildContent>
                 </MudExpansionPanelWithStoredState>
-        <MudExpansionPanelWithStoredState Id="components_ex-1">
-            <TitleContent>
-                <PanelHeaderWithTestTracking TTestClass="Test_Components_Introduction_Ex_LessonFinal">
-                    <MudText Typo="Typo.h6" Class="fw-bold">Lesson final exercise</MudText>
-                </PanelHeaderWithTestTracking>
-            </TitleContent>
-            <ChildContent>
-                <SpacedContent>
-                    <MudText>Your task is to modify the pre-created component: <ComponentFileWithPath T="Components_Introduction_Ex_LessonFinal" /></MudText>
-                    <MudText>You can see that you have some code already provided for you, you don't need to modify those parts, in order to avoid any kind of technical difficulties, please don't!</MudText>
-                    <MudText>The component also guides you with comments where you need to put your code, please follow these instructions</MudText>
-                    <MudText>The component should have a parameter defined of type <strong>@("List<int>")</strong> with the name <Important>@Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName</Important></MudText>
-                    <ul>
-                        <li><MudText>If the <strong>_showList</strong> field is <Important>true</Important>, the component should render for each element of the <Important>@Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName</Important> property a <Important>@(nameof(ComponentWithParameter))</Important> component with its <Important>@Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName</Important> parameter set to the value of the number from the @Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName list</MudText></li>
-                        <li><MudText>If the <strong>_showList</strong> field is <Important>false</Important>, the component should render @Test_Components_Introduction_Ex_LessonFinal.ListIsHiddenMarkup</MudText></li>    
-                    </ul>
-                    
-                    <TestRunner TTestClass="Test_Components_Introduction_Ex_LessonFinal" ComponentUnderTestParameters="@(new Dictionary<string, object>() { [Test_Components_Introduction_Ex_LessonFinal.NumbersParameterName] = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 } })"/>
-                </SpacedContent>
-            </ChildContent>
-        </MudExpansionPanelWithStoredState>
     </MudExpansionPanels>
 </MudContainer>
 

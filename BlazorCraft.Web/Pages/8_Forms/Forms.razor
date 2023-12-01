@@ -1,10 +1,6 @@
 ﻿@page "/forms"
-@using BlazorCraft.Web.Shared._Exercises.DependencyInjection
-@using BlazorCraft.Web.Tests._8_Forms
-@using IEmployeeService = BlazorCraft.Web.Shared._Exercises.DependencyInjection.IEmployeeService
 @using BlazorCraft.Web.Pages._5_RenderFragments
 @using BlazorCraft.Web.Pages._4_Component_LifeCycle
-@using BlazorCraft.Web.Shared._Exercises._8_Forms
 @using BlazorCraft.Web.Shared.Examples._8_Forms
 <MudText Typo="Typo.h4">Forms</MudText>
 <SpacedContent>
@@ -288,54 +284,6 @@
             </MudText>
             <MudText>Let's see an example where the fields are required, and the result is only shown, if the form is in a valid state: </MudText>
             <CodeSnippetWithOutput TComponent="DataAnnotationsValidatorExample" RenderOutput="true"/>
-        </SpacedContent>
-    </ChildContent>
-</MudExpansionPanelWithStoredState>
-<MudExpansionPanelWithStoredState Id="forms-exercise">
-    <TitleContent>
-        <PanelHeaderWithTestTracking TTestClass="Test_Forms_Ex_LessonFinal">
-            <MudText Typo="Typo.h6" Class="fw-bold">Lesson final exercise</MudText>
-        </PanelHeaderWithTestTracking>
-    </TitleContent>
-    <ChildContent>
-        <SpacedContent>
-            <MudText>
-                Your exercise here will be to Reuse the List component that you created in the Final exercise for <MudPageLink PageType="typeof(RenderFragments)">Render fragments</MudPageLink>:
-                <strong>@nameof(RenderFragments_LessonFinal)</strong>
-            </MudText>
-            <MudText Class="fw-bold">
-                That was a challenging exercise to get there, so let's collect dividends on the hard work!
-                We will reuse that component quite a couple of times, as it provides a very good foundation for topics to build upon
-            </MudText>
-            <MudText>
-                Your task will be to create a form, where we can add new employees and add them to the list.
-                Naturally, only valid employees can be added
-            </MudText>
-            <MudText>
-                For the exercise, you will need to modify the component <ComponentFileWithPath T="Forms_Ex_LessonFinal"/> and also
-                you will have to register @nameof(IEmployeeService) in
-                @(nameof(DependencyInjection_EmployeeServiceRegistration)).@nameof(DependencyInjection_EmployeeServiceRegistration.AddEmployeeService)
-            </MudText>
-            <MudText>
-                Every further instruction for you is provided in <ComponentFileWithPath T="Forms_Ex_LessonFinal"/>
-            </MudText>
-            <MudText>Good luck!</MudText>
-            <MudExpansionPanel>
-                <TitleContent>Hint, if you are stuck</TitleContent>
-                <ChildContent>
-                    <MudText>
-                        While sync methods (any method that does not return a task and does not have the async keyword) can be called inside the razor markup,
-                        This is not the case for async methods, since they are typically long running operations. Therefore, you will need to store its result in a field,
-                        which needs to be initiated in a lifecycle method.
-                    </MudText>
-                    <MudText>
-                        We have covered a technique, to mitigate this issue in the <MudPageLink PageType="typeof(ComponentLifecycle)">Component lifecycle</MudPageLink> chapter
-                    </MudText>
-                </ChildContent>
-            </MudExpansionPanel>
-            <TestRunner TTestClass="Test_Forms_Ex_LessonFinal"
-                        ComponentUnderTestParameters="@(new Dictionary<string, object>() { })">
-            </TestRunner>
         </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>

@@ -31,5 +31,25 @@
         <EmbeddedResource Include="**\*.js" />
         <EmbeddedResource Include="**\*.razor" />
     </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\2_ComponentEvents\ComponentEvents_Ex1_EventCallBack.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\2_ComponentEvents\ComponentEvents_ExLessonFinal.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\3_DataBinding\DataBinding_Ex1.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\3_DataBinding\DataBinding_Ex_LessonFinal.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\5_RenderFragments\RenderFragments_Ex1.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\5_RenderFragments\RenderFragments_Ex2.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\5_RenderFragments\RenderFragments_Ex3.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\5_RenderFragments\RenderFragments_Ex4.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\5_RenderFragments\RenderFragments_LessonFinal.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\6_Routing\Routing_Ex1.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\6_Routing\Routing_Ex2.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\6_Routing\Routing_Ex3.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\6_Routing\Routing_Ex4.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\6_Routing\Routing_Ex5.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\7_DependencyInjection\DependencyInjection_Ex_LessonFinal.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\8_Forms\Forms_Ex_LessonFinal.razor" />
+      <_ContentIncludedByDefault Remove="Shared\_Exercises\9_JsInterop\JsInterop_Ex_LessonFinal.razor" />
+    </ItemGroup>
 	
 </Project>

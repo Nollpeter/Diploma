@@ -1,7 +1,5 @@
 ﻿@page "/routing"
-@using BlazorCraft.Web.Shared._Exercises._6_Routing
 @using BlazorCraft.Web.Shared.Examples._6_Routing.ExampleUsages
-@using BlazorCraft.Web.Tests._6_Routing
 <MudText Typo="Typo.h4">Routing</MudText>
 <SpacedContent>
 <MudText Typo="Typo.h6" Class="fw-bold">What is routing?</MudText>
@@ -16,9 +14,7 @@
 <MudExpansionPanels MultiExpansion="true">
 <MudExpansionPanelWithStoredState Id="defining-routes">
     <TitleContent>
-        <PanelHeaderWithTestTracking TTestClass="Test_Routing_Ex1_Basics">
-            <MudText Typo="Typo.h6" Class="fw-bold">Defining routes</MudText>
-        </PanelHeaderWithTestTracking>
+        <MudText Typo="Typo.h6" Class="fw-bold">Defining routes</MudText>
     </TitleContent>
     <ChildContent>
         <SpacedContent>
@@ -38,25 +34,12 @@
             <CodeSnippetWithOutput TComponent="App" RenderOutput="false"/>
             <MudText>You can also define multiple routes for the pages, in this case, they will be reachable by all of its page routes</MudText>
             <CodeSnippetWithOutput TComponent="MultipleRoutes" RenderOutput="false"/>
-            <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
-            <MudText>Your task here is to modify the component <ComponentFileWithPath T="Routing_Ex1" /> so that it has can be reached via two route urls:</MudText>
-            <ul>
-                <li>
-                    <MudText Class="fw-bold">/@Test_Routing_Ex1_Basics.Route1</MudText>
-                </li>
-                <li>
-                    <MudText Class="fw-bold">/@Test_Routing_Ex1_Basics.Route2</MudText>
-                </li>
-            </ul>
-            <TestRunner TTestClass="Test_Routing_Ex1_Basics" TestComponentName="@nameof(Routing_Ex1)"></TestRunner>
         </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 <MudExpansionPanelWithStoredState Id="routeparameters">
     <TitleContent>
-        <PanelHeaderWithTestTracking TTestClass="Test_Routing_Ex2_RouteParams">
             <MudText Typo="Typo.h6" Class="fw-bold">Route parameters</MudText>
-        </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
         <SpacedContent>
@@ -70,25 +53,13 @@
             <MudText>
                 <Important>Be careful! Even if you define multiple routes with different parameters, the routes have to be unique!</Important>
             </MudText>
-            <MudDivider/>
-            <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
-            <MudText>
-                Your task here is to modify the component <ComponentFileWithPath T="Routing_Ex2"/> so that it has can be reached via the url: <strong>/@Test_Routing_Ex2_RouteParams.Route</strong>
-                and also, it should have a <strong>string</strong> route parameter with the name <strong>@Test_Routing_Ex2_RouteParams.RouteParamName</strong>.
-            </MudText>
-            <MudText>The component should only render the value of the route parameter inside a <strong>@("<p>")</strong> tag</MudText>
-
-            <TestRunner TTestClass="Test_Routing_Ex2_RouteParams" TestComponentName="@nameof(Routing_Ex2)"
-                        ComponentUnderTestParameters="@(new Dictionary<string, object>(){[nameof(Test_Routing_Ex2_RouteParams.RouteParamName)] = "Example value"})"></TestRunner>
 
         </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 <MudExpansionPanelWithStoredState Id="constraining-route-parameters">
     <TitleContent>
-        <PanelHeaderWithTestTracking TTestClass="Test_Routing_Ex3_RouteConstraints">
             <MudText Typo="Typo.h6" Class="fw-bold">Route parameter constraints</MudText>
-        </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
         <SpacedContent>
@@ -144,25 +115,12 @@
                     </MudTd>
                 </RowTemplate>
             </MudTable>
-            <MudDivider/>
-            <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
-            <MudText>
-                Your task here is to modify the component <ComponentFileWithPath T="Routing_Ex3"/> so that it has can be reached via the url: <strong>/@Test_Routing_Ex3_RouteConstraints.Route</strong>
-                and also, it should have a route parameter with the name <strong>@Test_Routing_Ex3_RouteConstraints.RouteParamName</strong>,
-                and also constraint to the type <strong>int</strong>
-            </MudText>
-            <MudText>The component should only render the value of the route parameter inside a <strong>@("<p>")</strong> tag</MudText>
-
-            <TestRunner TTestClass="Test_Routing_Ex3_RouteConstraints"
-                        ComponentUnderTestParameters="@(new Dictionary<string, object>(){[nameof(Test_Routing_Ex3_RouteConstraints.RouteParamName)] = 12})"></TestRunner>
         </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
 <MudExpansionPanelWithStoredState Id="optional-route-parameters">
     <TitleContent>
-        <PanelHeaderWithTestTracking TTestClass="Test_Routing_Ex4_OptionalRouteParams">
             <MudText Typo="Typo.h6" Class="fw-bold">Optional route parameters</MudText>
-        </PanelHeaderWithTestTracking>
     </TitleContent>
     <ChildContent>
         <SpacedContent>
@@ -181,73 +139,9 @@
             </MudText>
             <CodeSnippetWithOutput TComponent="EmployeeDetailsWithOptionalParameterUsage" RenderOutput="true"/>
             <MudText>You can also check out the page and play with the route parameter <MudLink Href="employee/details-optional-param">here</MudLink></MudText>
-            <MudDivider/>
-            <MudText Class="fw-bold" Typo="Typo.h6">Exercise</MudText>
-            <MudText>
-                Your task here is to modify the component <ComponentFileWithPath T="Routing_Ex4" /> so that it has can be reached via the url: <strong>/@Test_Routing_Ex3_RouteConstraints.Route</strong>
-                and also, it should have a route parameter with the name <strong>@Test_Routing_Ex4_OptionalRouteParams.RouteParamName</strong>,
-                and also constraint to the type <strong>int</strong>
-            </MudText>
-            <ul>
-                <li>
-                    <MudText>If the route parameter has been assigned a value, then to component should render it inside a <strong>@("p")</strong> tag</MudText>
-                </li>
-                <li>
-                    <MudText>If the route parameter has <strong>NOT</strong> been assigned a value, then to component should render <strong>"The parameter value is empty"</strong> inside a <strong>@("p")</strong> tag</MudText>
-                </li>
-            </ul>
-            <TestRunner TTestClass="Test_Routing_Ex4_OptionalRouteParams"></TestRunner>
         </SpacedContent>
     </ChildContent>
 
-</MudExpansionPanelWithStoredState>
-<MudExpansionPanelWithStoredState Id="routing-final-exercise">
-    <TitleContent>
-        <PanelHeaderWithTestTracking TTestClass="Test_Routing_Ex5_LessonFinal">
-            <MudText Typo="Typo.h6" Class="fw-bold">Lesson final exercise</MudText>
-        </PanelHeaderWithTestTracking>
-    </TitleContent>
-    <ChildContent>
-        <SpacedContent>
-            <MudText>In this exercise, you will have to modify the component <ComponentFileWithPath T="Routing_Ex5"/></MudText>
-            <MudText>Your task is to modify it, so that employees can bee looked up via two types of identifiers</MudText>
-            <MudText>You will find a list of Employees, with the Employee type having an additional Id: CompanyAccountId</MudText>
-            <MudText>You will need to create two routes:</MudText>
-            <ul>
-                <li>
-                    <MudText>/@Test_Routing_Ex5_LessonFinal.RouteById -> for the use-case, when an employee is searched for via its <strong>Id</strong> </MudText>
-                </li>
-                <li>
-                    <MudText>/@Test_Routing_Ex5_LessonFinal.RouteByCompanyAccountId -> for the use-case, when an employee is searched for via its <strong>CompanyAccountId</strong></MudText>
-                </li>
-            </ul>
-            <MudText>In both cases, it should be possible to configure via the url, if all data for the employee should be shown, or only the names
-                This route parameter will be called <strong>/@Test_Routing_Ex5_LessonFinal.AllDataRouteParam</strong></MudText>
-            <ul>
-                <li>
-                    <MudText>
-                        If all data is selected to be shown, then the component should render a row like this (based on the id of course):
-                        <CodeSnippet>@("<p>Employee id: 1, Company assigned identifier: aaaa, Name: Test theodore, Position: CEO</p>")</CodeSnippet>
-                    </MudText>
-                </li>
-                <li>
-                    <MudText>
-                        Otherwise, the component should render a row like this (based on the id of course):
-                        <CodeSnippet>@("<p>Test theodore</p>")</CodeSnippet>
-                    </MudText>
-                </li>
-            </ul>
-            <MudText>If the employee cannot be found by the given id,then the component should render this row:
-                <CodeSnippet>@("<p>Employee not found</p>")</CodeSnippet>
-                </MudText>
-            <MudText>
-                If no identifier is passed via the url, then the component should render this row:
-                <CodeSnippet>@("<p>No identifier received</p>")</CodeSnippet>
-            </MudText>
-            <TestRunner TTestClass="Test_Routing_Ex5_LessonFinal"
-                        ComponentUnderTestParameters="@(new Dictionary<string, object>(){[nameof(Test_Routing_Ex5_LessonFinal.AllDataRouteParam)] = true, [nameof(Test_Routing_Ex5_LessonFinal.IdRouteParam)] = 2})"></TestRunner>
-        </SpacedContent>
-    </ChildContent>
 </MudExpansionPanelWithStoredState>
 </MudExpansionPanels>
 </SpacedContent>
