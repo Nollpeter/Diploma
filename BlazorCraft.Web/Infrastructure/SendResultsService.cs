@@ -1,12 +1,9 @@
-﻿using System.Net.Http.Headers;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
 using BlazorCraft.Web.Infrastructure.TestLogging;
 using BlazorCraft.Web.Pages._11_Exam;
-using Dropbox.Api;
 
 namespace BlazorCraft.Web.Infrastructure;
 
@@ -60,7 +57,6 @@ public class SendResultsService : ISendResultsService
             return string.Empty;
         }
 
-        // Your existing filename formatting logic
         string result = string.Join("", input.Split(Path.GetInvalidFileNameChars()));
         result = string.Join("", result.Split(' ').Select(word => char.ToUpper(word[0]) + (word.Length > 1 ? word.Substring(1) : "")));
 

@@ -80,8 +80,6 @@ public class Test_DependencyInjection_Ex_LessonFinal : ComponentTestBase<Depende
         var testContext = new TestContext();
         testContext.Services.AddEmployeeService();
         var contains = testContext.Services.FirstOrDefault(p => p.ServiceType == typeof(IEmployeeService) && p.ImplementationType == typeof(EmployeeService) && p.Lifetime == ServiceLifetime.Scoped) != null;
-            
-           // .Contains(new ServiceDescriptor(typeof(IEmployeeService), typeof(EmployeeService), ServiceLifetime.Scoped));
         if (!contains)
         {
             throw new TestRunException(

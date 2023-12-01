@@ -66,7 +66,6 @@ public class ExamTestLoggingRepository : IExamTestLoggingRepository
         // Get existing sessions
         var existing = await _localStorage.GetItemAsync<Dictionary<DateTime, string>>(StorageKey) ?? new Dictionary<DateTime, string>();
 
-        //int key = existing.Keys.Any() ? existing.Keys.Max() : 1;
         // Serialize our new session to a string so it can be stored
 
         var kvpList = results.Select(kvp =>
@@ -75,7 +74,6 @@ public class ExamTestLoggingRepository : IExamTestLoggingRepository
        
         var serialized = JsonSerializer.Serialize(kvpList);
 
-        //var serialized = JsonSerializer.Serialize(results);
 
         // Add new session to existing
         existing[DateTime.Now] = serialized;

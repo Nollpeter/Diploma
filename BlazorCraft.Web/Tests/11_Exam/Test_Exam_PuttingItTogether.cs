@@ -3,7 +3,6 @@ using BlazorCraft.Web.Shared._Exercises._11_Exam;
 using BlazorCraft.Web.Shared._Exercises.Exam;
 using Bunit;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.JSInterop;
 using MudBlazor;
 using NSubstitute;
 

@@ -3,7 +3,6 @@ using BlazorCraft.Web.Shared._Exercises._11_Exam;
 using BlazorCraft.Web.Shared._Exercises.Exam;
 using Bunit;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace BlazorCraft.Web.Tests._11_Exam;
 
@@ -80,9 +79,6 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
             throw new TestRunException($"{nameof(ExamEmployeeForm)} is not editable after render!");
         }
     }
-
-    //TODO PRecondition: EmployeeService injected?
-
 
     [Title("Employee added if employee is valid on " + nameof(ExamEmployeeForm) + " then new employee is added to EmployeeService")]
     [Description("This test verifies that when an employee is valid on " + nameof(ExamEmployeeForm) + " then a new employee is added to " + nameof(IExamEmployeeService) + " and the Closed event of " + nameof(ExamEmployeeCreate) + " is invoked.")]

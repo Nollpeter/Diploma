@@ -39,7 +39,7 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
     {
         TestContext testContext = new TestContext();
         Random r = new Random();
-        List<Employee> list = new List<Employee>()
+        List<Employee> list = new()
         {
             new(r.Next(1000), $"test_{r.Next(1000)}"),
             new(r.Next(1000), $"test_{r.Next(1000)}"),
@@ -74,7 +74,7 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
     {
         TestContext testContext = new TestContext();
         Random r = new Random();
-        List<Employee> list = new List<Employee>()
+        List<Employee> list = new()
         {
             new(r.Next(1000), $"test_{r.Next(1000)}"),
             new(r.Next(1000), $"test_{r.Next(1000)}"),

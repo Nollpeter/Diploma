@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Components;
 
 namespace BlazorCraft.Web.Tests._3_DataBinding;
 
-
-
 [TestForPage(typeof(ComponentDataBinding))]
 public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
 {
@@ -16,7 +14,7 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
 
     public const string EmployeeLastNameParamName = "LastName";
     public const string EmployeeLastNameChangedName = "LastNameChanged";
-    
+
     [ParameterDefinedTitle(EmployeeFirstNameParamName)]
     [ParameterDefinedDescription(EmployeeFirstNameParamName, typeof(string))]
     [Precondition]
@@ -24,9 +22,9 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
     {
         var component = new DataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
-		return Task.CompletedTask;
-	}
-    
+        return Task.CompletedTask;
+    }
+
     [ParameterDefinedTitle(EmployeeLastNameParamName)]
     [ParameterDefinedDescription(EmployeeLastNameParamName, typeof(string))]
     [Precondition]
@@ -34,9 +32,9 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
     {
         var component = new DataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
-		return Task.CompletedTask;
-	}
-    
+        return Task.CompletedTask;
+    }
+
     [ParameterDefinedTitle(EmployeeFirstNameChangedName)]
     [ParameterDefinedDescription(EmployeeFirstNameChangedName, typeof(EventCallback<string>))]
     [Precondition]
@@ -44,9 +42,9 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
     {
         var component = new DataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
-		return Task.CompletedTask;
-	}
-    
+        return Task.CompletedTask;
+    }
+
     [ParameterDefinedTitle(EmployeeLastNameChangedName)]
     [ParameterDefinedDescription(EmployeeLastNameChangedName, typeof(EventCallback<string>))]
     [Precondition]
@@ -54,8 +52,8 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
     {
         var component = new DataBinding_Ex1();
         ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
-		return Task.CompletedTask;
-	}
+        return Task.CompletedTask;
+    }
 
     [Title(EmployeeFirstNameParamName + " binding Consumer -> Component")]
     [Description("This test verifies that once the Consumer component changes the " + EmployeeFirstNameParamName +
@@ -78,8 +76,8 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
                 $"{EmployeeFirstNameParamName} is not bound properly, its value should be {firstName}, but it is instead {idValue}");
         }
 
-		return Task.CompletedTask;
-	}
+        return Task.CompletedTask;
+    }
 
     [Title(EmployeeFirstNameParamName + " binding Component -> Consumer")]
     [Description("This test verifies that once the Component changes the " + EmployeeFirstNameParamName +
@@ -90,37 +88,33 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
 
         string firstName = "Theodore";
 
-        EventCallback<string> idChanged = EventCallback.Factory.Create<string>(this, value =>
-        {
-            firstName = value;
-        });
+        EventCallback<string> idChanged = EventCallback.Factory.Create<string>(this, value => { firstName = value; });
 
         var renderedComponent = testContext.RenderComponent<DataBinding_Ex1>(
             ComponentParameter.CreateParameter(EmployeeFirstNameParamName, firstName),
             ComponentParameter.CreateParameter(EmployeeFirstNameChangedName, idChanged)
         );
-        
+
         var inputs = renderedComponent.FindAll("input").ToList();
-        
+
         var idValue = inputs[0].GetAttribute("value");
         if (idValue != firstName.ToString())
         {
             throw new TestRunException(
                 $"{EmployeeFirstNameParamName} is not bound properly, its value should be {firstName}, but it is instead {idValue}");
         }
-        
+
         var inputText = renderedComponent.FindAll("input");
         var changedValue = "Changed";
-        
-        await inputText[0].InputAsync(new ChangeEventArgs(){Value = changedValue});
+
+        await inputText[0].InputAsync(new ChangeEventArgs() { Value = changedValue });
         if (firstName != changedValue)
         {
             throw new TestRunException(
                 $"{EmployeeLastNameParamName} is not bound two way. Upon changing the value of the input, the change is not reflected. Are you calling NameChanged?");
         }
-        
     }
-    
+
     [Title(EmployeeLastNameParamName + " binding Consumer -> Component")]
     [Description("This test verifies that once the Consumer component changes the " + EmployeeLastNameParamName +
                  " it is reflected in the component ")]
@@ -142,8 +136,8 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
                 $"{EmployeeLastNameParamName} is not bound properly, its value should be {lastName}, but it is instead {nameValue}");
         }
 
-		return Task.CompletedTask;
-	}
+        return Task.CompletedTask;
+    }
 
     [Title(EmployeeLastNameParamName + " binding Component -> Consumer")]
     [Description("This test verifies that once the Component changes the " + EmployeeLastNameParamName +
@@ -154,10 +148,7 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
 
         string lastName = "Test";
 
-        EventCallback<string> nameChanged = EventCallback.Factory.Create<string>(this, n =>
-        {
-            lastName = n;
-        });
+        EventCallback<string> nameChanged = EventCallback.Factory.Create<string>(this, n => { lastName = n; });
 
         var renderedComponent = testContext.RenderComponent<DataBinding_Ex1>(
             ComponentParameter.CreateParameter(EmployeeLastNameParamName, lastName),
@@ -165,9 +156,9 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
         );
 
         var input = renderedComponent.Find(".employee-last-name");
-        
+
         var changedValue = "Changed value";
-        await input.InputAsync(new ChangeEventArgs(){Value = changedValue});
+        await input.InputAsync(new ChangeEventArgs() { Value = changedValue });
 
         if (lastName != changedValue)
         {
@@ -175,5 +166,4 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
                 $"{EmployeeLastNameParamName} is not bound two way. Upon changing the value of the input, the change is not reflected. Are you calling NameChanged?");
         }
     }
-
 }

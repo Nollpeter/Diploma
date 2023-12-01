@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text.RegularExpressions;
 using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Infrastructure.TestLogging;
@@ -256,7 +255,6 @@ public class TestRunnerService : ITestRunnerService
         TestRunSession initedSession = new TestRunSession(new Dictionary<TestDescriptor, TestRunState>());
         foreach (var grouping in session.GroupBy(p => p.Key.Split(".")[0]))
         {
-            //Console.WriteLine(grouping.Key);
             var testClass = GetTypeByName(grouping.Key) ?? throw new TypeLoadException(grouping.Key);
             var testClassInstance = _serviceProvider.GetRequiredService(testClass);
             foreach (var kvp in grouping)

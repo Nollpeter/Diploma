@@ -29,7 +29,7 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
     {
         TestContext testContext = new TestContext();
         Random r = new Random();
-        List<Employee> list = new List<Employee>()
+        List<Employee> list = new()
         {
             new(r.Next(1000), $"test_{r.Next(1000)}"),
             new(r.Next(1000), $"test_{r.Next(1000)}"),
@@ -63,7 +63,7 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
         TestContext testContext = new TestContext();
         Random r = new Random();
         var employee1 = new Employee(r.Next(1000), $"test_{r.Next(1000)}");
-        List<Employee> list = new List<Employee>()
+        List<Employee> list = new()
         {
             employee1,
             new(r.Next(1000), $"test_{r.Next(1000)}"),

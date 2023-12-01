@@ -16,7 +16,7 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
     
     
     [Title(TitleFragmentName+" fragment defined")]
-    [Infrastructure.Attributes.Description("This test verifies that the "+TitleFragmentName+" has been defined on the component")]
+    [Description("This test verifies that the "+TitleFragmentName+" has been defined on the component")]
     [Precondition]
     public Task GivenRenderFragments_Ex1_WhenDeclared_ThenTitleFragmentIsDefined()
     {
@@ -26,7 +26,7 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
 	}
     
     [Title(DetailsFragmentName+" fragment defined")]
-    [Infrastructure.Attributes.Description("This test verifies that the "+DetailsFragmentName+" has been defined on the component")]
+    [Description("This test verifies that the "+DetailsFragmentName+" has been defined on the component")]
     [Precondition]
     public Task GivenRenderFragments_Ex1_WhenDeclared_ThenDetailsFragmentIsDefined()
     {
@@ -36,7 +36,7 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
 	}
     
     [Title(TitleFragmentName + " is rendered")]
-    [Infrastructure.Attributes.Description("This test verifies that the "+TitleFragmentName+" is rendered for the component without any interaction")]
+    [Description("This test verifies that the "+TitleFragmentName+" is rendered for the component without any interaction")]
     public Task GivenTitleFragment_WhenComponentRendered_ThenTitleFragmentIsRendered()
     {
         TestContext testContext = new TestContext();
@@ -56,7 +56,7 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
 	}
     
     [Title("Button click renders "+DetailsFragmentName)]
-    [Infrastructure.Attributes.Description("This test verifies that the "+DetailsFragmentName+" is rendered upon clicking the button")]
+    [Description("This test verifies that the "+DetailsFragmentName+" is rendered upon clicking the button")]
     public Task GivenButtonClick_WhenRendered_ThenDetailsFragmentIsRendered()
     {
         TestContext testContext = new TestContext();
@@ -85,7 +85,7 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
 
 
     [Title("Second Button click hides "+DetailsFragmentName)]
-    [Infrastructure.Attributes.Description("This test verifies that the "+DetailsFragmentName+" is hidden upon clicking the button a second time")]
+    [Description("This test verifies that the "+DetailsFragmentName+" is hidden upon clicking the button a second time")]
     public Task GivenSecondButtonClick_WhenRendered_ThenDetailsFragmentIsHidden()
     {
         TestContext testContext = new TestContext();

@@ -28,7 +28,7 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
         TestContext testContext = new TestContext();
 
         var r = new Random();
-        List<Employee> employees = new List<Employee>()
+        List<Employee> employees = new()
         {
             new Employee(r.Next(1000), $"test_{r.Next(1000)}",$"test_{r.Next(1000)}",$"test_{r.Next(1000)}"),
             new Employee(r.Next(1000), $"test_{r.Next(1000)}",$"test_{r.Next(1000)}",$"test_{r.Next(1000)}")
@@ -54,7 +54,7 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
         TestContext testContext = new TestContext();
 
         var r = new Random();
-        List<Employee> employees = new List<Employee>()
+        List<Employee> employees = new()
         {
             new Employee(r.Next(1000), $"test_{r.Next(1000)}",$"test_{r.Next(1000)}",$"test_{r.Next(1000)}"),
             new Employee(r.Next(1000), $"test_{r.Next(1000)}",$"test_{r.Next(1000)}",$"test_{r.Next(1000)}")
