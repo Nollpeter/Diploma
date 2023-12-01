@@ -3,6 +3,7 @@ using BlazorCraft.Web.Shared._Exercises._5_RenderFragments;
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.AspNetCore.Components.Web;
 using Employee = BlazorCraft.Web.Shared._Exercises._5_RenderFragments .RenderFragments_Ex2.Employee;
 
 
@@ -66,7 +67,7 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
     
     [Title("Button click renders "+DetailsFragmentName)]
     [Description("This test verifies that the "+DetailsFragmentName+" is rendered upon clicking the button")]
-    public Task GivenButtonClick_WhenRendered_ThenDetailsFragmentIsRendered()
+    public async Task GivenButtonClick_WhenRendered_ThenDetailsFragmentIsRendered()
     {
         TestContext testContext = new TestContext();
         
@@ -87,18 +88,17 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
             });
 
         var toggleButton = renderedComponent.Find($".toggle");
-        toggleButton.Click();
+        await toggleButton.ClickAsync(new MouseEventArgs());
         
         var element = renderedComponent.Find(".title").InnerHtml;
         element.MarkupMatches($"<p>{titleContent}</p>");
         var innerHtml = renderedComponent.Find(".details").InnerHtml;
         innerHtml.MarkupMatches($"<p>{detailsContent(employee)}</p>");
-		return Task.CompletedTask;
 	}
 
     [Title("Second Button click hides "+DetailsFragmentName)]
     [Description("This test verifies that the "+DetailsFragmentName+" is hidden upon clicking the button a second time")]
-    public Task GivenSecondButtonClick_WhenRendered_ThenDetailsFragmentIsHidden()
+    public async Task GivenSecondButtonClick_WhenRendered_ThenDetailsFragmentIsHidden()
     {
         TestContext testContext = new TestContext();
         
@@ -118,20 +118,19 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
             });
 
         var toggleButton = renderedComponent.Find($".toggle");
-        toggleButton.Click();
+        await toggleButton.ClickAsync(new MouseEventArgs());
         
         var element = renderedComponent.Find(".title").InnerHtml;
         element.MarkupMatches($"<p>{titleContent}</p>");
         var innerHtml = renderedComponent.Find(".details").InnerHtml;
         innerHtml.MarkupMatches($"<p>{detailsContent(employee)}</p>");
 
-        toggleButton.Click();
+        await toggleButton.ClickAsync(new MouseEventArgs());
         
         var titleResult = renderedComponent.Find(".title").InnerHtml;
         titleResult.MarkupMatches($"<p>{titleContent}</p>");
         var detailsResult = renderedComponent.Find(".details").InnerHtml;
         detailsResult.MarkupMatches(string.Empty, "The details content is not hidden after second click");
-		return Task.CompletedTask;
 	}
 
     private static RenderFragment<Employee> CreateDetailsFragment(Func<Employee, string> detailsContent)

@@ -3,6 +3,7 @@ using BlazorCraft.Web.Pages._2_ComponentEvents;
 using BlazorCraft.Web.Shared._Exercises._2_ComponentEvents;
 using Bunit;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Employee = BlazorCraft.Web.Shared._Exercises._2_ComponentEvents.ComponentEvents_Ex1_EventCallBack.Employee;
 
 namespace BlazorCraft.Web.Tests._2_ComponentEvents;
@@ -68,7 +69,7 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
 
     [Title(EventCallBackPropertyName + " event is called upon clicking on delete button")]
     [Description("This test verifies that upon clicking on the delete button for a row, the event is actually called")]
-    public Task GivenDeleteButton_WhenClicked_ThenEventCallBackTriggered()
+    public async Task GivenDeleteButton_WhenClicked_ThenEventCallBackTriggered()
     {
         TestContext testContext = new TestContext();
         Random r = new Random();
@@ -92,7 +93,7 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
             throw new TestRunException("There is no delete button!");
         }
 
-        buttons.First().Click();
+        await buttons.First().ClickAsync(new MouseEventArgs());
 
         if (calledEmployee == null)
         {
@@ -104,6 +105,5 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
             throw new TestRunException(EventCallBackPropertyName + " was called but not with the correct employee");
         }
 
-        return Task.CompletedTask;
     }
 }

@@ -3,6 +3,7 @@ using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Pages._1_Components_Introduction;
 using BlazorCraft.Web.Shared._Exercises._1_Components_Introduction;
 using Bunit;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace BlazorCraft.Web.Tests._1_Components_Introduction;
 
@@ -26,7 +27,7 @@ public class Test_Components_Introduction_Ex_LessonFinal : ComponentTestBase<Com
 
     [Title("List is hidden by default")]
     [Description("This test verifies that by default, the List is hidden in its initial state")]
-    public Task Test2()
+    public Task GivenInitialComponentState_WhenRendered_ThenListIsHidden()
     {
         TestContext testContext = new TestContext();
         Random r = new Random();
@@ -41,7 +42,7 @@ public class Test_Components_Introduction_Ex_LessonFinal : ComponentTestBase<Com
     
     [Title("Button click renders list")]
     [Description("This test verifies that clicking on the \"Click me\" button, the list is rendered")]
-    public Task GivenComponentsIntroductionExercise_WhenButtonClicked_ThenListRenders()
+    public async Task GivenComponentsIntroductionExercise_WhenButtonClicked_ThenListRenders()
     {
         var component = new Components_Introduction_Ex_LessonFinal();
         ValidateComponentProperty(component, NumbersParameterName, typeof(List<int>));
@@ -52,13 +53,12 @@ public class Test_Components_Introduction_Ex_LessonFinal : ComponentTestBase<Com
         var renderedComponent = testContext.RenderComponent<Components_Introduction_Ex_LessonFinal>(
             ComponentParameter.CreateParameter(NumbersParameterName, list));
 
-        renderedComponent.Find(".btn").Click();
+        await renderedComponent.Find(".btn").ClickAsync(new MouseEventArgs());
         
         var innerHtml = renderedComponent.Find(".ex-container").InnerHtml;
         innerHtml.MarkupMatches($"<p>parameter value: {list[0]}</p>"+
                                 $"<p>parameter value: {list[1]}</p>"+
                                 $"<p>parameter value: {list[2]}</p>");
 
-		return Task.CompletedTask;
 	}
 }

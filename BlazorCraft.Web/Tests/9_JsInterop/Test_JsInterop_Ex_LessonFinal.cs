@@ -115,7 +115,6 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
         {
             throw new TestRunException(
                 "Error while binding the property Employees to the List component, you probably need to define your markup so that it only renders the list component once employees are set");
-            //TODO Ezt megoldani úgy, hogy specifikus exceptiont dobjunk erre és arra lehessen egy hintet adni, hogy kell az _isInitialized
         }
         
     }

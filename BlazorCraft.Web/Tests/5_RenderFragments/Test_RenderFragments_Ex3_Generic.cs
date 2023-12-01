@@ -3,6 +3,7 @@ using BlazorCraft.Web.Shared._Exercises._5_RenderFragments;
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.AspNetCore.Components.Web;
 using Employee = BlazorCraft.Web.Shared._Exercises._5_RenderFragments.RenderFragments_Ex2.Employee;
 
 namespace BlazorCraft.Web.Tests._5_RenderFragments;
@@ -55,7 +56,7 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
 
     [Title("Button click renders " + ObjectToRenderParamName)]
     [Description("This test verifies that the " + ObjectToRenderParamName + " is rendered upon clicking the button")]
-    public Task GivenButtonClick_WhenRendered_ThenObjectToRenderParamIsRendered()
+    public async Task GivenButtonClick_WhenRendered_ThenObjectToRenderParamIsRendered()
     {
         TestContext testContext = new TestContext();
 
@@ -79,19 +80,18 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
             });
 
         var toggleButton = renderedComponent.Find($".toggle");
-        toggleButton.Click();
+        await toggleButton.ClickAsync(new MouseEventArgs());
 
         var element = renderedComponent.Find(".title").InnerHtml;
         element.MarkupMatches($"<p>{titleContent}</p>");
         var innerHtml = renderedComponent.Find(".details").InnerHtml;
         innerHtml.MarkupMatches($"{objectToRenderContent}");
-		return Task.CompletedTask;
 	}
 
     [Title("Second Button click hides " + DetailsFragmentName)]
     [Description("This test verifies that the " + DetailsFragmentName +
                  " is hidden upon clicking the button a second time")]
-    public Task GivenSecondButtonClick_WhenRendered_ThenDetailsFragmentIsHidden()
+    public async Task GivenSecondButtonClick_WhenRendered_ThenDetailsFragmentIsHidden()
     {
         TestContext testContext = new TestContext();
 
@@ -114,27 +114,26 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
             });
 
         var toggleButton = renderedComponent.Find($".toggle");
-        toggleButton.Click();
+        await toggleButton.ClickAsync(new MouseEventArgs());
 
         var element = renderedComponent.Find(".title").InnerHtml;
         element.MarkupMatches($"<p>{titleContent}</p>");
         var innerHtml = renderedComponent.Find(".details").InnerHtml;
         innerHtml.MarkupMatches(objectToRenderContent);
 
-        toggleButton.Click();
+        await toggleButton.ClickAsync(new MouseEventArgs());
 
         var titleResult = renderedComponent.Find(".title").InnerHtml;
         titleResult.MarkupMatches($"<p>{titleContent}</p>");
         var detailsResult = renderedComponent.Find(".details").InnerHtml;
         detailsResult.MarkupMatches(string.Empty, "The details content is not hidden after second click");
-		return Task.CompletedTask;
 	}
 
     private record SecondType(int Id, string Value);
 
     [Title("Rendering with different type")]
     [Description("This test verifies that the " + ObjectToRenderParamName + " is rendered even if it is not of the type Employee")]
-    public Task GivenObjectType_WhenRendered_ThenObjectRegardlessOfTypeIsRendered()
+    public async Task GivenObjectType_WhenRendered_ThenObjectRegardlessOfTypeIsRendered()
     {
         var renderFragmentsEx2 = new RenderFragments_Ex3<SecondType>();
         ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
@@ -159,13 +158,12 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
             });
 
         var toggleButton = renderedComponent.Find($".toggle");
-        toggleButton.Click();
+        await toggleButton.ClickAsync(new MouseEventArgs());
 
         var element = renderedComponent.Find(".title").InnerHtml;
         element.MarkupMatches($"<p>{titleContent}</p>");
         var innerHtml = renderedComponent.Find(".details").InnerHtml;
         innerHtml.MarkupMatches($"{objectToRenderContent}");
-		return Task.CompletedTask;
 	}
 
     private static RenderFragment<Employee> CreateDetailsFragment(Func<Employee, string> objectToRenderContent)

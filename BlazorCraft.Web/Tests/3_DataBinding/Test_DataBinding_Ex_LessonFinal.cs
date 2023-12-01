@@ -3,6 +3,7 @@ using BlazorCraft.Web.Pages._3_DataBinding;
 using BlazorCraft.Web.Shared._Exercises._3_DataBinding;
 using Bunit;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Employee = BlazorCraft.Web.Shared._Exercises._3_DataBinding.DataBinding_Ex_LessonFinal.Employee;
 
 namespace BlazorCraft.Web.Tests._3_DataBinding;
@@ -43,7 +44,7 @@ public class Test_DataBinding_Ex_LessonFinal : ComponentTestBase<DataBinding_Ex_
 
     [Title("Clicking Edit button reveals editor")]
     [Description("This test verifies that clicking the edit button reveals the editor for the employee")]
-    public Task GivenEditButton_WhenClicked_ThenEmployeeEditorIsRevealed()
+    public async Task GivenEditButton_WhenClicked_ThenEmployeeEditorIsRevealed()
     {
         TestContext testContext = new TestContext();
         List<Employee> employees = new()
@@ -61,11 +62,10 @@ public class Test_DataBinding_Ex_LessonFinal : ComponentTestBase<DataBinding_Ex_
             throw new TestRunException("Unexpected amount of buttons rendered");
         }
 
-        buttons[0].Click();
+        await buttons[0].ClickAsync(new MouseEventArgs());
 
         renderedComponent.Find(".employee-first-name");
         renderedComponent.Find(".employee-last-name");
-        return Task.CompletedTask;
     }
 
     [Title("Editor change reflected in table")]
@@ -88,7 +88,7 @@ public class Test_DataBinding_Ex_LessonFinal : ComponentTestBase<DataBinding_Ex_
             throw new TestRunException("Unexpected amount of buttons rendered");
         }
 
-        buttons[0].Click();
+        await buttons[0].ClickAsync(new MouseEventArgs());
 
         var firstNameInput = renderedComponent.Find(".employee-first-name");
         var lastNameInput = renderedComponent.Find(".employee-last-name");

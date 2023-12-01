@@ -2,6 +2,7 @@
 using BlazorCraft.Web.Pages._2_ComponentEvents;
 using BlazorCraft.Web.Shared._Exercises._2_ComponentEvents;
 using Bunit;
+using Microsoft.AspNetCore.Components.Web;
 using Employee = BlazorCraft.Web.Shared._Exercises._2_ComponentEvents.ComponentEvents_Ex1_EventCallBack.Employee;
 
 
@@ -23,7 +24,7 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
 
     [Title("Employee is deleted upon clicking delete")]
     [Description("This test verifies that the employee is deleted from " + EmployeesParameterName + " upon clicking delete")]
-    public Task GivenComponentEvents_ExLessonFinal_WhenDeleteClicked_ThenEmployeeIsDeleted()
+    public async Task GivenComponentEvents_ExLessonFinal_WhenDeleteClicked_ThenEmployeeIsDeleted()
     {
         TestContext testContext = new TestContext();
         Random r = new Random();
@@ -44,19 +45,17 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
             throw new TestRunException("There is no delete button!");
         }
 
-        buttons.First().Click();
+        await buttons.First().ClickAsync(new MouseEventArgs());
 
         if (list.Count > 1)
         {
             throw new TestRunException("Employee was not deleted from the grid upon clicking delete button");
         }
-
-        return Task.CompletedTask;
     }
 
     [Title("Deleted employees modified upon clicking delete")]
     [Description("This test verifies that the employee is deleted from " + EmployeesParameterName + " upon clicking delete and deleted employees are modified")]
-    public Task GivenComponentEvents_ExLessonFinal_WhenDeleteClicked_ThenEmployeeIsDeletedAndDeletedEmployeesModified()
+    public async Task GivenComponentEvents_ExLessonFinal_WhenDeleteClicked_ThenEmployeeIsDeletedAndDeletedEmployeesModified()
     {
         TestContext testContext = new TestContext();
         Random r = new Random();
@@ -77,10 +76,9 @@ public class Test_Components_Events_ExLessonFinal : ComponentTestBase<ComponentE
             throw new TestRunException("There is no delete button!");
         }
 
-        buttons.First().Click();
+        await buttons.First().ClickAsync(new MouseEventArgs());
 
         var innerHtml = renderedComponent.Find(".deleted-employees ul");
         innerHtml.MarkupMatches($"<ul><li>{employee1.Name}</li></ul>");
-        return Task.CompletedTask;
     }
 }

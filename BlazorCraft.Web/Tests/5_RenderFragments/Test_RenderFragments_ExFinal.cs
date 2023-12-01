@@ -1,6 +1,7 @@
 ﻿using BlazorCraft.Web.Infrastructure.Attributes;
 using BlazorCraft.Web.Shared._Exercises._5_RenderFragments;
 using Bunit;
+using Microsoft.AspNetCore.Components.Web;
 using Employee = BlazorCraft.Web.Shared._Exercises._5_RenderFragments.RenderFragments_LessonFinal.Employee;
 
 namespace BlazorCraft.Web.Tests._5_RenderFragments;
@@ -48,7 +49,7 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
     
     [Title("Table view renders properly")]
     [Description("This test validates if the table view for the component renders properly")]
-    public Task GivenTableView_WhenComponentRendered_ThenTableViewRendersProperly()
+    public async Task GivenTableView_WhenComponentRendered_ThenTableViewRendersProperly()
     {
         TestContext testContext = new TestContext();
 
@@ -60,7 +61,7 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
         };
 
         var renderedComponent = testContext.RenderComponent<RenderFragments_LessonFinal>(ComponentParameter.CreateParameter(EmployeesParamName, employees));
-        renderedComponent.Find(".table-view").Click();
+        await renderedComponent.Find(".table-view").ClickAsync(new MouseEventArgs());
         
         var element = renderedComponent.Find(ContainerName).InnerHtml;
         element.MarkupMatches("<h2>Employees</h2>" +
@@ -73,7 +74,6 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
                               "</table>"
         );
 
-		return Task.CompletedTask;
 	}
     
 }
