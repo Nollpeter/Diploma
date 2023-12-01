@@ -44,11 +44,29 @@ Everything else that you need to know regarding the application will be describe
 
 Happy coding and learning! :) 
 
+
+
 ## Prerequisites
+
 To run this project, you will need:
 - .NET 7.0 Runtime
 - An IDE, Visual Studio or JetBrains Rider
+- Windows 10 version 1607 (Anniversary Update) or later.
+- Administrative privileges on your machine.
 
+### Enable Long Path Support in Windows
+
+This PowerShell script is designed to enable the long path support in Windows, allowing paths longer than the standard 260-character limit. This can be particularly useful for developers and users who work with deeply nested files and directories.
+
+1. **Open PowerShell as Administrator**:
+    - Right-click the Start button.
+    - Select “Windows PowerShell (Admin)”.
+
+2. **Run the Script**:
+    - Copy the script below and paste it into the PowerShell window.
+    - Press Enter to execute the script.
+
+   ```powershell
 ## Running the Project
 
 ---
