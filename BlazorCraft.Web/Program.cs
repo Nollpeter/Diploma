@@ -15,4 +15,5 @@ builder.Services.AddBlazorCraftServices();
 builder.Services.AddBlazoredLocalStorage();
 
 
+
 await builder.Build().RunAsync();

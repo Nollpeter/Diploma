@@ -4,6 +4,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using BlazorCraft.Web.Infrastructure.TestLogging;
 using BlazorCraft.Web.Pages._11_Exam;
 using Dropbox.Api;
 
@@ -16,9 +17,9 @@ public interface ISendResultsService
 
 public class SendResultsService : ISendResultsService
 {
-    private ITestLoggingRepository _loggingRepository;
+    private IExamTestLoggingRepository _loggingRepository;
 
-    public SendResultsService(ITestLoggingRepository loggingRepository)
+    public SendResultsService(IExamTestLoggingRepository loggingRepository)
     {
         _loggingRepository = loggingRepository;
     }
@@ -26,7 +27,7 @@ public class SendResultsService : ISendResultsService
     public async Task SendResults(Questionnaire.QuestionnaireModel model)
     {
         // Serialize the results
-        var dictionary = await _loggingRepository.GetResults();
+        var dictionary = await _loggingRepository.LoadTestStates();
         var result = new
         {
             Feedback = model,
@@ -38,7 +39,7 @@ public class SendResultsService : ISendResultsService
         byte[] byteArray = Encoding.UTF8.GetBytes(serialize);
         
         // Generate filename for the blob
-        string fileName = $"{FormatStringForFilename(model.Name!)}{DateTime.Now:yyyyMMddhhmmssff}.json";
+        string fileName = $"{FormatStringForFilename($"{Constants.VERSION}_{model.Name!}")}{DateTime.Now:yyyyMMddhhmmssff}.json";
 
         using var memoryStream = new MemoryStream(byteArray);
         // Upload to Azure Blob Storage
@@ -49,7 +50,7 @@ public class SendResultsService : ISendResultsService
     {
         var blobServiceClient = new BlobServiceClient(new Uri("https://diplomamunkanpz.blob.core.windows.net"), new AzureSasCredential("si=everything&sv=2022-11-02&sr=c&sig=RlH3%2FjrzZYoH3MtQfbNLOA5N1wwqO8j8st164Hma3Kw%3D"));
         var blobContainerClient = blobServiceClient.GetBlobContainerClient("results");
-        var response = await blobContainerClient.UploadBlobAsync(fileName, fileData);
+        await blobContainerClient.UploadBlobAsync(fileName, fileData);
     }
 
     private string FormatStringForFilename(string input)

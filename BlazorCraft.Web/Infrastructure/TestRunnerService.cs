@@ -1,6 +1,8 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using BlazorCraft.Web.Infrastructure.Attributes;
+using BlazorCraft.Web.Infrastructure.TestLogging;
 using BlazorCraft.Web.Pages._11_Exam;
 using BlazorCraft.Web.Tests;
 using Bunit;
@@ -19,6 +21,9 @@ public interface ITestRunnerService
     TestRunSession GetSessionForTestClass(Type testClass);
 
     bool ExamCompleted();
+    TestRunSession TestsSession { get; }
+
+	Task Initialize();
 }
 
 public enum TestRunState
@@ -84,40 +89,67 @@ public record TestRunStateEventArgs(TestDescriptor TestDescriptor, TestRunResult
     TestRunState TestRunState);
 
 public record TestDescriptor(Func<Task> Method, string Title, string Description, string? Hint,
-    Type PageClass, Type TestClass, bool IsPrecondition, ComponentTestBase testClassInstance)
+							 Type PageClass, Type TestClass, bool IsPrecondition, ComponentTestBase testClassInstance, string Id)
 {
-    public bool IsExamTest => TestClass.Name.Contains("Exam");
-    public override int GetHashCode() => Title.GetHashCode();
+	public bool IsExamTest => TestClass.Name.Contains("Exam");
+	public override int GetHashCode()
+    {
+        return Id.GetHashCode();
+    }
+
+    public virtual bool Equals(TestDescriptor? other)
+    {
+        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return Id == other.Id;
+    }
 
     public string ToShortString()
-    {
-        return $"Title: {Title}, PageClass: {PageClass.Name}, TestClass: {TestClass.Name}, IsPrecondition: {IsPrecondition}";
-    }
+	{
+		return $"Title: {Title}, PageClass: {PageClass.Name}, TestClass: {TestClass.Name}, IsPrecondition: {IsPrecondition}";
+	}
 }
 
 public class TestRunnerService : ITestRunnerService
 {
-
-    private TestRunSession _testsSession;
+	public TestRunSession TestsSession { get; private set; } = null!;
     private Dictionary<TestDescriptor, TestRunResult?> _testRunResults;
     private IServiceProvider _serviceProvider;
     private readonly ITestLoggerService _testLoggerService;
-    public TestRunnerService(IServiceProvider serviceProvider)
+	private readonly IAllTestLoggingRepository _allTestStateLoggingRepository;
+    public TestRunnerService(IServiceProvider serviceProvider, IAllTestLoggingRepository allTestStateLoggingRepository)
     {
         _serviceProvider = serviceProvider;
-        _testLoggerService = serviceProvider.GetRequiredService<ITestLoggerService>();
-        _testsSession = new TestRunSession(GetEveryTest().ToDictionary(p => p.Key, p => TestRunState.NotStarted));
+		_allTestStateLoggingRepository = allTestStateLoggingRepository;
+		_testLoggerService = serviceProvider.GetRequiredService<ITestLoggerService>();
         _testRunResults = GetEveryTest();
+    }
+
+	public async Task Initialize()
+    {
+        var loadLastSession = await _allTestStateLoggingRepository.LoadTestStates();
+        if (loadLastSession != null)
+        {
+            TestsSession = InitTestDescriptorMethods(loadLastSession);
+            //TODO: Save and load Test results as well
+            _testRunResults = GetEveryTest();
+        }
+        else
+        {
+            var testRunResults = GetEveryTest();
+            TestsSession = new TestRunSession(testRunResults.ToDictionary(p => p.Key, p => TestRunState.NotStarted));
+            _testRunResults = testRunResults;
+        }
     }
     
     
     public async Task RunTests(IEnumerable<KeyValuePair<TestDescriptor,TestRunResult?>> tests)
     {
-        await using (_testLoggerService.CreateLoggingSession(this, tests.Select(p => p.Key).ToArray()))
+        await using (_testLoggerService.CreateLoggingSession(this))
         {
             foreach (var test in tests)
             {
-                OnTestStateChanged(new TestRunStateEventArgs(test.Key, null, _testsSession, TestRunState.Running));
+                OnTestStateChanged(new TestRunStateEventArgs(test.Key, null, TestsSession, TestRunState.Running));
             }
 
             //Let the UI update
@@ -125,7 +157,7 @@ public class TestRunnerService : ITestRunnerService
 
             foreach (var test in tests)
             {
-                await RunTest(test.Key, _testsSession);
+                await RunTest(test.Key, TestsSession);
 
                 //Let the UI update
                 await Task.Delay(1);
@@ -207,8 +239,51 @@ public class TestRunnerService : ITestRunnerService
         _testRunResults[eventArgs.TestDescriptor] = eventArgs.TestRunResult;
         TestStateChanged?.Invoke(this, eventArgs);
     }
+    public static Type? GetTypeByName(string typeName)
+    {
+        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            foreach (var type in assembly.GetTypes())
+            {
+                if (type.Name == typeName)
+                    return type;
+            }
+        }
+        return null;
+    }
+    public TestRunSession InitTestDescriptorMethods(IDictionary<string, TestRunState> session)
+    {
+        TestRunSession initedSession = new TestRunSession(new Dictionary<TestDescriptor, TestRunState>());
+        foreach (var grouping in session.GroupBy(p => p.Key.Split(".")[0]))
+        {
+            //Console.WriteLine(grouping.Key);
+            var testClass = GetTypeByName(grouping.Key) ?? throw new TypeLoadException(grouping.Key);
+            var testClassInstance = _serviceProvider.GetRequiredService(testClass);
+            foreach (var kvp in grouping)
+            {
+                var strings = kvp.Key.Split(".");
+                var methodName = strings[1];
+                var methodInfo = testClass.GetMethod(methodName,BindingFlags.Instance | BindingFlags.Public);
+                if (methodInfo == null)
+                {
+                    continue;
+                }
+                
+                var title = methodInfo.GetCustomAttribute<TitleAttribute>()?.Title ?? string.Empty;
+                var description = methodInfo.GetCustomAttribute<DescriptionAttribute>()?.Description ?? string.Empty;
+                var hint = methodInfo.GetCustomAttribute<HintAttribute>()?.Hint;
+                var isPrecondition = methodInfo.GetCustomAttribute<PreconditionAttribute>() != null;
+                var pageClass = testClass.GetCustomAttribute<TestForPageAttribute>()!.Page;
+                var func = (Func<Task>)Delegate.CreateDelegate(typeof(Func<Task>),
+                    testClassInstance, methodInfo);
+                TestDescriptor testDescriptor = new TestDescriptor(func, title, description, hint, pageClass, testClass, isPrecondition, (ComponentTestBase)testClassInstance, kvp.Key);
+                initedSession[testDescriptor] = kvp.Value;
+            }
+        }
 
-
+        return initedSession;
+    }
+    
     private Dictionary<TestDescriptor, TestRunResult?> GetEveryTest()
     {
         Dictionary<TestDescriptor, TestRunResult?> resultList = new();
@@ -234,9 +309,10 @@ public class TestRunnerService : ITestRunnerService
                     
                     var func = (Func<Task>)Delegate.CreateDelegate(typeof(Func<Task>),
                         testClassInstance, methodInfo);
+                    string id = type.Name+"."+methodInfo.Name;
                     resultList.Add(
                         new(func, titleAttribute?.Title ?? string.Empty, descriptionAttribute?.Description ?? string.Empty, hintAttribute?.Hint,
-                            testForPageAttribute.Page, type, isPrecondition, (ComponentTestBase)testClassInstance), null);
+                            testForPageAttribute.Page, type, isPrecondition, (ComponentTestBase)testClassInstance, id), null);
                 }
             }
         }
@@ -250,17 +326,19 @@ public class TestRunnerService : ITestRunnerService
 
     public TestRunSession GetSessionForPage(Type pageType)
     {
-        return new(_testsSession.Where(p => p.Key.PageClass == pageType).ToDictionary(p => p.Key, p => p.Value));
+        return new(TestsSession.Where(p => p.Key.PageClass == pageType).ToDictionary(p => p.Key, p => p.Value));
     }
 
     public TestRunSession GetSessionForTestClass(Type testClass)
     {
-        return new(_testsSession.Where(p => p.Key.TestClass == testClass).ToDictionary(p => p.Key, p => p.Value));
+		var sessionForTestClass = new TestRunSession(TestsSession.Where(p => p.Key.TestClass == testClass).ToDictionary(p => p.Key, p => p.Value));
+        
+		return sessionForTestClass;
     }
 
     public bool ExamCompleted()
     {
-        return _testsSession.Where(p => p.Key.PageClass == typeof(Exam)).All(p => p.Value == TestRunState.Successful);
+        return TestsSession.Where(p => p.Key.PageClass == typeof(Exam)).All(p => p.Value == TestRunState.Successful);
     }
 
     public event EventHandler<TestRunStateEventArgs>? TestStateChanged;

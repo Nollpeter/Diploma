@@ -33,13 +33,13 @@
             <div class="d-flex justify-content-between align-items-center ">
                 <div class="d-flex justify-content-start align-items-center gap-3">
                     <MudButton Color="Color.Primary" Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.PlayArrow" IconColor="Color.Success" OnClick="() => TestRunnerService.RunAllInTestClass(typeof(TTestClass))">Run all</MudButton>
-                    <MudText Typo="Typo.body1">Successful: <strong>@_testDescriptors.Count(p => p.Value is { IsSuccessful: true })/@_testDescriptors.Count</strong></MudText>
-                    <MudText Typo="Typo.body1">Failed: <strong>@_testDescriptors.Count(p => p.Value is { IsSuccessful: false })/@_testDescriptors.Count</strong></MudText>
-                    <MudText Typo="Typo.body1">Not run: <strong>@_testDescriptors.Count(p => p.Value is null)/@_testDescriptors.Count</strong></MudText>
+                    <MudText Typo="Typo.body1">Successful: <strong>@_session.Count(p => p.Value ==TestRunState.NotStarted)/@_session.Count</strong></MudText>
+                    <MudText Typo="Typo.body1">Failed: <strong>@_session.Count(p => p.Value == TestRunState.Error)/@_session.Count</strong></MudText>
+                    <MudText Typo="Typo.body1">Not run: <strong>@_session.Count(p => p.Value == TestRunState.Successful)/@_session.Count</strong></MudText>
                 </div>
                 <MudText Typo="Typo.body1" Class="text-end">Component under test: <strong>@TestComponentName</strong>.razor</MudText>
             </div>
-            <MudTreeView Items="_testDescriptors.ToHashSet()" Hover="true">
+            <MudTreeView Items="_testResults.ToHashSet()" Hover="true">
                 <ItemTemplate Context="test">
                     <MudTreeViewItem T="KeyValuePair<TestDescriptor, TestRunResult?>">
                         <BodyContent>
@@ -110,7 +110,7 @@
                     </MudTreeViewItem>
                 </ItemTemplate>
             </MudTreeView>
-            @if (_testDescriptors.All(p => p.Value?.IsSuccessful ?? false) && ComponentUnderTestParameters != null)
+            @if (_testResults.All(p => p.Value?.IsSuccessful ?? false) && ComponentUnderTestParameters != null)
             {
                 <MudPaper Elevation="0" Class="p-2 subtle-border">
                     <div class="d-flex">
@@ -131,8 +131,8 @@ else
 
 @code {
 
-    Dictionary<TestDescriptor, TestRunResult?> _testDescriptors = null!;
-    TestRunSession _session => TestRunnerService.GetSessionForTestClass(typeof(TTestClass));
+    Dictionary<TestDescriptor, TestRunResult?> _testResults = null!;
+    TestRunSession _session = null!;
     bool _isInitialized = false;
 
     [Parameter]
@@ -164,13 +164,14 @@ else
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        _testDescriptors = TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
+        _testResults = TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
+        _session = TestRunnerService.GetSessionForTestClass(typeof(TTestClass));
         _isInitialized = true;
         StateHasChanged();
 
         TestRunnerService.TestStateChanged += (sender, args) =>
         {
-            _testDescriptors = TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
+            _testResults = TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
             StateHasChanged();
         };
     }
