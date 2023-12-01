@@ -9,17 +9,9 @@
         </tr>
         </thead>
         <tbody>
+        
         @* Add your code here *@
-        @foreach (var emp in Employees)
-        {
-            <tr>
-                <td>@emp.Id</td>
-                <td>@emp.Name</td>
-                <td>
-                    <button class="btn btn-primary" @onclick="async () => { await ListItemDeleted.InvokeAsync(emp); }">Delete</button>
-                </td>
-            </tr>
-        }
+        @* For the button, you can use this template: <button class="btn btn-primary">Delete</button>*@
         </tbody>
     </table>
     
@@ -29,8 +21,5 @@
 @code {
 
     public record Employee(int Id, string Name);
-    
-    [Parameter] public List<Employee> Employees { get; set; } = null!;
-
-    [Parameter] public EventCallback<Employee> ListItemDeleted { get; set; }
+    @* Create parameters here *@
 }

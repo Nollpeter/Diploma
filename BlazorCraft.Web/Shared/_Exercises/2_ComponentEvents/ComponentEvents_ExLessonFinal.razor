@@ -1,26 +1,19 @@
-﻿<div class="grid-container">
-    <ComponentEvents_Ex1_EventCallBack Employees="Employees" ListItemDeleted="@((emp) => { Employees.Remove(emp); _deletedEmployees.Add(emp);})"></ComponentEvents_Ex1_EventCallBack>
+﻿@using Employee = ComponentEvents_Ex1_EventCallBack.Employee
+
+<div class="grid-container">
+    
 </div>
 <div class="deleted-employees">
-    <p>Deleted employees:</p>
-    <ul>
-        @* List deleted employee names here in <li> tags *@
-        @foreach (var emp in _deletedEmployees)
-        {
-            <li>@emp.Name</li>
-        }
-    </ul>
 </div>
 @code {
-
-    private List<ComponentEvents_Ex1_EventCallBack.Employee> _deletedEmployees = new();
-    [Parameter] 
-    public List<ComponentEvents_Ex1_EventCallBack.Employee> Employees { get; set; } = new()
-    {
-        new(1, "Test Theodore"),
-        new(2, "Test Tiffany"),
-        new(3, "Test Thomas"),
-        new(4, "Test Timothy")
-    };
-
+    public record Employee(int Id, string Name);
+    
+    @* Create fields and properties here *@
+    @* 
+    Some test data to experiment with:
+    new(1, "Test Theodore"),
+    new(2, "Test Tiffany"),
+    new(3, "Test Thomas"),
+    new(4, "Test Timothy")
+    *@
 }

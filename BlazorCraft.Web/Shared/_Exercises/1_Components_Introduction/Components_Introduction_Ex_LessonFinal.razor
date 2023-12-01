@@ -1,21 +1,11 @@
-﻿<button class="btn btn-primary" @onclick="() => { _showList = !_showList; }">Click me</button>
+﻿<button class="btn btn-primary" >Click me</button>
 <div class="ex-container">
     @* Add your code here *@
-    @if (_showList)
-    {
-        foreach (var number in Numbers)
-        {
-            <ComponentWithParameter Parameter="number"></ComponentWithParameter>
-        }
-    }
-    else
-    {
-        <p>The list is hidden</p>
-    }
 </div>
 
 
 @code {
+    @* Create properties and fields here *@
     private bool _showList = false;
     [Parameter] public List<int> Numbers { get; set; } = null!;
 

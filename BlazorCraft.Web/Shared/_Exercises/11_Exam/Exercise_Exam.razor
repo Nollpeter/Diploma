@@ -1,6 +1,5 @@
 ﻿@using BlazorCraft.Web.Shared._Exercises.Exam
 
-
 <MudContainer>
     <MudPaper Style="min-height: 800px; overflow:hidden; position:relative;">
         <MudDrawerContainer Class="mud-height-full">
@@ -11,7 +10,8 @@
                         <MudText Typo="Typo.h6">Employee Details</MudText>
                     </MudDrawerHeader>
 
-                    <ExamEmployeeDetails @key="@(_selectedEmployee?.Id ?? 0)" Closed="@DetailsClosed" EmployeeId="@_selectedEmployee!.Id"></ExamEmployeeDetails>
+                    @* Bind its attributes *@
+                    <ExamEmployeeDetails @key="@(_selectedEmployee?.Id ?? 0)"></ExamEmployeeDetails>
                 }
             </MudDrawer>
             <MudDrawer @bind-Open="@_createPanelOpen" Width="50%" Fixed="false" Anchor="Anchor.Start" Elevation="0" Variant="@DrawerVariant.Persistent">
@@ -21,34 +21,22 @@
                         <MudText Typo="Typo.h6">Create new Employee</MudText>
                     </MudDrawerHeader>
 
-                    <ExamEmployeeCreate Closed="@CreateClosed" Employee="new ExamEmployee()"></ExamEmployeeCreate>
+                    @* Bind its attributes *@
+                    <ExamEmployeeCreate></ExamEmployeeCreate>
                 }
             </MudDrawer>
             <div>
-                <MudTable T="ExamEmployee" Items="Employees" Class="w-100">
+                @* Bind missing attribute(s) *@
+                <MudTable T="ExamEmployee" Class="w-100">
                     <HeaderContent>
                         @* Add as headers here: Id, FirstName, LastName, Position, Salary, and one extra header for Create Employee *@
                         @* For Create employee, use this template (filling in everything that is missing): *@
                         @* <MudButton id="@CreateButtonId" Variant="Variant.Filled" Color="Color.Primary">Create new</MudButton> *@
-
-                        <MudTh>Id</MudTh>
-                        <MudTh>First Name</MudTh>
-                        <MudTh>Last Name</MudTh>
-                        <MudTh>Position</MudTh>
-                        <MudTh>Salary</MudTh>
-                        <MudTh>
-                            <MudButton id="@CreateButtonId" Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenCreateEmployee">Create new</MudButton>
-                        </MudTh>
                     </HeaderContent>
                     <RowTemplate>
-                        <MudTd>@context.Id</MudTd>
-                        <MudTd>@(context.FirstName!)</MudTd>
-                        <MudTd>@(context.LastName!)</MudTd>
-                        <MudTd>@(context.Position!)</MudTd>
-                        <MudTd>@(context.Salary!)</MudTd>
-                        <MudTd>
-                            <MudIconButton id="@DetailsId(context.Id)" Icon="@Icons.Material.Outlined.RemoveRedEye" Variant="Variant.Text" Color="Color.Primary" OnClick="async () => await OpenDetails(context.Id)"></MudIconButton>
-                        </MudTd>
+                        @* Fill in row content here *@
+                        @* For details icon button, you can use this template: *@
+                        @* <MudIconButton id="@DetailsId(context.Id)" Icon="@Icons.Material.Outlined.RemoveRedEye" Variant="Variant.Text" Color="Color.Primary"></MudIconButton>*@
                     </RowTemplate>
                 </MudTable>
             </div>
@@ -69,47 +57,5 @@
     private bool _detailsPanelOpen = false;
     private bool _createPanelOpen = false;
 
-    [Inject]
-    public IExamEmployeeService EmployeeService { get; set; } = null!;
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await base.OnParametersSetAsync();
-        await LoadEmployees();
-    }
-
-    protected async Task LoadEmployees()
-    {
-        Employees = await EmployeeService.GetEmployees();
-    }
-
-    protected async Task DetailsClosed()
-    {
-        _detailsPanelOpen = false;
-        await LoadEmployees();
-    }
-
-    protected async Task CreateClosed()
-    {
-        _createPanelOpen = false;
-        await LoadEmployees();
-    }
-
-    private void OpenCreateEmployee()
-    {
-        if (_detailsPanelOpen)
-        {
-            _detailsPanelOpen = false;
-        }
-
-        _createPanelOpen = true;
-        StateHasChanged();
-    }
-
-    private async Task OpenDetails(int employeeId)
-    {
-        _selectedEmployee = await EmployeeService.GetEmployee(employeeId);
-        _detailsPanelOpen = true;
-    }
-
+    [Inject] public IExamEmployeeService EmployeeService { get; set; } = null!;
 }

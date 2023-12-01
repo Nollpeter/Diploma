@@ -79,7 +79,7 @@
             <MudText>The component should only render the value of the route parameter inside a <strong>@("<p>")</strong> tag</MudText>
 
             <TestRunner TTestClass="Test_Routing_Ex2_RouteParams" TestComponentName="@nameof(Routing_Ex2)"
-                        ComponentUnderTestParameters="@(new Dictionary<string, object>(){[nameof(Routing_Ex2.MyParameter)] = "Example value"})"></TestRunner>
+                        ComponentUnderTestParameters="@(new Dictionary<string, object>(){[nameof(Test_Routing_Ex2_RouteParams.RouteParamName)] = "Example value"})"></TestRunner>
 
         </SpacedContent>
     </ChildContent>
@@ -154,7 +154,7 @@
             <MudText>The component should only render the value of the route parameter inside a <strong>@("<p>")</strong> tag</MudText>
 
             <TestRunner TTestClass="Test_Routing_Ex3_RouteConstraints"
-                        ComponentUnderTestParameters="@(new Dictionary<string, object>(){[nameof(Routing_Ex3.MyParameter)] = 12})"></TestRunner>
+                        ComponentUnderTestParameters="@(new Dictionary<string, object>(){[nameof(Test_Routing_Ex3_RouteConstraints.RouteParamName)] = 12})"></TestRunner>
         </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>
@@ -245,7 +245,7 @@
                 <CodeSnippet>@("<p>No identifier received</p>")</CodeSnippet>
             </MudText>
             <TestRunner TTestClass="Test_Routing_Ex5_LessonFinal"
-                        ComponentUnderTestParameters="@(new Dictionary<string, object>(){[nameof(Routing_Ex5.AllDataShown)] = true, [nameof(Routing_Ex5.Id)] = 2})"></TestRunner>
+                        ComponentUnderTestParameters="@(new Dictionary<string, object>(){[nameof(Test_Routing_Ex5_LessonFinal.AllDataRouteParam)] = true, [nameof(Test_Routing_Ex5_LessonFinal.IdRouteParam)] = 2})"></TestRunner>
         </SpacedContent>
     </ChildContent>
 </MudExpansionPanelWithStoredState>

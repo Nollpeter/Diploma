@@ -1,12 +1,12 @@
 ﻿<div class="mb-3">
     <label class="form-label">First Name</label>
     @* input for Employee.Id *@
-    <input class="form-control employee-first-name" type="text" @bind-value="FirstName" @bind-value:event="oninput"/>
+    <input class="form-control employee-first-name" type="text"/>
 </div>
 <div class="mb-3">
     <label class="form-label">Last Name</label>
     @* input for Employee.Name *@
-    <input class="form-control employee-last-name" type="text" @bind-value="LastName" @bind-value:event="oninput"/>
+    <input class="form-control employee-last-name" type="text"/>
 </div>
 
 
@@ -16,35 +16,4 @@
 
         @* Create properties for FirstName and LastName and their accompanying EventCallBacks to notify the consumer component about changes *@
         @*!! Please use the names "FirstName" and "LastName" !!*@
-
-    [Parameter]
-    public string FirstName
-    {
-        get => _firstName ?? string.Empty;
-        set
-        {
-            if (_firstName != value)
-            {
-                _firstName = value;
-                FirstNameChanged.InvokeAsync(_firstName);
-            }
-        }
-    }
-
-    [Parameter]
-    public string LastName
-    {
-        get => _lastName ?? string.Empty;
-        set
-        {
-            if (_lastName != value)
-            {
-                _lastName = value;
-                LastNameChanged.InvokeAsync(_lastName);
-            }
-        }
-    }
-
-    [Parameter]public EventCallback<string> FirstNameChanged { get; set; }
-    [Parameter]public EventCallback<string> LastNameChanged { get; set; }
 }

@@ -11,6 +11,7 @@ namespace BlazorCraft.Web.Tests._3_DataBinding;
 [TestForPage(typeof(ComponentDataBinding))]
 public class Test_DataBinding_Ex_LessonFinal : ComponentTestBase<DataBinding_Ex_LessonFinal>
 {
+    public const string EmployeesParamName = "Employees";
     private static Type EditorComponentType = typeof(DataBinding_Ex1);
 
     [ComponentUsedInMarkupTitle(typeof(DataBinding_Ex1))]
@@ -33,7 +34,7 @@ public class Test_DataBinding_Ex_LessonFinal : ComponentTestBase<DataBinding_Ex_
             new() { Id = 2, FirstName = "Test", LastName = "Tiffany", IsEditorVisible = false }
         };
         var renderedComponent = testContext.RenderComponent<DataBinding_Ex_LessonFinal>(
-            ComponentParameter.CreateParameter(nameof(DataBinding_Ex_LessonFinal.Employees), employees)
+            ComponentParameter.CreateParameter(EmployeesParamName, employees)
         );
 
         var rows = renderedComponent.FindAll("tr");
@@ -53,7 +54,7 @@ public class Test_DataBinding_Ex_LessonFinal : ComponentTestBase<DataBinding_Ex_
             new() { Id = 2, FirstName = "Test", LastName = "Tiffany", IsEditorVisible = false }
         };
         var renderedComponent = testContext.RenderComponent<DataBinding_Ex_LessonFinal>(
-            ComponentParameter.CreateParameter(nameof(DataBinding_Ex_LessonFinal.Employees), employees)
+            ComponentParameter.CreateParameter(EmployeesParamName, employees)
         );
 
         var buttons = renderedComponent.FindAll("tr button");
@@ -79,7 +80,7 @@ public class Test_DataBinding_Ex_LessonFinal : ComponentTestBase<DataBinding_Ex_
             new() { Id = 2, FirstName = "Test", LastName = "Tiffany", IsEditorVisible = false }
         };
         var renderedComponent = testContext.RenderComponent<DataBinding_Ex_LessonFinal>(
-            ComponentParameter.CreateParameter(nameof(DataBinding_Ex_LessonFinal.Employees), employees)
+            ComponentParameter.CreateParameter(EmployeesParamName, employees)
         );
 
         var buttons = renderedComponent.FindAll("tr button");

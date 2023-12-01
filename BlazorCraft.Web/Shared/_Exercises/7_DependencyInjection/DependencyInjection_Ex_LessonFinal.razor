@@ -7,25 +7,7 @@
 @* Be careful! GetEmployees is an async Task, so you cannot bind it directly from the markup! *@
 @* Remember the previous lessons, where and how it could be bound! *@
 
-@inject IEmployeeService EmployeeService
-
-@if (_isInited)
-{
-    <RenderFragments_LessonFinal Employees="_employees">
-
-    </RenderFragments_LessonFinal>
-}
 
 @code {
-    private List<Employee> _employees = null!;
-    private bool _isInited;
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        _employees = await EmployeeService.GetEmployees();
-        _isInited = true;
-    }
-
-    
 
 }

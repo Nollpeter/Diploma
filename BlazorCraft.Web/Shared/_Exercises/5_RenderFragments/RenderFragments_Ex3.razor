@@ -1,41 +1,23 @@
 ﻿@using System.Reflection
 @typeparam TContent
 <div id="ex3-container">
-    <button class="btn btn-primary toggle" @onclick="() => _detailsVisible = !_detailsVisible">Toggle details visibility</button>
+    <button class="btn btn-primary toggle">Toggle details visibility</button>
     <div class="accordion">
         @* Accordion content should come here *@
         <div class="title">
-            @TitleContent
         </div>
         <div class="details">
-            @if (_detailsVisible)
-            {
-                <ul>
-                    @foreach (var property in GetProperties(ObjectToRender!))
-                    {
-                        <li>@property.Name: @GetPropertyValue(property, ObjectToRender!)</li>
-                    }
-                </ul>
-            }
         </div>
     </div>
 </div>
 
 @code {
-    private bool _detailsVisible = false;
-
-    [Parameter]
-    public RenderFragment TitleContent { get; set; } = null!;
-
-    [Parameter]
-    public TContent ObjectToRender { get; set; } = default!;
 
     public IList<PropertyInfo> GetProperties(object objectToRender)
     {
         // You can use the .Name property on the result list items to show its name like Id, FirstName, LastName, Postion
         return objectToRender.GetType().GetProperties();
     }
-
     
     public string GetPropertyValue(PropertyInfo propertyInfo, object objectToRender)
     {

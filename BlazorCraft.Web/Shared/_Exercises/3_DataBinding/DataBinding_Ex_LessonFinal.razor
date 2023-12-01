@@ -16,27 +16,8 @@
     </thead>
     <tbody>
     @* Render employees here *@
-    @foreach (var emp in Employees)
-    {
-        <tr>
-            <td>@emp.Id</td>
-            <td>@emp.FirstName</td>
-            <td>@emp.LastName </td>
-            <td><button class="btn btn-primary" @onclick="() => { emp.IsEditorVisible = !emp.IsEditorVisible;}">Edit</button></td>
-        </tr>
-        @if (emp.IsEditorVisible)
-        {
-            <tr>
-                <td colspan="4"><DataBinding_Ex1 @bind-FirstName="@emp.FirstName" @bind-LastName="@emp.LastName" /></td>
-            </tr>
-        }
-    }
     </tbody>
 </table>
-
-<ul>
-
-</ul>
 
 @code
 {
@@ -49,7 +30,4 @@
         // You can use this variable to show/hide the editor
         public bool IsEditorVisible { get; set; }
     }
-
-    [Parameter]
-    public List<Employee> Employees { get; set; } = null!;
 }

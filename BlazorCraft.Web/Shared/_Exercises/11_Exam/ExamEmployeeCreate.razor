@@ -1,8 +1,8 @@
 ﻿@using BlazorCraft.Web.Shared._Exercises.Exam
-@inject IExamEmployeeService EmployeeService
+@* Inject IExamEmployeeService *@
+
 <MudContainer>
     @* Exercise markup comes here: *@
-    <ExamEmployeeForm Employee="Employee" IsEditMode="true" EmployeeValid="CreateEmployee" Cancel="Cancel"></ExamEmployeeForm>
 </MudContainer>
 
 @code {
@@ -11,15 +11,5 @@
     [Parameter]
     public ExamEmployee Employee { get; set; } = null!;
 
-    private async Task CreateEmployee()
-    {
-        await EmployeeService.AddEmployee(Employee);
-        await Closed.InvokeAsync();
-    }
-
-    private async Task Cancel()
-    {
-        await Closed.InvokeAsync();
-    }
-
+    // Implement methods here
 }

@@ -1,60 +1,12 @@
 ﻿@using System.Reflection
 
 <div class="d-flex">
-    <button class="btn btn-primary list-view" @onclick="() => _isListView = true">List view</button>
-    <button class="btn btn-primary table-view" @onclick="() => _isListView = false">Table view</button>
+    <button class="btn btn-primary list-view">List view</button>
+    <button class="btn btn-primary table-view">Table view</button>
 </div>
 <div class="ex-final-container">
     @* List component implementations should come here *@
     @* for each property, use a template like this: <span class="mx-1">{rendered value},</span> *@
-    @if (_isListView)
-    {
-        <ListComponent5 T="Employee" ListItems="Employees">
-            <Title><h2>Employees</h2></Title>
-            <ListTemplate>
-                <ul>
-                    @context
-                </ul>
-            </ListTemplate>
-            <ListItemTemplate>
-                <li>
-                    @foreach (var property in GetProperties())
-                    {
-                        <span class="mx-1">@(property.Name): @GetPropertyValue(property, context),</span>
-                    }
-                </li>
-            </ListItemTemplate>
-        </ListComponent5>
-    }
-    else
-    {
-        <ListComponent5 T="Employee" ListItems="Employees">
-            <Title><h2>Employees</h2></Title>
-                <ListItemTemplate>
-                    <tr>
-                        @foreach (var property in GetProperties())
-                        {
-                            <td>@GetPropertyValue(property, context)</td>
-                        }
-                    </tr>
-                    </ListItemTemplate>
-                    <ListTemplate>
-                        <table class="table table-dark">
-                            <thead>
-                            <tr>
-                                @foreach (var property in GetProperties())
-                                {
-                                    <th>@property.Name</th>    
-                                }
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @context
-                            </tbody>
-                        </table>
-                    </ListTemplate>
-        </ListComponent5>
-    }
 </div>
 
 @code {
@@ -62,8 +14,6 @@
 
     [Parameter]
     public List<Employee> Employees { get; set; } = null!;
-
-    bool _isListView = true;
 
     public record Employee(int Id, string FirstName, string LastName, string Position);
 

@@ -3,45 +3,26 @@
 @* 
     We are going to reuse the list component of renderfragments again (RenderFragments_LessonFinal), 
     but this time, the employees will be set from the javascript runtime.
+    Accompanying js file can be found at: /wwwroot/js/exercises/js-interop/js-interop-exercise-helper.js
+    It also gives you hints, how methods should be named here
 *@
 
 @* Inject IJsRuntime, use the name: "JsRuntime" *@
-@inject IJSRuntime JsRuntime
 
-@if (_employees != null)
-{
-    <RenderFragments_LessonFinal Employees="_employees"></RenderFragments_LessonFinal>
-}
 
 @code {
 
     private List<Employee>? _employees;
     
     
-    // Create a method, that will be invokeable from the javascript runtime
+    // Create a method, that will be invokable from the javascript runtime
     // The method should be able to accept a list of employees and also,
-    // The method should make sure, that the employees can be bound to the list component
-    // Hint: Remember how the properties were bound in the previous chapter's exercise
-
-    private DotNetObjectReference<JsInterop_Ex_LessonFinal> _dotNetObjectReference = null!;
-    
-    [JSInvokable]
-    public void SetValueFromJs(List<Employee> employees)
-    {
-        _employees = employees;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        _dotNetObjectReference = DotNetObjectReference.Create(this);
-        await CallJs();
-    }
+    // the method should make sure, that the employees can be bound to the list component
+    // Hint: Remember how the properties were bound in the previous chapters' exercise
 
     public async Task CallJs()
     {
-        await JsRuntime.InvokeVoidAsync("JsInteropExerciseHelper.registerBlazorComponent", _dotNetObjectReference);
-        await JsRuntime.InvokeVoidAsync("JsInteropExerciseHelper.callBlazorMethod");
+        // register the blazor component with the DotNetObjectReference for the Js runtime
         
         // This one could be tricky, so it is pre-provided for you!
         await InvokeAsync(async () =>

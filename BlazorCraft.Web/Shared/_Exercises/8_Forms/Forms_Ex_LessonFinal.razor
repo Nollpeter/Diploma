@@ -2,52 +2,19 @@
 @using BlazorCraft.Web.Shared._Exercises.Forms
 
 @* Inject the IEmployeeService with which employee data can be managed *@ 
-@inject IEmployeeService EmployeeService
 
 @* Create an EditForm that uses the _selectedEmployee as Model and if the model is valid, then the employee if saved in EmployeeService*@
-@* For each field of the employee create the corresponding input with labels. Refer to DataAnnotationsValidatorExample.razor how to create each input type with their labels *@
+@* For each field of the employee create the corresponding input with labels and Validation messages. Refer to DataAnnotationsValidatorExample.razor how to create each input type with their labels *@
+@* Create a validation summary as well at the end of the form! *@
+
 @* Note: The Id field will be auto-generated, therefore, you don't need to create an input for that *@
 
-@if (_selectedEmployee != null)
-{
-    <EditForm class="d-grid gap-2" Model="_selectedEmployee" OnValidSubmit="SaveEmployee">
-        <DataAnnotationsValidator/>
-        <div>
-            <label class="form-label">First name</label>
-            <InputText class="first-name form-control" @bind-Value="@_selectedEmployee.FirstName"/>
-            <ValidationMessage class="text-danger" For="() => _selectedEmployee.FirstName" />
-        </div>
-        <div>
-            <label class="form-label">Last name</label>
-            <InputText class="last-name form-control" @bind-Value="@_selectedEmployee.LastName"/>
-            <ValidationMessage class="text-danger" For="() => _selectedEmployee.LastName" />
-        </div>
-        <div>
-            <label class="form-label">Position</label>
-            <InputText class="position form-control" @bind-Value="@_selectedEmployee.Position"/>
-            <ValidationMessage class="text-danger" For="() => _selectedEmployee.Position" />
-        </div>
-        <div>
-            <label class="form-label">Salary</label>
-            <InputNumber class="salary form-control" TValue="@(int?)" @bind-Value="@_selectedEmployee.Salary"/>
-            <ValidationMessage class="text-danger" For="() => _selectedEmployee.Salary" />
-        </div>
-        <div>
-            <label class="form-label">Birthdate</label>
-            <InputDate class="birthdate form-control" TValue="DateTime?" @bind-Value="@_selectedEmployee.BirthDate"/>
-            <ValidationMessage class="text-danger" For="() => _selectedEmployee.BirthDate" />
-        </div>
-        <ValidationSummary class="validation-summary text-danger"></ValidationSummary>
-        <button class="btn btn-primary" type="submit">Save</button>
-    </EditForm>
-}
-
-<ListComponent5 T="Employee" ListItems="_employees">
+<ListComponent5 T="Employee">
     <Title>
         <div class="d-flex justify-content-start gap-2">
             <h2>Employees</h2>
             @* bind the click event of this button to a handler, that bind an empty employee to the form *@ 
-            <button class="btn btn-primary" @onclick="CreateEmployee">
+            <button class="btn btn-primary" >
                 Create
             </button>
         </div>
@@ -72,22 +39,13 @@
     </ListTemplate>
     <ListItemTemplate>
         @* Add the row values according to the headers *@
-        <tr>
-            <td>@context.Id</td>
-            <td>@(context.FirstName!)</td>
-            <td>@(context.LastName!)</td>
-            <td>@(context.Position!)</td>
-            <td>@(context.Salary!)</td>
-            <td>@(context.BirthDate!)</td>
-        </tr>
+       
     </ListItemTemplate>
 </ListComponent5>
 
 @code {
 
     private Employee? _selectedEmployee;
-
-    private List<Employee> _employees = null!;
 
     public class Employee
     {
@@ -109,27 +67,6 @@
         [Required]
         public DateTime? BirthDate { get; set; }
         
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await base.OnParametersSetAsync();
-        _employees = await EmployeeService.GetEmployees();
-        
-    }
-
-    private async Task SaveEmployee()
-    {
-        await EmployeeService.AddEmployee(_selectedEmployee!);
-        _selectedEmployee = null;
-        _employees = await EmployeeService.GetEmployees();
-        StateHasChanged();
-    }
-
-    private Task CreateEmployee()
-    {
-        _selectedEmployee = new Employee();
-        return Task.CompletedTask;
     }
 
 }

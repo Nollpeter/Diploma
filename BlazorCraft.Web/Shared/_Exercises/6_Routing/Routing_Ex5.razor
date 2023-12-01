@@ -1,29 +1,6 @@
-﻿@page "/employee-by-id/{AllDataShown:bool}/{Id:int?}"
-@page "/employee-by-company-account-id/{AllDataShown:bool}/{CompanyAccountId?}"
-
-@if (Id == null && CompanyAccountId == null)
-{
-    <p>No identifier received</p>
-}
-else if (_selectedEmployee == null)
-{
-    <p>Employee not found</p>
-}
-else if (AllDataShown)
-{
-    <p>Employee id: @_selectedEmployee.Id, Company assigned identifier: @_selectedEmployee.CompanyAccountId, Name: @_selectedEmployee.FirstName @_selectedEmployee.LastName, Position: @_selectedEmployee.Position</p>
-}
-else
-{
-    <p>@_selectedEmployee.FirstName @_selectedEmployee.LastName</p>
-}
+﻿
 
 @code {
-
-    [Parameter]public bool AllDataShown { get; set; }
-    [Parameter]public int? Id { get; set; }
-    [Parameter]public string? CompanyAccountId { get; set; }
-    private Employee? _selectedEmployee;
 
     public record Employee(int Id, string CompanyAccountId, string FirstName, string LastName, string Position);
 
@@ -35,14 +12,7 @@ else
         new(4, "dddd", "Test", "Tim", "Janitor")
     };
 
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-        if (Id != null || CompanyAccountId != null)
-        {
-            _selectedEmployee = Id != null ? Employees.FirstOrDefault(p => p.Id == Id) : Employees.FirstOrDefault(p => p.CompanyAccountId == CompanyAccountId);
-        }
-    }
+    @* Remember from the Component lifecycle chapter which lifecycle event would be suitable to set everything up! *@
 
 
 }
