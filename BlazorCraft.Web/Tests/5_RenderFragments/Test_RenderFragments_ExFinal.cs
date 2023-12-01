@@ -16,8 +16,7 @@ public class Test_RenderFragments_ExFinal : RenderFragmentsTestBase<RenderFragme
     [Precondition]
     public Task GivenRenderFragments_LessonFinal_WhenDeclared_ThenEmployeesParameterIsDefined()
     {
-        var component = new RenderFragments_LessonFinal();
-        ValidateComponentProperty(component, EmployeesParamName, typeof(List<Employee>));
+        ValidateComponentProperty(Component, EmployeesParamName, typeof(List<Employee>));
 		return Task.CompletedTask;
 	}
     

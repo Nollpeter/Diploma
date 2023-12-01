@@ -22,8 +22,7 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
     [Precondition]
     public Task GivenRenderFragments_Ex2_WhenDeclared_ThenTitleFragmentIsDefined()
     {
-        var renderFragmentsEx2 = new RenderFragments_Ex2();
-        ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
+        ValidateRenderFragmentExists(Component, TitleFragmentName, typeof(RenderFragment));
 		return Task.CompletedTask;
 	}
     
@@ -32,8 +31,7 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
     [Precondition]
     public Task GivenRenderFragments_Ex2_WhenDeclared_ThenDetailsFragmentIsDefined()
     {
-        var renderFragmentsEx2 = new RenderFragments_Ex2();
-        ValidateRenderFragmentExists(renderFragmentsEx2, DetailsFragmentName, typeof(RenderFragment<Employee>));
+        ValidateRenderFragmentExists(Component, DetailsFragmentName, typeof(RenderFragment<Employee>));
 		return Task.CompletedTask;
 	}
     
@@ -42,8 +40,7 @@ public class Test_RenderFragments_Ex2_RenderFragment_Parameter : RenderFragments
     [Precondition]
     public Task GivenRenderFragments_Ex2_WhenDeclared_ThenEmployeeParameterAndDetailsFragmentDefined()
     {
-        var renderFragmentsEx2 = new RenderFragments_Ex2();
-        ValidateComponentProperty(renderFragmentsEx2, EmployeeParamName, typeof(Employee));
+        ValidateComponentProperty(Component, EmployeeParamName, typeof(Employee));
 		return Task.CompletedTask;
 	}
     

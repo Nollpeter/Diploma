@@ -21,8 +21,7 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
     [Precondition]
     public Task GivenRenderFragments_Ex3_WhenDeclared_ThenDetailsAndTitleFragmentsAreDefined()
     {
-        var renderFragmentsEx2 = new RenderFragments_Ex3<Employee>();
-        ValidateRenderFragmentExists(renderFragmentsEx2, TitleFragmentName, typeof(RenderFragment));
+        ValidateRenderFragmentExists(Component, TitleFragmentName, typeof(RenderFragment));
 		return Task.CompletedTask;
 	}
 
@@ -31,8 +30,7 @@ public class Test_RenderFragments_Ex3_Generic : RenderFragmentsTestBase<RenderFr
     [Precondition]
     public Task GivenRenderFragments_Ex3_WhenDeclared_ThenObjectToRenderParameterDefined()
     {
-        var renderFragmentsEx2 = new RenderFragments_Ex3<Employee>();
-        ValidateComponentProperty(renderFragmentsEx2, ObjectToRenderParamName, typeof(Employee));
+        ValidateComponentProperty(Component, ObjectToRenderParamName, typeof(Employee));
 		return Task.CompletedTask;
 	}
 

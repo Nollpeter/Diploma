@@ -17,8 +17,7 @@ public class Test_DataBinding_Ex_LessonFinal : ComponentTestBase<DataBinding_Ex_
     [Precondition]
     public Task GivenComponentDataBinding_Ex_LessonFinal_WhenDeclared_ThenComponentDataBinding_Ex1ComponentUsed()
     {
-        var component = new DataBinding_Ex_LessonFinal();
-        ValidateComponentUsage(component, EditorComponentType);
+        ValidateComponentUsage(Component, EditorComponentType);
         return Task.CompletedTask;
     }
 

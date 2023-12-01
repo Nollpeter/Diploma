@@ -18,20 +18,18 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
     [Precondition]
     public Task GivenComponentEvents_Ex2_EventCallBack_WhenDeclared_ThenEmployeesParameterDefined()
     {
-        var component = new ComponentEvents_Ex1_EventCallBack();
-        ValidateComponentProperty(component, EmployeesParameterName, typeof(List<Employee>));
-		return Task.CompletedTask;
-	}
+        ValidateComponentProperty(Component, EmployeesParameterName, typeof(List<Employee>));
+        return Task.CompletedTask;
+    }
 
     [ParameterDefinedTitle(EventCallBackPropertyName)]
     [ParameterDefinedDescription(EventCallBackPropertyName, typeof(EventCallback<Employee>))]
     [Precondition]
     public Task GivenComponentEvents_Ex2_EventCallBack_WhenDeclared_ThenEventCallBackParameterDefined()
     {
-        var component = new ComponentEvents_Ex1_EventCallBack();
-        ValidateComponentProperty(component, EventCallBackPropertyName, typeof(EventCallback<Employee>));
-		return Task.CompletedTask;
-	}
+        ValidateComponentProperty(Component, EventCallBackPropertyName, typeof(EventCallback<Employee>));
+        return Task.CompletedTask;
+    }
 
     [Title(EmployeesParameterName + " are rendered properly")]
     [Description("This test verifies that you render the values of " + EmployeesParameterName + " properly")]
@@ -51,7 +49,7 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
 
 
         var tbody = renderedComponent.FindAll("tbody");
-        
+
         tbody.MarkupMatches($"<tbody>" +
                             $"  <tr>" +
                             $"      <td>{list[0].Id}</td>" +
@@ -65,8 +63,8 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
                             $"  </tr>" +
                             $"</tbody>");
 
-		return Task.CompletedTask;
-	}
+        return Task.CompletedTask;
+    }
 
     [Title(EventCallBackPropertyName + " event is called upon clicking on delete button")]
     [Description("This test verifies that upon clicking on the delete button for a row, the event is actually called")]
@@ -89,11 +87,11 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
 
 
         var buttons = renderedComponent.FindAll(".btn");
-		if (!buttons.Any())
-		{
-			throw new TestRunException("There is no delete button!");
-		}
-		
+        if (!buttons.Any())
+        {
+            throw new TestRunException("There is no delete button!");
+        }
+
         buttons.First().Click();
 
         if (calledEmployee == null)
@@ -106,6 +104,6 @@ public class Test_ComponentEvents_Ex1_EventCallBack : ComponentTestBase<Componen
             throw new TestRunException(EventCallBackPropertyName + " was called but not with the correct employee");
         }
 
-		return Task.CompletedTask;
-	}
+        return Task.CompletedTask;
+    }
 }

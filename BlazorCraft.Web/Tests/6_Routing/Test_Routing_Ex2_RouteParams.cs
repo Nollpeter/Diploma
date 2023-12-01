@@ -14,8 +14,7 @@ public class Test_Routing_Ex2_RouteParams : RoutingTestBase<Routing_Ex2>
     [Description("This test verifies if the component has the /" + Route + " route defined")]
     public Task GivenRouting_Ex2_WhenDefined_ThenIsAccessibleViaRoute()
     {
-        var routingEx2 = new Routing_Ex2();
-        var routeAttributes = CheckRouteAttributesExist(routingEx2);
+        var routeAttributes = CheckRouteAttributesExist(Component);
 
         CheckRouteByTemplate(routeAttributes, Route);
 		return Task.CompletedTask;
@@ -25,11 +24,10 @@ public class Test_Routing_Ex2_RouteParams : RoutingTestBase<Routing_Ex2>
     [Description("This test verifies if the route parameter " + RouteParamName + " is defined with the correct name")]
     public Task GivenRouteParameter_WhenDefined_ThenHasCorrectName()
     {
-        var routingEx2 = new Routing_Ex2();
-        var routeAttributes = CheckRouteAttributesExist(routingEx2);
+        var routeAttributes = CheckRouteAttributesExist(Component);
 
         CheckRouteByTemplate(routeAttributes, Route);
-        FindRouteParameterByName(routingEx2, RouteParamName);
+        FindRouteParameterByName(Component, RouteParamName);
 		return Task.CompletedTask;
 	}
 
@@ -38,11 +36,10 @@ public class Test_Routing_Ex2_RouteParams : RoutingTestBase<Routing_Ex2>
                  " is defined with the correct type: string")]
     public Task GivenRouteParameter_WhenDefined_ThenHasCorrectType()
     {
-        var routingEx2 = new Routing_Ex2();
-        var routeAttributes = CheckRouteAttributesExist(routingEx2);
+        var routeAttributes = CheckRouteAttributesExist(Component);
 
         CheckRouteByTemplate(routeAttributes, Route);
-        var parameterByName = FindRouteParameterByName(routingEx2, RouteParamName);
+        var parameterByName = FindRouteParameterByName(Component, RouteParamName);
         ValidateRouteParameterType(parameterByName, typeof(string));
 		return Task.CompletedTask;
 	}
@@ -51,11 +48,10 @@ public class Test_Routing_Ex2_RouteParams : RoutingTestBase<Routing_Ex2>
     [Description("This test verifies if the component actually renders the route parameter in a <p> tag")]
     public Task GivenRouteParameter_WhenRendered_ThenIsDisplayedInPTag()
     {
-        var routingEx2 = new Routing_Ex2();
-        var routeAttributes = CheckRouteAttributesExist(routingEx2);
+        var routeAttributes = CheckRouteAttributesExist(Component);
 
         CheckRouteByTemplate(routeAttributes, Route);
-        var parameterByName = FindRouteParameterByName(routingEx2, RouteParamName);
+        var parameterByName = FindRouteParameterByName(Component, RouteParamName);
         ValidateRouteParameterType(parameterByName, typeof(string));
 
         TestContext testContext = new TestContext();

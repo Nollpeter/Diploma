@@ -36,8 +36,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
     [Precondition]
     public Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenRenderFragments_LessonFinalComponentUsed()
     {
-        var component = new JsInterop_Ex_LessonFinal();
-        ValidateComponentUsage(component, ListComponentType);
+        ValidateComponentUsage(Component, ListComponentType);
 		return Task.CompletedTask;
 	}
 
@@ -46,8 +45,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
     [Precondition]
     public Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenJsRuntimeParameterDefined()
     {
-        var component = new JsInterop_Ex_LessonFinal();
-        ValidateInjectedProperty(component, JsRuntimeName, typeof(IJSRuntime));
+        ValidateInjectedProperty(Component, JsRuntimeName, typeof(IJSRuntime));
 		return Task.CompletedTask;
 	}
 
@@ -56,9 +54,8 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
     [Precondition]
     public Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenObjectReferenceFieldOrPropertyDefined()
     {
-        var component = new JsInterop_Ex_LessonFinal();
 
-        ValidatePropertyOrFieldWithTypeExists(component, typeof(DotNetObjectReference<JsInterop_Ex_LessonFinal>));
+        ValidatePropertyOrFieldWithTypeExists(Component, typeof(DotNetObjectReference<JsInterop_Ex_LessonFinal>));
 		return Task.CompletedTask;
 	}
 
@@ -67,8 +64,7 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
     [Precondition]
     public Task GivenJsInterop_Ex_LessonFinal_WhenDeclared_ThenJsInvokableMethodAttributeDefined()
     {
-        var component = new JsInterop_Ex_LessonFinal();
-        ValidateMethodWithNameAndAttributeExists(component, JsInvokableMethodName, typeof(JSInvokableAttribute));
+        ValidateMethodWithNameAndAttributeExists(Component, JsInvokableMethodName, typeof(JSInvokableAttribute));
 		return Task.CompletedTask;
 	}
 
@@ -77,7 +73,6 @@ public class Test_JsInterop_Ex_LessonFinal : ComponentTestBase<JsInterop_Ex_Less
                  ".Employees")]
     public async Task GivenEmployees_WhenBound_ThenAreBoundToRenderFragmentsLessonFinalEmployees()
     {
-        var component = new JsInterop_Ex_LessonFinal();
 
         var testContext = new TestContext();
         await SetupMockJsRuntime(testContext);

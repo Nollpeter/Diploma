@@ -18,8 +18,7 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
     [Description("This test verifies if the component has the /" + RouteById + " route defined")]
     public Task GivenRouting_Ex5_WhenDefined_ThenRouteByIdIsAccessible()
     {
-        var routingEx5 = new Routing_Ex5();
-        var routeAttributes = CheckRouteAttributesExist(routingEx5);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         CheckRouteByTemplate(routeAttributes, RouteById);
 		return Task.CompletedTask;
 	}
@@ -28,8 +27,7 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
     [Description("This test verifies if the component has the /" + RouteByCompanyAccountId + " route defined")]
     public Task GivenRouting_Ex5_WhenDefined_ThenRouteByCompanyAccountIdIsAccessible()
     {
-        var routingEx5 = new Routing_Ex5();
-        var routeAttributes = CheckRouteAttributesExist(routingEx5);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         CheckRouteByTemplate(routeAttributes, RouteByCompanyAccountId);
 		return Task.CompletedTask;
 	}
@@ -38,23 +36,22 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
     [Description("This test verifies if the route parameters are defined with the correct name and type")]
     public Task GivenRouteParameters_WhenDefined_ThenHaveCorrectNameAndType()
     {
-        var routingEx5 = new Routing_Ex5();
-        var routeAttributes = CheckRouteAttributesExist(routingEx5);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         var idAttribute = CheckRouteByTemplate(routeAttributes, RouteById);
         var companyIdAttribute = CheckRouteByTemplate(routeAttributes, RouteByCompanyAccountId);
 
-        var idParam = FindRouteParameterByName(routingEx5, IdRouteParam);
+        var idParam = FindRouteParameterByName(Component, IdRouteParam);
         ValidateRouteParameterType(idParam, typeof(int?));
         ValidateRouteParameterConstraint(idAttribute, IdRouteParam, "int?");
 
-        var companyIdParam = FindRouteParameterByName(routingEx5, CompanyIdRouteParam);
+        var companyIdParam = FindRouteParameterByName(Component, CompanyIdRouteParam);
         ValidateRouteParameterType(companyIdParam, typeof(string));
         ValidateRouteParameterConstraint(companyIdAttribute, IdRouteParam, "?", true);
 
-        var idShowAllParam = FindRouteParameterByName(routingEx5, AllDataRouteParam);
+        var idShowAllParam = FindRouteParameterByName(Component, AllDataRouteParam);
         ValidateRouteParameterType(idShowAllParam, typeof(bool));
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, idAttribute);
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, companyIdAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, idAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, companyIdAttribute);
 		return Task.CompletedTask;
 	}
 
@@ -62,23 +59,22 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
     [Description("This test verifies if company id is given with all data shown, the component renders accordingly")]
     public Task GivenCompanyIdWithAllData_WhenRendered_ThenComponentRendersAccordingly()
     {
-        var routingEx5 = new Routing_Ex5();
-        var routeAttributes = CheckRouteAttributesExist(routingEx5);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         var idAttribute = CheckRouteByTemplate(routeAttributes, RouteById);
         var companyIdAttribute = CheckRouteByTemplate(routeAttributes, RouteByCompanyAccountId);
 
-        var idParam = FindRouteParameterByName(routingEx5, IdRouteParam);
+        var idParam = FindRouteParameterByName(Component, IdRouteParam);
         ValidateRouteParameterType(idParam, typeof(int?));
         ValidateRouteParameterConstraint(idAttribute, IdRouteParam, "int?");
 
-        var companyIdParam = FindRouteParameterByName(routingEx5, CompanyIdRouteParam);
+        var companyIdParam = FindRouteParameterByName(Component, CompanyIdRouteParam);
         ValidateRouteParameterType(companyIdParam, typeof(string));
         ValidateRouteParameterConstraint(companyIdAttribute, IdRouteParam, "?", true);
 
-        var idShowAllParam = FindRouteParameterByName(routingEx5, AllDataRouteParam);
+        var idShowAllParam = FindRouteParameterByName(Component, AllDataRouteParam);
         ValidateRouteParameterType(idShowAllParam, typeof(bool));
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, idAttribute);
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, companyIdAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, idAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, companyIdAttribute);
 
         TestContext testContext = new TestContext();
         int? paramValue = 2;
@@ -100,23 +96,22 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
         "This test verifies if company id is given with not all data shown, the component renders accordingly")]
     public Task GivenCompanyIdWithNotAllData_WhenRendered_ThenComponentRendersAccordingly()
     {
-        var routingEx5 = new Routing_Ex5();
-        var routeAttributes = CheckRouteAttributesExist(routingEx5);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         var idAttribute = CheckRouteByTemplate(routeAttributes, RouteById);
         var companyIdAttribute = CheckRouteByTemplate(routeAttributes, RouteByCompanyAccountId);
 
-        var idParam = FindRouteParameterByName(routingEx5, IdRouteParam);
+        var idParam = FindRouteParameterByName(Component, IdRouteParam);
         ValidateRouteParameterType(idParam, typeof(int?));
         ValidateRouteParameterConstraint(idAttribute, IdRouteParam, "int?");
 
-        var companyIdParam = FindRouteParameterByName(routingEx5, CompanyIdRouteParam);
+        var companyIdParam = FindRouteParameterByName(Component, CompanyIdRouteParam);
         ValidateRouteParameterType(companyIdParam, typeof(string));
         ValidateRouteParameterConstraint(companyIdAttribute, IdRouteParam, "?", true);
 
-        var idShowAllParam = FindRouteParameterByName(routingEx5, AllDataRouteParam);
+        var idShowAllParam = FindRouteParameterByName(Component, AllDataRouteParam);
         ValidateRouteParameterType(idShowAllParam, typeof(bool));
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, idAttribute);
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, companyIdAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, idAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, companyIdAttribute);
 
         TestContext testContext = new TestContext();
         int? paramValue = 2;
@@ -136,23 +131,22 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
     [Description("This test verifies if company id is given with all data shown, the component renders accordingly")]
     public Task GivenCompanyAccountIdWithAllData_WhenRendered_ThenComponentRendersAccordingly()
     {
-        var routingEx5 = new Routing_Ex5();
-        var routeAttributes = CheckRouteAttributesExist(routingEx5);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         var idAttribute = CheckRouteByTemplate(routeAttributes, RouteById);
         var companyIdAttribute = CheckRouteByTemplate(routeAttributes, RouteByCompanyAccountId);
 
-        var idParam = FindRouteParameterByName(routingEx5, IdRouteParam);
+        var idParam = FindRouteParameterByName(Component, IdRouteParam);
         ValidateRouteParameterType(idParam, typeof(int?));
         ValidateRouteParameterConstraint(idAttribute, IdRouteParam, "int?");
 
-        var companyIdParam = FindRouteParameterByName(routingEx5, CompanyIdRouteParam);
+        var companyIdParam = FindRouteParameterByName(Component, CompanyIdRouteParam);
         ValidateRouteParameterType(companyIdParam, typeof(string));
         ValidateRouteParameterConstraint(companyIdAttribute, IdRouteParam, "?", true);
 
-        var idShowAllParam = FindRouteParameterByName(routingEx5, AllDataRouteParam);
+        var idShowAllParam = FindRouteParameterByName(Component, AllDataRouteParam);
         ValidateRouteParameterType(idShowAllParam, typeof(bool));
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, idAttribute);
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, companyIdAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, idAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, companyIdAttribute);
 
         TestContext testContext = new TestContext();
         string paramValue = "bbbb";
@@ -174,23 +168,22 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
         "This test verifies if company id is given with not all data shown, the component renders accordingly")]
     public Task GivenCompanyAccountIdWithNotAllData_WhenRendered_ThenComponentRendersAccordingly()
     {
-        var routingEx5 = new Routing_Ex5();
-        var routeAttributes = CheckRouteAttributesExist(routingEx5);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         var idAttribute = CheckRouteByTemplate(routeAttributes, RouteById);
         var companyIdAttribute = CheckRouteByTemplate(routeAttributes, RouteByCompanyAccountId);
 
-        var idParam = FindRouteParameterByName(routingEx5, IdRouteParam);
+        var idParam = FindRouteParameterByName(Component, IdRouteParam);
         ValidateRouteParameterType(idParam, typeof(int?));
         ValidateRouteParameterConstraint(idAttribute, IdRouteParam, "int?");
 
-        var companyIdParam = FindRouteParameterByName(routingEx5, CompanyIdRouteParam);
+        var companyIdParam = FindRouteParameterByName(Component, CompanyIdRouteParam);
         ValidateRouteParameterType(companyIdParam, typeof(string));
         ValidateRouteParameterConstraint(companyIdAttribute, IdRouteParam, "?", true);
 
-        var idShowAllParam = FindRouteParameterByName(routingEx5, AllDataRouteParam);
+        var idShowAllParam = FindRouteParameterByName(Component, AllDataRouteParam);
         ValidateRouteParameterType(idShowAllParam, typeof(bool));
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, idAttribute);
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, companyIdAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, idAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, companyIdAttribute);
 
         TestContext testContext = new TestContext();
         string paramValue = "bbbb";
@@ -211,23 +204,22 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
         "This test verifies if company id is given with not all data shown, the component renders accordingly")]
     public Task GivenNoIdPassed_WhenRendered_ThenComponentRendersAccordingly()
     {
-        var routingEx5 = new Routing_Ex5();
-        var routeAttributes = CheckRouteAttributesExist(routingEx5);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         var idAttribute = CheckRouteByTemplate(routeAttributes, RouteById);
         var companyIdAttribute = CheckRouteByTemplate(routeAttributes, RouteByCompanyAccountId);
 
-        var idParam = FindRouteParameterByName(routingEx5, IdRouteParam);
+        var idParam = FindRouteParameterByName(Component, IdRouteParam);
         ValidateRouteParameterType(idParam, typeof(int?));
         ValidateRouteParameterConstraint(idAttribute, IdRouteParam, "int?");
 
-        var companyIdParam = FindRouteParameterByName(routingEx5, CompanyIdRouteParam);
+        var companyIdParam = FindRouteParameterByName(Component, CompanyIdRouteParam);
         ValidateRouteParameterType(companyIdParam, typeof(string));
         ValidateRouteParameterConstraint(companyIdAttribute, IdRouteParam, "?", true);
 
-        var idShowAllParam = FindRouteParameterByName(routingEx5, AllDataRouteParam);
+        var idShowAllParam = FindRouteParameterByName(Component, AllDataRouteParam);
         ValidateRouteParameterType(idShowAllParam, typeof(bool));
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, idAttribute);
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, companyIdAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, idAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, companyIdAttribute);
 
         TestContext testContext = new TestContext();
         bool showAllValue = false;
@@ -245,23 +237,22 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
     [Description("This test verifies if id is given, but the employee is not found, the component renders accordingly")]
     public Task GivenNotFoundById_WhenRendered_ThenComponentRendersAccordingly()
     {
-        var routingEx5 = new Routing_Ex5();
-        var routeAttributes = CheckRouteAttributesExist(routingEx5);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         var idAttribute = CheckRouteByTemplate(routeAttributes, RouteById);
         var companyIdAttribute = CheckRouteByTemplate(routeAttributes, RouteByCompanyAccountId);
 
-        var idParam = FindRouteParameterByName(routingEx5, IdRouteParam);
+        var idParam = FindRouteParameterByName(Component, IdRouteParam);
         ValidateRouteParameterType(idParam, typeof(int?));
         ValidateRouteParameterConstraint(idAttribute, IdRouteParam, "int?");
 
-        var companyIdParam = FindRouteParameterByName(routingEx5, CompanyIdRouteParam);
+        var companyIdParam = FindRouteParameterByName(Component, CompanyIdRouteParam);
         ValidateRouteParameterType(companyIdParam, typeof(string));
         ValidateRouteParameterConstraint(companyIdAttribute, IdRouteParam, "?", true);
 
-        var idShowAllParam = FindRouteParameterByName(routingEx5, AllDataRouteParam);
+        var idShowAllParam = FindRouteParameterByName(Component, AllDataRouteParam);
         ValidateRouteParameterType(idShowAllParam, typeof(bool));
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, idAttribute);
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, companyIdAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, idAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, companyIdAttribute);
 
         TestContext testContext = new TestContext();
         bool showAllValue = false;
@@ -281,23 +272,22 @@ public class Test_Routing_Ex5_LessonFinal : RoutingTestBase<Routing_Ex5>
         "This test verifies if Company Account Id is given, but the employee is not found, the component renders accordingly")]
     public Task GivenNotFoundByCompanyAccountId_WhenRendered_ThenComponentRendersAccordingly()
     {
-        var routingEx5 = new Routing_Ex5();
-        var routeAttributes = CheckRouteAttributesExist(routingEx5);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         var idAttribute = CheckRouteByTemplate(routeAttributes, RouteById);
         var companyIdAttribute = CheckRouteByTemplate(routeAttributes, RouteByCompanyAccountId);
 
-        var idParam = FindRouteParameterByName(routingEx5, IdRouteParam);
+        var idParam = FindRouteParameterByName(Component, IdRouteParam);
         ValidateRouteParameterType(idParam, typeof(int?));
         ValidateRouteParameterConstraint(idAttribute, IdRouteParam, "int?");
 
-        var companyIdParam = FindRouteParameterByName(routingEx5, CompanyIdRouteParam);
+        var companyIdParam = FindRouteParameterByName(Component, CompanyIdRouteParam);
         ValidateRouteParameterType(companyIdParam, typeof(string));
         ValidateRouteParameterConstraint(companyIdAttribute, IdRouteParam, "?", true);
 
-        var idShowAllParam = FindRouteParameterByName(routingEx5, AllDataRouteParam);
+        var idShowAllParam = FindRouteParameterByName(Component, AllDataRouteParam);
         ValidateRouteParameterType(idShowAllParam, typeof(bool));
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, idAttribute);
-        FindRouteParameterByNameInRoute(routingEx5, AllDataRouteParam, companyIdAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, idAttribute);
+        FindRouteParameterByNameInRoute(Component, AllDataRouteParam, companyIdAttribute);
 
         TestContext testContext = new TestContext();
         bool showAllValue = false;

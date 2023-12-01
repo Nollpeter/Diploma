@@ -20,8 +20,7 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
     [Precondition]
     public Task GivenRenderFragments_Ex1_WhenDeclared_ThenTitleFragmentIsDefined()
     {
-        var renderFragmentsEx1 = new RenderFragments_Ex1();
-        ValidateRenderFragmentExists(renderFragmentsEx1, TitleFragmentName, typeof(RenderFragment));
+        ValidateRenderFragmentExists(Component, TitleFragmentName, typeof(RenderFragment));
 		return Task.CompletedTask;
 	}
     
@@ -30,8 +29,7 @@ public class Test_RenderFragments_Ex1_Basics : RenderFragmentsTestBase<RenderFra
     [Precondition]
     public Task GivenRenderFragments_Ex1_WhenDeclared_ThenDetailsFragmentIsDefined()
     {
-        var renderFragmentsEx1 = new RenderFragments_Ex1();
-        ValidateRenderFragmentExists(renderFragmentsEx1, DetailsFragmentName, typeof(RenderFragment));
+        ValidateRenderFragmentExists(Component, DetailsFragmentName, typeof(RenderFragment));
 		return Task.CompletedTask;
 	}
     

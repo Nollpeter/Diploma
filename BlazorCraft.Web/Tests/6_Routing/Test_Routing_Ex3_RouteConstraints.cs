@@ -14,8 +14,7 @@ public class Test_Routing_Ex3_RouteConstraints : RoutingTestBase<Routing_Ex3>
     [Description("This test verifies if the component has the /" + Route + " route defined")]
     public Task GivenRouting_Ex3_WhenDefined_ThenIsAccessibleViaRoute()
     {
-        var routingEx3 = new Routing_Ex3();
-        var routeAttributes = CheckRouteAttributesExist(routingEx3);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         ExactlyOneRouteAttributeExists(routeAttributes);
         CheckRouteByTemplate(routeAttributes, Route);
 		return Task.CompletedTask;
@@ -25,11 +24,10 @@ public class Test_Routing_Ex3_RouteConstraints : RoutingTestBase<Routing_Ex3>
     [Description("This test verifies if the route parameter " + RouteParamName + " is defined with the correct name")]
     public Task GivenRouteParameter_WhenDefined_ThenHasCorrectName()
     {
-        var routingEx3 = new Routing_Ex3();
-        var routeAttributes = CheckRouteAttributesExist(routingEx3);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         ExactlyOneRouteAttributeExists(routeAttributes);
         CheckRouteByTemplate(routeAttributes, Route);
-        var parameterByName = FindRouteParameterByName(routingEx3, RouteParamName);
+        var parameterByName = FindRouteParameterByName(Component, RouteParamName);
 		return Task.CompletedTask;
 	}
 
@@ -38,11 +36,10 @@ public class Test_Routing_Ex3_RouteConstraints : RoutingTestBase<Routing_Ex3>
                  " is defined with the correct type: int")]
     public Task GivenRouteParameter_WhenDefined_ThenHasCorrectType()
     {
-        var routingEx3 = new Routing_Ex3();
-        var routeAttributes = CheckRouteAttributesExist(routingEx3);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         ExactlyOneRouteAttributeExists(routeAttributes);
         CheckRouteByTemplate(routeAttributes, Route);
-        var parameterByName = FindRouteParameterByName(routingEx3, RouteParamName);
+        var parameterByName = FindRouteParameterByName(Component, RouteParamName);
         ValidateRouteParameterType(parameterByName, typeof(int));
         ValidateRouteParameterConstraint(routeAttributes.First(), RouteParamName, "int");
 		return Task.CompletedTask;
@@ -52,11 +49,10 @@ public class Test_Routing_Ex3_RouteConstraints : RoutingTestBase<Routing_Ex3>
     [Description("This test verifies if the component actually renders the route parameter in a <p> tag")]
     public Task GivenRouteParameter_WhenRendered_ThenIsDisplayedInPTag()
     {
-        var routingEx3 = new Routing_Ex3();
-        var routeAttributes = CheckRouteAttributesExist(routingEx3);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         ExactlyOneRouteAttributeExists(routeAttributes);
         CheckRouteByTemplate(routeAttributes, Route);
-        var parameterByName = FindRouteParameterByName(routingEx3, RouteParamName);
+        var parameterByName = FindRouteParameterByName(Component, RouteParamName);
         ValidateRouteParameterType(parameterByName, typeof(int));
         ValidateRouteParameterConstraint(routeAttributes.First(), RouteParamName, "int");
         {

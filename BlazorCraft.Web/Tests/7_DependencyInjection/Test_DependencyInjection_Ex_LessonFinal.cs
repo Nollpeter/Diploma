@@ -21,8 +21,7 @@ public class Test_DependencyInjection_Ex_LessonFinal : ComponentTestBase<Depende
     [Precondition]
     public Task GivenDependencyInjection_Ex_LessonFinal_WhenDeclared_ThenRenderFragments_LessonFinalComponentUsed()
     {
-        var component = new DependencyInjection_Ex_LessonFinal();
-        ValidateComponentUsage(component, ListComponentType);
+        ValidateComponentUsage(Component, ListComponentType);
 		return Task.CompletedTask;
 	}
 
@@ -31,8 +30,7 @@ public class Test_DependencyInjection_Ex_LessonFinal : ComponentTestBase<Depende
     [Precondition]
     public Task GivenDependencyInjection_Ex_LessonFinal_WhenDeclared_ThenEmployeeServiceParameterDefined()
     {
-        var component = new DependencyInjection_Ex_LessonFinal();
-        ValidateInjectedProperty(component, EmployeeServiceName, typeof(IEmployeeService));
+        ValidateInjectedProperty(Component, EmployeeServiceName, typeof(IEmployeeService));
 		return Task.CompletedTask;
 	}
 
@@ -41,8 +39,7 @@ public class Test_DependencyInjection_Ex_LessonFinal : ComponentTestBase<Depende
     [Precondition]
     public Task GivenEmployeeService_WhenRegistered_ThenItIsAsScopedService()
     {
-        var component = new DependencyInjection_Ex_LessonFinal();
-        ValidateComponentUsage(component, ListComponentType);
+        ValidateComponentUsage(Component, ListComponentType);
         GetAndValidateTestContext();
 		return Task.CompletedTask;
 	}

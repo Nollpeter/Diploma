@@ -14,8 +14,7 @@ public class Test_Routing_Ex4_OptionalRouteParams : RoutingTestBase<Routing_Ex4>
     [Description("This test verifies if the component has the /" + Route + " route defined")]
     public Task GivenRouting_Ex4_WhenDefined_ThenIsAccessibleViaRoute()
     {
-        var routingEx4 = new Routing_Ex4();
-        var routeAttributes = CheckRouteAttributesExist(routingEx4);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         ExactlyOneRouteAttributeExists(routeAttributes);
         CheckRouteByTemplate(routeAttributes, Route);
 		return Task.CompletedTask;
@@ -25,11 +24,10 @@ public class Test_Routing_Ex4_OptionalRouteParams : RoutingTestBase<Routing_Ex4>
     [Description("This test verifies if the route parameter " + RouteParamName + " is defined with the correct name")]
     public Task GivenRouteParameter_WhenDefined_ThenHasCorrectName()
     {
-        var routingEx4 = new Routing_Ex4();
-        var routeAttributes = CheckRouteAttributesExist(routingEx4);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         ExactlyOneRouteAttributeExists(routeAttributes);
         CheckRouteByTemplate(routeAttributes, Route);
-        FindRouteParameterByName(routingEx4, RouteParamName);
+        FindRouteParameterByName(Component, RouteParamName);
 		return Task.CompletedTask;
 	}
 
@@ -38,11 +36,10 @@ public class Test_Routing_Ex4_OptionalRouteParams : RoutingTestBase<Routing_Ex4>
                  " is defined with the correct type: int")]
     public Task GivenRouteParameter_WhenDefined_ThenHasCorrectType()
     {
-        var routingEx4 = new Routing_Ex4();
-        var routeAttributes = CheckRouteAttributesExist(routingEx4);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         ExactlyOneRouteAttributeExists(routeAttributes);
         CheckRouteByTemplate(routeAttributes, Route);
-        var parameterByName = FindRouteParameterByName(routingEx4, RouteParamName);
+        var parameterByName = FindRouteParameterByName(Component, RouteParamName);
         ValidateRouteParameterType(parameterByName, typeof(int?));
         ValidateRouteParameterConstraint(routeAttributes.First(), RouteParamName, "int?");
 		return Task.CompletedTask;
@@ -52,11 +49,10 @@ public class Test_Routing_Ex4_OptionalRouteParams : RoutingTestBase<Routing_Ex4>
     [Description("This test verifies if the parameter is left empty, the component renders accordingly")]
     public Task GivenEmptyParameter_WhenRendered_ThenComponentRendersAccordingly()
     {
-        var routingEx4 = new Routing_Ex4();
-        var routeAttributes = CheckRouteAttributesExist(routingEx4);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         ExactlyOneRouteAttributeExists(routeAttributes);
         CheckRouteByTemplate(routeAttributes, Route);
-        var parameterByName = FindRouteParameterByName(routingEx4, RouteParamName);
+        var parameterByName = FindRouteParameterByName(Component, RouteParamName);
         ValidateRouteParameterType(parameterByName, typeof(int?));
         ValidateRouteParameterConstraint(routeAttributes.First(), RouteParamName, "int?");
         TestContext testContext = new TestContext();
@@ -78,11 +74,10 @@ public class Test_Routing_Ex4_OptionalRouteParams : RoutingTestBase<Routing_Ex4>
     [Description("This test verifies if the parameter is left empty, the component renders accordingly")]
     public Task GivenIntParameter_WhenRendered_ThenComponentRendersAccordingly()
     {
-        var routingEx4 = new Routing_Ex4();
-        var routeAttributes = CheckRouteAttributesExist(routingEx4);
+        var routeAttributes = CheckRouteAttributesExist(Component);
         ExactlyOneRouteAttributeExists(routeAttributes);
         CheckRouteByTemplate(routeAttributes, Route);
-        var parameterByName = FindRouteParameterByName(routingEx4, RouteParamName);
+        var parameterByName = FindRouteParameterByName(Component, RouteParamName);
         ValidateRouteParameterType(parameterByName, typeof(int?));
         ValidateRouteParameterConstraint(routeAttributes.First(), RouteParamName, "int?");
         TestContext testContext = new TestContext();

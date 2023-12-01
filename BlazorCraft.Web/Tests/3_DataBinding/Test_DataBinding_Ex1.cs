@@ -20,8 +20,7 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
     [Precondition]
     public Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeFirstNameParameterDefined()
     {
-        var component = new DataBinding_Ex1();
-        ValidateComponentProperty(component, EmployeeFirstNameParamName, typeof(string));
+        ValidateComponentProperty(Component, EmployeeFirstNameParamName, typeof(string));
         return Task.CompletedTask;
     }
 
@@ -30,8 +29,7 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
     [Precondition]
     public Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeLastNameParameterDefined()
     {
-        var component = new DataBinding_Ex1();
-        ValidateComponentProperty(component, EmployeeLastNameParamName, typeof(string));
+        ValidateComponentProperty(Component, EmployeeLastNameParamName, typeof(string));
         return Task.CompletedTask;
     }
 
@@ -40,8 +38,7 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
     [Precondition]
     public Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeFirstNameChangedParameterDefined()
     {
-        var component = new DataBinding_Ex1();
-        ValidateComponentProperty(component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
+        ValidateComponentProperty(Component, EmployeeFirstNameChangedName, typeof(EventCallback<string>));
         return Task.CompletedTask;
     }
 
@@ -50,8 +47,7 @@ public class Test_DataBinding_Ex1 : ComponentTestBase<DataBinding_Ex1>
     [Precondition]
     public Task GivenComponentDataBinding_Ex1_WhenDeclared_ThenEmployeeLastNameChangedParameterDefined()
     {
-        var component = new DataBinding_Ex1();
-        ValidateComponentProperty(component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
+        ValidateComponentProperty(Component, EmployeeLastNameChangedName, typeof(EventCallback<string>));
         return Task.CompletedTask;
     }
 
