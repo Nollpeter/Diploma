@@ -67,6 +67,9 @@ This PowerShell script is designed to enable the long path support in Windows, a
     - Press Enter to execute the script.
 
    ```powershell
+   # Set the LongPathsEnabled key to 1
+   Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1
+      
 ## Running the Project
 
 ---
@@ -74,14 +77,14 @@ This PowerShell script is designed to enable the long path support in Windows, a
 ### Using JetBrains Rider
 1. Open the solution file (`BlazorCraft.sln`) in JetBrains Rider.
 2. Ensure that the `BlazorCraft.Web` project is set as the startup project.
-3. Select the "BlazorCraft" launch profile from the run configuration dropdown.
+3. Select the `Browser launch` or `No browser launch` launch profile from the run configuration dropdown. (Based on if you prefer to have the default browser automatically opened, each time you run the apllication)
 4. Press `F5` or click the run button to start the application. The application will be reachable on `http://localhost:5000`
 5. If you make any modifications, simply rerun the project with the same profile and refresh the page in the browser.
 
 ### Using Visual Studio
 1. Open the solution file (`BlazorCraft.sln`) in Visual Studio.
 2. Right-click on the `BlazorCraft.Web` project in the Solution Explorer and set it as the startup project.
-3. From the toolbar, select the "BlazorCraft" profile from the run/debug configuration dropdown.
+3. From the toolbar, select the the `Browser launch` or `No browser launch` profile from the run/debug configuration dropdown. (Based on if you prefer to have the default browser automatically opened, each time you run the apllication)
 4. Press `F5` or click the run button to start debugging. The application will be reachable on `http://localhost:5000`
 5. After making changes to the code, rerun the project or solution with the same profile and refresh your browser.
 
