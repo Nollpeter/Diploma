@@ -60,8 +60,7 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     }
 
     [ComponentUsedInMarkupTitle(typeof(ExamEmployeeForm))]
-    //TODO Description, ami figyelmeztet, hogy csak akkor lesz jó, ha condition renderingnél is be van töltve minden
-    [ComponentUsedInMarkupDescription(typeof(ExamEmployeeForm))]
+    [Description("This test ensures that an instance of the " + nameof(ExamEmployeeForm) + " component is declared and accessible when rendering the Employee Details. The test is applicable under the condition that all necessary data has been filled in during conditional rendering.")]
     [Precondition]
     public async Task GivenEmployeeDetails_WhenRendered_ThenHasEmployeeFormDeclared()
     {
@@ -80,7 +79,6 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     }
 
     [Title("UpdateImage is callable from javascript")]
-    //TODO Description
     [Description("This test verifies that the " + nameof(ExamEmployeeDetails) + "." + nameof(ExamEmployeeDetails.UpdateImage) + " method is marked with the " + nameof(JSInvokableAttribute) +
                  ", ensuring that it can be called from JavaScript in the context of the ExamEmployeeEdit component.")]
     [Precondition]
@@ -119,8 +117,7 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     }
 
     [Title(nameof(ExamEmployeeForm) + " is NOT Editable on render")]
-    //TODO Description
-    [Description("")]
+    [Description("This test verifies that the " + nameof(ExamEmployeeForm) + " component is not editable immediately upon rendering. If it is editable, it might suggest a discrepancy in the default settings of the form.")]
     public async Task GivenEmployeeDetails_WhenRendered_ThenEmployeeFormIsNotEditable()
     {
         var ctx = await SetupTestContext();
@@ -251,8 +248,7 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     }
 
     [Title("Clicking Delete button deletes employee")]
-    //TODO Description
-    [Description("")]
+    [Description("This test checks that clicking the 'Delete' button within the " + nameof(ExamEmployeeDetails) + " component successfully deletes the corresponding employee's data record. If the data record persists, it raises an issue with the deletion operation.")]
     public async Task GivenExamEmployeeEdit_WhenDeleteButtonPressed_ThenEmployeeIsDeleted()
     {
         var ctx = await SetupTestContext();

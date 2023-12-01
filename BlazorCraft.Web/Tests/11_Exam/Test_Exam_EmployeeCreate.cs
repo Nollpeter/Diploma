@@ -18,7 +18,8 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
     }
 
     [ComponentUsedInMarkupTitle(typeof(ExamEmployeeForm))]
-    [ComponentUsedInMarkupDescription(typeof(ExamEmployeeForm))]
+    [Description("This test verifies that an instance of the " + nameof(ExamEmployeeForm) + " component is declared and present when rendering the " + nameof(ExamEmployeeCreate) +
+                 " component. If the instance is not present, it implies a potential structuring or rendering issue.")]
     [Precondition]
     public async Task GivenEmployeeCreate_WhenRendered_ThenHasEmployeeFormDeclared()
     {
@@ -59,7 +60,8 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
 
     [Title(nameof(ExamEmployeeForm) + " is Editable on render")]
     [Description("This test verifies that the " + nameof(ExamEmployeeForm) + " component is editable upon rendering within the " + nameof(ExamEmployeeCreate) + " component. The test sets up the " + nameof(ExamEmployeeForm) +
-                 " with a predefined employee and checks if the form's edit mode is enabled by default. If the form is not in edit mode, the test fails, indicating an issue with the initial state of the " + nameof(ExamEmployeeForm) + " when used in " +
+                 " with a predefined employee and checks if the form's edit mode is enabled by default. If the form is not in edit mode, the test fails, indicating an issue with the initial state of the " + nameof(ExamEmployeeForm) +
+                 " when used in " +
                  nameof(ExamEmployeeCreate) + ".")]
     public async Task GivenEmployeeCreate_WhenRendered_ThenEmployeeFormIsEditable()
     {
@@ -102,9 +104,9 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
 
         await renderedComponent.InvokeAsync(async () => await findComponent.Instance.EmployeeValid.InvokeAsync());
         try
-		{
-			await employeeService.GetEmployee(employee.Id);
-		}
+        {
+            await employeeService.GetEmployee(employee.Id);
+        }
         catch (KeyNotFoundException)
         {
             throw new TestRunException("Employee was not added to EmployeeService!");
