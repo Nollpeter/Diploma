@@ -2,6 +2,7 @@
 @using BlazorCraft.Web.Shared._Exercises.Exam
 @using BlazorCraft.Web.Shared._Exercises._11_Exam
 @using BlazorCraft.Web.Tests._11_Exam
+@using BlazorCraft.Web.Pages._9_JsInterop
 @inject IExamEmployeeService EmployeeService
 <MudText Typo="Typo.h4">Exam exercise</MudText>
 <SpacedContent>
@@ -23,8 +24,9 @@
     </MudText>
     <MudText>There will be 4 separate exercises, where the 3 main components will be tested separately (Employee form, Employee create component and Employee Details-Edit component), and in the end the final component will put them togedther</MudText>
     <MudText>The layout will be predefined for you, as it is out-of-scope for this application to teach the usage of CSS libraries and/or CSS itself</MudText>
-    <MudText>The layout will often use components of MudBlazor, but don't worry, everything will be explained how they can be used, also the general look of the component will be much better this way</MudText>
-    
+    <MudText>Public property parameters will be predefined for you (mainly to make testing easier), your task is primarily to wire everything together</MudText>
+    <MudText>For each of the exercises, use the <strong>@nameof(IExamEmployeeService)</strong> for managing employees (inject it wherever it is needed)</MudText>
+    <MudText><Important>After you finish the exam exercise, or if you wan't to give up unfinished, please click on the "Send results" button, to submit your results to me!</Important></MudText>
 
     <MudExpansionPanels MultiExpansion="true">
         <MudExpansionPanelWithStoredState Id="exam-exercise">
@@ -37,9 +39,18 @@
                         <PanelHeaderWithTestTracking TTestClass="Test_Exam_EmployeeForm">Employee form</PanelHeaderWithTestTracking>
                     </TitleContent>
                     <ChildContent>
-                        <TestRunner TTestClass="Test_Exam_EmployeeForm"
-                                    ComponentUnderTestParameters="@(new Dictionary<string, object>() { [nameof(EmployeeForm.Employee)] = _employee, [nameof(EmployeeForm.IsEditMode)] = true })">
-                        </TestRunner>
+                        <SpacedContent>
+                            <MudText>
+                                As a start, your task is to create the employee form found in <ComponentFileWithPath T="ExamEmployeeForm"/>
+                            </MudText>
+                            <MudText>This form will be used for both creating and editing employees</MudText>
+                            <MudText>Use the MudBlazor form elements for the fields of <strong>@nameof(ExamEmployee)</strong> listed in the comments for the component</MudText>
+                            <MudText>Add <strong>Labels, data-binding and validations</strong> for each form component, also they should only be enabled, if <strong>IsEditMode = true</strong> </MudText>
+                            <MudText>Also, implement the Save and Cancel buttons logic. The Save button should submit the form, and the Cancel button should raise the Cancel event</MudText>
+                            <TestRunner TTestClass="Test_Exam_EmployeeForm"
+                                        ComponentUnderTestParameters="@(new Dictionary<string, object>() { [nameof(ExamEmployeeForm.Employee)] = _employee, [nameof(ExamEmployeeForm.IsEditMode)] = true })">
+                            </TestRunner>
+                        </SpacedContent>
                     </ChildContent>
                 </MudExpansionPanelWithStoredState>
                 <MudExpansionPanelWithStoredState Id="employee-create">
@@ -47,8 +58,21 @@
                         <PanelHeaderWithTestTracking TTestClass="Test_Exam_EmployeeCreate">Employee create</PanelHeaderWithTestTracking>
                     </TitleContent>
                     <ChildContent>
-                        <TestRunner TTestClass="Test_Exam_EmployeeCreate"
-                                    ComponentUnderTestParameters="@(new Dictionary<string, object>(){[nameof(ExamEmployeeCreate.Employee)] = new ExamEmployee()})"></TestRunner>
+                        <SpacedContent>
+                            <MudText>Now that we have the Employee form, it is time to use it!</MudText>
+                            <MudText>To complete the exercise, modify the component: <ComponentFileWithPath T="ExamEmployeeCreate" /></MudText>
+                            <MudText>First of all, we will create the logic for creating an employee.</MudText>
+                            <MudText>To achieve this, integrate the @nameof(ExamEmployeeForm) to the component</MudText>
+                            <MudText>In the previous exercise, we implemented each event of the form when and how they are called, here, you should handle these events.</MudText>
+                            <MudText>
+                                <ul>
+                                    <li>If the <strong>@nameof(ExamEmployeeForm.EmployeeValid)</strong> event is raised, add the employee to the employee service, and call the <strong>@nameof(ExamEmployeeCreate.Closed)</strong> event</li>
+                                    <li>IF the <strong>@nameof(ExamEmployeeForm.Cancel)</strong> event is raise, call the <strong>@nameof(ExamEmployeeCreate.Closed)</strong> event </li>
+                                </ul>
+                            </MudText>
+                            <TestRunner TTestClass="Test_Exam_EmployeeCreate"
+                                        ComponentUnderTestParameters="@(new Dictionary<string, object>() { [nameof(ExamEmployeeCreate.Employee)] = new ExamEmployee() })"></TestRunner>
+                        </SpacedContent>
                     </ChildContent>
                 </MudExpansionPanelWithStoredState>
                 <MudExpansionPanelWithStoredState Id="employee-details">
@@ -56,8 +80,38 @@
                         <PanelHeaderWithTestTracking TTestClass="Test_Exam_EmployeeDetails">Employee details</PanelHeaderWithTestTracking>
                     </TitleContent>
                     <ChildContent>
-                        <TestRunner TTestClass="Test_Exam_EmployeeDetails"
-                                    ComponentUnderTestParameters="@(new Dictionary<string, object>(){[nameof(ExamEmployeeDetails.EmployeeId)] = 2})"></TestRunner>
+                        <SpacedContent>
+                            <MudText>Now we are going to reuse the Employee form again, however this time around to show the details of each employee, and on the click of the button, make it editable or deletable</MudText>
+                            <MudText>You are going to need to integrate the @nameof(ExamEmployeeForm) component to the details component: <ComponentFileWithPath T="ExamEmployeeDetails" /></MudText>
+                            <MudText>You will see marked with comments what comes where, also, you will need to implement the logic of the component:</MudText>
+                            <MudText>
+                                <ul>
+                                    <li>
+                                        <MudText>
+                                            The profile picture of the employee is going to be provided via javascript interop, you can find the js class for it in <MudText Inline="true" Class="fw-bold">/wwwroot/js/exercises/exam/exam.js</MudText>
+                                            <br/>
+                                            The logic is implemented, you just need to integrate it with the component. 
+                                            <br/>
+                                            Remember how this can be achieved by referring to the chapter <MudPageLink PageType="typeof(JsInterop)">@nameof(JsInterop)</MudPageLink>
+                                            <br/>
+                                            The javascript object returns a base64 encoded string of the image, so you can directly bind it to the src of the image
+                                            <br/>
+                                            <strong>Disclaimer: </strong>All prfoile picture were generated using <MudLink Href="https://thispersondoesnotexist.com/">https://thispersondoesnotexist.com/</MudLink>
+                                        </MudText>
+                                    </li>
+                                    <li>
+                                        <MudText>To show details/edit an employee, we are going to work on a copy of the employee. TO create a copy of an employee by its id, you can use the corresponding method of <strong>@nameof(IExamEmployeeService)</strong></MudText>
+                                    </li>
+                                    <li>
+                                        <MudText>
+                                            Implement editing, saving and deleting employees using the corresponding methods of <strong>@nameof(IExamEmployeeService)</strong> and handing the events raised by the <strong>@nameof(ExamEmployeeForm)</strong>
+                                        </MudText>
+                                    </li>
+                                </ul>
+                            </MudText>
+                            <TestRunner TTestClass="Test_Exam_EmployeeDetails"
+                                        ComponentUnderTestParameters="@(new Dictionary<string, object>() { [nameof(ExamEmployeeDetails.EmployeeId)] = 2 })"></TestRunner>
+                        </SpacedContent>
                     </ChildContent>
                 </MudExpansionPanelWithStoredState>
                 <MudExpansionPanelWithStoredState Id="putting-it-together">
@@ -65,7 +119,22 @@
                         <PanelHeaderWithTestTracking TTestClass="Test_Exam_PuttingItTogether">Putting it all together</PanelHeaderWithTestTracking>
                     </TitleContent>
                     <ChildContent>
-                        <TestRunner TTestClass="Test_Exam_PuttingItTogether" ComponentUnderTestParameters="new Dictionary<string, object>()"></TestRunner>
+                        <SpacedContent>
+                            <MudText>We now have every building block for employee management, we just have to put it together</MudText>
+                            <MudText>Modify the component <ComponentFileWithPath T="Exercise_Exam"/></MudText>
+                            <MudText>You will have to implement an employee list using a <strong>@($"<{nameof(MudSimpleTable)}>")</strong> component
+                                <br/>
+                                You will see inside the component what snippets you should use for 
+                                <ul>
+                                    <li><MudText>Adding a create button in the table header, which will open the <strong>@nameof(ExamEmployeeCreate)</strong></MudText></li>
+                                    <li><MudText>Adding a details icon for each employee inside the table that will open the <strong>@nameof(ExamEmployeeDetails)</strong></MudText></li>
+                                </ul>
+                            </MudText>
+                            <MudText>You will find variables inside the component that you can use to show/hide the Create and Details component</MudText>
+                            <MudText>You will also have to handle the events of each component, to reload employee data using the <strong>@nameof(IExamEmployeeService)</strong>, and hide the closed components</MudText>
+                            <MudText>Good luck!</MudText>
+                            <TestRunner TTestClass="Test_Exam_PuttingItTogether" ComponentUnderTestParameters="new Dictionary<string, object>()"></TestRunner>
+                        </SpacedContent>
                     </ChildContent>
                 </MudExpansionPanelWithStoredState>
             </ChildContent>

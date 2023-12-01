@@ -8,6 +8,7 @@
             <div>
                 @if (!string.IsNullOrEmpty(_employee.ProfilePicture))
                 {
+                    @* Employee profile picutre comes here *@
                     <img src="@_employee.ProfilePicture" width="72px" height="72px" alt="Random Person"/>
                 }
                 else
@@ -16,16 +17,18 @@
                 }
             </div>
             <div class="d-flex align-items-center justify-content-center flex-grow-1">
+                @* Employee firstname and lastname comes here*@
                 <MudText Typo="Typo.h5">@_employee.FirstName @_employee.LastName</MudText>
             </div>
             <div class="d-flex flex-column justify-content-start align-items-center gap-2">
+                @* Close, Edit and Delete buttons here*@
                 <MudButton id="@CloseButtonId" Size="Size.Small" Variant="Variant.Filled" Color="Color.Secondary" OnClick="Closed">Close</MudButton>
                 <MudButton id="@EditButtonId" Size="Size.Small" Variant="Variant.Filled" Color="Color.Primary" Disabled="_isEditMode" OnClick="() => { _isEditMode = true; }">Edit</MudButton>
                 <MudButton id="@DeleteButtonId" Size="Size.Small" Variant="Variant.Filled" Color="Color.Primary" OnClick="DeleteEmployee">Delete</MudButton>
             </div>
         </div>
 
-        <EmployeeForm @bind-Employee="_employee" IsEditMode="_isEditMode" EmployeeValid="SaveEmployee" Cancel="CancelEmployeeEdit"></EmployeeForm>
+        <ExamEmployeeForm @bind-Employee="_employee" IsEditMode="_isEditMode" EmployeeValid="SaveEmployee" Cancel="CancelEmployeeEdit"></ExamEmployeeForm>
     </MudContainer>
 }
 

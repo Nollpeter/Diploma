@@ -53,7 +53,7 @@ public abstract class ExamTestBase<TComponent> : ComponentTestBase<TComponent> w
 }
 
 [TestForPage(typeof(Pages._11_Exam.Exam))]
-public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
+public class Test_Exam_EmployeeForm : ExamTestBase<ExamEmployeeForm>
 {
     public interface IFormFieldDeclaration<TComponentType, TValue> where TComponentType : IComponent
     {
@@ -65,7 +65,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         
         public IRenderedComponent<TComponentType> RenderedComponent { get; protected set; }
 
-        public void Initialize(IRenderedComponent<EmployeeForm> form)
+        public void Initialize(IRenderedComponent<ExamEmployeeForm> form)
         {
             var components = form.FindComponents<TComponentType>();
 
@@ -211,11 +211,11 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     private async Task ValidateDeclaredField<TComponentType,TValue>(IFormFieldDeclaration<TComponentType,TValue> field) where TComponentType : IComponent
     {
         var ctx = await SetupTestContext();
-        var renderedComponent = ctx.RenderComponent<EmployeeForm>(builder => builder.Add(form => form.Employee, new ExamEmployee()));
+        var renderedComponent = ctx.RenderComponent<ExamEmployeeForm>(builder => builder.Add(form => form.Employee, new ExamEmployee()));
         GetFormField(renderedComponent, field);
     }
 
-    private IRenderedComponent<TComponentType> GetFormField<TComponentType, TValue>(IRenderedComponent<EmployeeForm> form ,IFormFieldDeclaration<TComponentType,TValue> field) where TComponentType : IComponent
+    private IRenderedComponent<TComponentType> GetFormField<TComponentType, TValue>(IRenderedComponent<ExamEmployeeForm> form ,IFormFieldDeclaration<TComponentType,TValue> field) where TComponentType : IComponent
     {
         var components = form.FindComponents<TComponentType>();
 
@@ -319,7 +319,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     public async Task GivenEmployeeForm_WhenEditModeFalse_ThenAllFieldsDisabled()
     {
         var testContext = await SetupTestContext();
-        var form = testContext.RenderComponent<EmployeeForm>(builder => 
+        var form = testContext.RenderComponent<ExamEmployeeForm>(builder => 
             builder.Add(form => form.Employee, new ExamEmployee())
                 .Add(form => form.IsEditMode, false));
 
@@ -347,7 +347,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     public async Task GivenEmployeeForm_WhenEditMOdeFalse_ThenEditAndCancelButtonsHidden()
     {
         var testContext = await SetupTestContext();
-        var form = testContext.RenderComponent<EmployeeForm>(builder => 
+        var form = testContext.RenderComponent<ExamEmployeeForm>(builder => 
             builder.Add(form => form.Employee, new ExamEmployee())
                 .Add(form => form.IsEditMode, false));
 
@@ -367,7 +367,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     public async Task GivenEmployeeForm_WhenEditModeTrue_ThenIdDisabled()
     {
         var testContext = await SetupTestContext();
-        var form = testContext.RenderComponent<EmployeeForm>(builder => 
+        var form = testContext.RenderComponent<ExamEmployeeForm>(builder => 
             builder.Add(form => form.Employee, new ExamEmployee())
                 .Add(form => form.IsEditMode, true));
 
@@ -380,7 +380,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     public async Task GivenEmployeeForm_WhenEditModeTrue_ThenOtherFieldsNotDisabled()
     {
         var testContext = await SetupTestContext();
-        var form = testContext.RenderComponent<EmployeeForm>(builder => 
+        var form = testContext.RenderComponent<ExamEmployeeForm>(builder => 
             builder.Add(form => form.Employee, new ExamEmployee())
                 .Add(form => form.IsEditMode, true));
 
@@ -401,7 +401,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     {
         
         var testContext = await SetupTestContext();
-        var form = testContext.RenderComponent<EmployeeForm>(builder => 
+        var form = testContext.RenderComponent<ExamEmployeeForm>(builder => 
             builder.Add(form => form.Employee, new ExamEmployee())
                 .Add(form => form.IsEditMode, true));
 
@@ -430,7 +430,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         
         var testContext = await SetupTestContext();
         var isCancelInvoked = false;
-        var form = testContext.RenderComponent<EmployeeForm>(builder => 
+        var form = testContext.RenderComponent<ExamEmployeeForm>(builder => 
             builder.Add(form => form.Employee, new ExamEmployee())
                 .Add(form => form.IsEditMode, true)
                 .Add(form => form.Cancel, EventCallback.Factory.Create(this, () => isCancelInvoked = true)));
@@ -457,14 +457,14 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
     {
         var testContext = await SetupTestContext();
         var employee = new ExamEmployee() {Id = 10};
-        var form = testContext.RenderComponent<EmployeeForm>(builder =>
+        var form = testContext.RenderComponent<ExamEmployeeForm>(builder =>
         {
             builder.Add(form => form.Employee, employee)
                 .Add(form => form.IsEditMode, true);
         });
 
        
-        async Task ValidateDataBinding<TComponent,TValue>( IRenderedComponent<EmployeeForm> form, IFormFieldDeclaration<TComponent, TValue> field, 
+        async Task ValidateDataBinding<TComponent,TValue>( IRenderedComponent<ExamEmployeeForm> form, IFormFieldDeclaration<TComponent, TValue> field, 
             Action<TValue> setValueOfEmployee,
             Func<TValue> getValueOfEmployee,
             TValue value1, TValue value2) where TComponent : IComponent 
@@ -507,7 +507,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
         var testContext = await SetupTestContext();
         var employee = new ExamEmployee() {Id = 10};
         var employeeValidInvoked = false;
-        var form = testContext.RenderComponent<EmployeeForm>(builder =>
+        var form = testContext.RenderComponent<ExamEmployeeForm>(builder =>
         {
             builder.Add(form => form.Employee, employee)
                 .Add(form => form.IsEditMode, true)
@@ -535,7 +535,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
 
         if (employeeValidInvoked)
         {
-            throw new TestRunException($"{nameof(EmployeeForm.EmployeeValid)} is invoked with invalid Employee!");
+            throw new TestRunException($"{nameof(ExamEmployeeForm.EmployeeValid)} is invoked with invalid Employee!");
         }
         
         employee.Salary = 100_000;
@@ -570,7 +570,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
             HireDate = DateTime.MinValue,
         };
         var employeeValidInvoked = false;
-        var form = testContext.RenderComponent<EmployeeForm>(builder =>
+        var form = testContext.RenderComponent<ExamEmployeeForm>(builder =>
         {
             builder.Add(form => form.Employee, employee)
                 .Add(form => form.IsEditMode, true)
@@ -601,7 +601,7 @@ public class Test_Exam_EmployeeForm : ExamTestBase<EmployeeForm>
 
         if (!employeeValidInvoked)
         {
-            throw new TestRunException($"{nameof(EmployeeForm.EmployeeValid)} is NOT invoked with valid Employee!");
+            throw new TestRunException($"{nameof(ExamEmployeeForm.EmployeeValid)} is NOT invoked with valid Employee!");
         }
         
     }

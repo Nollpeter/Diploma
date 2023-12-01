@@ -59,9 +59,9 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         }
     }
 
-    [ComponentUsedInMarkupTitle(typeof(EmployeeForm))]
+    [ComponentUsedInMarkupTitle(typeof(ExamEmployeeForm))]
     //TODO Description, ami figyelmeztet, hogy csak akkor lesz jó, ha condition renderingnél is be van töltve minden
-    [ComponentUsedInMarkupDescription(typeof(EmployeeForm))]
+    [ComponentUsedInMarkupDescription(typeof(ExamEmployeeForm))]
     [Precondition]
     public async Task GivenEmployeeDetails_WhenRendered_ThenHasEmployeeFormDeclared()
     {
@@ -72,10 +72,10 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         };
         var renderedEmployeeDetails = await RenderedEmployeeDetails(ctx,
             builder => builder.Add(form => form.EmployeeId, employee.Id));
-        var hasComponent = renderedEmployeeDetails.HasComponent<EmployeeForm>();
+        var hasComponent = renderedEmployeeDetails.HasComponent<ExamEmployeeForm>();
         if (!hasComponent)
         {
-            throw new TestRunException($"The component has no {nameof(EmployeeForm)} component declared");
+            throw new TestRunException($"The component has no {nameof(ExamEmployeeForm)} component declared");
         }
     }
 
@@ -90,10 +90,10 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
 		return Task.CompletedTask;
 	}
 
-    [Title(nameof(EmployeeForm) + " Employee is bound to " + nameof(IExamEmployeeService) + " Employee")]
+    [Title(nameof(ExamEmployeeForm) + " Employee is bound to " + nameof(IExamEmployeeService) + " Employee")]
     [Description(
-        "This test verifies that the Employee instance within the " + nameof(EmployeeForm) + " is correctly bound to the Employee object managed by the " + nameof(IExamEmployeeService) + ". It ensures consistent data representation across the " +
-        nameof(EmployeeForm) + " and " + nameof(ExamEmployeeDetails) + " components.")]
+        "This test verifies that the Employee instance within the " + nameof(ExamEmployeeForm) + " is correctly bound to the Employee object managed by the " + nameof(IExamEmployeeService) + ". It ensures consistent data representation across the " +
+        nameof(ExamEmployeeForm) + " and " + nameof(ExamEmployeeDetails) + " components.")]
     [Precondition]
     public async Task GivenEmployeeDetails_WhenRendered_ThenEmployeeFormEmployeeBoundToEmployeeDetailsEmployee()
     {
@@ -101,11 +101,11 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         ExamEmployee employee = await _employeeService.GetEmployeeForEdit(1);
         var renderedEmployeeDetails = await RenderedEmployeeDetails(ctx,
             builder => builder.Add(form => form.EmployeeId, employee.Id));
-        var findComponent = renderedEmployeeDetails.FindComponent<EmployeeForm>();
+        var findComponent = renderedEmployeeDetails.FindComponent<ExamEmployeeForm>();
         var instanceEmployee = findComponent.Instance.Employee;
         if (employee != instanceEmployee)
         {
-            throw new TestRunException($"Employee of the {nameof(EmployeeForm)} is not bound to the Employee of the {nameof(ExamEmployeeDetails)}");
+            throw new TestRunException($"Employee of the {nameof(ExamEmployeeForm)} is not bound to the Employee of the {nameof(ExamEmployeeDetails)}");
         }
     }
 
@@ -118,7 +118,7 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         return renderedEmployeeDetails;
     }
 
-    [Title(nameof(EmployeeForm) + " is NOT Editable on render")]
+    [Title(nameof(ExamEmployeeForm) + " is NOT Editable on render")]
     //TODO Description
     [Description("")]
     public async Task GivenEmployeeDetails_WhenRendered_ThenEmployeeFormIsNotEditable()
@@ -131,17 +131,17 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         };
         var renderedComponent = ctx.RenderComponent<ExamEmployeeDetails>(
             builder => builder.Add(form => form.EmployeeId, employee.Id));
-        var findComponent = renderedComponent.FindComponent<EmployeeForm>();
+        var findComponent = renderedComponent.FindComponent<ExamEmployeeForm>();
         var isEditMode = findComponent.Instance.IsEditMode;
         if (isEditMode)
         {
-            throw new TestRunException($"{nameof(EmployeeForm)} is editable after render!");
+            throw new TestRunException($"{nameof(ExamEmployeeForm)} is editable after render!");
         }
     }
 
     [Title("Clicking Edit button makes employee form editable")]
     [Description(
-        "This test verifies that the " + nameof(EmployeeForm) + " is in a non-editable state immediately after rendering. It checks that the IsEditMode property of the " + nameof(EmployeeForm) +
+        "This test verifies that the " + nameof(ExamEmployeeForm) + " is in a non-editable state immediately after rendering. It checks that the IsEditMode property of the " + nameof(ExamEmployeeForm) +
         " instance is false, ensuring the form remains read-only until explicitly enabled for editing.")]
     public async Task GivenEmployeeDetails_WhenEditButtonClick_ThenEmployeeFormIsEditable()
     {
@@ -153,10 +153,10 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         };
         var renderedComponent = await RenderedEmployeeDetails(ctx, builder => builder.Add(form => form.EmployeeId, employee.Id));
         await renderedComponent.Find($"#{ExamEmployeeDetails.EditButtonId}").ClickAsync(new MouseEventArgs());
-        var employeeForm = renderedComponent.FindComponent<EmployeeForm>();
+        var employeeForm = renderedComponent.FindComponent<ExamEmployeeForm>();
         if (!employeeForm.Instance.IsEditMode)
         {
-            throw new TestRunException($"{nameof(EmployeeForm)} is not editable after clicking Edit button!");
+            throw new TestRunException($"{nameof(ExamEmployeeForm)} is not editable after clicking Edit button!");
         }
     }
 
@@ -178,7 +178,7 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
     }
 
     [Title("Saving employee form updates EmployeeService employee")]
-    [Description("This test verifies that saving changes in the " + nameof(EmployeeForm) + " component within " + nameof(ExamEmployeeDetails) + " correctly updates the employee in the " + nameof(IExamEmployeeService) +
+    [Description("This test verifies that saving changes in the " + nameof(ExamEmployeeForm) + " component within " + nameof(ExamEmployeeDetails) + " correctly updates the employee in the " + nameof(IExamEmployeeService) +
                  ". It ensures that modifications made to the employee's details are accurately reflected in the EmployeeService after the save operation is performed.")]
     public async Task GivenEmployeeDetails_()
     {
@@ -186,12 +186,12 @@ public class Test_Exam_EmployeeDetails : ExamTestBase<ExamEmployeeDetails>
         var employee = await _employeeService.GetEmployee(1);
         var renderedComponent = ctx.RenderComponent<ExamEmployeeDetails>(
             builder => builder.Add(form => form.EmployeeId, employee.Id));
-        var form = renderedComponent.FindComponent<EmployeeForm>();
+        var form = renderedComponent.FindComponent<ExamEmployeeForm>();
         var newFirstName = "TestTest";
         form.Instance.Employee.FirstName = newFirstName;
         form.Render();
         await form.InvokeAsync(async () => await form.Instance.EmployeeChanged.InvokeAsync(form.Instance.Employee));
-        form = renderedComponent.FindComponent<EmployeeForm>();
+        form = renderedComponent.FindComponent<ExamEmployeeForm>();
         await form.InvokeAsync(async () => await form.Instance.EmployeeValid.InvokeAsync());
         await WaitForState(UpdateEmployeeCalled);
         if (!UpdateEmployeeCalled())

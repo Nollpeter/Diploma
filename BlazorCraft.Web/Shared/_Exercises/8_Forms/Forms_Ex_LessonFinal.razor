@@ -1,6 +1,12 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @using BlazorCraft.Web.Shared._Exercises.Forms
+
+@* Inject the IEmployeeService with which employee data can be managed *@ 
 @inject IEmployeeService EmployeeService
+
+@* Create an EditForm that uses the _selectedEmployee as Model and if the model is valid, then the employee if saved in EmployeeService*@
+@* For each field of the employee create the corresponding input with labels. Refer to DataAnnotationsValidatorExample.razor how to create each input type with their labels *@
+@* Note: The Id field will be auto-generated, therefore, you don't need to create an input for that *@
 
 @if (_selectedEmployee != null)
 {
@@ -35,10 +41,12 @@
         <button class="btn btn-primary" type="submit">Save</button>
     </EditForm>
 }
+
 <ListComponent5 T="Employee" ListItems="_employees">
     <Title>
         <div class="d-flex justify-content-start gap-2">
             <h2>Employees</h2>
+            @* bind the click event of this button to a handler, that bind an empty employee to the form *@ 
             <button class="btn btn-primary" @onclick="CreateEmployee">
                 Create
             </button>
@@ -47,6 +55,7 @@
     <ListTemplate>
         <table class="table table-dark">
             <thead>
+            @* Ad Id, First Name, Last Name, Position, Salary, and BirthDate header *@
             <tr>
                 <th>Id</th>
                 <th>First Name</th>
@@ -62,6 +71,7 @@
         </table>
     </ListTemplate>
     <ListItemTemplate>
+        @* Add the row values according to the headers *@
         <tr>
             <td>@context.Id</td>
             <td>@(context.FirstName!)</td>

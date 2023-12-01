@@ -1,7 +1,8 @@
 ﻿@using BlazorCraft.Web.Shared._Exercises.Exam
 @inject IExamEmployeeService EmployeeService
 <MudContainer>
-    <EmployeeForm Employee="Employee" IsEditMode="true" EmployeeValid="CreateEmployee" Cancel="Cancel"></EmployeeForm>
+    @* Exercise markup comes here: *@
+    <ExamEmployeeForm Employee="Employee" IsEditMode="true" EmployeeValid="CreateEmployee" Cancel="Cancel"></ExamEmployeeForm>
 </MudContainer>
 
 @code {

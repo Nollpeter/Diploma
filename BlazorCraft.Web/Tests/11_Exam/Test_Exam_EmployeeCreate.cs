@@ -17,8 +17,8 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
         return setupTestContext;
     }
 
-    [ComponentUsedInMarkupTitle(typeof(EmployeeForm))]
-    [ComponentUsedInMarkupDescription(typeof(EmployeeForm))]
+    [ComponentUsedInMarkupTitle(typeof(ExamEmployeeForm))]
+    [ComponentUsedInMarkupDescription(typeof(ExamEmployeeForm))]
     [Precondition]
     public async Task GivenEmployeeCreate_WhenRendered_ThenHasEmployeeFormDeclared()
     {
@@ -29,16 +29,16 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
         };
         var renderedComponent = ctx.RenderComponent<ExamEmployeeCreate>(
             builder => builder.Add(form => form.Employee, employee));
-        var hasComponent = renderedComponent.HasComponent<EmployeeForm>();
+        var hasComponent = renderedComponent.HasComponent<ExamEmployeeForm>();
         if (!hasComponent)
         {
-            throw new TestRunException($"The component has no {nameof(EmployeeForm)} component declared");
+            throw new TestRunException($"The component has no {nameof(ExamEmployeeForm)} component declared");
         }
     }
 
-    [Title("Employee is bound to " + nameof(EmployeeForm))]
-    [Description("This test verifies that the employee object is correctly bound to the " + nameof(EmployeeForm) + " within the " + nameof(ExamEmployeeCreate) + " component. It ensures that the same employee instance used in " +
-                 nameof(ExamEmployeeCreate) + " is also present in the " + nameof(EmployeeForm) + ", by checking for reference equality.")]
+    [Title("Employee is bound to " + nameof(ExamEmployeeForm))]
+    [Description("This test verifies that the employee object is correctly bound to the " + nameof(ExamEmployeeForm) + " within the " + nameof(ExamEmployeeCreate) + " component. It ensures that the same employee instance used in " +
+                 nameof(ExamEmployeeCreate) + " is also present in the " + nameof(ExamEmployeeForm) + ", by checking for reference equality.")]
     public async Task GivenEmployeeCreate_WhenRendered_ThenEmployeeFormEmployeeBoundToEmployeeCreateEmployee()
     {
         var ctx = await SetupTestContext();
@@ -49,17 +49,17 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
         };
         var renderedComponent = ctx.RenderComponent<ExamEmployeeCreate>(
             builder => builder.Add(form => form.Employee, employee));
-        var findComponent = renderedComponent.FindComponent<EmployeeForm>();
+        var findComponent = renderedComponent.FindComponent<ExamEmployeeForm>();
         var instanceEmployee = findComponent.Instance.Employee;
         if (!ReferenceEquals(employee, instanceEmployee))
         {
-            throw new TestRunException($"Employee of the {nameof(EmployeeForm)} is not bound to the Employee of the {nameof(ExamEmployeeCreate)}");
+            throw new TestRunException($"Employee of the {nameof(ExamEmployeeForm)} is not bound to the Employee of the {nameof(ExamEmployeeCreate)}");
         }
     }
 
-    [Title(nameof(EmployeeForm) + " is Editable on render")]
-    [Description("This test verifies that the " + nameof(EmployeeForm) + " component is editable upon rendering within the " + nameof(ExamEmployeeCreate) + " component. The test sets up the " + nameof(EmployeeForm) +
-                 " with a predefined employee and checks if the form's edit mode is enabled by default. If the form is not in edit mode, the test fails, indicating an issue with the initial state of the " + nameof(EmployeeForm) + " when used in " +
+    [Title(nameof(ExamEmployeeForm) + " is Editable on render")]
+    [Description("This test verifies that the " + nameof(ExamEmployeeForm) + " component is editable upon rendering within the " + nameof(ExamEmployeeCreate) + " component. The test sets up the " + nameof(ExamEmployeeForm) +
+                 " with a predefined employee and checks if the form's edit mode is enabled by default. If the form is not in edit mode, the test fails, indicating an issue with the initial state of the " + nameof(ExamEmployeeForm) + " when used in " +
                  nameof(ExamEmployeeCreate) + ".")]
     public async Task GivenEmployeeCreate_WhenRendered_ThenEmployeeFormIsEditable()
     {
@@ -71,19 +71,19 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
         };
         var renderedComponent = ctx.RenderComponent<ExamEmployeeCreate>(
             builder => builder.Add(form => form.Employee, employee));
-        var findComponent = renderedComponent.FindComponent<EmployeeForm>();
+        var findComponent = renderedComponent.FindComponent<ExamEmployeeForm>();
         var isEditMode = findComponent.Instance.IsEditMode;
         if (!isEditMode)
         {
-            throw new TestRunException($"{nameof(EmployeeForm)} is not editable after render!");
+            throw new TestRunException($"{nameof(ExamEmployeeForm)} is not editable after render!");
         }
     }
 
     //TODO PRecondition: EmployeeService injected?
 
 
-    [Title("Employee added if employee is valid on " + nameof(EmployeeForm) + " then new employee is added to EmployeeService")]
-    [Description("This test verifies that when an employee is valid on " + nameof(EmployeeForm) + " then a new employee is added to " + nameof(IExamEmployeeService) + " and the Closed event of " + nameof(ExamEmployeeCreate) + " is invoked.")]
+    [Title("Employee added if employee is valid on " + nameof(ExamEmployeeForm) + " then new employee is added to EmployeeService")]
+    [Description("This test verifies that when an employee is valid on " + nameof(ExamEmployeeForm) + " then a new employee is added to " + nameof(IExamEmployeeService) + " and the Closed event of " + nameof(ExamEmployeeCreate) + " is invoked.")]
     public async Task GivenEmployeeCreate_WhenEmployeeFormValidEmployeeInvoked_ThenEmployeeAddedToEmployeeService()
     {
         var ctx = await SetupTestContext();
@@ -98,7 +98,7 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
                 .Add(form => form.Employee, employee)
                 .Add(form => form.Closed, EventCallback.Factory.Create(this, () => { isClosedInvoked = true; })));
         var employeeService = ctx.Services.GetRequiredService<IExamEmployeeService>();
-        var findComponent = renderedComponent.FindComponent<EmployeeForm>();
+        var findComponent = renderedComponent.FindComponent<ExamEmployeeForm>();
 
         await renderedComponent.InvokeAsync(async () => await findComponent.Instance.EmployeeValid.InvokeAsync());
         try
@@ -112,13 +112,13 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
 
         if (!isClosedInvoked)
         {
-            throw new TestRunException($"{nameof(ExamEmployeeCreate.Closed)} is not invoked on {nameof(EmployeeForm)}.{nameof(EmployeeForm.EmployeeValid)}!");
+            throw new TestRunException($"{nameof(ExamEmployeeCreate.Closed)} is not invoked on {nameof(ExamEmployeeForm)}.{nameof(ExamEmployeeForm.EmployeeValid)}!");
         }
     }
 
 
-    [Title("Closed event invoked if " + nameof(EmployeeForm) + " is cancelled")]
-    [Description("This test verifies that the Closed event is invoked when the Cancel method on " + nameof(EmployeeForm) + " is executed in " + nameof(ExamEmployeeCreate) + ".")]
+    [Title("Closed event invoked if " + nameof(ExamEmployeeForm) + " is cancelled")]
+    [Description("This test verifies that the Closed event is invoked when the Cancel method on " + nameof(ExamEmployeeForm) + " is executed in " + nameof(ExamEmployeeCreate) + ".")]
     public async Task GivenEmployeeCreate_WhenEmployeeFormValidCancelInvoked_ThenClosedInvoked()
     {
         var ctx = await SetupTestContext();
@@ -132,11 +132,11 @@ public class Test_Exam_EmployeeCreate : ExamTestBase<ExamEmployeeCreate>
             builder => builder
                 .Add(form => form.Employee, employee)
                 .Add(form => form.Closed, EventCallback.Factory.Create(this, () => { isClosedInvoked = true; })));
-        var findComponent = renderedComponent.FindComponent<EmployeeForm>();
+        var findComponent = renderedComponent.FindComponent<ExamEmployeeForm>();
         await renderedComponent.InvokeAsync(async () => await findComponent.Instance.Cancel.InvokeAsync());
         if (!isClosedInvoked)
         {
-            throw new TestRunException($"{nameof(ExamEmployeeCreate.Closed)} is not invoked on {nameof(EmployeeForm)}.{nameof(EmployeeForm.EmployeeValid)}!");
+            throw new TestRunException($"{nameof(ExamEmployeeCreate.Closed)} is not invoked on {nameof(ExamEmployeeForm)}.{nameof(ExamEmployeeForm.EmployeeValid)}!");
         }
     }
 }
