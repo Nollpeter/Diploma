@@ -7,24 +7,26 @@
       "sslPort": 44398
     }
   },
-  "Browser launch": {
-    "commandName": "Project",
-    "dotnetRunMessages": "true",
-    "launchBrowser": true,
-    "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-    "applicationUrl": "https://localhost:5001;http://localhost:5000",
-    "environmentVariables": {
-      "ASPNETCORE_ENVIRONMENT": "Development"
-    }
-  },
-  "NO browser launch": {
-    "commandName": "Project",
-    "dotnetRunMessages": "true",
-    "launchBrowser": false,
-    "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-    "applicationUrl": "https://localhost:5001;http://localhost:5000",
-    "environmentVariables": {
-      "ASPNETCORE_ENVIRONMENT": "Development"
+  "profiles": {
+    "Browser launch": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": true,
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "NO browser launch": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": false,
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }
