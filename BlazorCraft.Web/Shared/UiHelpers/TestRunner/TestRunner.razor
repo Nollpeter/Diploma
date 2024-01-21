@@ -33,9 +33,9 @@
             <div class="d-flex justify-content-between align-items-center ">
                 <div class="d-flex justify-content-start align-items-center gap-3">
                     <MudButton Color="Color.Primary" Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.PlayArrow" IconColor="Color.Success" OnClick="() => TestRunnerService.RunAllInTestClass(typeof(TTestClass))">Run all</MudButton>
-                    <MudText Typo="Typo.body1">Successful: <strong>@_session.Count(p => p.Value ==TestRunState.NotStarted)/@_session.Count</strong></MudText>
+                    <MudText Typo="Typo.body1">Successful: <strong>@_session.Count(p => p.Value ==TestRunState.Successful)/@_session.Count</strong></MudText>
                     <MudText Typo="Typo.body1">Failed: <strong>@_session.Count(p => p.Value == TestRunState.Error)/@_session.Count</strong></MudText>
-                    <MudText Typo="Typo.body1">Not run: <strong>@_session.Count(p => p.Value == TestRunState.Successful)/@_session.Count</strong></MudText>
+                    <MudText Typo="Typo.body1">Not run: <strong>@_session.Count(p => p.Value == TestRunState.NotStarted)/@_session.Count</strong></MudText>
                 </div>
                 <MudText Typo="Typo.body1" Class="text-end">Component under test: <strong>@TestComponentName</strong>.razor</MudText>
             </div>
@@ -172,23 +172,36 @@ else
         TestRunnerService.TestStateChanged += (sender, args) =>
         {
             _testResults = TestRunnerService.GetTestRunResultMethods(typeof(TTestClass));
+            _session = TestRunnerService.GetSessionForTestClass(typeof(TTestClass));
             StateHasChanged();
         };
     }
 
     private Color GetTextColor(KeyValuePair<TestDescriptor, TestRunResult?> value)
     {
-        if (value.Value == null)
+        if (!_session.ContainsKey(value.Key))
         {
+            Console.WriteLine("Not contains");
             return Color.Default;
         }
-        else if (value.Value.IsSuccessful)
+
+        var testRunState = _session[value.Key];
+
+        switch (testRunState)
         {
-            return Color.Success;
-        }
-        else
-        {
-            return Color.Error;
+            case TestRunState.NotStarted:
+                return Color.Default;
+            case TestRunState.Running:
+                return Color.Primary;
+            case TestRunState.Successful:
+                return Color.Success;
+            case TestRunState.Error:
+                return Color.Error;
+            case TestRunState.AtLeastOneNotStarted:
+            default:
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 
